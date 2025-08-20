@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="alternate icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTUiIGZpbGw9IiMzNDk4ZGIiIHN0cm9rZT0iIzJjM2U1MCIgc3Ryb2tlLXdpZHRoPSIyIi8+PGcgZmlsbD0id2hpdGUiIGZvbnQtZmFtaWx5PSJUaW1lcyxzZXJpZiIgZm9udC13ZWlnaHQ9ImJvbGQiPjx0ZXh0IHg9IjE2IiB5PSIxMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxMiI+ZDwvdGV4dD48bGluZSB4MT0iOCIgeTE9IjE2IiB4Mj0iMjQiIHkyPSIxNiIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjUiLz48dGV4dCB4PSIxNiIgeT0iMjUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTAiPmR4PC90ZXh0PjwvZz48L3N2Zz4=">
+    <title>高等数学 - 可视化复习系统</title>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Crimson Text', 'Times New Roman', serif;
+            background: #ffffff;
+            color: #2c3e50;
+            line-height: 1.6;
+            font-size: 18px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* 浮动公式背景 */
+        .formula-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .floating-formula {
+            position: absolute;
+            color: rgba(52, 152, 219, 0.15);
+            font-size: 1.2rem;
+            pointer-events: none;
+            user-select: none;
+            animation: floatUp 25s infinite linear;
+            font-family: 'Times New Roman', serif;
+            text-shadow: 0 0 2px rgba(52, 152, 219, 0.1);
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            5% {
+                opacity: 1;
+            }
+            95% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* 页眉 */
+        .header {
+            text-align: center;
+            border-bottom: 3px double #2c3e50;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .university-name {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            margin-bottom: 5px;
+            letter-spacing: 1.5px;
+        }
+
+        .main-title {
+            font-size: 2.4rem;
+            color: #2c3e50;
+            font-weight: 600;
+            margin: 10px 0;
+            letter-spacing: 2px;
+        }
+
+        .course-subtitle {
+            font-size: 1.1rem;
+            color: #34495e;
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+
+        /* 目录样式 */
+        .table-of-contents {
+            margin: 10px 0;
+        }
+
+        .toc-title {
+            font-size: 1.4rem;
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 12px;
+            font-weight: 600;
+            position: relative;
+        }
+
+        .toc-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 2px;
+            background: #3498db;
+            margin: 10px auto;
+        }
+
+        .chapter-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 15px;
+            list-style: none;
+            counter-reset: chapter-counter;
+            padding: 0;
+        }
+
+        .chapter-card {
+            counter-increment: chapter-counter;
+            background: #ffffff;
+            border: 2px solid #e3f2fd;
+            border-radius: 12px;
+            padding: 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            height: 240px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .chapter-card:hover {
+            border-color: #3498db;
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.3);
+            background: #f8fffe;
+        }
+
+        .chapter-header {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .chapter-number {
+            font-size: 0.9rem;
+            color: #3498db;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .chapter-number::before {
+            content: "第" counter(chapter-counter) "章";
+        }
+
+        .chapter-title {
+            font-size: 1rem;
+            color: #2c3e50;
+            font-weight: 600;
+            line-height: 1.2;
+            margin-bottom: 8px;
+            height: 2.4em;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        .chapter-description {
+            color: #5d6d7e;
+            font-size: 0.75rem;
+            line-height: 1.3;
+            flex-grow: 1;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+        }
+
+        .chapter-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+            padding-top: 8px;
+            border-top: 1px solid #ecf0f1;
+        }
+
+        .topics-count {
+            background: #ecf0f1;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            color: #7f8c8d;
+        }
+
+        .difficulty-badge {
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .chapter-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.2rem;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+
+        .chapter-card:hover .chapter-icon {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        /* 页脚 */
+        .footer {
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 1px solid #ecf0f1;
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        .mathematics-quote {
+            font-style: italic;
+            margin-bottom: 15px;
+            color: #5d6d7e;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 1400px) {
+            .chapter-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .chapter-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .chapter-card {
+                height: 220px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 20px 15px;
+            }
+            
+            .main-title {
+                font-size: 2.5rem;
+            }
+            
+            .chapter-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+            
+            .chapter-card {
+                padding: 12px;
+                height: 240px;
+            }
+            
+            .chapter-title {
+                font-size: 0.9rem;
+            }
+            
+            .chapter-description {
+                font-size: 0.7rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .chapter-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .chapter-card {
+                height: auto;
+                min-height: 160px;
+            }
+        }
+
+        /* 打印样式 */
+        @media print {
+            body {
+                background: white;
+                box-shadow: none;
+                max-width: none;
+            }
+            
+            .chapter-card:hover {
+                transform: none;
+                box-shadow: none;
+            }
+            
+            .chapter-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 10px;
+            }
+        }
+
+        /* 加载动画 */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+        .delay-5 { animation-delay: 0.5s; }
+        .delay-6 { animation-delay: 0.6s; }
+        .delay-7 { animation-delay: 0.7s; }
+        .delay-8 { animation-delay: 0.8s; }
+        .delay-9 { animation-delay: 0.9s; }
+        .delay-10 { animation-delay: 1.0s; }
+        .delay-11 { animation-delay: 1.1s; }
+        .delay-12 { animation-delay: 1.2s; }
+    </style>
+</head>
+<body>
+    <!-- 浮动公式背景 -->
+    <div class="formula-background" id="formulaBackground"></div>
+
+    <!-- 页眉 -->
+    <header class="header fade-in">
+        <div class="university-name">ADVANCED MATHEMATICS COURSE</div>
+        <h1 class="main-title">高等数学</h1>
+        <div class="course-subtitle">Mathematical Analysis & Calculus</div>
+    </header>
+
+    <!-- 目录 -->
+    <main class="table-of-contents">
+        <h2 class="toc-title fade-in delay-1">课程目录</h2>
+        <ul class="chapter-grid" id="chapterGrid">
+            <!-- 章节内容将通过JavaScript动态生成 -->
+        </ul>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="footer fade-in delay-12">
+        <div class="mathematics-quote">
+            "数学是科学的皇后，而数论是数学的皇后。" —— 高斯
+        </div>
+        <div>© 2025 高等数学课程 | 探索数学的无穷奥秘</div>
+    </footer>
+
+    <script>
+        // 数学公式数组
+        const formulas = [
+            '\\lim_{x \\to \\infty} \\frac{1}{x} = 0',
+            '\\int_0^{\\infty} e^{-x^2} dx = \\frac{\\sqrt{\\pi}}{2}',
+            '\\frac{d}{dx}[f(x)g(x)] = f\'(x)g(x) + f(x)g\'(x)',
+            '\\sum_{n=1}^{\\infty} \\frac{1}{n^2} = \\frac{\\pi^2}{6}',
+            'e^{i\\pi} + 1 = 0',
+            '\\int_{-\\infty}^{\\infty} \\frac{\\sin x}{x} dx = \\pi',
+            '\\oint_C \\vec{F} \\cdot d\\vec{r} = \\iint_S (\\nabla \\times \\vec{F}) \\cdot d\\vec{S}',
+            '\\nabla f = \\frac{\\partial f}{\\partial x}\\vec{i} + \\frac{\\partial f}{\\partial y}\\vec{j}',
+            '\\int_a^b f(x) dx = F(b) - F(a)',
+            '\\frac{\\partial^2 u}{\\partial x^2} + \\frac{\\partial^2 u}{\\partial y^2} = 0',
+            '\\lim_{h \\to 0} \\frac{f(x+h) - f(x)}{h}',
+            '\\sin^2 x + \\cos^2 x = 1',
+            '\\log_a b = \\frac{\\ln b}{\\ln a}',
+            '\\int \\frac{1}{x} dx = \\ln|x| + C',
+            '\\sum_{k=0}^n \\binom{n}{k} x^k y^{n-k} = (x+y)^n',
+            '\\lim_{x \\to 0} \\frac{\\sin x}{x} = 1',
+            '\\frac{d}{dx} e^x = e^x',
+            '\\lim_{x \\to x_0} f(x) = A',
+            'f\'(x_0) = \\lim_{\\Delta x \\to 0} \\frac{f(x_0 + \\Delta x) - f(x_0)}{\\Delta x}',
+            'f\'(\\xi) = \\frac{f(b) - f(a)}{b - a}',
+            '\\frac{f\'(\\xi)}{g\'(\\xi)} = \\frac{f(b) - f(a)}{g(b) - g(a)}',
+            'f(x) = f(x_0) + f\'(x_0)(x-x_0) + \\frac{f\'\'(x_0)}{2!}(x-x_0)^2 + \\cdots + \\frac{f^{(n)}(x_0)}{n!}(x-x_0)^n + R_n(x)',
+            '\\iint_D f(x, y) \\, dxdy = \\int_a^b dx \\int_{\\varphi_1(x)}^{\\varphi_2(x)} f(x, y) \\, dy',
+            'dV = dxdydz = r \\, dr \\, d\\theta \\, dz = r^2\\sin\\varphi \\, dr \\, d\\varphi \\, d\\theta',
+            '\\int_L f(x,y) \\, ds = \\int_{\\alpha}^{\\beta} f[\\varphi(t), \\psi(t)] \\sqrt{[\\varphi\'(t)]^2 + [\\psi\'(t)]^2} \\, dt',
+            '\\int_L f(x,y) \\, ds = \\int_{a}^{b} f[x, \\phi(x)] \\sqrt{1 + [\\phi\'(x)]^2} \\, dx',
+            '\\int_L f(x,y) \\, ds = \\int_{\\alpha}^{\\beta} f[r(\\theta)\\cos\\theta, r(\\theta)\\sin\\theta] \\sqrt{[r(\\theta)]^2 + [r\'(\\theta)]^2} \\, d\\theta',
+            '\\int_L P(x,y) \\, dx + Q(x,y) \\, dy = \\int_{\\alpha}^{\\beta} [P(\\varphi(t), \\psi(t))\\varphi\'(t) + Q(\\varphi(t), \\psi(t))\\psi\'(t)] \\, dt',
+            '\\int_L P(x,y) \\, dx + Q(x,y) \\, dy = \\int_{a}^{b} [P(x, \\phi(x)) + Q(x, \\phi(x))\\phi\'(x)] \\, dx',
+            '\\oint_L P \\, dx + Q \\, dy = \\iint_D \\left(\\frac{\\partial Q}{\\partial x} - \\frac{\\partial P}{\\partial y}\\right) \\, dx \\, dy',
+            '\\iint_S f(x,y,z) \\, dS = \\iint_{D_{xy}} f(x,y,z(x,y)) \\sqrt{1 + \\left(\\frac{\\partial z}{\\partial x}\\right)^2 + \\left(\\frac{\\partial z}{\\partial y}\\right)^2} \\, dx \\, dy'
+        ];
+
+        // 章节数据
+        const chapters = [
+            {
+                title: "函数与极限",
+                description: "研究函数的基本概念、性质以及极限理论。包括映射与函数、数列极限、函数极限、无穷小与无穷大、连续性等核心内容。这是微积分学的基础，为后续章节学习奠定理论基础。",
+                topics: 10,
+                difficulty: "基础",
+                icon: "📊"
+            },
+            {
+                title: "导数与微分",
+                description: "介绍导数的概念、几何意义及计算方法。涵盖求导法则、高阶导数、隐函数求导、参数方程求导以及微分的概念与应用。导数是微积分的核心工具之一。",
+                topics: 5,
+                difficulty: "基础",
+                icon: "📈"
+            },
+            {
+                title: "微分中值定理与导数的应用",
+                description: "深入探讨微分中值定理及其应用。包括罗尔定理、拉格朗日中值定理、洛必达法则、泰勒公式、函数性态分析、曲率等内容，体现导数在解决实际问题中的重要作用。",
+                topics: 8,
+                difficulty: "中等",
+                icon: "⚖️"
+            },
+            {
+                title: "不定积分",
+                description: "学习不定积分的概念、性质和计算方法。掌握基本积分公式、换元积分法、分部积分法以及有理函数的积分技巧。不定积分是定积分学习的前提。",
+                topics: 5,
+                difficulty: "中等",
+                icon: "∫"
+            },
+            {
+                title: "定积分",
+                description: "系统学习定积分理论。包括定积分的概念、性质、微积分基本公式、定积分的计算方法以及反常积分。定积分在几何、物理中有广泛应用。",
+                topics: 5,
+                difficulty: "中等",
+                icon: "∫"
+            },
+            {
+                title: "定积分的应用",
+                description: "运用定积分解决实际问题。包括计算平面图形面积、旋转体体积、平面曲线弧长以及物理应用如变力做功、流体压力等，展现数学与实际问题的紧密联系。",
+                topics: 3,
+                difficulty: "应用",
+                icon: "🔧"
+            },
+            {
+                title: "微分方程",
+                description: "介绍微分方程的基本理论和求解方法。涵盖一阶微分方程、高阶线性微分方程、常系数线性微分方程组等内容。微分方程是描述自然现象变化规律的重要数学工具。",
+                topics: 11,
+                difficulty: "较难",
+                icon: "🔄"
+            },
+            {
+                title: "向量代数与空间解析几何",
+                description: "建立空间概念，学习向量代数运算。包括向量的线性运算、数量积、向量积，以及空间中平面、直线、曲面的方程。为多元函数微积分学奠定几何基础。",
+                topics: 6,
+                difficulty: "基础",
+                icon: "📐"
+            },
+            {
+                title: "多元函数微分法及其应用",
+                description: "将一元函数微分学推广到多元函数。包括多元函数的极限、连续性、偏导数、全微分、复合函数求导、隐函数求导以及多元函数的极值问题。",
+                topics: 10,
+                difficulty: "较难",
+                icon: "🗺️"
+            },
+            {
+                title: "重积分",
+                description: "学习二重积分和三重积分的概念、性质和计算方法。掌握在不同坐标系下的积分变换，以及重积分在几何、物理中的应用。",
+                topics: 5,
+                difficulty: "较难",
+                icon: "∬"
+            },
+            {
+                title: "曲线积分与曲面积分",
+                description: "研究曲线积分和曲面积分的概念、计算方法。学习格林公式、高斯公式、斯托克斯公式等重要积分公式，以及它们在物理中的应用。",
+                topics: 7,
+                difficulty: "很难",
+                icon: "🌊"
+            },
+            {
+                title: "无穷级数",
+                description: "介绍无穷级数理论。包括常数项级数的收敛性判定、幂级数的收敛域、函数的幂级数展开以及傅里叶级数。级数是函数逼近和数值计算的重要工具。",
+                topics: 8,
+                difficulty: "很难",
+                icon: "∞"
+            }
+        ];
+
+        // 难度对应的颜色
+        const difficultyColors = {
+            "基础": "#27ae60",
+            "中等": "#f39c12",
+            "应用": "#9b59b6",
+            "较难": "#e74c3c",
+            "很难": "#c0392b"
+        };
+
+        // 创建浮动公式背景
+        function createFloatingFormulas() {
+            const background = document.getElementById('formulaBackground');
+            
+            // 创建公式的函数
+            function addFormula() {
+                const formula = document.createElement('div');
+                formula.className = 'floating-formula';
+                formula.innerHTML = `\\(${formulas[Math.floor(Math.random() * formulas.length)]}\\)`;
+                formula.style.left = Math.random() * 100 + '%';
+                formula.style.animationDelay = Math.random() * 5 + 's';
+                formula.style.animationDuration = (20 + Math.random() * 10) + 's';
+                formula.style.fontSize = (0.8 + Math.random() * 0.8) + 'rem';
+                
+                background.appendChild(formula);
+                
+                // 重新渲染MathJax
+                if (window.MathJax && window.MathJax.typesetPromise) {
+                    MathJax.typesetPromise([formula]);
+                }
+                
+                // 25秒后移除元素
+                setTimeout(() => {
+                    if (formula.parentNode) {
+                        formula.parentNode.removeChild(formula);
+                    }
+                }, 25000);
+            }
+            
+            // 初始创建一些公式
+            for (let i = 0; i < 8; i++) {
+                setTimeout(() => {
+                    addFormula();
+                }, i * 2000);
+            }
+            
+            // 定期添加新公式
+            setInterval(addFormula, 4000);
+        }
+
+        // 创建章节列表
+        function createChapterList() {
+            const chapterGrid = document.getElementById('chapterGrid');
+            
+            chapters.forEach((chapter, index) => {
+                const li = document.createElement('li');
+                li.className = `chapter-card fade-in delay-${Math.floor(index / 6) + 2}`;
+                li.onclick = () => goToChapter(index + 1);
+                
+                const difficultyColor = difficultyColors[chapter.difficulty];
+                
+                li.innerHTML = `
+                    <div class="chapter-icon">${chapter.icon}</div>
+                    <div class="chapter-header">
+                        <div class="chapter-number"></div>
+                        <div class="chapter-title">${chapter.title}</div>
+                    </div>
+                    <div class="chapter-description">${chapter.description}</div>
+                    <div class="chapter-footer">
+                        <span class="topics-count">${chapter.topics} 个知识点</span>
+                        <span class="difficulty-badge" style="background-color: ${difficultyColor};">
+                            ${chapter.difficulty}
+                        </span>
+                    </div>
+                `;
+                
+                chapterGrid.appendChild(li);
+            });
+        }
+
+        // 跳转到章节
+        function goToChapter(chapterNum) {
+            const chapterStr = chapterNum.toString().padStart(2, '0');
+            window.location.href = `chp${chapterStr}/index.html`;
+        }
+
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            createChapterList();
+            
+            // 延迟启动浮动公式，确保MathJax已加载
+            setTimeout(() => {
+                createFloatingFormulas();
+            }, 1000);
+        });
+
+        // MathJax配置
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+</body>
+</html>
