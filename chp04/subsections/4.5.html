@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="alternate icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTUiIGZpbGw9IiMzNDk4ZGIiIHN0cm9rZT0iIzJjM2U1MCIgc3Ryb2tlLXdpZHRoPSIyIi8+PGcgZmlsbD0id2hpdGUiIGZvbnQtZmFtaWx5PSJUaW1lcyxzZXJpZiIgZm9udC13ZWlnaHQ9ImJvbGQiPjx0ZXh0IHg9IjE2IiB5PSIxMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxMiI+ZDwvdGV4dD48bGluZSB4MT0iOCIgeTE9IjE2IiB4Mj0iMjQiIHkyPSIxNiIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjUiLz48dGV4dCB4PSIxNiIgeT0iMjUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTAiPmR4PC90ZXh0PjwvZz48L3N2Zz4=">
+    <title>4.5 积分表的使用 - 高等数学复习</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']]
+            },
+            chtml: {
+                fontURL: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2'
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.26.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #e91e63 0%, #ad1457 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 20px;
+            color: #e91e63;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 15px;
+            border-radius: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .back-link:hover {
+            color: #ad1457;
+            transform: translateX(-5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+        
+        .back-link::before {
+            content: '←';
+            margin-right: 8px;
+            font-size: 1.2em;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #ad1457 0%, #880e4f 100%);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            margin: 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            font-weight: 300;
+        }
+        
+        .subtitle {
+            font-size: 1.1em;
+            margin-top: 10px;
+            opacity: 0.9;
+        }
+        
+        .content-section {
+            background: white;
+            margin: 25px 0;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .content-section:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .section-header {
+            padding: 20px 30px;
+            background: linear-gradient(45deg, #ad1457, #880e4f);
+            color: white;
+        }
+        
+        .section-header h2 {
+            margin: 0;
+            font-size: 1.6em;
+            font-weight: 400;
+        }
+        
+        .section-content {
+            padding: 30px;
+        }
+        
+        .definition {
+            background: linear-gradient(135deg, #fce4ec, #f8bbd9);
+            border-left: 5px solid #e91e63;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(233, 30, 99, 0.1);
+        }
+        
+        .definition h4 {
+            margin: 0 0 15px 0;
+            color: #e91e63;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .theorem {
+            background: linear-gradient(135deg, #e8f5e8, #c8e6c9);
+            border-left: 5px solid #4caf50;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(76, 175, 80, 0.1);
+        }
+        
+        .theorem h4 {
+            margin: 0 0 15px 0;
+            color: #4caf50;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .example {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-left: 5px solid #2196f3;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(33, 150, 243, 0.1);
+        }
+        
+        .example h4 {
+            margin: 0 0 15px 0;
+            color: #2196f3;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .practice-problem {
+            background: linear-gradient(135deg, #fce4ec, #f8bbd9);
+            border-left: 5px solid #c2185b;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(194, 24, 91, 0.1);
+        }
+        
+        .practice-problem h4 {
+            margin: 0 0 15px 0;
+            color: #c2185b;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .difficulty {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: 500;
+            margin-left: 10px;
+        }
+        
+        .difficulty.medium {
+            background: #e91e63;
+            color: white;
+        }
+        
+        .difficulty.hard {
+            background: #f44336;
+            color: white;
+        }
+        
+        .difficulty.very-hard {
+            background: #ad1457;
+            color: white;
+        }
+        
+        .solution {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px dashed #bdc3c7;
+        }
+        
+        .solution-header {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 40px;
+            padding: 20px 0;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 25px;
+            background: linear-gradient(45deg, #ad1457, #880e4f);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 15px rgba(173, 20, 87, 0.3);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(173, 20, 87, 0.4);
+        }
+        
+        .btn.prev::before {
+            content: '←';
+            margin-right: 8px;
+            font-size: 1.1em;
+        }
+        
+        .btn.next::after {
+            content: '→';
+            margin-left: 8px;
+            font-size: 1.1em;
+        }
+        
+        footer {
+            text-align: center;
+            color: white;
+            padding: 30px 0;
+            opacity: 0.9;
+            margin-top: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        footer p {
+            text-align: center;
+            margin: 0;
+        }
+        
+        .math-expression {
+            text-align: center;
+            margin: 15px 0;
+            font-size: 1.1em;
+        }
+        
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        .highlight {
+            background: linear-gradient(135deg, #fce4ec, #f8bbd9);
+            padding: 15px;
+            border-left: 4px solid #e91e63;
+            border-radius: 0 8px 8px 0;
+            margin: 15px 0;
+        }
+        
+        .memory-tip {
+            background: linear-gradient(135deg, #e8f5e8, #c8e6c9);
+            border-left: 4px solid #4caf50;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            position: relative;
+        }
+        
+        .memory-tip::before {
+            content: '💡';
+            position: absolute;
+            top: 15px;
+            left: -15px;
+            background: #4caf50;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+        
+        .memory-tip h5 {
+            color: #4caf50;
+            margin: 0 0 10px 0;
+            font-size: 1.1em;
+        }
+        
+        .formula-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .formula-card {
+            background: linear-gradient(135deg, #fce4ec, #f8bbd9);
+            border: 2px solid #e91e63;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 3px 15px rgba(233, 30, 99, 0.2);
+            transition: all 0.3s ease;
+            opacity: 1;
+            transform: scale(1);
+            display: block;
+            visibility: visible;
+        }
+        
+        .formula-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(233, 30, 99, 0.3);
+        }
+        
+        .formula-card h5 {
+            color: #e91e63;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+        
+        .formula-category {
+            background: linear-gradient(135deg, #f3e5f5, #e1bee7);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        .category-header {
+            text-align: center;
+            color: #e91e63;
+            font-size: 1.3em;
+            font-weight: 600;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e91e63;
+        }
+        
+        .strategy-cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .strategy-card {
+            background: linear-gradient(135deg, #fce4ec, #f8bbd9);
+            border: 1px solid #e91e63;
+            border-radius: 8px;
+            padding: 15px;
+            font-size: 0.95em;
+        }
+        
+        .strategy-card h6 {
+            color: #e91e63;
+            margin-bottom: 10px;
+            font-size: 1em;
+            font-weight: 600;
+        }
+
+        /* AI提示方块样式 */
+        .ai-warning {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            border: 2px solid #e0e0e0;
+        }
+        
+        .ai-warning:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            border-color: #ff4444;
+        }
+        
+        .ai-warning::before {
+            content: '!';
+            color: #e74c3c;
+            font-size: 20px;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+        }
+        
+        .ai-warning-tooltip {
+            position: absolute;
+            top: 50px;
+            left: 0;
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 16px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            line-height: 1.5;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1001;
+            width: 250px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .ai-warning-tooltip::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: 20px;
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid rgba(0, 0, 0, 0.9);
+        }
+        
+        .ai-warning:hover .ai-warning-tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        @media (max-width: 768px) {
+            .formula-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .strategy-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .ai-warning {
+                width: 35px;
+                height: 35px;
+                top: 15px;
+                left: 15px;
+            }
+            
+            .ai-warning::before {
+                font-size: 18px;
+            }
+            
+            .ai-warning-tooltip {
+                width: 280px;
+                font-size: 13px;
+                padding: 14px 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- AI内容提示 -->
+    <div class="ai-warning">
+        <div class="ai-warning-tooltip">
+            页面内容由AI生成，请谨慎对待。<br>如发现错误，欢迎反馈。
+        </div>
+    </div>
+    
+    <div class="container">
+        <a href="../index.html" class="back-link">返回章节概览</a>
+        
+        <header>
+            <h1>4.5 积分表的使用</h1>
+            <div class="subtitle">Use of Integration Tables</div>
+        </header>
+        
+        <div class="content-section">
+            <div class="section-header">
+                <h2>4.5.1 积分表的基本概念</h2>
+            </div>
+            <div class="section-content">
+                <div class="definition">
+                    <h4>积分表的定义与作用</h4>
+                    <p>积分表是将常用函数的不定积分公式按照一定规律系统化整理的工具表。它可以帮助我们：</p>
+                    <ul>
+                        <li><strong>快速查找</strong>：直接查找复杂函数的积分公式</li>
+                        <li><strong>标准化处理</strong>：将被积函数转化为表中的标准形式</li>
+                        <li><strong>提高效率</strong>：避免复杂的推导过程</li>
+                        <li><strong>验证结果</strong>：检验自己计算的积分结果</li>
+                    </ul>
+                </div>
+                
+                <div class="memory-tip">
+                    <h5>使用积分表的基本策略</h5>
+                    <p><strong>观察与匹配</strong>：仔细观察被积函数的形式，找到与积分表中公式最相似的模式</p>
+                    <p><strong>变量替换</strong>：通过适当的变量替换，将被积函数转化为表中的标准形式</p>
+                    <p><strong>组合使用</strong>：复杂积分可能需要多个公式的组合使用</p>
+                    <p><strong>熟记常用</strong>：对于最常用的积分公式，建议熟记于心</p>
+                </div>
+                
+                <div class="strategy-cards">
+                    <div class="strategy-card">
+                        <h6>1. 识别函数类型</h6>
+                        <p>首先判断被积函数属于哪一类：三角函数、指数函数、对数函数、有理函数、无理函数等</p>
+                    </div>
+                    
+                    <div class="strategy-card">
+                        <h6>2. 标准化处理</h6>
+                        <p>通过代数变换、三角恒等式等方法，将函数转化为表中的标准形式</p>
+                    </div>
+                    
+                    <div class="strategy-card">
+                        <h6>3. 参数对应</h6>
+                        <p>确定被积函数中的参数与表中公式参数的对应关系</p>
+                    </div>
+                    
+                    <div class="strategy-card">
+                        <h6>4. 应用公式</h6>
+                        <p>直接应用相应的积分公式，注意常数因子的处理</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-section">
+            <div class="section-header">
+                <h2>4.5.2 常用积分公式分类</h2>
+            </div>
+            <div class="section-content">
+                <div class="formula-category">
+                    <div class="category-header">基本积分公式</div>
+                    <div class="formula-grid">
+                        <div class="formula-card">
+                            <h5>幂函数</h5>
+                            <div class="math-expression">
+                                $$\int x^n dx = \frac{x^{n+1}}{n+1} + C \quad (n \neq -1)$$
+                            </div>
+                            <div class="math-expression">
+                                $$\int \frac{1}{x} dx = \ln|x| + C$$
+                            </div>
+                        </div>
+                        
+                        <div class="formula-card">
+                            <h5>指数函数</h5>
+                            <div class="math-expression">
+                                $$\int e^x dx = e^x + C$$
+                            </div>
+                            <div class="math-expression">
+                                $$\int a^x dx = \frac{a^x}{\ln a} + C$$
+                            </div>
+                        </div>
+                        
+                        <div class="formula-card">
+                            <h5>三角函数</h5>
+                            <div class="math-expression">
+                                $$\int \sin x dx = -\cos x + C$$
+                            </div>
+                            <div class="math-expression">
+                                $$\int \cos x dx = \sin x + C$$
+                            </div>
+                        </div>
+                        
+                        <div class="formula-card">
+                            <h5>反三角函数</h5>
+                            <div class="math-expression">
+                                $$\int \frac{1}{\sqrt{1-x^2}} dx = \arcsin x + C$$
+                            </div>
+                            <div class="math-expression">
+                                $$\int \frac{1}{1+x^2} dx = \arctan x + C$$
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="formula-category">
+                    <div class="category-header">含有 $\sqrt{a^2 \pm x^2}$ 的积分</div>
+                    <div class="formula-grid">
+                        <div class="formula-card">
+                            <h5>$\sqrt{a^2 - x^2}$ 类型</h5>
+                            <div class="math-expression">
+                                $$\int \sqrt{a^2-x^2} dx = \frac{x}{2}\sqrt{a^2-x^2} + \frac{a^2}{2}\arcsin\frac{x}{a} + C$$
+                            </div>
+                            <div class="math-expression">
+                                $$\int \frac{1}{\sqrt{a^2-x^2}} dx = \arcsin\frac{x}{a} + C$$
+                            </div>
+                        </div>
+                        
+                        <div class="formula-card">
+                            <h5>$\sqrt{x^2 + a^2}$ 类型</h5>
+                            <div class="math-expression" style="font-size: 1.0em;">
+                                $$\int \sqrt{x^2+a^2} dx = \frac{x}{2}\sqrt{x^2+a^2} + \frac{a^2}{2}\ln(x+\sqrt{x^2+a^2}) + C$$
+                            </div>
+                            <div class="math-expression">
+                                $$\int \frac{1}{\sqrt{x^2+a^2}} dx = \ln(x+\sqrt{x^2+a^2}) + C$$
+                            </div>
+                        </div>
+                        
+                        <div class="formula-card">
+                            <h5>$\sqrt{x^2 - a^2}$ 类型</h5>
+                            <div class="math-expression" style="font-size: 1.0em;">
+                                $$\int \sqrt{x^2-a^2} dx = \frac{x}{2}\sqrt{x^2-a^2} - \frac{a^2}{2}\ln|x+\sqrt{x^2-a^2}| + C$$
+                            </div>
+                            <div class="math-expression">
+                                $$\int \frac{1}{\sqrt{x^2-a^2}} dx = \ln|x+\sqrt{x^2-a^2}| + C$$
+                            </div>
+                        </div>
+                        
+                        <div class="formula-card">
+                            <h5>分母含根式</h5>
+                            <div class="math-expression">
+                                $$\int \frac{1}{x^2+a^2} dx = \frac{1}{a}\arctan\frac{x}{a} + C$$
+                            </div>
+                            <div class="math-expression">
+                                $$\int \frac{1}{x^2-a^2} dx = \frac{1}{2a}\ln\left|\frac{x-a}{x+a}\right| + C$$
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="formula-category">
+                    <div class="category-header">三角函数积分公式</div>
+                    <div class="formula-grid">
+                        <div class="formula-card">
+                            <h5>基本三角函数</h5>
+                            <div class="math-expression">
+                                $$\int \tan x dx = -\ln|\cos x| + C$$
+                            </div>
+                            <div class="math-expression">
+                                $$\int \cot x dx = \ln|\sin x| + C$$
+                            </div>
+                        </div>
+                        
+                        <div class="formula-card">
+                            <h5>正割与余割</h5>
+                            <div class="math-expression">
+                                $$\int \sec x dx = \ln|\sec x + \tan x| + C$$
+                            </div>
+                            <div class="math-expression">
+                                $$\int \csc x dx = \ln|\csc x - \cot x| + C$$
+                            </div>
+                        </div>
+                        
+                        <div class="formula-card">
+                            <h5>平方形式</h5>
+                            <div class="math-expression">
+                                $$\int \sin^2 x dx = \frac{x}{2} - \frac{\sin 2x}{4} + C$$
+                            </div>
+                            <div class="math-expression">
+                                $$\int \cos^2 x dx = \frac{x}{2} + \frac{\sin 2x}{4} + C$$
+                            </div>
+                        </div>
+                        
+                        <div class="formula-card">
+                            <h5>正割平方</h5>
+                            <div class="math-expression">
+                                $$\int \sec^2 x dx = \tan x + C$$
+                            </div>
+                            <div class="math-expression">
+                                $$\int \csc^2 x dx = -\cot x + C$$
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-section">
+            <div class="section-header">
+                <h2>4.5.3 典型例题</h2>
+            </div>
+            <div class="section-content">
+                <div class="example">
+                    <h4>例题1：根式积分的查表应用</h4>
+                    <p><strong>问题</strong>：计算不定积分 $\int \frac{1}{\sqrt{9-4x^2}} dx$</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解答过程：</div>
+                        <p><strong>第1步：识别函数类型</strong></p>
+                        <p>被积函数形如 $\frac{1}{\sqrt{a^2-u^2}}$，属于含根式的反三角函数积分</p>
+                        
+                        <p><strong>第2步：标准化处理</strong></p>
+                        <div class="math-expression">
+                            $$\sqrt{9-4x^2} = \sqrt{9(1-\frac{4x^2}{9})} = 3\sqrt{1-(\frac{2x}{3})^2}$$
+                        </div>
+                        
+                        <p><strong>第3步：变量替换</strong></p>
+                        <p>令 $u = \frac{2x}{3}$，则 $du = \frac{2}{3}dx$，$dx = \frac{3}{2}du$</p>
+                        
+                        <p><strong>第4步：应用积分表公式</strong></p>
+                        <div class="math-expression">
+                            $$\int \frac{1}{\sqrt{9-4x^2}} dx = \int \frac{1}{3\sqrt{1-u^2}} \cdot \frac{3}{2} du = \frac{1}{2}\int \frac{1}{\sqrt{1-u^2}} du$$
+                        </div>
+                        
+                        <p><strong>第5步：查表得结果</strong></p>
+                        <div class="math-expression">
+                            $$= \frac{1}{2}\arcsin u + C = \frac{1}{2}\arcsin\frac{2x}{3} + C$$
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <h4>例题2：三角函数积分的查表应用</h4>
+                    <p><strong>问题</strong>：计算不定积分 $\int \sin^3 x \cos^2 x dx$</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解答过程：</div>
+                        <p><strong>第1步：函数分析</strong></p>
+                        <p>被积函数是三角函数的乘积，需要利用三角恒等式处理</p>
+                        
+                        <p><strong>第2步：分离因子</strong></p>
+                        <div class="math-expression">
+                            $$\sin^3 x \cos^2 x = \sin^2 x \cos^2 x \cdot \sin x = (1-\cos^2 x)\cos^2 x \cdot \sin x$$
+                        </div>
+                        
+                        <p><strong>第3步：展开并重组</strong></p>
+                        <div class="math-expression">
+                            $$= (\cos^2 x - \cos^4 x) \sin x = \cos^2 x \sin x - \cos^4 x \sin x$$
+                        </div>
+                        
+                        <p><strong>第4步：换元积分</strong></p>
+                        <p>令 $u = \cos x$，则 $du = -\sin x dx$</p>
+                        <div class="math-expression">
+                            $$\int \sin^3 x \cos^2 x dx = \int (u^2 - u^4)(-du) = \int (u^4 - u^2) du$$
+                        </div>
+                        
+                        <p><strong>第5步：应用幂函数积分公式</strong></p>
+                        <div class="math-expression">
+                            $$= \frac{u^5}{5} - \frac{u^3}{3} + C = \frac{\cos^5 x}{5} - \frac{\cos^3 x}{3} + C$$
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <h4>例题3：复合函数的查表应用</h4>
+                    <p><strong>问题</strong>：计算不定积分 $\int \frac{e^x}{\sqrt{e^{2x}+1}} dx$</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解答过程：</div>
+                        <p><strong>第1步：观察函数结构</strong></p>
+                        <p>被积函数形如 $\frac{f'(x)}{\sqrt{f^2(x)+a^2}}$，其中 $f(x) = e^x$</p>
+                        
+                        <p><strong>第2步：变量替换</strong></p>
+                        <p>令 $u = e^x$，则 $du = e^x dx$</p>
+                        
+                        <p><strong>第3步：转化为标准形式</strong></p>
+                        <div class="math-expression">
+                            $$\int \frac{e^x}{\sqrt{e^{2x}+1}} dx = \int \frac{1}{\sqrt{u^2+1}} du$$
+                        </div>
+                        
+                        <p><strong>第4步：查表应用公式</strong></p>
+                        <p>根据积分表，$\int \frac{1}{\sqrt{u^2+a^2}} du = \ln(u+\sqrt{u^2+a^2}) + C$</p>
+                        
+                        <p><strong>第5步：回代得结果</strong></p>
+                        <div class="math-expression">
+                            $$= \ln(u+\sqrt{u^2+1}) + C = \ln(e^x+\sqrt{e^{2x}+1}) + C$$
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-section">
+            <div class="section-header">
+                <h2>4.5.4 查表技巧与注意事项</h2>
+            </div>
+            <div class="section-content">
+                <div class="memory-tip">
+                    <h5>高效查表的技巧</h5>
+                    <p><strong>分类记忆</strong>：按照函数类型（三角、指数、对数、根式等）分类记忆常用公式</p>
+                    <p><strong>模式识别</strong>：训练快速识别被积函数的模式和结构的能力</p>
+                    <p><strong>变换灵活</strong>：熟练掌握各种函数变换技巧，如三角恒等式、代数变换等</p>
+                    <p><strong>验证习惯</strong>：养成对积分结果求导验证的好习惯</p>
+                </div>
+                
+                <div class="strategy-cards">
+                    <div class="strategy-card">
+                        <h6>常见错误1：参数对应错误</h6>
+                        <p>使用公式时要仔细对应参数，特别注意系数和符号</p>
+                        <div class="math-expression" style="font-size: 0.9em;">
+                            $$\int \frac{1}{\sqrt{4-9x^2}} dx \neq \frac{1}{2}\arcsin\frac{x}{2}$$
+                        </div>
+                    </div>
+                    
+                    <div class="strategy-card">
+                        <h6>常见错误2：忽略定义域</h6>
+                        <p>使用含根式或对数的公式时，要注意函数的定义域</p>
+                        <div class="math-expression" style="font-size: 0.9em;">
+                            $$\ln|x| \text{ 而不是 } \ln x$$
+                        </div>
+                    </div>
+                    
+                    <div class="strategy-card">
+                        <h6>常见错误3：遗漏常数项</h6>
+                        <p>不定积分的结果一定要加上积分常数 $C$</p>
+                        <div class="math-expression" style="font-size: 0.9em;">
+                            $$\int f(x)dx = F(x) + C$$
+                        </div>
+                    </div>
+                    
+                    <div class="strategy-card">
+                        <h6>常见错误4：公式记忆错误</h6>
+                        <p>要准确记忆基本公式，特别是符号和系数</p>
+                        <div class="math-expression" style="font-size: 0.9em;">
+                            $$\int \sec x dx = \ln|\sec x + \tan x| + C$$
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="theorem">
+                    <h4>积分表使用的一般流程</h4>
+                    <ol>
+                        <li><strong>预处理</strong>：观察被积函数，确定其基本类型和特征</li>
+                        <li><strong>标准化</strong>：通过适当的变换，将函数转化为标准形式</li>
+                        <li><strong>查找匹配</strong>：在积分表中找到对应的公式</li>
+                        <li><strong>参数对应</strong>：确定被积函数与表中公式的参数对应关系</li>
+                        <li><strong>应用公式</strong>：直接应用公式得到积分结果</li>
+                        <li><strong>结果验证</strong>：对积分结果求导，验证是否正确</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-section">
+            <div class="section-header">
+                <h2>4.5.5 练习题</h2>
+            </div>
+            <div class="section-content">
+                <div class="practice-problem">
+                    <h4>习题1：基础查表应用 <span class="difficulty medium">中等</span></h4>
+                    <p>计算下列不定积分：</p>
+                    <div class="math-expression">
+                        $$\int \frac{1}{\sqrt{16-25x^2}} dx$$
+                    </div>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解答：</div>
+                        <p><strong>第1步：标准化处理</strong></p>
+                        <div class="math-expression">
+                            $$\sqrt{16-25x^2} = 4\sqrt{1-\frac{25x^2}{16}} = 4\sqrt{1-(\frac{5x}{4})^2}$$
+                        </div>
+                        
+                        <p><strong>第2步：变量替换</strong></p>
+                        <p>令 $u = \frac{5x}{4}$，则 $du = \frac{5}{4}dx$，$dx = \frac{4}{5}du$</p>
+                        
+                        <p><strong>第3步：应用公式</strong></p>
+                        <div class="math-expression">
+                            $$\int \frac{1}{\sqrt{16-25x^2}} dx = \int \frac{1}{4\sqrt{1-u^2}} \cdot \frac{4}{5} du = \frac{1}{5}\int \frac{1}{\sqrt{1-u^2}} du$$
+                        </div>
+                        
+                        <p><strong>第4步：查表得结果</strong></p>
+                        <div class="math-expression">
+                            $$= \frac{1}{5}\arcsin u + C = \frac{1}{5}\arcsin\frac{5x}{4} + C$$
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="practice-problem">
+                    <h4>习题2：复合函数积分 <span class="difficulty hard">较难</span></h4>
+                    <p>计算下列不定积分：</p>
+                    <div class="math-expression">
+                        $$\int \frac{\ln x}{x\sqrt{(\ln x)^2+4}} dx$$
+                    </div>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解答：</div>
+                        <p><strong>第1步：变量替换</strong></p>
+                        <p>令 $u = \ln x$，则 $du = \frac{1}{x}dx$</p>
+                        
+                        <p><strong>第2步：转化积分</strong></p>
+                        <div class="math-expression">
+                            $$\int \frac{\ln x}{x\sqrt{(\ln x)^2+4}} dx = \int \frac{u}{\sqrt{u^2+4}} du$$
+                        </div>
+                        
+                        <p><strong>第3步：识别公式类型</strong></p>
+                        <p>这是形如 $\int \frac{u}{\sqrt{u^2+a^2}} du$ 的积分，其中 $a = 2$</p>
+                        
+                        <p><strong>第4步：应用公式</strong></p>
+                        <p>由于 $\frac{d}{du}(u^2+a^2) = 2u$，所以：</p>
+                        <div class="math-expression">
+                            $$\int \frac{u}{\sqrt{u^2+4}} du = \frac{1}{2}\int \frac{2u}{\sqrt{u^2+4}} du = \frac{1}{2} \cdot 2\sqrt{u^2+4} + C$$
+                        </div>
+                        
+                        <p><strong>第5步：回代</strong></p>
+                        <div class="math-expression">
+                            $$= \sqrt{u^2+4} + C = \sqrt{(\ln x)^2+4} + C$$
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="practice-problem">
+                    <h4>习题3：综合应用 <span class="difficulty very-hard">很难</span></h4>
+                    <p>计算下列不定积分：</p>
+                    <div class="math-expression">
+                        $$\int \frac{\sqrt{e^x-1}}{e^x} dx$$
+                    </div>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解答：</div>
+                        <p><strong>第1步：变量替换</strong></p>
+                        <p>令 $u = \sqrt{e^x-1}$，则 $u^2 = e^x-1$，$e^x = u^2+1$</p>
+                        <p>$x = \ln(u^2+1)$，$dx = \frac{2u}{u^2+1}du$</p>
+                        
+                        <p><strong>第2步：转化积分</strong></p>
+                        <div class="math-expression">
+                            $$\int \frac{\sqrt{e^x-1}}{e^x} dx = \int \frac{u}{u^2+1} \cdot \frac{2u}{u^2+1} du = \int \frac{2u^2}{(u^2+1)^2} du$$
+                        </div>
+                        
+                        <p><strong>第3步：部分分式分解</strong></p>
+                        <div class="math-expression">
+                            $$\frac{2u^2}{(u^2+1)^2} = \frac{2(u^2+1-1)}{(u^2+1)^2} = \frac{2}{u^2+1} - \frac{2}{(u^2+1)^2}$$
+                        </div>
+                        
+                        <p><strong>第4步：分别积分</strong></p>
+                        <div class="math-expression">
+                            $$\int \frac{2}{u^2+1} du = 2\arctan u$$
+                        </div>
+                        <p>对于 $\int \frac{1}{(u^2+1)^2} du$，使用递推公式或三角代换：</p>
+                        <div class="math-expression">
+                            $$\int \frac{1}{(u^2+1)^2} du = \frac{1}{2}\left(\frac{u}{u^2+1} + \arctan u\right)$$
+                        </div>
+                        
+                        <p><strong>第5步：合并结果</strong></p>
+                        <div class="math-expression">
+                            $$= 2\arctan u - 2 \cdot \frac{1}{2}\left(\frac{u}{u^2+1} + \arctan u\right) + C$$
+                        </div>
+                        <div class="math-expression">
+                            $$= \arctan u - \frac{u}{u^2+1} + C$$
+                        </div>
+                        
+                        <p><strong>第6步：回代</strong></p>
+                        <div class="math-expression">
+                            $$= \arctan\sqrt{e^x-1} - \frac{\sqrt{e^x-1}}{e^x} + C$$
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="nav-buttons">
+            <a href="4.4.html" class="btn prev">上一节：4.4 有理函数的积分</a>
+            <a href="../index.html" class="btn next">返回章节概览</a>
+        </div>
+        
+        <footer>
+            <p>&copy; 2025 高等数学复习系统 - 积分表的使用</p>
+        </footer>
+    </div>
+
+    <script>
+        // 页面加载动画
+        function initializeAnimations() {
+            const contentSections = document.querySelectorAll('.content-section');
+            if (contentSections.length > 0 && typeof gsap !== 'undefined') {
+                gsap.from('.content-section', {
+                    duration: 0.8,
+                    y: 30,
+                    opacity: 0,
+                    stagger: 0.2,
+                    ease: "power2.out"
+                });
+            }
+            
+            const formulaCards = document.querySelectorAll('.formula-card');
+            if (formulaCards.length > 0 && typeof gsap !== 'undefined') {
+                gsap.from('.formula-card', {
+                    duration: 0.6,
+                    scale: 0.8,
+                    opacity: 0,
+                    stagger: 0.1,
+                    delay: 0.5,
+                    ease: "back.out(1.7)"
+                });
+            } else {
+                // 如果GSAP未加载，确保卡片可见
+                document.querySelectorAll('.formula-card').forEach(card => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'scale(1)';
+                });
+            }
+        }
+        
+        // 滚动触发动画
+        function setupScrollAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && typeof gsap !== 'undefined') {
+                        gsap.from(entry.target.querySelectorAll('.definition, .theorem, .example, .practice-problem'), {
+                            duration: 0.6,
+                            y: 20,
+                            opacity: 0,
+                            stagger: 0.1,
+                            ease: "power2.out"
+                        });
+                    }
+                });
+            }, { threshold: 0.2 });
+            
+            document.querySelectorAll('.content-section').forEach(section => {
+                observer.observe(section);
+            });
+        }
+        
+        // 卡片交互效果
+        function setupCardInteraction() {
+            const cards = document.querySelectorAll('.formula-card, .strategy-card');
+            cards.forEach(card => {
+                card.addEventListener('click', function() {
+                    if (typeof gsap !== 'undefined') {
+                        gsap.to(this, {
+                            duration: 0.2,
+                            scale: 1.05,
+                            yoyo: true,
+                            repeat: 1,
+                            ease: "power2.inOut"
+                        });
+                    }
+                });
+                
+                card.style.cursor = 'pointer';
+                card.title = '点击强调此内容';
+            });
+        }
+        
+        // 公式高亮效果
+        function setupFormulaHighlight() {
+            // 移除了公式的鼠标悬停动画效果
+        }
+        
+        // 分类展示动画
+        function setupCategoryAnimation() {
+            const categories = document.querySelectorAll('.formula-category');
+            categories.forEach((category, index) => {
+                category.addEventListener('mouseenter', function() {
+                    if (typeof gsap !== 'undefined') {
+                        gsap.to(this.querySelectorAll('.formula-card'), {
+                            duration: 0.3,
+                            y: -5,
+                            boxShadow: '0 8px 25px rgba(233, 30, 99, 0.3)',
+                            stagger: 0.05,
+                            ease: "power2.out"
+                        });
+                    }
+                });
+                
+                category.addEventListener('mouseleave', function() {
+                    if (typeof gsap !== 'undefined') {
+                        gsap.to(this.querySelectorAll('.formula-card'), {
+                            duration: 0.3,
+                            y: 0,
+                            boxShadow: '0 3px 15px rgba(233, 30, 99, 0.2)',
+                            stagger: 0.05,
+                            ease: "power2.out"
+                        });
+                    }
+                });
+            });
+        }
+        
+        // 页面加载时初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 确保所有卡片立即可见
+            document.querySelectorAll('.formula-card').forEach(card => {
+                card.style.opacity = '1';
+                card.style.transform = 'scale(1)';
+                card.style.visibility = 'visible';
+            });
+            
+            // 延迟执行动画以确保DOM完全加载
+            setTimeout(() => {
+                initializeAnimations();
+                setupScrollAnimations();
+                setupCardInteraction();
+                setupCategoryAnimation();
+            }, 100);
+            
+            // MathJax 加载完成后的回调
+            if (typeof MathJax !== 'undefined') {
+                MathJax.startup.promise.then(() => {
+                    console.log('MathJax loaded successfully');
+                    // MathJax加载后再次确保卡片可见
+                    document.querySelectorAll('.formula-card').forEach(card => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'scale(1)';
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>

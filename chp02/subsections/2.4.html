@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="alternate icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTUiIGZpbGw9IiMzNDk4ZGIiIHN0cm9rZT0iIzJjM2U1MCIgc3Ryb2tlLXdpZHRoPSIyIi8+PGcgZmlsbD0id2hpdGUiIGZvbnQtZmFtaWx5PSJUaW1lcyxzZXJpZiIgZm9udC13ZWlnaHQ9ImJvbGQiPjx0ZXh0IHg9IjE2IiB5PSIxMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxMiI+ZDwvdGV4dD48bGluZSB4MT0iOCIgeTE9IjE2IiB4Mj0iMjQiIHkyPSIxNiIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjUiLz48dGV4dCB4PSIxNiIgeT0iMjUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTAiPmR4PC90ZXh0PjwvZz48L3N2Zz4=">
+    <title>2.4 隐函数、由参数方程确定的函数的导数、相关变化率 - 高等数学复习</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']]
+            },
+            chtml: {
+                fontURL: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2'
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.26.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 20px;
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 15px;
+            border-radius: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .back-link:hover {
+            color: #2980b9;
+            transform: translateX(-5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+        
+        .back-link::before {
+            content: '←';
+            margin-right: 8px;
+            font-size: 1.2em;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            margin: 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            font-weight: 300;
+        }
+        
+        .subtitle {
+            font-size: 1.1em;
+            margin-top: 10px;
+            opacity: 0.9;
+        }
+        
+        .content-section {
+            background: white;
+            margin: 25px 0;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .content-section:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .section-header {
+            padding: 20px 30px;
+            background: linear-gradient(45deg, #27ae60, #229954);
+            color: white;
+        }
+        
+        .section-header h2 {
+            margin: 0;
+            font-size: 1.6em;
+            font-weight: 400;
+        }
+        
+        .section-content {
+            padding: 30px;
+        }
+        
+        .definition {
+            background: linear-gradient(135deg, #e8f5e8, #d5ead5);
+            border-left: 5px solid #27ae60;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(39, 174, 96, 0.1);
+        }
+        
+        .definition h4 {
+            margin: 0 0 15px 0;
+            color: #27ae60;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .theorem {
+            background: linear-gradient(135deg, #fef9e7, #fcf4dd);
+            border-left: 5px solid #f39c12;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(243, 156, 18, 0.1);
+        }
+        
+        .theorem h4 {
+            margin: 0 0 15px 0;
+            color: #f39c12;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .example {
+            background: linear-gradient(135deg, #ebf3fd, #d6e9f8);
+            border-left: 5px solid #3498db;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(52, 152, 219, 0.1);
+        }
+        
+        .example h4 {
+            margin: 0 0 15px 0;
+            color: #3498db;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .practice-problem {
+            background: linear-gradient(135deg, #fdf2e9, #fbeee0);
+            border-left: 5px solid #e67e22;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(230, 126, 34, 0.1);
+        }
+        
+        .practice-problem h4 {
+            margin: 0 0 15px 0;
+            color: #e67e22;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .difficulty {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: 500;
+            margin-left: 10px;
+        }
+        
+        .difficulty.medium {
+            background: #f39c12;
+            color: white;
+        }
+        
+        .difficulty.hard {
+            background: #e74c3c;
+            color: white;
+        }
+        
+        .difficulty.very-hard {
+            background: #8e44ad;
+            color: white;
+        }
+        
+        .solution {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px dashed #bdc3c7;
+        }
+        
+        .solution-header {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+        
+        .viz-container {
+            width: 100%;
+            height: 400px;
+            margin: 25px 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .interactive-demo {
+            width: 100%;
+            height: auto;
+            min-height: 480px;
+            margin: 25px 0;
+            background: #f8f9fa;
+            border-radius: 10px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            padding: 20px;
+            position: relative;
+        }
+        
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .controls label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #27ae60;
+        }
+        
+        .controls input, .controls select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 40px;
+            padding: 20px 0;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 25px;
+            background: linear-gradient(45deg, #27ae60, #229954);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 15px rgba(39, 174, 96, 0.3);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(39, 174, 96, 0.4);
+        }
+        
+        .btn.prev::before {
+            content: '←';
+            margin-right: 8px;
+            font-size: 1.1em;
+        }
+        
+        .btn.next::after {
+            content: '→';
+            margin-left: 8px;
+            font-size: 1.1em;
+        }
+        
+        footer {
+            text-align: center;
+            color: white;
+            padding: 30px 0;
+            opacity: 0.9;
+            margin-top: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        footer p {
+            text-align: center;
+            margin: 0;
+        }
+        
+        .math-expression {
+            text-align: center;
+            margin: 15px 0;
+            font-size: 1.1em;
+        }
+        
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        .highlight {
+            background: linear-gradient(135deg, #d5f4e6, #bfebd1);
+            padding: 15px;
+            border-left: 4px solid #27ae60;
+            border-radius: 0 8px 8px 0;
+            margin: 15px 0;
+        }
+        
+        .implicit-function-demo {
+            width: 100%;
+            height: 400px;
+            margin: 25px 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .parametric-demo {
+            width: 100%;
+            height: 400px;
+            margin: 25px 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .related-rates-demo {
+            width: 100%;
+            height: 400px;
+            margin: 25px 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .method-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .method-card {
+            background: linear-gradient(135deg, #a8e6cf 0%, #dcedc8 50%, #f1f8e9 100%);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.2);
+            text-align: center;
+        }
+        
+        .method-card h5 {
+            color: #27ae60;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+        
+        .method-card .formula {
+            font-size: 1.2em;
+            margin: 15px 0;
+            color: #2c3e50;
+        }
+
+        /* AI提示方块样式 */
+        .ai-warning {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            border: 2px solid #e0e0e0;
+        }
+        
+        .ai-warning:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            border-color: #ff4444;
+        }
+        
+        .ai-warning::before {
+            content: '!';
+            color: #e74c3c;
+            font-size: 20px;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+        }
+        
+        .ai-warning-tooltip {
+            position: absolute;
+            top: 50px;
+            left: 0;
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 16px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            line-height: 1.5;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1001;
+            width: 250px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .ai-warning-tooltip::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: 20px;
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid rgba(0, 0, 0, 0.9);
+        }
+        
+        .ai-warning:hover .ai-warning-tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .section-content {
+                padding: 20px;
+            }
+            
+            .definition, .theorem, .example, .practice-problem {
+                padding: 20px;
+            }
+            
+            .nav-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .controls {
+                grid-template-columns: 1fr;
+            }
+
+            .ai-warning {
+                width: 35px;
+                height: 35px;
+                top: 15px;
+                left: 15px;
+            }
+            
+            .ai-warning::before {
+                font-size: 18px;
+            }
+            
+            .ai-warning-tooltip {
+                width: 280px;
+                font-size: 13px;
+                padding: 14px 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- AI内容提示 -->
+    <div class="ai-warning">
+        <div class="ai-warning-tooltip">
+            页面内容由AI生成，请谨慎对待。<br>如发现错误，欢迎反馈。
+        </div>
+    </div>
+    
+    <div class="container">
+        <a href="../index.html" class="back-link">返回章节概览</a>
+        
+        <header>
+            <h1>2.4 隐函数、由参数方程确定的函数的导数、相关变化率</h1>
+            <div class="subtitle">Derivatives of Implicit Functions, Parametric Functions, and Related Rates</div>
+        </header>
+        
+        <!-- 2.4.1 隐函数的导数 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>2.4.1 隐函数的导数</h2>
+            </div>
+            <div class="section-content">
+                <div class="definition">
+                    <h4>隐函数的定义</h4>
+                    <p>由方程 $F(x, y) = 0$ 确定的函数 $y = f(x)$ 称为<strong>隐函数</strong>。</p>
+                    <p>与之相对的是<strong>显函数</strong>，即形如 $y = f(x)$ 的函数。</p>
+                    
+                    <div class="highlight">
+                        <p><strong>注意：</strong>隐函数未必能解出显式表达式，但在一定条件下仍可求出其导数。</p>
+                    </div>
+                </div>
+                
+                <div class="theorem">
+                    <h4>隐函数求导法则</h4>
+                    <p>设由方程 $F(x, y) = 0$ 确定隐函数 $y = y(x)$，且 $F(x, y)$ 具有连续的偏导数，则：</p>
+                    
+                    <div class="math-expression">
+                        $$\frac{dy}{dx} = -\frac{F_x}{F_y} = -\frac{\partial F/\partial x}{\partial F/\partial y}$$
+                    </div>
+                    
+                    <p><strong>隐函数求导的步骤：</strong></p>
+                    <ol>
+                        <li>方程两边同时对 $x$ 求导</li>
+                        <li>把 $y$ 看作 $x$ 的函数，应用复合函数求导法则</li>
+                        <li>解出 $\frac{dy}{dx}$</li>
+                    </ol>
+                </div>
+                
+                <div class="implicit-function-demo" id="implicit-function-plot"></div>
+                
+                <div class="example">
+                    <h4>例1：圆的隐函数求导</h4>
+                    <p>求由方程 $x^2 + y^2 = 25$ 确定的隐函数 $y = y(x)$ 的导数。</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解法一（隐函数求导）：</div>
+                        <p>方程两边同时对 $x$ 求导：</p>
+                        $$\frac{d}{dx}(x^2 + y^2) = \frac{d}{dx}(25)$$
+                        $$2x + 2y\frac{dy}{dx} = 0$$
+                        <p>解得：$\frac{dy}{dx} = -\frac{x}{y}$</p>
+                        
+                        <div class="solution-header">解法二（公式法）：</div>
+                        <p>设 $F(x, y) = x^2 + y^2 - 25$，则：</p>
+                        <p>$F_x = 2x$，$F_y = 2y$</p>
+                        <p>因此：$\frac{dy}{dx} = -\frac{F_x}{F_y} = -\frac{2x}{2y} = -\frac{x}{y}$</p>
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <h4>例2：复杂隐函数求导</h4>
+                    <p>求由方程 $e^{xy} + x^2y - y = 1$ 确定的隐函数 $y = y(x)$ 的导数。</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解：</div>
+                        <p>方程两边同时对 $x$ 求导：</p>
+                        $$\frac{d}{dx}(e^{xy}) + \frac{d}{dx}(x^2y) - \frac{d}{dx}(y) = \frac{d}{dx}(1)$$
+                        
+                        <p>应用复合函数和乘积法则：</p>
+                        $$e^{xy} \cdot \frac{d}{dx}(xy) + 2xy + x^2\frac{dy}{dx} - \frac{dy}{dx} = 0$$
+                        $$e^{xy}(y + x\frac{dy}{dx}) + 2xy + x^2\frac{dy}{dx} - \frac{dy}{dx} = 0$$
+                        
+                        <p>整理得：</p>
+                        $$ye^{xy} + 2xy + (xe^{xy} + x^2 - 1)\frac{dy}{dx} = 0$$
+                        
+                        <p>解得：$\frac{dy}{dx} = -\frac{ye^{xy} + 2xy}{xe^{xy} + x^2 - 1}$</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 2.4.2 由参数方程确定的函数的导数 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>2.4.2 由参数方程确定的函数的导数</h2>
+            </div>
+            <div class="section-content">
+                <div class="definition">
+                    <h4>参数方程</h4>
+                    <p>设函数由参数方程给出：</p>
+                    <div class="math-expression">
+                        $$\begin{cases}
+                        x = \varphi(t) \\
+                        y = \psi(t)
+                        \end{cases}$$
+                    </div>
+                    <p>其中 $t$ 为参数，$\varphi(t)$、$\psi(t)$ 在某区间内具有导数。</p>
+                </div>
+                
+                <div class="theorem">
+                    <h4>参数方程求导公式</h4>
+                    <p>若 $x = \varphi(t)$，$y = \psi(t)$，且 $\varphi'(t) \neq 0$，则：</p>
+                    
+                    <div class="math-expression">
+                        $$\frac{dy}{dx} = \frac{dy/dt}{dx/dt} = \frac{\psi'(t)}{\varphi'(t)}$$
+                    </div>
+                    
+                    <p><strong>二阶导数：</strong></p>
+                    <div class="math-expression">
+                        $$\frac{d^2y}{dx^2} = \frac{d}{dx}\left(\frac{dy}{dx}\right) = \frac{d}{dt}\left(\frac{dy}{dx}\right) \cdot \frac{dt}{dx} = \frac{d}{dt}\left(\frac{\psi'(t)}{\varphi'(t)}\right) \cdot \frac{1}{\varphi'(t)}$$
+                    </div>
+                </div>
+                
+                <div class="parametric-demo" id="parametric-plot"></div>
+                
+                <div class="example">
+                    <h4>例1：椭圆的参数方程求导</h4>
+                    <p>设椭圆的参数方程为 $x = a\cos t$，$y = b\sin t$，求 $\frac{dy}{dx}$ 和 $\frac{d^2y}{dx^2}$。</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解：</div>
+                        <p><strong>一阶导数：</strong></p>
+                        <p>$\frac{dx}{dt} = -a\sin t$，$\frac{dy}{dt} = b\cos t$</p>
+                        <p>因此：$\frac{dy}{dx} = \frac{dy/dt}{dx/dt} = \frac{b\cos t}{-a\sin t} = -\frac{b}{a}\cot t$</p>
+                        
+                        <p><strong>二阶导数：</strong></p>
+                        $$\frac{d^2y}{dx^2} = \frac{d}{dt}\left(-\frac{b}{a}\cot t\right) \cdot \frac{1}{-a\sin t}$$
+                        $$= \frac{b}{a} \csc^2 t \cdot \frac{1}{-a\sin t} = -\frac{b}{a^2\sin^3 t}$$
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <h4>例2：摆线的参数方程求导</h4>
+                    <p>摆线的参数方程为 $x = r(t - \sin t)$，$y = r(1 - \cos t)$，求在 $t = \frac{\pi}{2}$ 处的切线斜率。</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解：</div>
+                        <p>$\frac{dx}{dt} = r(1 - \cos t)$，$\frac{dy}{dt} = r\sin t$</p>
+                        <p>因此：$\frac{dy}{dx} = \frac{r\sin t}{r(1 - \cos t)} = \frac{\sin t}{1 - \cos t}$</p>
+                        
+                        <p>当 $t = \frac{\pi}{2}$ 时：</p>
+                        $$\frac{dy}{dx}\bigg|_{t=\pi/2} = \frac{\sin(\pi/2)}{1 - \cos(\pi/2)} = \frac{1}{1 - 0} = 1$$
+                        
+                        <p>所以在 $t = \frac{\pi}{2}$ 处的切线斜率为 $1$。</p>
+                    </div>
+                </div>
+                
+                <div class="method-cards">
+                    <div class="method-card">
+                        <h5>一阶导数</h5>
+                        <div class="formula">$$\frac{dy}{dx} = \frac{y'(t)}{x'(t)}$$</div>
+                        <p>参数方程导数的基本公式</p>
+                    </div>
+                    <div class="method-card">
+                        <h5>二阶导数</h5>
+                        <div class="formula">$$\frac{d^2y}{dx^2} = \frac{d}{dt}\left(\frac{dy}{dx}\right) \cdot \frac{1}{x'(t)}$$</div>
+                        <p>注意链式法则的应用</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 2.4.3 相关变化率 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>2.4.3 相关变化率</h2>
+            </div>
+            <div class="section-content">
+                <div class="definition">
+                    <h4>相关变化率的概念</h4>
+                    <p>当两个或多个变量都随时间变化，且它们之间存在某种函数关系时，各变量对时间的变化率（导数）之间的关系称为<strong>相关变化率</strong>。</p>
+                    
+                    <div class="highlight">
+                        <p><strong>解题步骤：</strong></p>
+                        <ol>
+                            <li>建立变量间的函数关系式</li>
+                            <li>对时间 $t$ 求导，得到变化率之间的关系</li>
+                            <li>代入已知条件求解未知的变化率</li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="related-rates-demo" id="related-rates-plot"></div>
+                
+                <div class="example">
+                    <h4>例1：气球膨胀问题</h4>
+                    <p>一个球形气球在充气过程中，半径以 $0.2$ 米/分钟的速度增长。当半径为 $3$ 米时，求气球体积的变化率。</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解：</div>
+                        <p><strong>步骤1：建立关系式</strong></p>
+                        <p>球的体积公式：$V = \frac{4}{3}\pi r^3$</p>
+                        
+                        <p><strong>步骤2：对时间求导</strong></p>
+                        $$\frac{dV}{dt} = \frac{dV}{dr} \cdot \frac{dr}{dt} = 4\pi r^2 \cdot \frac{dr}{dt}$$
+                        
+                        <p><strong>步骤3：代入已知条件</strong></p>
+                        <p>已知：$\frac{dr}{dt} = 0.2$ 米/分钟，$r = 3$ 米</p>
+                        $$\frac{dV}{dt} = 4\pi \cdot 3^2 \cdot 0.2 = 4\pi \cdot 9 \cdot 0.2 = 7.2\pi \text{ 立方米/分钟}$$
+                        
+                        <p>所以气球体积的变化率为 $7.2\pi$ 立方米/分钟。</p>
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <h4>例2：梯子下滑问题</h4>
+                    <p>长为 $5$ 米的梯子靠在墙上，梯子底端以 $2$ 米/秒的速度离开墙根。当梯子底端离墙根 $3$ 米时，求梯子顶端下滑的速度。</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解：</div>
+                        <p><strong>步骤1：建立关系式</strong></p>
+                        <p>设梯子底端离墙距离为 $x$，顶端离地高度为 $y$，梯子长度为 $l = 5$</p>
+                        <p>由勾股定理：$x^2 + y^2 = l^2 = 25$</p>
+                        
+                        <p><strong>步骤2：对时间求导</strong></p>
+                        $$2x\frac{dx}{dt} + 2y\frac{dy}{dt} = 0$$
+                        $$\frac{dy}{dt} = -\frac{x}{y} \cdot \frac{dx}{dt}$$
+                        
+                        <p><strong>步骤3：代入已知条件</strong></p>
+                        <p>当 $x = 3$ 时，$y = \sqrt{25 - 9} = 4$</p>
+                        <p>已知：$\frac{dx}{dt} = 2$ 米/秒</p>
+                        $$\frac{dy}{dt} = -\frac{3}{4} \cdot 2 = -1.5 \text{ 米/秒}$$
+                        
+                        <p>负号表示梯子顶端在下滑，速度为 $1.5$ 米/秒。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 习题练习 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>习题练习</h2>
+            </div>
+            <div class="section-content">
+                <div class="practice-problem">
+                    <h4>习题1：隐函数求导 <span class="difficulty medium">中等难度</span></h4>
+                    <p>求由方程 $x^3 + y^3 = 6xy$ 确定的隐函数 $y = y(x)$ 的导数 $\frac{dy}{dx}$。</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解：</div>
+                        <p>方程两边同时对 $x$ 求导：</p>
+                        $$3x^2 + 3y^2\frac{dy}{dx} = 6y + 6x\frac{dy}{dx}$$
+                        
+                        <p>整理得：</p>
+                        $$3y^2\frac{dy}{dx} - 6x\frac{dy}{dx} = 6y - 3x^2$$
+                        $$(3y^2 - 6x)\frac{dy}{dx} = 6y - 3x^2$$
+                        
+                        <p>因此：</p>
+                        $$\frac{dy}{dx} = \frac{6y - 3x^2}{3y^2 - 6x} = \frac{2y - x^2}{y^2 - 2x}$$
+                    </div>
+                </div>
+                
+                <div class="practice-problem">
+                    <h4>习题2：参数方程求导 <span class="difficulty hard">较难</span></h4>
+                    <p>已知参数方程 $x = t^2 + 2t$，$y = t^3 - t$，求 $\frac{d^2y}{dx^2}$。</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解：</div>
+                        <p><strong>步骤1：求一阶导数</strong></p>
+                        <p>$\frac{dx}{dt} = 2t + 2$，$\frac{dy}{dt} = 3t^2 - 1$</p>
+                        <p>$\frac{dy}{dx} = \frac{3t^2 - 1}{2t + 2} = \frac{3t^2 - 1}{2(t + 1)}$</p>
+                        
+                        <p><strong>步骤2：求二阶导数</strong></p>
+                        $$\frac{d^2y}{dx^2} = \frac{d}{dt}\left(\frac{dy}{dx}\right) \cdot \frac{dt}{dx}$$
+                        
+                        <p>先求 $\frac{d}{dt}\left(\frac{3t^2 - 1}{2(t + 1)}\right)$：</p>
+                        $$= \frac{6t \cdot 2(t+1) - (3t^2-1) \cdot 2}{4(t+1)^2} = \frac{12t(t+1) - 2(3t^2-1)}{4(t+1)^2}$$
+                        $$= \frac{12t^2 + 12t - 6t^2 + 2}{4(t+1)^2} = \frac{6t^2 + 12t + 2}{4(t+1)^2}$$
+                        
+                        <p>因为 $\frac{dt}{dx} = \frac{1}{2t + 2}$，所以：</p>
+                        $$\frac{d^2y}{dx^2} = \frac{6t^2 + 12t + 2}{4(t+1)^2} \cdot \frac{1}{2(t+1)} = \frac{6t^2 + 12t + 2}{8(t+1)^3}$$
+                    </div>
+                </div>
+                
+                <div class="practice-problem">
+                    <h4>习题3：相关变化率应用 <span class="difficulty very-hard">很难</span></h4>
+                    <p>一个圆锥形容器，顶点向下，顶角为 $60°$，以 $3$ 立方厘米/秒的速度向其中注水。当水深为 $6$ 厘米时，求水面上升的速度。</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解：</div>
+                        <p><strong>步骤1：建立几何关系</strong></p>
+                        <p>设水的深度为 $h$，水面半径为 $r$</p>
+                        <p>由于顶角为 $60°$，所以 $\tan 30° = \frac{r}{h} = \frac{1}{\sqrt{3}}$</p>
+                        <p>因此：$r = \frac{h}{\sqrt{3}}$</p>
+                        
+                        <p><strong>步骤2：建立体积关系</strong></p>
+                        <p>圆锥体积：$V = \frac{1}{3}\pi r^2 h = \frac{1}{3}\pi \left(\frac{h}{\sqrt{3}}\right)^2 h = \frac{\pi h^3}{9}$</p>
+                        
+                        <p><strong>步骤3：对时间求导</strong></p>
+                        $$\frac{dV}{dt} = \frac{dV}{dh} \cdot \frac{dh}{dt} = \frac{\pi h^2}{3} \cdot \frac{dh}{dt}$$
+                        
+                        <p><strong>步骤4：代入已知条件</strong></p>
+                        <p>已知：$\frac{dV}{dt} = 3$ 立方厘米/秒，$h = 6$ 厘米</p>
+                        $$3 = \frac{\pi \cdot 36}{3} \cdot \frac{dh}{dt} = 12\pi \cdot \frac{dh}{dt}$$
+                        
+                        <p>解得：$\frac{dh}{dt} = \frac{3}{12\pi} = \frac{1}{4\pi}$ 厘米/秒</p>
+                        
+                        <p>所以水面上升的速度为 $\frac{1}{4\pi}$ 厘米/秒。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 导航按钮 -->
+        <div class="nav-buttons">
+            <a href="2.3.html" class="btn prev">2.3 高阶导数</a>
+            <a href="2.5.html" class="btn next">2.5 函数的微分</a>
+        </div>
+        
+        <footer>
+            <p>© 2025 高等数学复习系统 - 导数与微分</p>
+        </footer>
+    </div>
+
+    <script>
+        // 隐函数可视化演示
+        function createImplicitFunctionDemo() {
+            const data = [];
+            const xRange = [-6, 6];
+            const yRange = [-6, 6];
+            const step = 0.1;
+            
+            // 生成圆 x^2 + y^2 = 25 的数据点
+            for (let x = xRange[0]; x <= xRange[1]; x += step) {
+                const y1 = Math.sqrt(25 - x*x);
+                const y2 = -Math.sqrt(25 - x*x);
+                
+                if (!isNaN(y1) && Math.abs(x) <= 5) {
+                    data.push({x: x, y: y1});
+                    data.push({x: x, y: y2});
+                }
+            }
+            
+            // 在特定点绘制切线
+            const x0 = 3;
+            const y0 = 4; // 从 x^2 + y^2 = 25 得到
+            const slope = -x0/y0; // dy/dx = -x/y
+            
+            const tangentX = [x0-1, x0+1];
+            const tangentY = [y0 + slope*(tangentX[0]-x0), y0 + slope*(tangentX[1]-x0)];
+            
+            const trace1 = {
+                x: data.map(d => d.x),
+                y: data.map(d => d.y),
+                type: 'scatter',
+                mode: 'markers',
+                name: 'x² + y² = 25',
+                marker: { color: '#27ae60', size: 2 }
+            };
+            
+            const trace2 = {
+                x: [x0],
+                y: [y0],
+                type: 'scatter',
+                mode: 'markers',
+                name: `切点 (${x0}, ${y0})`,
+                marker: { color: '#e74c3c', size: 8 }
+            };
+            
+            const trace3 = {
+                x: tangentX,
+                y: tangentY,
+                type: 'scatter',
+                mode: 'lines',
+                name: `切线 (斜率 = ${slope.toFixed(2)})`,
+                line: { color: '#f39c12', width: 3 }
+            };
+            
+            const layout = {
+                title: '隐函数 x² + y² = 25 及其在点 (3, 4) 处的切线',
+                xaxis: { 
+                    title: 'x',
+                    range: [-7, 7],
+                    zeroline: true,
+                    gridcolor: 'rgba(128,128,128,0.2)'
+                },
+                yaxis: { 
+                    title: 'y',
+                    range: [-7, 7],
+                    zeroline: true,
+                    gridcolor: 'rgba(128,128,128,0.2)'
+                },
+                showlegend: true,
+                plot_bgcolor: 'rgba(0,0,0,0)',
+                paper_bgcolor: 'rgba(0,0,0,0)',
+                font: { family: 'Microsoft YaHei', size: 12 }
+            };
+            
+            Plotly.newPlot('implicit-function-plot', [trace1, trace2, trace3], layout, {responsive: true});
+        }
+        
+        // 参数方程可视化演示
+        function createParametricDemo() {
+            const t = [];
+            const x = [];
+            const y = [];
+            
+            // 椭圆参数方程: x = 4cos(t), y = 3sin(t)
+            for (let i = 0; i <= 200; i++) {
+                const ti = 2 * Math.PI * i / 200;
+                t.push(ti);
+                x.push(4 * Math.cos(ti));
+                y.push(3 * Math.sin(ti));
+            }
+            
+            // 在特定点绘制切线
+            const t0 = Math.PI/4;
+            const x0 = 4 * Math.cos(t0);
+            const y0 = 3 * Math.sin(t0);
+            
+            // dy/dx = (dy/dt)/(dx/dt) = (3cos(t))/(-4sin(t)) = -3cot(t)/4
+            const slope = -3 * Math.cos(t0) / (4 * Math.sin(t0));
+            
+            const tangentX = [x0-2, x0+2];
+            const tangentY = [y0 + slope*(tangentX[0]-x0), y0 + slope*(tangentX[1]-x0)];
+            
+            const trace1 = {
+                x: x,
+                y: y,
+                type: 'scatter',
+                mode: 'lines',
+                name: '椭圆: x=4cos(t), y=3sin(t)',
+                line: { color: '#27ae60', width: 3 }
+            };
+            
+            const trace2 = {
+                x: [x0],
+                y: [y0],
+                type: 'scatter',
+                mode: 'markers',
+                name: `t = π/4 处的点`,
+                marker: { color: '#e74c3c', size: 10 }
+            };
+            
+            const trace3 = {
+                x: tangentX,
+                y: tangentY,
+                type: 'scatter',
+                mode: 'lines',
+                name: `切线 (斜率 = ${slope.toFixed(2)})`,
+                line: { color: '#f39c12', width: 3, dash: 'dash' }
+            };
+            
+            const layout = {
+                title: '参数方程确定的椭圆及其切线',
+                xaxis: { 
+                    title: 'x',
+                    range: [-5, 5],
+                    zeroline: true,
+                    gridcolor: 'rgba(128,128,128,0.2)'
+                },
+                yaxis: { 
+                    title: 'y',
+                    range: [-4, 4],
+                    zeroline: true,
+                    gridcolor: 'rgba(128,128,128,0.2)'
+                },
+                showlegend: true,
+                plot_bgcolor: 'rgba(0,0,0,0)',
+                paper_bgcolor: 'rgba(0,0,0,0)',
+                font: { family: 'Microsoft YaHei', size: 12 },
+                aspectratio: { x: 1, y: 1 }
+            };
+            
+            Plotly.newPlot('parametric-plot', [trace1, trace2, trace3], layout, {responsive: true});
+        }
+        
+        // 相关变化率演示 - 气球膨胀
+        function createRelatedRatesDemo() {
+            const time = [];
+            const radius = [];
+            const volume = [];
+            const volumeRate = [];
+            
+            // 半径以 0.2 m/min 的速度增长
+            const rRate = 0.2;
+            
+            for (let t = 0; t <= 30; t += 0.5) {
+                const r = 2 + rRate * t; // 初始半径 2m
+                const V = (4/3) * Math.PI * Math.pow(r, 3);
+                const dVdt = 4 * Math.PI * Math.pow(r, 2) * rRate;
+                
+                time.push(t);
+                radius.push(r);
+                volume.push(V);
+                volumeRate.push(dVdt);
+            }
+            
+            // 特殊点：r = 3 时
+            const specialTime = (3 - 2) / rRate; // 5 分钟
+            const specialVolumeRate = 4 * Math.PI * 9 * 0.2;
+            
+            const trace1 = {
+                x: time,
+                y: radius,
+                type: 'scatter',
+                mode: 'lines',
+                name: '半径 r(t)',
+                line: { color: '#3498db', width: 3 },
+                yaxis: 'y'
+            };
+            
+            const trace2 = {
+                x: time,
+                y: volumeRate,
+                type: 'scatter',
+                mode: 'lines',
+                name: '体积变化率 dV/dt',
+                line: { color: '#e74c3c', width: 3 },
+                yaxis: 'y2'
+            };
+            
+            const trace3 = {
+                x: [specialTime],
+                y: [specialVolumeRate],
+                type: 'scatter',
+                mode: 'markers',
+                name: `r=3m 时，dV/dt=${specialVolumeRate.toFixed(1)}`,
+                marker: { color: '#f39c12', size: 10 },
+                yaxis: 'y2'
+            };
+            
+            const layout = {
+                title: '球形气球膨胀的相关变化率',
+                xaxis: { 
+                    title: '时间 t (分钟)',
+                    gridcolor: 'rgba(128,128,128,0.2)'
+                },
+                yaxis: {
+                    title: '半径 r (米)',
+                    side: 'left',
+                    color: '#3498db'
+                },
+                yaxis2: {
+                    title: '体积变化率 dV/dt (立方米/分钟)',
+                    overlaying: 'y',
+                    side: 'right',
+                    color: '#e74c3c'
+                },
+                showlegend: true,
+                plot_bgcolor: 'rgba(0,0,0,0)',
+                paper_bgcolor: 'rgba(0,0,0,0)',
+                font: { family: 'Microsoft YaHei', size: 12 }
+            };
+            
+            Plotly.newPlot('related-rates-plot', [trace1, trace2, trace3], layout, {responsive: true});
+        }
+        
+        // 页面加载动画
+        function initializeAnimations() {
+            const contentSections = document.querySelectorAll('.content-section');
+            if (contentSections.length > 0 && typeof gsap !== 'undefined') {
+                gsap.from('.content-section', {
+                    duration: 0.8,
+                    y: 30,
+                    opacity: 0,
+                    stagger: 0.2,
+                    ease: "power2.out"
+                });
+            }
+            
+            const methodCards = document.querySelectorAll('.method-card');
+            if (methodCards.length > 0 && typeof gsap !== 'undefined') {
+                gsap.from('.method-card', {
+                    duration: 0.6,
+                    scale: 0.8,
+                    opacity: 0,
+                    stagger: 0.1,
+                    delay: 1,
+                    ease: "back.out(1.7)"
+                });
+            }
+        }
+        
+        // 滚动触发动画
+        function setupScrollAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && typeof gsap !== 'undefined') {
+                        gsap.from(entry.target.querySelectorAll('.definition, .theorem, .example'), {
+                            duration: 0.6,
+                            y: 20,
+                            opacity: 0,
+                            stagger: 0.1,
+                            ease: "power2.out"
+                        });
+                    }
+                });
+            }, { threshold: 0.2 });
+            
+            document.querySelectorAll('.content-section').forEach(section => {
+                observer.observe(section);
+            });
+        }
+        
+        // 页面加载时初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 延迟执行以确保DOM完全加载
+            setTimeout(() => {
+                createImplicitFunctionDemo();
+                createParametricDemo();
+                createRelatedRatesDemo();
+                initializeAnimations();
+                setupScrollAnimations();
+            }, 500);
+            
+            // MathJax 加载完成后的回调
+            if (typeof MathJax !== 'undefined') {
+                MathJax.startup.promise.then(() => {
+                    console.log('MathJax loaded successfully');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

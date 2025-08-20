@@ -1,0 +1,1348 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="alternate icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTUiIGZpbGw9IiMzNDk4ZGIiIHN0cm9rZT0iIzJjM2U1MCIgc3Ryb2tlLXdpZHRoPSIyIi8+PGcgZmlsbD0id2hpdGUiIGZvbnQtZmFtaWx5PSJUaW1lcyxzZXJpZiIgZm9udC13ZWlnaHQ9ImJvbGQiPjx0ZXh0IHg9IjE2IiB5PSIxMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxMiI+ZDwvdGV4dD48bGluZSB4MT0iOCIgeTE9IjE2IiB4Mj0iMjQiIHkyPSIxNiIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjUiLz48dGV4dCB4PSIxNiIgeT0iMjUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTAiPmR4PC90ZXh0PjwvZz48L3N2Zz4=">
+    <title>8.2 向量的数量积、向量积、混合积 - 高等数学复习</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']]
+            },
+            chtml: {
+                fontURL: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2'
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+    <script src="https://unpkg.com/three@0.158.0/build/three.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 20px;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 15px;
+            border-radius: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .back-link:hover {
+            color: #764ba2;
+            transform: translateX(-5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+        
+        .back-link::before {
+            content: '←';
+            margin-right: 8px;
+            font-size: 1.2em;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            margin: 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            font-weight: 300;
+        }
+        
+        .subtitle {
+            font-size: 1.1em;
+            margin-top: 10px;
+            opacity: 0.9;
+        }
+        
+        .content-section {
+            background: white;
+            margin: 25px 0;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .content-section:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .section-header {
+            padding: 20px 30px;
+            background: linear-gradient(45deg, #6a11cb, #2575fc);
+            color: white;
+        }
+        
+        .section-header h2 {
+            margin: 0;
+            font-size: 1.6em;
+            font-weight: 400;
+        }
+        
+        .section-content {
+            padding: 30px;
+        }
+        
+        .definition {
+            background: linear-gradient(135deg, #f0f4ff, #e6efff);
+            border-left: 5px solid #6a11cb;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(106, 17, 203, 0.1);
+        }
+        
+        .definition h4 {
+            margin: 0 0 15px 0;
+            color: #6a11cb;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .theorem {
+            background: linear-gradient(135deg, #f4f1ff, #ece6ff);
+            border-left: 5px solid #9c27b0;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(156, 39, 176, 0.1);
+        }
+        
+        .theorem h4 {
+            margin: 0 0 15px 0;
+            color: #9c27b0;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .example {
+            background: linear-gradient(135deg, #e8f4fd, #d4edfa);
+            border-left: 5px solid #2575fc;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(37, 117, 252, 0.1);
+        }
+        
+        .example h4 {
+            margin: 0 0 15px 0;
+            color: #2575fc;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .practice-problem {
+            background: linear-gradient(135deg, #f0f6ff, #e2ecff);
+            border-left: 5px solid #3f51b5;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(63, 81, 181, 0.1);
+        }
+        
+        .practice-problem h4 {
+            margin: 0 0 15px 0;
+            color: #3f51b5;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .difficulty {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: 500;
+            margin-left: 10px;
+        }
+        
+        .difficulty.medium {
+            background: #ff9800;
+            color: white;
+        }
+        
+        .difficulty.hard {
+            background: #e91e63;
+            color: white;
+        }
+        
+        .difficulty.very-hard {
+            background: #673ab7;
+            color: white;
+        }
+        
+        .solution {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px dashed #bdc3c7;
+        }
+        
+        .solution-header {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+        
+        .viz-container {
+            width: 100%;
+            height: 400px;
+            margin: 25px 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .interactive-demo {
+            width: 100%;
+            height: auto;
+            min-height: 480px;
+            margin: 25px 0;
+            background: #f8f9fa;
+            border-radius: 10px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            padding: 20px;
+            position: relative;
+        }
+        
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .controls label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #6a11cb;
+        }
+        
+        .controls input, .controls select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 40px;
+            padding: 20px 0;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 25px;
+            background: linear-gradient(45deg, #6a11cb, #2575fc);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 15px rgba(106, 17, 203, 0.3);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(106, 17, 203, 0.4);
+        }
+        
+        .btn.prev::before {
+            content: '←';
+            margin-right: 8px;
+            font-size: 1.1em;
+        }
+        
+        .btn.next::after {
+            content: '→';
+            margin-left: 8px;
+            font-size: 1.1em;
+        }
+        
+        footer {
+            text-align: center;
+            color: white;
+            padding: 30px 0;
+            opacity: 0.9;
+            margin-top: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        footer p {
+            text-align: center;
+            margin: 0;
+        }
+        
+        .math-expression {
+            text-align: center;
+            margin: 15px 0;
+            font-size: 1.1em;
+        }
+        
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        .highlight {
+            background: linear-gradient(135deg, #e8f2ff, #d1e7ff);
+            padding: 15px;
+            border-left: 4px solid #2196f3;
+            border-radius: 0 8px 8px 0;
+            margin: 15px 0;
+        }
+        
+        .vector-operations {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .operation-card {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 50%, #90caf9 100%);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(33, 150, 243, 0.3);
+            text-align: center;
+        }
+        
+        .operation-card h5 {
+            color: #1565c0;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+        
+        .operation-card .formula {
+            font-size: 1.1em;
+            margin: 15px 0;
+            color: #2c3e50;
+        }
+        
+        .vector-visualization {
+            width: 100%;
+            height: 500px;
+            margin: 25px 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .three-js-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        
+        .vector-info {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            font-size: 0.9em;
+            z-index: 10;
+        }
+        
+        .vector-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .vector-input {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .vector-input h6 {
+            color: #6a11cb;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        .vector-component {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+        
+        .vector-component input {
+            width: 80px;
+            padding: 5px 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        /* AI提示方块样式 */
+        .ai-warning {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            border: 2px solid #e0e0e0;
+        }
+        
+        .ai-warning:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            border-color: #ff4444;
+        }
+        
+        .ai-warning::before {
+            content: '!';
+            color: #e74c3c;
+            font-size: 20px;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+        }
+        
+        .ai-warning-tooltip {
+            position: absolute;
+            top: 50px;
+            left: 0;
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 16px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            line-height: 1.5;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1001;
+            width: 250px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .ai-warning-tooltip::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: 20px;
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid rgba(0, 0, 0, 0.9);
+        }
+        
+        .ai-warning:hover .ai-warning-tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .section-content {
+                padding: 20px;
+            }
+            
+            .definition, .theorem, .example, .practice-problem {
+                padding: 20px;
+            }
+            
+            .nav-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .controls {
+                grid-template-columns: 1fr;
+            }
+            
+            .vector-controls {
+                grid-template-columns: 1fr;
+            }
+
+            .ai-warning {
+                width: 35px;
+                height: 35px;
+                top: 15px;
+                left: 15px;
+            }
+            
+            .ai-warning::before {
+                font-size: 18px;
+            }
+            
+            .ai-warning-tooltip {
+                width: 280px;
+                font-size: 13px;
+                padding: 14px 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- AI内容提示 -->
+    <div class="ai-warning">
+        <div class="ai-warning-tooltip">
+            页面内容由AI生成，请谨慎对待。<br>如发现错误，欢迎反馈。
+        </div>
+    </div>
+    
+    <div class="container">
+        <a href="../index.html" class="back-link">返回章节概览</a>
+        
+        <header>
+            <h1>8.2 向量的数量积、向量积、混合积</h1>
+            <div class="subtitle">Dot Product, Cross Product, and Scalar Triple Product of Vectors</div>
+        </header>
+        
+        <!-- 8.2.1 向量的数量积 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>8.2.1 向量的数量积（点积）</h2>
+            </div>
+            <div class="section-content">
+                <div class="definition">
+                    <h4>数量积的定义</h4>
+                    <p>设有两个向量 $\vec{a}$ 和 $\vec{b}$，它们的<strong>数量积</strong>（或称<strong>点积</strong>、<strong>内积</strong>）定义为：</p>
+                    <div class="math-expression">
+                        $$\vec{a} \cdot \vec{b} = |\vec{a}||\vec{b}|\cos\theta$$
+                    </div>
+                    <p>其中 $\theta$ 是两向量之间的夹角（$0 \leq \theta \leq \pi$）。</p>
+                    
+                    <div class="highlight">
+                        <p><strong>坐标表示：</strong>设 $\vec{a} = (a_1, a_2, a_3)$，$\vec{b} = (b_1, b_2, b_3)$，则：</p>
+                        $$\vec{a} \cdot \vec{b} = a_1b_1 + a_2b_2 + a_3b_3$$
+                    </div>
+                </div>
+                
+                <div class="theorem">
+                    <h4>数量积的性质</h4>
+                    <ol>
+                        <li><strong>交换律：</strong>$\vec{a} \cdot \vec{b} = \vec{b} \cdot \vec{a}$</li>
+                        <li><strong>数乘结合律：</strong>$(\lambda\vec{a}) \cdot \vec{b} = \lambda(\vec{a} \cdot \vec{b})$</li>
+                        <li><strong>分配律：</strong>$\vec{a} \cdot (\vec{b} + \vec{c}) = \vec{a} \cdot \vec{b} + \vec{a} \cdot \vec{c}$</li>
+                        <li><strong>非负性：</strong>$\vec{a} \cdot \vec{a} = |\vec{a}|^2 \geq 0$</li>
+                        <li><strong>垂直判定：</strong>$\vec{a} \perp \vec{b} \Leftrightarrow \vec{a} \cdot \vec{b} = 0$</li>
+                    </ol>
+                </div>
+                
+                <div class="example">
+                    <h4>例1：数量积的计算</h4>
+                    <p>已知 $\vec{a} = (2, -1, 3)$，$\vec{b} = (1, 4, -2)$，求 $\vec{a} \cdot \vec{b}$ 和两向量的夹角。</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解：</div>
+                        <p><strong>步骤1：计算数量积</strong></p>
+                        $$\vec{a} \cdot \vec{b} = 2 \times 1 + (-1) \times 4 + 3 \times (-2) = 2 - 4 - 6 = -8$$
+                        
+                        <p><strong>步骤2：计算向量的模</strong></p>
+                        $$|\vec{a}| = \sqrt{2^2 + (-1)^2 + 3^2} = \sqrt{4 + 1 + 9} = \sqrt{14}$$
+                        $$|\vec{b}| = \sqrt{1^2 + 4^2 + (-2)^2} = \sqrt{1 + 16 + 4} = \sqrt{21}$$
+                        
+                        <p><strong>步骤3：计算夹角</strong></p>
+                        $$\cos\theta = \frac{\vec{a} \cdot \vec{b}}{|\vec{a}||\vec{b}|} = \frac{-8}{\sqrt{14} \cdot \sqrt{21}} = \frac{-8}{\sqrt{294}}$$
+                        $$\theta = \arccos\left(\frac{-8}{\sqrt{294}}\right) \approx 117.1°$$
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <h4>例2：向量的投影</h4>
+                    <p>已知 $\vec{a} = (3, 4, 0)$，$\vec{b} = (1, 1, 2)$，求向量 $\vec{a}$ 在向量 $\vec{b}$ 上的投影。</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解：</div>
+                        <p>向量 $\vec{a}$ 在向量 $\vec{b}$ 上的投影为：</p>
+                        $$\text{proj}_{\vec{b}}\vec{a} = \frac{\vec{a} \cdot \vec{b}}{|\vec{b}|^2}\vec{b}$$
+                        
+                        <p>首先计算：</p>
+                        $$\vec{a} \cdot \vec{b} = 3 \times 1 + 4 \times 1 + 0 \times 2 = 7$$
+                        $$|\vec{b}|^2 = 1^2 + 1^2 + 2^2 = 6$$
+                        
+                        <p>因此：</p>
+                        $$\text{proj}_{\vec{b}}\vec{a} = \frac{7}{6}(1, 1, 2) = \left(\frac{7}{6}, \frac{7}{6}, \frac{7}{3}\right)$$
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 8.2.2 向量的向量积 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>8.2.2 向量的向量积（叉积）</h2>
+            </div>
+            <div class="section-content">
+                <div class="definition">
+                    <h4>向量积的定义</h4>
+                    <p>设有两个向量 $\vec{a}$ 和 $\vec{b}$，它们的<strong>向量积</strong>（或称<strong>叉积</strong>、<strong>外积</strong>）定义为：</p>
+                    <div class="math-expression">
+                        $$\vec{a} \times \vec{b} = |\vec{a}||\vec{b}|\sin\theta \cdot \vec{n}$$
+                    </div>
+                    <p>其中 $\theta$ 为两向量的夹角，$\vec{n}$ 是垂直于 $\vec{a}$ 和 $\vec{b}$ 的单位向量，方向由右手法则确定。</p>
+                    
+                    <div class="highlight">
+                        <p><strong>坐标表示：</strong>设 $\vec{a} = (a_1, a_2, a_3)$，$\vec{b} = (b_1, b_2, b_3)$，则：</p>
+                        $$\vec{a} \times \vec{b} = \begin{vmatrix} \vec{i} & \vec{j} & \vec{k} \\ a_1 & a_2 & a_3 \\ b_1 & b_2 & b_3 \end{vmatrix} = (a_2b_3 - a_3b_2, a_3b_1 - a_1b_3, a_1b_2 - a_2b_1)$$
+                    </div>
+                </div>
+                
+                <div class="theorem">
+                    <h4>向量积的性质</h4>
+                    <ol>
+                        <li><strong>反交换律：</strong>$\vec{a} \times \vec{b} = -\vec{b} \times \vec{a}$</li>
+                        <li><strong>数乘结合律：</strong>$(\lambda\vec{a}) \times \vec{b} = \lambda(\vec{a} \times \vec{b})$</li>
+                        <li><strong>分配律：</strong>$\vec{a} \times (\vec{b} + \vec{c}) = \vec{a} \times \vec{b} + \vec{a} \times \vec{c}$</li>
+                        <li><strong>平行判定：</strong>$\vec{a} \parallel \vec{b} \Leftrightarrow \vec{a} \times \vec{b} = \vec{0}$</li>
+                        <li><strong>几何意义：</strong>$|\vec{a} \times \vec{b}|$ 等于以 $\vec{a}$、$\vec{b}$ 为邻边的平行四边形面积</li>
+                    </ol>
+                </div>
+                
+                <div class="example">
+                    <h4>例3：向量积的计算</h4>
+                    <p>已知 $\vec{a} = (2, 1, -1)$，$\vec{b} = (1, -2, 3)$，求 $\vec{a} \times \vec{b}$。</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解：</div>
+                        <p>使用行列式计算：</p>
+                        $$\vec{a} \times \vec{b} = \begin{vmatrix} \vec{i} & \vec{j} & \vec{k} \\ 2 & 1 & -1 \\ 1 & -2 & 3 \end{vmatrix}$$
+                        
+                        <p>展开得：</p>
+                        $$= \vec{i}\begin{vmatrix} 1 & -1 \\ -2 & 3 \end{vmatrix} - \vec{j}\begin{vmatrix} 2 & -1 \\ 1 & 3 \end{vmatrix} + \vec{k}\begin{vmatrix} 2 & 1 \\ 1 & -2 \end{vmatrix}$$
+                        
+                        $$= \vec{i}(1 \times 3 - (-1) \times (-2)) - \vec{j}(2 \times 3 - (-1) \times 1) + \vec{k}(2 \times (-2) - 1 \times 1)$$
+                        
+                        $$= \vec{i}(3 - 2) - \vec{j}(6 + 1) + \vec{k}(-4 - 1) = \vec{i} - 7\vec{j} - 5\vec{k}$$
+                        
+                        <p>因此：$\vec{a} \times \vec{b} = (1, -7, -5)$</p>
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <h4>例4：平行四边形面积</h4>
+                    <p>求由向量 $\vec{a} = (3, 1, 2)$ 和 $\vec{b} = (1, 4, -1)$ 构成的平行四边形的面积。</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解：</div>
+                        <p>平行四边形的面积等于 $|\vec{a} \times \vec{b}|$。</p>
+                        
+                        <p>首先计算 $\vec{a} \times \vec{b}$：</p>
+                        $$\vec{a} \times \vec{b} = \begin{vmatrix} \vec{i} & \vec{j} & \vec{k} \\ 3 & 1 & 2 \\ 1 & 4 & -1 \end{vmatrix}$$
+                        $$= (1 \times (-1) - 2 \times 4, 2 \times 1 - 3 \times (-1), 3 \times 4 - 1 \times 1)$$
+                        $$= (-9, 5, 11)$$
+                        
+                        <p>因此面积为：</p>
+                        $$S = |\vec{a} \times \vec{b}| = \sqrt{(-9)^2 + 5^2 + 11^2} = \sqrt{81 + 25 + 121} = \sqrt{227}$$
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 8.2.3 向量的混合积 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>8.2.3 向量的混合积</h2>
+            </div>
+            <div class="section-content">
+                <div class="definition">
+                    <h4>混合积的定义</h4>
+                    <p>三个向量 $\vec{a}$、$\vec{b}$、$\vec{c}$ 的<strong>混合积</strong>定义为：</p>
+                    <div class="math-expression">
+                        $$[\vec{a}, \vec{b}, \vec{c}] = \vec{a} \cdot (\vec{b} \times \vec{c})$$
+                    </div>
+                    
+                    <div class="highlight">
+                        <p><strong>坐标表示：</strong>设 $\vec{a} = (a_1, a_2, a_3)$，$\vec{b} = (b_1, b_2, b_3)$，$\vec{c} = (c_1, c_2, c_3)$，则：</p>
+                        $$[\vec{a}, \vec{b}, \vec{c}] = \begin{vmatrix} a_1 & a_2 & a_3 \\ b_1 & b_2 & b_3 \\ c_1 & c_2 & c_3 \end{vmatrix}$$
+                    </div>
+                </div>
+                
+                <div class="theorem">
+                    <h4>混合积的性质</h4>
+                    <ol>
+                        <li><strong>轮换对称性：</strong>$[\vec{a}, \vec{b}, \vec{c}] = [\vec{b}, \vec{c}, \vec{a}] = [\vec{c}, \vec{a}, \vec{b}]$</li>
+                        <li><strong>反轮换反号：</strong>$[\vec{a}, \vec{b}, \vec{c}] = -[\vec{b}, \vec{a}, \vec{c}]$</li>
+                        <li><strong>几何意义：</strong>$|[\vec{a}, \vec{b}, \vec{c}]|$ 等于以 $\vec{a}$、$\vec{b}$、$\vec{c}$ 为邻边的平行六面体的体积</li>
+                        <li><strong>共面判定：</strong>$\vec{a}$、$\vec{b}$、$\vec{c}$ 共面 $\Leftrightarrow [\vec{a}, \vec{b}, \vec{c}] = 0$</li>
+                    </ol>
+                </div>
+                
+                <div class="example">
+                    <h4>例5：混合积的计算</h4>
+                    <p>已知 $\vec{a} = (1, 2, 3)$，$\vec{b} = (2, 1, 0)$，$\vec{c} = (1, 1, 1)$，求混合积 $[\vec{a}, \vec{b}, \vec{c}]$。</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解：</div>
+                        <p>使用行列式计算：</p>
+                        $$[\vec{a}, \vec{b}, \vec{c}] = \begin{vmatrix} 1 & 2 & 3 \\ 2 & 1 & 0 \\ 1 & 1 & 1 \end{vmatrix}$$
+                        
+                        <p>按第一行展开：</p>
+                        $$= 1 \cdot \begin{vmatrix} 1 & 0 \\ 1 & 1 \end{vmatrix} - 2 \cdot \begin{vmatrix} 2 & 0 \\ 1 & 1 \end{vmatrix} + 3 \cdot \begin{vmatrix} 2 & 1 \\ 1 & 1 \end{vmatrix}$$
+                        
+                        $$= 1 \cdot (1 - 0) - 2 \cdot (2 - 0) + 3 \cdot (2 - 1)$$
+                        $$= 1 - 4 + 3 = 0$$
+                        
+                        <p>因此混合积为 $0$，说明三个向量共面。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 三维向量可视化演示 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>向量运算可视化演示</h2>
+            </div>
+            <div class="section-content">
+                <div class="interactive-demo">
+                    <div class="vector-controls">
+                        <div class="vector-input">
+                            <h6 style="color: #6A11CB;">向量 A</h6>
+                            <div class="vector-component">
+                                <label>x:</label>
+                                <input type="range" id="ax" min="0" max="4" value="3" step="0.1">
+                                <label>y:</label>
+                                <input type="range" id="ay" min="0" max="4" value="2" step="0.1">
+                                <label>z:</label>
+                                <input type="range" id="az" min="0" max="4" value="1" step="0.1">
+                            </div>
+                        </div>
+                        <div class="vector-input">
+                            <h6 style="color: #2575FC;">向量 B</h6>
+                            <div class="vector-component">
+                                <label>x:</label>
+                                <input type="range" id="bx" min="0" max="4" value="1" step="0.1">
+                                <label>y:</label>
+                                <input type="range" id="by" min="0" max="4" value="3" step="0.1">
+                                <label>z:</label>
+                                <input type="range" id="bz" min="0" max="4" value="2" step="0.1">
+                            </div>
+                        </div>
+                        <div class="vector-input">
+                            <h6>显示选项</h6>
+                            <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                                <label><input type="checkbox" id="showDot" checked> 数量积投影</label>
+                                <label><input type="checkbox" id="showCross" checked> 向量积</label>
+                                <label><input type="checkbox" id="showAngle" checked> 夹角</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="vector-visualization">
+                        <div class="three-js-container" id="vector-canvas">
+                            <div id="canvas-loading" style="display: flex; align-items: center; justify-content: center; height: 100%; color: #666;">
+                                <div>正在加载3D可视化...</div>
+                            </div>
+                        </div>
+                        <div class="vector-info" id="vector-info">
+                            <div>向量 A: (3, 2, 1)</div>
+                            <div>向量 B: (1, 3, 2)</div>
+                            <div>数量积: A·B = 11</div>
+                            <div>向量积: A×B = (1, -5, 7)</div>
+                            <div>夹角: 38.9°</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="vector-operations">
+                    <div class="operation-card">
+                        <h5>数量积（点积）</h5>
+                        <div class="formula">$$\vec{a} \cdot \vec{b} = |\vec{a}||\vec{b}|\cos\theta$$</div>
+                        <p>结果是标量，表示投影关系和夹角信息</p>
+                    </div>
+                    <div class="operation-card">
+                        <h5>向量积（叉积）</h5>
+                        <div class="formula">$$\vec{a} \times \vec{b} = |\vec{a}||\vec{b}|\sin\theta \cdot \vec{n}$$</div>
+                        <p>结果是向量，垂直于原两向量，模长等于平行四边形面积</p>
+                    </div>
+                    <div class="operation-card">
+                        <h5>混合积</h5>
+                        <div class="formula">$$[\vec{a}, \vec{b}, \vec{c}] = \vec{a} \cdot (\vec{b} \times \vec{c})$$</div>
+                        <p>结果是标量，绝对值等于平行六面体体积</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 练习题 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>练习题</h2>
+            </div>
+            <div class="section-content">
+                <div class="practice-problem">
+                    <h4>习题1 <span class="difficulty medium">中等难度</span></h4>
+                    <p>已知 $\vec{a} = (1, -2, 3)$，$\vec{b} = (2, 1, -1)$，求：</p>
+                    <ol>
+                        <li>$\vec{a} \cdot \vec{b}$</li>
+                        <li>$\vec{a} \times \vec{b}$</li>
+                        <li>两向量的夹角</li>
+                    </ol>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解：</div>
+                        <p><strong>(1) 数量积：</strong></p>
+                        $$\vec{a} \cdot \vec{b} = 1 \times 2 + (-2) \times 1 + 3 \times (-1) = 2 - 2 - 3 = -3$$
+                        
+                        <p><strong>(2) 向量积：</strong></p>
+                        $$\vec{a} \times \vec{b} = \begin{vmatrix} \vec{i} & \vec{j} & \vec{k} \\ 1 & -2 & 3 \\ 2 & 1 & -1 \end{vmatrix} = (-1, 7, 5)$$
+                        
+                        <p><strong>(3) 夹角：</strong></p>
+                        $$|\vec{a}| = \sqrt{1^2 + (-2)^2 + 3^2} = \sqrt{14}$$
+                        $$|\vec{b}| = \sqrt{2^2 + 1^2 + (-1)^2} = \sqrt{6}$$
+                        $$\cos\theta = \frac{-3}{\sqrt{14} \cdot \sqrt{6}} = \frac{-3}{\sqrt{84}} = \frac{-3}{2\sqrt{21}}$$
+                        $$\theta = \arccos\left(\frac{-3}{2\sqrt{21}}\right) \approx 106.8°$$
+                    </div>
+                </div>
+                
+                <div class="practice-problem">
+                    <h4>习题2 <span class="difficulty hard">较难</span></h4>
+                    <p>已知三点 $A(1, 2, 3)$，$B(2, 1, 4)$，$C(3, 3, 2)$，求：</p>
+                    <ol>
+                        <li>三角形 $ABC$ 的面积</li>
+                        <li>从点 $A$ 到直线 $BC$ 的距离</li>
+                    </ol>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解：</div>
+                        <p>首先求向量：</p>
+                        $$\overrightarrow{AB} = (1, -1, 1), \quad \overrightarrow{AC} = (2, 1, -1)$$
+                        
+                        <p><strong>(1) 三角形面积：</strong></p>
+                        $$\overrightarrow{AB} \times \overrightarrow{AC} = \begin{vmatrix} \vec{i} & \vec{j} & \vec{k} \\ 1 & -1 & 1 \\ 2 & 1 & -1 \end{vmatrix} = (0, 3, 3)$$
+                        $$S = \frac{1}{2}|\overrightarrow{AB} \times \overrightarrow{AC}| = \frac{1}{2}\sqrt{0^2 + 3^2 + 3^2} = \frac{3\sqrt{2}}{2}$$
+                        
+                        <p><strong>(2) 点到直线距离：</strong></p>
+                        $$\overrightarrow{BC} = (1, 2, -2)$$
+                        <p>点 $A$ 到直线 $BC$ 的距离为：</p>
+                        $$d = \frac{|\overrightarrow{BA} \times \overrightarrow{BC}|}{|\overrightarrow{BC}|} = \frac{|(-1, 1, -1) \times (1, 2, -2)|}{|(1, 2, -2)|}$$
+                        $$= \frac{|(0, -3, -3)|}{|(1, 2, -2)|} = \frac{3\sqrt{2}}{3} = \sqrt{2}$$
+                    </div>
+                </div>
+                
+                <div class="practice-problem">
+                    <h4>习题3 <span class="difficulty very-hard">很难</span></h4>
+                    <p>证明：对任意三个向量 $\vec{a}$，$\vec{b}$，$\vec{c}$，有恒等式：</p>
+                    $$\vec{a} \times (\vec{b} \times \vec{c}) = (\vec{a} \cdot \vec{c})\vec{b} - (\vec{a} \cdot \vec{b})\vec{c}$$
+                    <p>这个恒等式称为向量三重积公式。</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">证明：</div>
+                        <p>设 $\vec{a} = (a_1, a_2, a_3)$，$\vec{b} = (b_1, b_2, b_3)$，$\vec{c} = (c_1, c_2, c_3)$</p>
+                        
+                        <p><strong>左边：</strong>首先计算 $\vec{b} \times \vec{c}$：</p>
+                        $$\vec{b} \times \vec{c} = (b_2c_3 - b_3c_2, b_3c_1 - b_1c_3, b_1c_2 - b_2c_1)$$
+                        
+                        <p>然后计算 $\vec{a} \times (\vec{b} \times \vec{c})$ 的第一个分量：</p>
+                        $$a_2(b_1c_2 - b_2c_1) - a_3(b_3c_1 - b_1c_3)$$
+                        $$= a_2b_1c_2 - a_2b_2c_1 - a_3b_3c_1 + a_3b_1c_3$$
+                        $$= b_1(a_2c_2 + a_3c_3) - c_1(a_2b_2 + a_3b_3)$$
+                        
+                        <p><strong>右边：</strong>计算 $(\vec{a} \cdot \vec{c})\vec{b} - (\vec{a} \cdot \vec{b})\vec{c}$ 的第一个分量：</p>
+                        $$(a_1c_1 + a_2c_2 + a_3c_3)b_1 - (a_1b_1 + a_2b_2 + a_3b_3)c_1$$
+                        $$= a_1c_1b_1 + a_2c_2b_1 + a_3c_3b_1 - a_1b_1c_1 - a_2b_2c_1 - a_3b_3c_1$$
+                        $$= b_1(a_2c_2 + a_3c_3) - c_1(a_2b_2 + a_3b_3)$$
+                        
+                        <p>可见左右两边相等。类似地可以验证其他分量，从而证明了恒等式。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="nav-buttons">
+            <a href="8.1.html" class="btn prev">8.1 向量及其线性运算</a>
+            <a href="8.3.html" class="btn next">下一节：8.3 平面及其方程</a>
+        </div>
+        
+        <footer>
+            <p>第八章：向量代数与空间解析几何 - 8.2 向量的数量积、向量积、混合积</p>
+        </footer>
+    </div>
+    
+    <script>
+        // 3D向量可视化
+        function createVectorVisualization() {
+            const container = document.getElementById('vector-canvas');
+            const loadingDiv = document.getElementById('canvas-loading');
+            
+            if (!container) {
+                console.warn('Vector canvas container not found');
+                return;
+            }
+            
+            // 检查Three.js是否加载
+            if (typeof THREE === 'undefined') {
+                console.warn('Three.js not loaded, showing fallback');
+                showFallbackVisualization();
+                return;
+            }
+            
+            try {
+                // 隐藏加载提示
+                if (loadingDiv) loadingDiv.style.display = 'none';
+                
+                const scene = new THREE.Scene();
+                const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+                const renderer = new THREE.WebGLRenderer({ 
+                    antialias: true,
+                    alpha: true
+                });
+                
+                renderer.setSize(container.clientWidth, container.clientHeight);
+                renderer.setClearColor(0xf8f9fa, 1);
+                container.appendChild(renderer.domElement);
+                
+                // 创建坐标轴
+                const axesHelper = new THREE.AxesHelper(4);
+                scene.add(axesHelper);
+                
+                // 简化的网格（减少性能消耗）
+                const gridHelper = new THREE.GridHelper(8, 8, 0xcccccc, 0xeeeeee);
+                scene.add(gridHelper);
+                
+                let vectorA, vectorB, vectorCross, projectionLine;
+                
+                function updateVectors() {
+                    // 清除旧的向量
+                    [vectorA, vectorB, vectorCross, projectionLine].forEach(obj => {
+                        if (obj) scene.remove(obj);
+                    });
+                    
+                    // 获取向量值
+                    const ax = parseFloat(document.getElementById('ax')?.value || 3);
+                    const ay = parseFloat(document.getElementById('ay')?.value || 2);
+                    const az = parseFloat(document.getElementById('az')?.value || 1);
+                    const bx = parseFloat(document.getElementById('bx')?.value || 1);
+                    const by = parseFloat(document.getElementById('by')?.value || 3);
+                    const bz = parseFloat(document.getElementById('bz')?.value || 2);
+                    
+                    const vecA = new THREE.Vector3(ax, ay, az);
+                    const vecB = new THREE.Vector3(bx, by, bz);
+                    
+                    // 创建向量A
+                    if (vecA.length() > 0.001) {
+                        vectorA = new THREE.ArrowHelper(
+                            vecA.clone().normalize(),
+                            new THREE.Vector3(0, 0, 0),
+                            vecA.length(),
+                            0x6a11cb,
+                            vecA.length() * 0.15,
+                            vecA.length() * 0.08
+                        );
+                        scene.add(vectorA);
+                    }
+                    
+                    // 创建向量B
+                    if (vecB.length() > 0.001) {
+                        vectorB = new THREE.ArrowHelper(
+                            vecB.clone().normalize(),
+                            new THREE.Vector3(0, 0, 0),
+                            vecB.length(),
+                            0x2575fc,
+                            vecB.length() * 0.15,
+                            vecB.length() * 0.08
+                        );
+                        scene.add(vectorB);
+                    }
+                    
+                    // 计算并显示向量积
+                    if (document.getElementById('showCross')?.checked) {
+                        const crossProduct = new THREE.Vector3().crossVectors(vecA, vecB);
+                        if (crossProduct.length() > 0.001) {
+                            vectorCross = new THREE.ArrowHelper(
+                                crossProduct.clone().normalize(),
+                                new THREE.Vector3(0, 0, 0),
+                                crossProduct.length() * 0.5, // 缩小一点便于观察
+                                0xe91e63,
+                                crossProduct.length() * 0.1,
+                                crossProduct.length() * 0.05
+                            );
+                            scene.add(vectorCross);
+                        }
+                    }
+                    
+                    // 显示投影线
+                    if (document.getElementById('showDot')?.checked && vecB.length() > 0.001) {
+                        const projectionScalar = vecA.dot(vecB) / vecB.dot(vecB);
+                        const projection = vecB.clone().multiplyScalar(projectionScalar);
+                        
+                        const points = [vecA, projection];
+                        const geometry = new THREE.BufferGeometry().setFromPoints(points);
+                        const material = new THREE.LineBasicMaterial({ 
+                            color: 0xff9800, 
+                            linewidth: 3,
+                            transparent: true,
+                            opacity: 0.8
+                        });
+                        projectionLine = new THREE.Line(geometry, material);
+                        scene.add(projectionLine);
+                    }
+                    
+                    // 更新信息显示
+                    updateVectorInfo(vecA, vecB);
+                }
+                
+                function updateVectorInfo(vecA, vecB) {
+                    const infoDiv = document.getElementById('vector-info');
+                    if (!infoDiv) return;
+                    
+                    const dotProduct = vecA.dot(vecB);
+                    const crossProduct = new THREE.Vector3().crossVectors(vecA, vecB);
+                    const angle = vecA.angleTo(vecB) * 180 / Math.PI;
+                    
+                    infoDiv.innerHTML = `
+                        <div><strong>向量 A:</strong> (${vecA.x.toFixed(1)}, ${vecA.y.toFixed(1)}, ${vecA.z.toFixed(1)})</div>
+                        <div><strong>向量 B:</strong> (${vecB.x.toFixed(1)}, ${vecB.y.toFixed(1)}, ${vecB.z.toFixed(1)})</div>
+                        <div><strong>数量积:</strong> A·B = ${dotProduct.toFixed(2)}</div>
+                        <div><strong>向量积:</strong> A×B = (${crossProduct.x.toFixed(1)}, ${crossProduct.y.toFixed(1)}, ${crossProduct.z.toFixed(1)})</div>
+                        <div><strong>夹角:</strong> ${angle.toFixed(1)}°</div>
+                        <div><strong>|A×B|:</strong> ${crossProduct.length().toFixed(2)}</div>
+                    `;
+                }
+                
+                // 设置相机位置
+                camera.position.set(6, 4, 6);
+                camera.lookAt(0, 0, 0);
+                
+                // 简化的鼠标控制
+                let isMouseDown = false;
+                let mouseX = 0, mouseY = 0;
+                
+                container.addEventListener('mousedown', (event) => {
+                    isMouseDown = true;
+                    mouseX = event.clientX;
+                    mouseY = event.clientY;
+                    event.preventDefault();
+                });
+                
+                document.addEventListener('mouseup', () => {
+                    isMouseDown = false;
+                });
+                
+                document.addEventListener('mousemove', (event) => {
+                    if (!isMouseDown) return;
+                    
+                    const deltaX = event.clientX - mouseX;
+                    const deltaY = event.clientY - mouseY;
+                    
+                    const spherical = new THREE.Spherical();
+                    spherical.setFromVector3(camera.position);
+                    spherical.theta -= deltaX * 0.01;
+                    spherical.phi += deltaY * 0.01;
+                    spherical.phi = Math.max(0.1, Math.min(Math.PI - 0.1, spherical.phi));
+                    
+                    camera.position.setFromSpherical(spherical);
+                    camera.lookAt(0, 0, 0);
+                    
+                    mouseX = event.clientX;
+                    mouseY = event.clientY;
+                });
+                
+                // 滚轮缩放
+                container.addEventListener('wheel', (event) => {
+                    const scale = event.deltaY > 0 ? 1.1 : 0.9;
+                    camera.position.multiplyScalar(scale);
+                    camera.position.clampLength(3, 15);
+                    event.preventDefault();
+                });
+                
+                // 动画循环
+                function animate() {
+                    requestAnimationFrame(animate);
+                    renderer.render(scene, camera);
+                }
+                
+                // 事件监听
+                ['ax', 'ay', 'az', 'bx', 'by', 'bz'].forEach(id => {
+                    const element = document.getElementById(id);
+                    if (element) {
+                        element.addEventListener('input', updateVectors);
+                    }
+                });
+                
+                ['showDot', 'showCross', 'showAngle'].forEach(id => {
+                    const element = document.getElementById(id);
+                    if (element) {
+                        element.addEventListener('change', updateVectors);
+                    }
+                });
+                
+                // 处理窗口大小变化
+                const resizeObserver = new ResizeObserver(() => {
+                    if (container.clientWidth > 0 && container.clientHeight > 0) {
+                        camera.aspect = container.clientWidth / container.clientHeight;
+                        camera.updateProjectionMatrix();
+                        renderer.setSize(container.clientWidth, container.clientHeight);
+                    }
+                });
+                resizeObserver.observe(container);
+                
+                // 初始化
+                updateVectors();
+                animate();
+                
+            } catch (error) {
+                console.error('3D visualization failed:', error);
+                showFallbackVisualization();
+            }
+        }
+        
+        // 降级方案：显示2D图形或文字说明
+        function showFallbackVisualization() {
+            const container = document.getElementById('vector-canvas');
+            const loadingDiv = document.getElementById('canvas-loading');
+            
+            if (loadingDiv) loadingDiv.style.display = 'none';
+            
+            container.innerHTML = `
+                <div style="
+                    display: flex; 
+                    flex-direction: column; 
+                    align-items: center; 
+                    justify-content: center; 
+                    height: 100%; 
+                    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+                    border-radius: 10px;
+                    text-align: center;
+                    padding: 20px;
+                ">
+                    <div style="font-size: 3em; margin-bottom: 15px; color: #6a11cb;">📐</div>
+                    <div style="font-size: 1.2em; font-weight: 600; color: #495057; margin-bottom: 10px;">
+                        向量运算可视化
+                    </div>
+                    <div style="color: #6c757d; margin-bottom: 20px;">
+                        3D可视化功能暂时不可用<br>
+                        请参考下方的向量运算卡片和练习题
+                    </div>
+                    <div style="display: flex; gap: 20px; font-size: 0.9em; color: #495057;">
+                        <div>📊 数量积计算</div>
+                        <div>🔄 向量积计算</div>
+                        <div>📐 夹角计算</div>
+                    </div>
+                </div>
+            `;
+            
+            // 仍然更新信息显示
+            updateVectorInfoFallback();
+            
+            // 监听输入变化
+            ['ax', 'ay', 'az', 'bx', 'by', 'bz'].forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.addEventListener('input', updateVectorInfoFallback);
+                }
+            });
+        }
+        
+        function updateVectorInfoFallback() {
+            const infoDiv = document.getElementById('vector-info');
+            if (!infoDiv) return;
+            
+            const ax = parseFloat(document.getElementById('ax')?.value || 3);
+            const ay = parseFloat(document.getElementById('ay')?.value || 2);
+            const az = parseFloat(document.getElementById('az')?.value || 1);
+            const bx = parseFloat(document.getElementById('bx')?.value || 1);
+            const by = parseFloat(document.getElementById('by')?.value || 3);
+            const bz = parseFloat(document.getElementById('bz')?.value || 2);
+            
+            // 手动计算向量运算
+            const dotProduct = ax * bx + ay * by + az * bz;
+            const crossX = ay * bz - az * by;
+            const crossY = az * bx - ax * bz;
+            const crossZ = ax * by - ay * bx;
+            const crossLength = Math.sqrt(crossX * crossX + crossY * crossY + crossZ * crossZ);
+            
+            const lengthA = Math.sqrt(ax * ax + ay * ay + az * az);
+            const lengthB = Math.sqrt(bx * bx + by * by + bz * bz);
+            const angle = Math.acos(dotProduct / (lengthA * lengthB)) * 180 / Math.PI;
+            
+            infoDiv.innerHTML = `
+                <div><strong>向量 A:</strong> (${ax.toFixed(1)}, ${ay.toFixed(1)}, ${az.toFixed(1)})</div>
+                <div><strong>向量 B:</strong> (${bx.toFixed(1)}, ${by.toFixed(1)}, ${bz.toFixed(1)})</div>
+                <div><strong>数量积:</strong> A·B = ${dotProduct.toFixed(2)}</div>
+                <div><strong>向量积:</strong> A×B = (${crossX.toFixed(1)}, ${crossY.toFixed(1)}, ${crossZ.toFixed(1)})</div>
+                <div><strong>夹角:</strong> ${isNaN(angle) ? '未定义' : angle.toFixed(1) + '°'}</div>
+                <div><strong>|A×B|:</strong> ${crossLength.toFixed(2)}</div>
+            `;
+        }
+        
+        // 页面加载动画（优化版）
+        function initializeAnimations() {
+            if (typeof gsap === 'undefined') return;
+            
+            // 减少动画复杂度，提高性能
+            gsap.set('.content-section', { opacity: 0, y: 20 });
+            gsap.to('.content-section', {
+                duration: 0.6,
+                y: 0,
+                opacity: 1,
+                stagger: 0.1,
+                ease: "power2.out"
+            });
+            
+            gsap.set('.operation-card', { opacity: 0, scale: 0.9 });
+            gsap.to('.operation-card', {
+                duration: 0.5,
+                scale: 1,
+                opacity: 1,
+                stagger: 0.05,
+                delay: 0.3,
+                ease: "back.out(1.2)"
+            });
+        }
+        
+        // 简化的滚动动画
+        function setupScrollAnimations() {
+            if (typeof IntersectionObserver === 'undefined') return;
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && typeof gsap !== 'undefined') {
+                        const elements = entry.target.querySelectorAll('.definition, .theorem, .example, .practice-problem');
+                        gsap.from(elements, {
+                            duration: 0.4,
+                            y: 15,
+                            opacity: 0,
+                            stagger: 0.05,
+                            ease: "power2.out"
+                        });
+                        observer.unobserve(entry.target); // 只执行一次
+                    }
+                });
+            }, { 
+                threshold: 0.1,
+                rootMargin: '50px'
+            });
+            
+            document.querySelectorAll('.content-section').forEach(section => {
+                observer.observe(section);
+            });
+        }
+        
+        // 优化的页面加载
+        document.addEventListener('DOMContentLoaded', function() {
+            // 立即初始化基本功能
+            initializeAnimations();
+            setupScrollAnimations();
+            
+            // 延迟加载3D可视化，避免阻塞页面渲染
+            setTimeout(() => {
+                createVectorVisualization();
+            }, 100);
+            
+            // MathJax 优化配置
+            if (typeof MathJax !== 'undefined') {
+                MathJax.startup.promise.then(() => {
+                    console.log('MathJax 加载完成');
+                    // 可以在这里添加MathJax渲染完成后的回调
+                });
+            }
+        });
+        
+        // 预加载优化：在页面空闲时预处理一些计算
+        if ('requestIdleCallback' in window) {
+            requestIdleCallback(() => {
+                // 预计算一些默认值，提高交互响应速度
+                const defaultA = { x: 3, y: 2, z: 1 };
+                const defaultB = { x: 1, y: 3, z: 2 };
+                
+                // 预计算结果缓存
+                window.vectorCache = {
+                    dotProduct: defaultA.x * defaultB.x + defaultA.y * defaultB.y + defaultA.z * defaultB.z,
+                    crossProduct: {
+                        x: defaultA.y * defaultB.z - defaultA.z * defaultB.y,
+                        y: defaultA.z * defaultB.x - defaultA.x * defaultB.z,
+                        z: defaultA.x * defaultB.y - defaultA.y * defaultB.x
+                    }
+                };
+            });
+        }
+    </script>
+</body>
+</html>

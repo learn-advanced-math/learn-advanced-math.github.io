@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="alternate icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTUiIGZpbGw9IiMzNDk4ZGIiIHN0cm9rZT0iIzJjM2U1MCIgc3Ryb2tlLXdpZHRoPSIyIi8+PGcgZmlsbD0id2hpdGUiIGZvbnQtZmFtaWx5PSJUaW1lcyxzZXJpZiIgZm9udC13ZWlnaHQ9ImJvbGQiPjx0ZXh0IHg9IjE2IiB5PSIxMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxMiI+ZDwvdGV4dD48bGluZSB4MT0iOCIgeTE9IjE2IiB4Mj0iMjQiIHkyPSIxNiIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjUiLz48dGV4dCB4PSIxNiIgeT0iMjUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTAiPmR4PC90ZXh0PjwvZz48L3N2Zz4=">
+    <title>1.5 极限的运算法则 - 高等数学复习</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']]
+            },
+            chtml: {
+                fontURL: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2'
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" 
+            onerror="console.error('MathJax failed to load')"></script>
+    <script src="https://cdn.plot.ly/plotly-2.26.0.min.js" 
+            onerror="console.error('Plotly failed to load')"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js" 
+            onerror="console.error('GSAP failed to load')"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 20px;
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 15px;
+            border-radius: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .back-link:hover {
+            color: #2980b9;
+            transform: translateX(-5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+        
+        .back-link::before {
+            content: '←';
+            margin-right: 8px;
+            font-size: 1.2em;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            margin: 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            font-weight: 300;
+        }
+        
+        .subtitle {
+            font-size: 1.1em;
+            margin-top: 10px;
+            opacity: 0.9;
+        }
+
+        .content-section {
+            background: white;
+            margin: 25px 0;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .content-section:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .section-header {
+            padding: 20px 30px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+        }
+        
+        .section-header h2 {
+            margin: 0;
+            font-size: 1.6em;
+            font-weight: 400;
+        }
+        
+        .section-content {
+            padding: 30px;
+        }
+
+        .definition-box {
+            background: linear-gradient(135deg, #f4f0f8, #ece2f0);
+            border-left: 5px solid #667eea;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(102, 126, 234, 0.1);
+        }
+        
+        .definition-box h3, .definition-box h4 {
+            margin: 0 0 15px 0;
+            color: #667eea;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+
+        .theorem-box {
+            background: linear-gradient(135deg, #fef9e7, #fcf4dd);
+            border-left: 5px solid #f39c12;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(243, 156, 18, 0.1);
+        }
+        
+        .theorem-box h3, .theorem-box h4 {
+            margin: 0 0 15px 0;
+            color: #f39c12;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+
+        .example-box {
+            background: linear-gradient(135deg, #ebf3fd, #d6e9f8);
+            border-left: 5px solid #3498db;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(52, 152, 219, 0.1);
+        }
+        
+        .example-box h3, .example-box h4 {
+            margin: 0 0 15px 0;
+            color: #3498db;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+
+        .interactive-section {
+            background: white;
+            margin: 25px 0;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .interactive-section:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .control-group label {
+            font-weight: 600;
+            color: #4c51bf;
+        }
+
+        .control-group select,
+        .control-group input {
+            padding: 10px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .control-group select:focus,
+        .control-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .plot-container {
+            width: 100%;
+            height: 500px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .exercises {
+            display: grid;
+            gap: 20px;
+        }
+
+        .exercise {
+            background: linear-gradient(135deg, #fdf2e9, #fbeee0);
+            border-left: 5px solid #e67e22;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(230, 126, 34, 0.1);
+        }
+
+        .exercise.medium {
+            border-left-color: #f39c12;
+        }
+
+        .exercise.hard {
+            border-left-color: #e74c3c;
+        }
+
+        .exercise.very-hard {
+            border-left-color: #8e44ad;
+        }
+
+        .exercise h4 {
+            margin: 0 0 15px 0;
+            color: #e67e22;
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+        
+        .difficulty {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: 500;
+            margin-left: 10px;
+        }
+        
+        .difficulty.medium {
+            background: #f39c12;
+            color: white;
+        }
+        
+        .difficulty.hard {
+            background: #e74c3c;
+            color: white;
+        }
+        
+        .difficulty.very-hard {
+            background: #8e44ad;
+            color: white;
+        }
+
+        .solution {
+            background: rgba(102, 126, 234, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .solution.show {
+            display: block;
+        }
+        
+        .solution-header {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .solution-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .solution-btn:hover {
+            transform: translateY(-1px);
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            padding: 30px 0;
+            opacity: 0.9;
+            margin-top: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        footer p {
+            color: white;
+            text-align: center;
+            margin: 0;
+        }
+
+        .rule-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .rule-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 40px;
+            padding: 20px 0;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 25px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn.prev::before {
+            content: '←';
+            margin-right: 8px;
+            font-size: 1.1em;
+        }
+        
+        .btn.next::after {
+            content: '→';
+            margin-left: 8px;
+            font-size: 1.1em;
+        }
+        
+        .math-expression {
+            text-align: center;
+            margin: 15px 0;
+            font-size: 1.1em;
+        }
+        
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        /* AI提示方块样式 */
+        .ai-warning {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            border: 2px solid #e0e0e0;
+        }
+        
+        .ai-warning:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            border-color: #ff4444;
+        }
+        
+        .ai-warning::before {
+            content: '!';
+            color: #e74c3c;
+            font-size: 20px;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+        }
+        
+        .ai-warning-tooltip {
+            position: absolute;
+            top: 50px;
+            left: 0;
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 16px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            line-height: 1.5;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1001;
+            width: 250px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .ai-warning-tooltip::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: 20px;
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid rgba(0, 0, 0, 0.9);
+        }
+        
+        .ai-warning:hover .ai-warning-tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .controls {
+                grid-template-columns: 1fr;
+            }
+
+            .ai-warning {
+                width: 35px;
+                height: 35px;
+                top: 15px;
+                left: 15px;
+            }
+            
+            .ai-warning::before {
+                font-size: 18px;
+            }
+            
+            .ai-warning-tooltip {
+                width: 280px;
+                font-size: 13px;
+                padding: 14px 18px;
+            }
+        }
+    </style>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            chtml: {
+                displayAlign: 'center',
+                displayIndent: '0'
+            }
+        };
+    </script>
+</head>
+<body>
+    <!-- AI内容提示 -->
+    <div class="ai-warning">
+        <div class="ai-warning-tooltip">
+            页面内容由AI生成，请谨慎对待。<br>如发现错误，欢迎反馈。
+        </div>
+    </div>
+    
+    <div class="container">
+        <a href="../index.html" class="back-link">返回章节概览</a>
+        
+        <header>
+            <h1>1.5 极限的运算法则</h1>
+            <div class="subtitle">Limit Operations and Calculation Rules</div>
+        </header>
+
+        <!-- 核心定义 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>核心定义与法则</h2>
+            </div>
+            <div class="section-content">
+            
+            <div class="definition-box">
+                <h3>极限运算法则</h3>
+                <p>设 $\lim\limits_{x \to x_0} f(x) = A$，$\lim\limits_{x \to x_0} g(x) = B$，则有以下运算法则：</p>
+                
+                <div class="rule-grid">
+                    <div class="rule-card">
+                        <h4>加法法则</h4>
+                        $$\lim_{x \to x_0} [f(x) + g(x)] = A + B$$
+                    </div>
+                    <div class="rule-card">
+                        <h4>减法法则</h4>
+                        $$\lim_{x \to x_0} [f(x) - g(x)] = A - B$$
+                    </div>
+                    <div class="rule-card">
+                        <h4>乘法法则</h4>
+                        $$\lim_{x \to x_0} [f(x) \cdot g(x)] = A \cdot B$$
+                    </div>
+                    <div class="rule-card">
+                        <h4>除法法则</h4>
+                        $$\lim_{x \to x_0} \frac{f(x)}{g(x)} = \frac{A}{B} \quad (B \neq 0)$$
+                    </div>
+                    <div class="rule-card">
+                        <h4>常数乘法法则</h4>
+                        $$\lim_{x \to x_0} [c \cdot f(x)] = c \cdot A$$
+                    </div>
+                    <div class="rule-card">
+                        <h4>幂法则</h4>
+                        $$\lim_{x \to x_0} [f(x)]^n = A^n$$
+                    </div>
+                </div>
+            </div>
+
+            <div class="theorem-box">
+                <h3>复合函数的极限运算</h3>
+                <p>设函数 $y = f[g(x)]$ 是由函数 $u = g(x)$ 与函数 $y = f(u)$ 复合而成，且满足：</p>
+                <ol>
+                    <li>$\lim\limits_{x \to x_0} g(x) = u_0$</li>
+                    <li>$\lim\limits_{u \to u_0} f(u) = A$</li>
+                    <li>存在 $\delta > 0$，当 $0 < |x - x_0| < \delta$ 时，有 $g(x) \neq u_0$</li>
+                </ol>
+                <p>则：$$\lim_{x \to x_0} f[g(x)] = \lim_{u \to u_0} f(u) = A$$</p>
+            </div>
+        </div>
+        </div>
+
+        <!-- 交互式演示 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>交互式极限运算演示</h2>
+            </div>
+            <div class="section-content">
+            
+            <div class="controls">
+                <div class="control-group">
+                    <label for="function1">函数 $f(x)$：</label>
+                    <select id="function1">
+                        <option value="x">x</option>
+                        <option value="x^2">x²</option>
+                        <option value="sin(x)">sin(x)</option>
+                        <option value="exp(x)">eˣ</option>
+                        <option value="1/x">1/x</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label for="function2">函数 $g(x)$：</label>
+                    <select id="function2">
+                        <option value="x">x</option>
+                        <option value="x^2">x²</option>
+                        <option value="cos(x)">cos(x)</option>
+                        <option value="ln(x)">ln(x)</option>
+                        <option value="sqrt(x)">√x</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label for="operation">运算类型：</label>
+                    <select id="operation">
+                        <option value="add">f(x) + g(x)</option>
+                        <option value="sub">f(x) - g(x)</option>
+                        <option value="mul">f(x) × g(x)</option>
+                        <option value="div">f(x) ÷ g(x)</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label for="limit-point">极限点 $x_0$：</label>
+                    <input type="range" id="limit-point" value="1" step="0.1" min="-5" max="5">
+                </div>
+            </div>
+            
+            <div class="plot-container" id="limit-operations-plot"></div>
+        </div>
+        </div>
+
+        <!-- 典型例题 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>典型例题</h2>
+            </div>
+            <div class="section-content">
+            
+            <div class="example-box">
+                <h3>例题 1：基本运算法则应用</h3>
+                <p><strong>题目：</strong>求 $\lim\limits_{x \to 2} (3x^2 - 2x + 1)$</p>
+                
+                <p><strong>解答：</strong></p>
+                <p>根据极限运算法则：</p>
+                $$\begin{align}
+                \lim_{x \to 2} (3x^2 - 2x + 1) &= \lim_{x \to 2} 3x^2 - \lim_{x \to 2} 2x + \lim_{x \to 2} 1 \\
+                &= 3\lim_{x \to 2} x^2 - 2\lim_{x \to 2} x + 1 \\
+                &= 3 \cdot 2^2 - 2 \cdot 2 + 1 \\
+                &= 12 - 4 + 1 = 9
+                \end{align}$$
+            </div>
+
+            <div class="example-box">
+                <h3>例题 2：有理函数极限</h3>
+                <p><strong>题目：</strong>求 $\lim\limits_{x \to 1} \frac{x^2 - 1}{x - 1}$</p>
+                
+                <p><strong>解答：</strong></p>
+                <p>由于当 $x \to 1$ 时，分子分母都趋于 $0$，属于 $\frac{0}{0}$ 型未定式。</p>
+                <p>先进行因式分解：</p>
+                $$\frac{x^2 - 1}{x - 1} = \frac{(x-1)(x+1)}{x-1} = x + 1 \quad (x \neq 1)$$
+                <p>因此：</p>
+                $$\lim_{x \to 1} \frac{x^2 - 1}{x - 1} = \lim_{x \to 1} (x + 1) = 1 + 1 = 2$$
+            </div>
+
+            <div class="example-box">
+                <h3>例题 3：复合函数极限</h3>
+                <p><strong>题目：</strong>求 $\lim\limits_{x \to 0} \sin(2x^2 + x)$</p>
+                
+                <p><strong>解答：</strong></p>
+                <p>设 $u = 2x^2 + x$，当 $x \to 0$ 时，$u \to 0$</p>
+                <p>由于 $\sin u$ 在 $u = 0$ 处连续，根据复合函数极限法则：</p>
+                $$\lim_{x \to 0} \sin(2x^2 + x) = \sin\left(\lim_{x \to 0} (2x^2 + x)\right) = \sin(0) = 0$$
+            </div>
+        </div>
+        </div>
+
+        <!-- 练习题 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>练习题</h2>
+            </div>
+            <div class="section-content">
+            
+            <div class="exercises">
+                <div class="exercise medium">
+                    <h4>习题1 <span class="difficulty medium">中等难度</span></h4>
+                    <p>求极限：$\lim\limits_{x \to 3} \frac{x^2 + 2x - 15}{x - 3}$</p>
+                    <button class="solution-btn" onclick="toggleSolution(1)">显示解答</button>
+                    <div class="solution" id="solution1">
+                        <div class="solution-header">解：</div>
+                        <p>分子因式分解：$x^2 + 2x - 15 = (x-3)(x+5)$</p>
+                        $$\lim_{x \to 3} \frac{x^2 + 2x - 15}{x - 3} = \lim_{x \to 3} \frac{(x-3)(x+5)}{x-3} = \lim_{x \to 3} (x+5) = 8$$
+                    </div>
+                </div>
+
+                <div class="exercise hard">
+                    <h4>习题2 <span class="difficulty hard">较难</span></h4>
+                    <p>求极限：$\lim\limits_{x \to 0} \frac{\sqrt{1+x} - 1}{x}$</p>
+                    <button class="solution-btn" onclick="toggleSolution(2)">显示解答</button>
+                    <div class="solution" id="solution2">
+                        <div class="solution-header">解：</div>
+                        <p>分子分母同时乘以 $\sqrt{1+x} + 1$：</p>
+                        $$\frac{\sqrt{1+x} - 1}{x} = \frac{(\sqrt{1+x} - 1)(\sqrt{1+x} + 1)}{x(\sqrt{1+x} + 1)} = \frac{1+x-1}{x(\sqrt{1+x} + 1)} = \frac{1}{\sqrt{1+x} + 1}$$
+                        <p>因此：</p>
+                        $$\lim_{x \to 0} \frac{\sqrt{1+x} - 1}{x} = \lim_{x \to 0} \frac{1}{\sqrt{1+x} + 1} = \frac{1}{2}$$
+                    </div>
+                </div>
+
+                <div class="exercise very-hard">
+                    <h4>习题3 <span class="difficulty very-hard">很难</span></h4>
+                    <p>求极限：$\lim\limits_{x \to 0} \frac{\sin(3x) - 3\sin(x)}{x^3}$</p>
+                    <button class="solution-btn" onclick="toggleSolution(3)">显示解答</button>
+                    <div class="solution" id="solution3">
+                        <div class="solution-header">解：</div>
+                        <p>利用三角恒等式：$\sin(3x) = 3\sin(x) - 4\sin^3(x)$</p>
+                        $$\sin(3x) - 3\sin(x) = -4\sin^3(x)$$
+                        <p>因此：</p>
+                        $$\lim_{x \to 0} \frac{\sin(3x) - 3\sin(x)}{x^3} = \lim_{x \to 0} \frac{-4\sin^3(x)}{x^3} = -4\left(\lim_{x \to 0} \frac{\sin(x)}{x}\right)^3 = -4 \cdot 1^3 = -4$$
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        
+        <div class="nav-buttons">
+            <a href="1.4.html" class="btn prev">上一节：1.4 无穷小与无穷大</a>
+            <a href="1.6.html" class="btn next">下一节：1.6 极限的存在准则</a>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2025 高等数学复习系统 - 极限的运算法则</p>
+        </footer>
+    </div>
+
+    <script>
+        // 解答显示切换
+        function toggleSolution(id) {
+            const solution = document.getElementById(`solution${id}`);
+            solution.classList.toggle('show');
+        }
+
+        // 函数表达式映射
+        const functionMap = {
+            'x': (x) => x,
+            'x^2': (x) => x * x,
+            'sin(x)': (x) => Math.sin(x),
+            'cos(x)': (x) => Math.cos(x),
+            'exp(x)': (x) => Math.exp(x),
+            '1/x': (x) => x === 0 ? NaN : 1 / x,
+            'ln(x)': (x) => x > 0 ? Math.log(x) : NaN,
+            'sqrt(x)': (x) => x >= 0 ? Math.sqrt(x) : NaN
+        };
+
+        // 运算映射
+        const operationMap = {
+            'add': (a, b) => a + b,
+            'sub': (a, b) => a - b,
+            'mul': (a, b) => a * b,
+            'div': (a, b) => b !== 0 ? a / b : NaN
+        };
+
+        // 运算符号映射
+        const operationSymbolMap = {
+            'add': '+',
+            'sub': '-',
+            'mul': '×',
+            'div': '÷'
+        };
+
+        // 绘制极限运算图
+        function plotLimitOperations() {
+            const func1 = document.getElementById('function1').value;
+            const func2 = document.getElementById('function2').value;
+            const operation = document.getElementById('operation').value;
+            const x0 = parseFloat(document.getElementById('limit-point').value);
+
+            const x = [];
+            const y1 = [];
+            const y2 = [];
+            const y_combined = [];
+
+            // 生成数据点
+            for (let i = -50; i <= 50; i++) {
+                const xi = x0 + i * 0.02;
+                if (xi !== x0) { // 避免在极限点处计算
+                    const val1 = functionMap[func1](xi);
+                    const val2 = functionMap[func2](xi);
+                    const combined = operationMap[operation](val1, val2);
+                    
+                    if (!isNaN(val1) && !isNaN(val2) && !isNaN(combined) && Math.abs(combined) < 100) {
+                        x.push(xi);
+                        y1.push(val1);
+                        y2.push(val2);
+                        y_combined.push(combined);
+                    }
+                }
+            }
+
+            // 计算极限值
+            const limit1 = functionMap[func1](x0);
+            const limit2 = functionMap[func2](x0);
+            const limitCombined = operationMap[operation](limit1, limit2);
+
+            const traces = [
+                {
+                    x: x,
+                    y: y1,
+                    type: 'scatter',
+                    mode: 'lines',
+                    name: `f(x) = ${func1}`,
+                    line: { color: 'blue', width: 2 }
+                },
+                {
+                    x: x,
+                    y: y2,
+                    type: 'scatter',
+                    mode: 'lines',
+                    name: `g(x) = ${func2}`,
+                    line: { color: 'green', width: 2 }
+                },
+                {
+                    x: x,
+                    y: y_combined,
+                    type: 'scatter',
+                    mode: 'lines',
+                    name: `f(x) ${operationSymbolMap[operation]} g(x)`,
+                    line: { color: 'purple', width: 3 }
+                }
+            ];
+
+            // 添加极限点
+            if (!isNaN(limitCombined)) {
+                traces.push({
+                    x: [x0],
+                    y: [limitCombined],
+                    type: 'scatter',
+                    mode: 'markers',
+                    name: `极限值 = ${limitCombined.toFixed(3)}`,
+                    marker: { color: 'red', size: 10 }
+                });
+            }
+
+            const layout = {
+                title: `极限运算演示：x → ${x0}`,
+                xaxis: {
+                    title: 'x',
+                    range: [x0 - 2, x0 + 2],
+                    showgrid: true,
+                    gridcolor: 'rgba(128,128,128,0.2)'
+                },
+                yaxis: {
+                    title: 'y',
+                    showgrid: true,
+                    gridcolor: 'rgba(128,128,128,0.2)'
+                },
+                plot_bgcolor: 'rgba(0,0,0,0)',
+                paper_bgcolor: 'rgba(0,0,0,0)',
+                font: { family: 'Arial', size: 12 },
+                legend: { x: 0.02, y: 0.98 }
+            };
+
+            Plotly.newPlot('limit-operations-plot', traces, layout, {responsive: true});
+        }
+
+        // 事件监听器
+        document.getElementById('function1').addEventListener('change', plotLimitOperations);
+        document.getElementById('function2').addEventListener('change', plotLimitOperations);
+        document.getElementById('operation').addEventListener('change', plotLimitOperations);
+        document.getElementById('limit-point').addEventListener('input', plotLimitOperations);
+
+        // 页面加载完成后初始化图表
+        window.addEventListener('load', () => {
+            // 检查必要的库是否加载成功
+            if (typeof Plotly === 'undefined') {
+                console.error('Plotly未加载成功，图表功能将不可用');
+                document.getElementById('limit-operations-plot').innerHTML = 
+                    '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#666;font-size:18px;">图表加载失败，请检查网络连接</div>';
+                return;
+            }
+            
+            if (typeof gsap === 'undefined') {
+                console.warn('GSAP未加载成功，动画效果将不可用');
+            } else {
+                // 页面动画初始化
+                gsap.from(".header", {duration: 1, y: -50, opacity: 0, ease: "back.out(1.7)"});
+                gsap.from(".content-section", {duration: 0.8, y: 50, opacity: 0, stagger: 0.2, delay: 0.3});
+                gsap.from(".footer", {duration: 0.6, y: 30, opacity: 0, delay: 1});
+            }
+            
+            setTimeout(plotLimitOperations, 500);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="alternate icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTUiIGZpbGw9IiMzNDk4ZGIiIHN0cm9rZT0iIzJjM2U1MCIgc3Ryb2tlLXdpZHRoPSIyIi8+PGcgZmlsbD0id2hpdGUiIGZvbnQtZmFtaWx5PSJUaW1lcyxzZXJpZiIgZm9udC13ZWlnaHQ9ImJvbGQiPjx0ZXh0IHg9IjE2IiB5PSIxMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxMiI+ZDwvdGV4dD48bGluZSB4MT0iOCIgeTE9IjE2IiB4Mj0iMjQiIHkyPSIxNiIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjUiLz48dGV4dCB4PSIxNiIgeT0iMjUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTAiPmR4PC90ZXh0PjwvZz48L3N2Zz4=">
+    <title>8.3 平面及其方程 - 高等数学复习</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']]
+            },
+            chtml: {
+                fontURL: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2'
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.26.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #2e8b57 0%, #3cb371 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 20px;
+            color: #27ae60;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 15px;
+            border-radius: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .back-link:hover {
+            color: #1e8449;
+            transform: translateX(-5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+        
+        .back-link::before {
+            content: '←';
+            margin-right: 8px;
+            font-size: 1.2em;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #16a085 0%, #138d75 100%);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            margin: 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            font-weight: 300;
+        }
+        
+        .subtitle {
+            font-size: 1.1em;
+            margin-top: 10px;
+            opacity: 0.9;
+        }
+        
+        .content-section {
+            background: white;
+            margin: 25px 0;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .content-section:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .section-header {
+            padding: 20px 30px;
+            background: linear-gradient(45deg, #16a085, #138d75);
+            color: white;
+        }
+        
+        .section-header h2 {
+            margin: 0;
+            font-size: 1.6em;
+            font-weight: 400;
+        }
+        
+        .section-content {
+            padding: 30px;
+        }
+        
+        .definition {
+            background: linear-gradient(135deg, #e8f8f5, #d5f4e6);
+            border-left: 5px solid #16a085;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(22, 160, 133, 0.1);
+        }
+        
+        .definition h4 {
+            margin: 0 0 15px 0;
+            color: #16a085;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .theorem {
+            background: linear-gradient(135deg, #fdf4e3, #fcf0d7);
+            border-left: 5px solid #f39c12;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(243, 156, 18, 0.1);
+        }
+        
+        .theorem h4 {
+            margin: 0 0 15px 0;
+            color: #f39c12;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .example {
+            background: linear-gradient(135deg, #eaf2ff, #dbeafe);
+            border-left: 5px solid #3498db;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(52, 152, 219, 0.1);
+        }
+        
+        .example h4 {
+            margin: 0 0 15px 0;
+            color: #3498db;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .practice-problem {
+            background: linear-gradient(135df, #fff4e6, #fef2e0);
+            border-left: 5px solid #e67e22;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(230, 126, 34, 0.1);
+        }
+        
+        .practice-problem h4 {
+            margin: 0 0 15px 0;
+            color: #e67e22;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .difficulty {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: 500;
+            margin-left: 10px;
+        }
+        
+        .difficulty.medium {
+            background: #f39c12;
+            color: white;
+        }
+        
+        .difficulty.hard {
+            background: #e74c3c;
+            color: white;
+        }
+        
+        .difficulty.very-hard {
+            background: #8e44ad;
+            color: white;
+        }
+        
+        .solution {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px dashed #bdc3c7;
+        }
+        
+        .solution-header {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+        
+        .viz-container {
+            width: 100%;
+            height: 400px;
+            margin: 25px 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .interactive-demo {
+            width: 100%;
+            height: auto;
+            min-height: 520px;
+            margin: 25px 0;
+            background: #f8f9fa;
+            border-radius: 10px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            padding: 20px;
+            position: relative;
+        }
+        
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .controls label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #16a085;
+        }
+        
+        .controls input, .controls select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 40px;
+            padding: 20px 0;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 25px;
+            background: linear-gradient(45deg, #16a085, #138d75);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 15px rgba(22, 160, 133, 0.3);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(22, 160, 133, 0.4);
+        }
+        
+        .btn.prev::before {
+            content: '←';
+            margin-right: 8px;
+            font-size: 1.1em;
+        }
+        
+        .btn.next::after {
+            content: '→';
+            margin-left: 8px;
+            font-size: 1.1em;
+        }
+        
+        footer {
+            text-align: center;
+            color: white;
+            padding: 30px 0;
+            opacity: 0.9;
+            margin-top: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        footer p {
+            text-align: center;
+            margin: 0;
+        }
+        
+        .math-expression {
+            text-align: center;
+            margin: 15px 0;
+            font-size: 1.1em;
+        }
+        
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        .highlight {
+            background: linear-gradient(135deg, #d5f4e6, #a9dfbf);
+            padding: 15px;
+            border-left: 4px solid #27ae60;
+            border-radius: 0 8px 8px 0;
+            margin: 15px 0;
+        }
+        
+        .plane-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .plane-card {
+            background: linear-gradient(135deg, #a8e6cf 0%, #88d8a3 50%, #7fcdcd 100%);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(168, 230, 207, 0.3);
+            text-align: center;
+        }
+        
+        .plane-card h5 {
+            color: #138d75;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+        
+        .plane-card .plane-formula {
+            font-size: 1.2em;
+            margin: 15px 0;
+            color: #2c3e50;
+        }
+        
+        .geometry-visualization {
+            width: 100%;
+            height: 400px;
+            margin: 25px 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            position: relative;
+            min-height: 400px;
+        }
+
+        /* AI提示方块样式 */
+        .ai-warning {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            border: 2px solid #e0e0e0;
+        }
+        
+        .ai-warning:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            border-color: #ff4444;
+        }
+        
+        .ai-warning::before {
+            content: '!';
+            color: #e74c3c;
+            font-size: 20px;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+        }
+        
+        .ai-warning-tooltip {
+            position: absolute;
+            top: 50px;
+            left: 0;
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 16px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            line-height: 1.5;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1001;
+            width: 250px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .ai-warning-tooltip::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: 20px;
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid rgba(0, 0, 0, 0.9);
+        }
+        
+        .ai-warning:hover .ai-warning-tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .section-content {
+                padding: 20px;
+            }
+            
+            .definition, .theorem, .example, .practice-problem {
+                padding: 20px;
+            }
+            
+            .nav-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .controls {
+                grid-template-columns: 1fr;
+            }
+
+            .ai-warning {
+                width: 35px;
+                height: 35px;
+                top: 15px;
+                left: 15px;
+            }
+            
+            .ai-warning::before {
+                font-size: 18px;
+            }
+            
+            .ai-warning-tooltip {
+                width: 280px;
+                font-size: 13px;
+                padding: 14px 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- AI内容提示 -->
+    <div class="ai-warning">
+        <div class="ai-warning-tooltip">
+            页面内容由AI生成，请谨慎对待。<br>如发现错误，欢迎反馈。
+        </div>
+    </div>
+    
+    <div class="container">
+        <a href="../index.html" class="back-link">返回章节概览</a>
+        
+        <header>
+            <h1>8.3 平面及其方程</h1>
+            <div class="subtitle">Planes and Their Equations</div>
+        </header>
+        
+        <!-- 库加载状态指示器 -->
+        <div id="library-status" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border-radius: 10px; padding: 15px; margin-bottom: 20px; text-align: center; color: white; font-size: 0.9em; display: none;">
+            <div id="status-content">正在加载可视化库...</div>
+        </div>
+        
+        <!-- 8.3.1 曲面方程与空间曲线方程 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>8.3.1 曲面方程与空间曲线方程</h2>
+            </div>
+            <div class="section-content">
+                <div class="definition">
+                    <h4>曲面方程的概念</h4>
+                    <p>在空间直角坐标系中，一个三元方程 $F(x, y, z) = 0$ 一般表示一张曲面。</p>
+                    
+                    <p><strong>曲面方程的特点：</strong></p>
+                    <ul>
+                        <li>曲面上的点的坐标满足该方程</li>
+                        <li>不在曲面上的点的坐标不满足该方程</li>
+                        <li>三个变量之间存在一个约束关系</li>
+                    </ul>
+                    
+                    <div class="math-expression">
+                        常见曲面方程的一般形式：$F(x, y, z) = 0$
+                    </div>
+                </div>
+                
+                <div class="definition">
+                    <h4>空间曲线方程的概念</h4>
+                    <p>空间曲线可以看作两个曲面的交线，通常用方程组表示：</p>
+                    
+                    <div class="math-expression">
+                        $$\begin{cases}
+                        F(x, y, z) = 0 \\
+                        G(x, y, z) = 0
+                        \end{cases}$$
+                    </div>
+                    
+                    <p><strong>空间曲线的参数方程：</strong></p>
+                    <div class="math-expression">
+                        $$\begin{cases}
+                        x = x(t) \\
+                        y = y(t) \\
+                        z = z(t)
+                        \end{cases}$$
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <h4>例1：曲面方程的理解</h4>
+                    <p>分析方程 $x^2 + y^2 + z^2 = 4$ 表示什么曲面。</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解：</div>
+                        <p>这是以原点为中心，半径为 $2$ 的球面。</p>
+                        <p><strong>验证：</strong></p>
+                        <ul>
+                            <li>当 $z = 0$ 时，得到 $x^2 + y^2 = 4$，这是 $xy$ 平面上的圆</li>
+                            <li>对于球面上任意一点 $(x_0, y_0, z_0)$，都满足 $x_0^2 + y_0^2 + z_0^2 = 4$</li>
+                            <li>球心到表面任意一点的距离都等于 $2$</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <h4>例2：空间曲线方程</h4>
+                    <p>求球面 $x^2 + y^2 + z^2 = 4$ 与平面 $z = 1$ 的交线方程。</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解：</div>
+                        <p>交线方程为：</p>
+                        $$\begin{cases}
+                        x^2 + y^2 + z^2 = 4 \\
+                        z = 1
+                        \end{cases}$$
+                        <p>将 $z = 1$ 代入第一个方程：</p>
+                        $$x^2 + y^2 + 1 = 4$$
+                        $$x^2 + y^2 = 3$$
+                        <p>因此，交线是平面 $z = 1$ 上以原点为中心、半径为 $\sqrt{3}$ 的圆。</p>
+                    </div>
+                </div>
+                
+                <div class="highlight">
+                    <h4 style="color: #16a085; margin-bottom: 15px;">💡 几何直观理解</h4>
+                    <p><strong>球面与平面的交线：</strong></p>
+                    <ul>
+                        <li>球面 $x^2 + y^2 + z^2 = 4$ 是以原点为中心、半径为2的球体表面</li>
+                        <li>平面 $z = 1$ 是一个水平平面，高度为1</li>
+                        <li>它们的交线是平面 $z = 1$ 上的圆，圆心在 $(0, 0, 1)$，半径为 $\sqrt{3}$</li>
+                        <li>这个圆的方程可以写成参数形式：$x = \sqrt{3}\cos t$，$y = \sqrt{3}\sin t$，$z = 1$</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 8.3.2 平面的方程 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>8.3.2 平面的一般式方程、点法式方程、截距式方程</h2>
+            </div>
+            <div class="section-content">
+                <div class="plane-types">
+                    <div class="plane-card">
+                        <h5>一般式方程</h5>
+                        <div class="plane-formula">$$Ax + By + Cz + D = 0$$</div>
+                        <p>其中 $A$、$B$、$C$ 不全为零，$(A, B, C)$ 是平面的法向量</p>
+                    </div>
+                    <div class="plane-card">
+                        <h5>点法式方程</h5>
+                        <div class="plane-formula" style="font-size: 0.95em;">$$A(x - x_0) + B(y - y_0) + C(z - z_0) = 0$$</div>
+                        <p>过点 $(x_0, y_0, z_0)$，法向量为 $(A, B, C)$ 的平面</p>
+                    </div>
+                    <div class="plane-card">
+                        <h5>截距式方程</h5>
+                        <div class="plane-formula">$$\frac{x}{a} + \frac{y}{b} + \frac{z}{c} = 1$$</div>
+                        <p>在三个坐标轴上的截距分别为 $a$、$b$、$c$</p>
+                    </div>
+                </div>
+                
+                <div class="definition">
+                    <h4>平面方程的确定</h4>
+                    <p><strong>确定平面的条件：</strong></p>
+                    <ul>
+                        <li><strong>三个不共线的点</strong>：可以唯一确定一个平面</li>
+                        <li><strong>一个点和一个法向量</strong>：可以确定点法式方程</li>
+                        <li><strong>两条相交直线</strong>：可以确定平面</li>
+                        <li><strong>两条平行直线</strong>：可以确定平面</li>
+                    </ul>
+                    
+                    <div class="highlight">
+                        <p><strong>法向量的求法：</strong>如果平面通过三点 $A(x_1,y_1,z_1)$，$B(x_2,y_2,z_2)$，$C(x_3,y_3,z_3)$，则法向量 $\vec{n} = \overrightarrow{AB} \times \overrightarrow{AC}$</p>
+                    </div>
+                </div>
+                
+                <div class="interactive-demo">
+                    <div class="controls">
+                        <div class="control-group">
+                            <label for="plane-type">平面方程类型：</label>
+                            <select id="plane-type">
+                                <option value="general">一般式方程</option>
+                                <option value="point-normal">点法式方程</option>
+                                <option value="intercept">截距式方程</option>
+                            </select>
+                        </div>
+                        <div class="control-group">
+                            <label for="coeff-a">系数 A：</label>
+                            <input type="range" id="coeff-a" min="-3" max="3" value="1" step="0.1">
+                            <span id="coeff-a-display">1</span>
+                        </div>
+                        <div class="control-group">
+                            <label for="coeff-b">系数 B：</label>
+                            <input type="range" id="coeff-b" min="-3" max="3" value="1" step="0.1">
+                            <span id="coeff-b-display">1</span>
+                        </div>
+                        <div class="control-group">
+                            <label for="coeff-c">系数 C：</label>
+                            <input type="range" id="coeff-c" min="-3" max="3" value="1" step="0.1">
+                            <span id="coeff-c-display">1</span>
+                        </div>
+                    </div>
+                    
+                    <div class="geometry-visualization" id="plane-visualization"></div>
+                </div>
+                
+                <div class="example">
+                    <h4>例3：求平面的点法式方程</h4>
+                    <p>求过点 $M(1, 2, 3)$ 且垂直于向量 $\vec{n} = (2, -1, 3)$ 的平面方程。</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解：</div>
+                        <p>使用点法式方程：$A(x - x_0) + B(y - y_0) + C(z - z_0) = 0$</p>
+                        <p>其中 $(x_0, y_0, z_0) = (1, 2, 3)$，$(A, B, C) = (2, -1, 3)$</p>
+                        <p>代入得：</p>
+                        $$2(x - 1) + (-1)(y - 2) + 3(z - 3) = 0$$
+                        $$2x - 2 - y + 2 + 3z - 9 = 0$$
+                        $$2x - y + 3z - 9 = 0$$
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <h4>例4：三点确定平面方程</h4>
+                    <p>求过三点 $A(1, 0, 0)$，$B(0, 1, 0)$，$C(0, 0, 1)$ 的平面方程。</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解：</div>
+                        <p><strong>方法一：</strong>使用截距式方程</p>
+                        <p>由于三点分别在三个坐标轴上，截距为 $a = 1$，$b = 1$，$c = 1$</p>
+                        $$\frac{x}{1} + \frac{y}{1} + \frac{z}{1} = 1$$
+                        $$x + y + z = 1$$
+                        
+                        <p><strong>方法二：</strong>使用法向量</p>
+                        <p>$\overrightarrow{AB} = (-1, 1, 0)$，$\overrightarrow{AC} = (-1, 0, 1)$</p>
+                        <p>法向量 $\vec{n} = \overrightarrow{AB} \times \overrightarrow{AC} = (1, 1, 1)$</p>
+                        <p>使用点 $A(1, 0, 0)$：</p>
+                        $$1(x - 1) + 1(y - 0) + 1(z - 0) = 0$$
+                        $$x - 1 + y + z = 0$$
+                        $$x + y + z = 1$$
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 8.3.3 两平面的夹角和点到平面的距离 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>8.3.3 两平面的夹角；点到平面的距离</h2>
+            </div>
+            <div class="section-content">
+                <div class="theorem">
+                    <h4>两平面的夹角</h4>
+                    <p>设两平面方程为：</p>
+                    <ul>
+                        <li>$\pi_1: A_1x + B_1y + C_1z + D_1 = 0$</li>
+                        <li>$\pi_2: A_2x + B_2y + C_2z + D_2 = 0$</li>
+                    </ul>
+                    
+                    <p>两平面的夹角 $\theta$ 满足：</p>
+                    <div class="math-expression">
+                        $$\cos \theta = \frac{|A_1A_2 + B_1B_2 + C_1C_2|}{\sqrt{A_1^2 + B_1^2 + C_1^2}\sqrt{A_2^2 + B_2^2 + C_2^2}}$$
+                    </div>
+                    
+                    <div class="highlight">
+                        <p><strong>特殊情况：</strong></p>
+                        <ul>
+                            <li><strong>平行：</strong>$A_1:B_1:C_1 = A_2:B_2:C_2$</li>
+                            <li><strong>垂直：</strong>$A_1A_2 + B_1B_2 + C_1C_2 = 0$</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="theorem">
+                    <h4>点到平面的距离</h4>
+                    <p>点 $P_0(x_0, y_0, z_0)$ 到平面 $Ax + By + Cz + D = 0$ 的距离为：</p>
+                    
+                    <div class="math-expression">
+                        $$d = \frac{|Ax_0 + By_0 + Cz_0 + D|}{\sqrt{A^2 + B^2 + C^2}}$$
+                    </div>
+                    
+                    <p><strong>推导思路：</strong></p>
+                    <ol>
+                        <li>在平面上任选一点 $P_1(x_1, y_1, z_1)$</li>
+                        <li>构造向量 $\overrightarrow{P_1P_0} = (x_0-x_1, y_0-y_1, z_0-z_1)$</li>
+                        <li>平面法向量 $\vec{n} = (A, B, C)$</li>
+                        <li>距离 = $|\overrightarrow{P_1P_0}|$ 在法向量上的投影</li>
+                    </ol>
+                </div>
+                
+                <div class="example">
+                    <h4>例5：求两平面的夹角</h4>
+                    <p>求平面 $x + y + z - 1 = 0$ 与平面 $2x - y + 3z + 5 = 0$ 的夹角。</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解：</div>
+                        <p>两平面的法向量分别为：</p>
+                        <ul>
+                            <li>$\vec{n_1} = (1, 1, 1)$</li>
+                            <li>$\vec{n_2} = (2, -1, 3)$</li>
+                        </ul>
+                        
+                        <p>计算夹角余弦值：</p>
+                        $$\cos \theta = \frac{|1 \cdot 2 + 1 \cdot (-1) + 1 \cdot 3|}{\sqrt{1^2 + 1^2 + 1^2}\sqrt{2^2 + (-1)^2 + 3^2}}$$
+                        $$= \frac{|2 - 1 + 3|}{\sqrt{3}\sqrt{14}} = \frac{4}{\sqrt{42}}$$
+                        
+                        <p>因此夹角为：$\theta = \arccos\left(\frac{4}{\sqrt{42}}\right) \approx 51.8°$</p>
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <h4>例6：求点到平面的距离</h4>
+                    <p>求点 $P(1, 2, 3)$ 到平面 $2x - y + 2z - 6 = 0$ 的距离。</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解：</div>
+                        <p>使用点到平面距离公式：</p>
+                        $$d = \frac{|Ax_0 + By_0 + Cz_0 + D|}{\sqrt{A^2 + B^2 + C^2}}$$
+                        
+                        <p>其中 $(A, B, C, D) = (2, -1, 2, -6)$，$(x_0, y_0, z_0) = (1, 2, 3)$</p>
+                        
+                        $$d = \frac{|2 \cdot 1 + (-1) \cdot 2 + 2 \cdot 3 - 6|}{\sqrt{2^2 + (-1)^2 + 2^2}}$$
+                        $$= \frac{|2 - 2 + 6 - 6|}{\sqrt{4 + 1 + 4}} = \frac{0}{3} = 0$$
+                        
+                        <p>距离为 $0$，说明点 $P(1, 2, 3)$ 就在平面上。</p>
+                    </div>
+                </div>
+                
+                <div class="practice-problem">
+                    <h4>习题1 <span class="difficulty medium">中等难度</span></h4>
+                    <p>求过点 $(1, 1, 1)$ 且平行于平面 $2x + 3y - z + 5 = 0$ 的平面方程。</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解：</div>
+                        <p>因为两平面平行，所以它们的法向量相同。</p>
+                        <p>给定平面的法向量为 $(2, 3, -1)$</p>
+                        <p>所求平面过点 $(1, 1, 1)$，法向量为 $(2, 3, -1)$</p>
+                        <p>使用点法式方程：</p>
+                        $$2(x - 1) + 3(y - 1) + (-1)(z - 1) = 0$$
+                        $$2x - 2 + 3y - 3 - z + 1 = 0$$
+                        $$2x + 3y - z - 4 = 0$$
+                    </div>
+                </div>
+                
+                <div class="practice-problem">
+                    <h4>习题2 <span class="difficulty hard">较难</span></h4>
+                    <p>求过直线 $\begin{cases} x + y - z = 1 \\ 2x - y + z = 3 \end{cases}$ 且垂直于平面 $x + 2y + z = 0$ 的平面方程。</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解：</div>
+                        <p><strong>步骤1：</strong>求直线的方向向量</p>
+                        <p>两平面的法向量分别为 $\vec{n_1} = (1, 1, -1)$，$\vec{n_2} = (2, -1, 1)$</p>
+                        <p>直线方向向量：$\vec{s} = \vec{n_1} \times \vec{n_2} = (0, -3, -3) = 3(0, -1, -1)$</p>
+                        <p>取 $\vec{s} = (0, -1, -1)$</p>
+                        
+                        <p><strong>步骤2：</strong>求所求平面的法向量</p>
+                        <p>所求平面包含直线，所以 $\vec{s} \perp \vec{n}$</p>
+                        <p>所求平面垂直于已知平面，设已知平面法向量 $\vec{n_0} = (1, 2, 1)$</p>
+                        <p>所以 $\vec{n} \parallel (\vec{s} \times \vec{n_0})$</p>
+                        
+                        $$\vec{n} = \vec{s} \times \vec{n_0} = (0, -1, -1) \times (1, 2, 1) = (1, -1, 1)$$
+                        
+                        <p><strong>步骤3：</strong>求平面上一点</p>
+                        <p>令 $z = 0$，得 $\begin{cases} x + y = 1 \\ 2x - y = 3 \end{cases}$</p>
+                        <p>解得 $x = \frac{4}{3}$，$y = -\frac{1}{3}$，所以 $(\frac{4}{3}, -\frac{1}{3}, 0)$ 在直线上</p>
+                        
+                        <p><strong>步骤4：</strong>写出平面方程</p>
+                        $$1(x - \frac{4}{3}) + (-1)(y + \frac{1}{3}) + 1(z - 0) = 0$$
+                        $$x - \frac{4}{3} - y - \frac{1}{3} + z = 0$$
+                        $$x - y + z = \frac{5}{3}$$
+                        <p>即：$3x - 3y + 3z = 5$</p>
+                    </div>
+                </div>
+                
+                <div class="practice-problem">
+                    <h4>习题3 <span class="difficulty very-hard">很难</span></h4>
+                    <p>求到两平面 $x + 2y - 2z + 3 = 0$ 和 $2x + 4y - 4z - 1 = 0$ 距离相等的点的轨迹方程。</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解：</div>
+                        <p>设动点为 $P(x, y, z)$，它到两个平面的距离分别为 $d_1$ 和 $d_2$</p>
+                        
+                        $$d_1 = \frac{|x + 2y - 2z + 3|}{\sqrt{1^2 + 2^2 + (-2)^2}} = \frac{|x + 2y - 2z + 3|}{3}$$
+                        
+                        <p>对于第二个平面，先化简：$2x + 4y - 4z - 1 = 0$ 即 $x + 2y - 2z - \frac{1}{2} = 0$</p>
+                        
+                        $$d_2 = \frac{|x + 2y - 2z - \frac{1}{2}|}{3}$$
+                        
+                        <p>由 $d_1 = d_2$ 得：</p>
+                        $$|x + 2y - 2z + 3| = |x + 2y - 2z - \frac{1}{2}|$$
+                        
+                        <p>设 $u = x + 2y - 2z$，则 $|u + 3| = |u - \frac{1}{2}|$</p>
+                        
+                        <p><strong>情况1：</strong>$u + 3 = u - \frac{1}{2}$，得 $3 = -\frac{1}{2}$（无解）</p>
+                        
+                        <p><strong>情况2：</strong>$u + 3 = -(u - \frac{1}{2})$，得 $2u = -\frac{7}{2}$，即 $u = -\frac{7}{4}$</p>
+                        
+                        <p>因此轨迹方程为：</p>
+                        $$x + 2y - 2z = -\frac{7}{4}$$
+                        $$4x + 8y - 8z + 7 = 0$$
+                        
+                        <p>这是一个平面，它平行于给定的两个平面，且到两个平面的距离相等。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="nav-buttons">
+            <a href="8.2.html" class="btn prev">上一节：8.2 向量的数量积、向量积、混合积</a>
+            <a href="8.4.html" class="btn next">下一节：8.4 空间直线及其方程</a>
+        </div>
+        
+        <footer>
+            <p>&copy; 2025 高等数学复习系统 - 平面及其方程</p>
+        </footer>
+    </div>
+
+    <script>
+        // 平面可视化
+        function createPlaneVisualization() {
+            const plotDiv = document.getElementById('plane-visualization');
+            if (!plotDiv) {
+                console.error('plane-visualization 容器未找到');
+                return;
+            }
+            
+            if (typeof Plotly === 'undefined') {
+                console.error('Plotly 库未加载');
+                plotDiv.innerHTML = '<div style="text-align: center; padding: 50px; color: #666;">Plotly 库加载失败，无法显示平面可视化</div>';
+                return;
+            }
+            
+            const planeTypeSelect = document.getElementById('plane-type');
+            const coeffARange = document.getElementById('coeff-a');
+            const coeffBRange = document.getElementById('coeff-b');
+            const coeffCRange = document.getElementById('coeff-c');
+            const coeffADisplay = document.getElementById('coeff-a-display');
+            const coeffBDisplay = document.getElementById('coeff-b-display');
+            const coeffCDisplay = document.getElementById('coeff-c-display');
+            
+            if (!planeTypeSelect || !coeffARange || !coeffBRange || !coeffCRange) {
+                console.error('平面可视化控制元素未找到');
+                return;
+            }
+            
+            function updatePlot() {
+                try {
+                    const A = parseFloat(coeffARange.value);
+                    const B = parseFloat(coeffBRange.value);
+                    const C = parseFloat(coeffCRange.value);
+                    const D = -2; // 固定D值
+                    
+                    coeffADisplay.textContent = A.toFixed(1);
+                    coeffBDisplay.textContent = B.toFixed(1);
+                    coeffCDisplay.textContent = C.toFixed(1);
+                    
+                    // 生成平面数据
+                    const x = [], y = [], z = [];
+                    const size = 20;
+                    
+                    for (let i = 0; i < size; i++) {
+                        const xRow = [], yRow = [], zRow = [];
+                        for (let j = 0; j < size; j++) {
+                            const xi = -3 + i * 6 / (size - 1);
+                            const yi = -3 + j * 6 / (size - 1);
+                            
+                            // 根据平面方程 Ax + By + Cz + D = 0 求 z
+                            let zi;
+                            if (Math.abs(C) > 0.01) {
+                                zi = -(A * xi + B * yi + D) / C;
+                            } else {
+                                zi = 0; // 如果C接近0，设置z为0
+                            }
+                            
+                            xRow.push(xi);
+                            yRow.push(yi);
+                            zRow.push(zi);
+                        }
+                        x.push(xRow);
+                        y.push(yRow);
+                        z.push(zRow);
+                    }
+                    
+                    const planeType = planeTypeSelect.value;
+                    let title = '';
+                    
+                    switch(planeType) {
+                        case 'general':
+                            title = `一般式方程: ${A.toFixed(1)}x + ${B.toFixed(1)}y + ${C.toFixed(1)}z + ${D} = 0`;
+                            break;
+                        case 'point-normal':
+                            title = `点法式方程: ${A.toFixed(1)}(x-1) + ${B.toFixed(1)}(y-1) + ${C.toFixed(1)}(z-1) = 0`;
+                            break;
+                        case 'intercept':
+                            const a = -D/A, b = -D/B, c = -D/C;
+                            if (Math.abs(A) > 0.01 && Math.abs(B) > 0.01 && Math.abs(C) > 0.01) {
+                                title = `截距式方程: x/${a.toFixed(1)} + y/${b.toFixed(1)} + z/${c.toFixed(1)} = 1`;
+                            } else {
+                                title = '截距式方程（某轴截距为无穷大）';
+                            }
+                            break;
+                    }
+                    
+                    const trace = {
+                        x: x,
+                        y: y,
+                        z: z,
+                        type: 'surface',
+                        colorscale: [
+                            [0, '#a8e6cf'],
+                            [0.5, '#16a085'],
+                            [1, '#138d75']
+                        ],
+                        opacity: 0.8,
+                        showscale: false
+                    };
+                    
+                    // 添加法向量
+                    const normalTrace = {
+                        x: [0, A],
+                        y: [0, B],
+                        z: [0, C],
+                        type: 'scatter3d',
+                        mode: 'lines+markers',
+                        line: { color: '#e74c3c', width: 5 },
+                        marker: { color: '#e74c3c', size: 5 },
+                        name: '法向量'
+                    };
+                    
+                    const layout = {
+                        title: title,
+                        scene: {
+                            xaxis: { title: 'X', range: [-3, 3] },
+                            yaxis: { title: 'Y', range: [-3, 3] },
+                            zaxis: { title: 'Z', range: [-3, 3] },
+                            aspectmode: 'cube'
+                        },
+                        showlegend: true,
+                        margin: { l: 0, r: 0, t: 50, b: 0 },
+                        font: { family: 'Microsoft YaHei', size: 12 }
+                    };
+                    
+                    Plotly.newPlot(plotDiv, [trace, normalTrace], layout, {responsive: true});
+                } catch (error) {
+                    console.error('平面可视化更新失败:', error);
+                }
+            }
+            
+            // 事件监听器
+            planeTypeSelect.addEventListener('change', updatePlot);
+            coeffARange.addEventListener('input', updatePlot);
+            coeffBRange.addEventListener('input', updatePlot);
+            coeffCRange.addEventListener('input', updatePlot);
+            
+            // 初始化
+            updatePlot();
+        }
+        
+        // 页面加载动画
+        function initializeAnimations() {
+            const contentSections = document.querySelectorAll('.content-section');
+            if (contentSections.length > 0 && typeof gsap !== 'undefined') {
+                gsap.from('.content-section', {
+                    duration: 0.8,
+                    y: 30,
+                    opacity: 0,
+                    stagger: 0.2,
+                    ease: "power2.out"
+                });
+            }
+            
+            const planeCards = document.querySelectorAll('.plane-card');
+            if (planeCards.length > 0 && typeof gsap !== 'undefined') {
+                gsap.from('.plane-card', {
+                    duration: 0.6,
+                    scale: 0.8,
+                    opacity: 0,
+                    stagger: 0.1,
+                    delay: 1,
+                    ease: "back.out(1.7)"
+                });
+            }
+        }
+        
+        // 滚动触发动画
+        function setupScrollAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && typeof gsap !== 'undefined') {
+                        gsap.from(entry.target.querySelectorAll('.definition, .theorem, .example'), {
+                            duration: 0.6,
+                            y: 20,
+                            opacity: 0,
+                            stagger: 0.1,
+                            ease: "power2.out"
+                        });
+                    }
+                });
+            }, { threshold: 0.2 });
+            
+            document.querySelectorAll('.content-section').forEach(section => {
+                observer.observe(section);
+            });
+        }
+        
+        // 更新库状态指示器
+        function updateLibraryStatus() {
+            const statusDiv = document.getElementById('library-status');
+            const statusContent = document.getElementById('status-content');
+            
+            if (!statusDiv || !statusContent) return;
+            
+            const libs = {
+                'Plotly': typeof Plotly !== 'undefined',
+                'GSAP': typeof gsap !== 'undefined',
+                'MathJax': typeof MathJax !== 'undefined'
+            };
+            
+            const loadedCount = Object.values(libs).filter(loaded => loaded).length;
+            const totalCount = Object.keys(libs).length;
+            
+            if (loadedCount === totalCount) {
+                statusContent.innerHTML = '✅ 所有可视化库加载完成';
+                setTimeout(() => {
+                    statusDiv.style.display = 'none';
+                }, 3000);
+            } else if (loadedCount > 0) {
+                statusContent.innerHTML = `⏳ 可视化库加载中... (${loadedCount}/${totalCount})`;
+                statusDiv.style.display = 'block';
+            } else {
+                statusContent.innerHTML = '⚠️ 正在加载可视化库，请稍候...';
+                statusDiv.style.display = 'block';
+            }
+            
+            // 显示具体哪些库加载失败
+            const failedLibs = Object.entries(libs).filter(([name, loaded]) => !loaded).map(([name]) => name);
+            if (failedLibs.length > 0 && loadedCount < totalCount) {
+                setTimeout(() => {
+                    if (Object.values(libs).filter(loaded => loaded).length === loadedCount) {
+                        statusContent.innerHTML = `⚠️ 部分库加载失败: ${failedLibs.join(', ')} - 相关功能可能无法正常工作`;
+                    }
+                }, 5000);
+            }
+        }
+        
+        // 页面加载时初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM Content Loaded');
+            
+            // 智能库加载检测函数
+            function checkLibraries() {
+                const libraries = {
+                    'Plotly': typeof Plotly !== 'undefined',
+                    'GSAP': typeof gsap !== 'undefined',
+                    'MathJax': typeof MathJax !== 'undefined'
+                };
+                
+                console.log('库加载状态:', libraries);
+                return libraries;
+            }
+            
+            // 延迟初始化函数
+            function initializeWithRetry(attempt = 1, maxAttempts = 3) {
+                console.log(`初始化尝试 ${attempt}/${maxAttempts}`);
+                
+                const libs = checkLibraries();
+                updateLibraryStatus(); // 更新状态指示器
+                
+                // 初始化Plotly可视化
+                if (libs.Plotly) {
+                    try {
+                        createPlaneVisualization();
+                        console.log('Plotly 可视化初始化完成');
+                    } catch (error) {
+                        console.error('Plotly 可视化初始化失败:', error);
+                    }
+                } else if (attempt < maxAttempts) {
+                    console.log('Plotly未加载，准备重试...');
+                    setTimeout(() => initializeWithRetry(attempt + 1, maxAttempts), 1000);
+                    return;
+                } else {
+                    console.error('Plotly 加载失败，跳过相关可视化');
+                }
+                
+                // 初始化动画（GSAP可选）
+                try {
+                    initializeAnimations();
+                    setupScrollAnimations();
+                    console.log('动画初始化完成');
+                } catch (error) {
+                    console.error('动画初始化失败:', error);
+                }
+            }
+            
+            // 等待一定时间后开始初始化
+            setTimeout(() => {
+                console.log('开始智能初始化可视化');
+                updateLibraryStatus(); // 初始状态更新
+                initializeWithRetry();
+            }, 800);
+            
+            // MathJax 加载完成后的回调
+            if (typeof MathJax !== 'undefined') {
+                MathJax.startup.promise.then(() => {
+                    console.log('MathJax loaded successfully');
+                });
+            } else {
+                console.warn('MathJax 未加载');
+            }
+        });
+    </script>
+</body>
+</html>

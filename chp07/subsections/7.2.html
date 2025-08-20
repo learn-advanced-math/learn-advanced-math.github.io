@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="alternate icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTUiIGZpbGw9IiMzNDk4ZGIiIHN0cm9rZT0iIzJjM2U1MCIgc3Ryb2tlLXdpZHRoPSIyIi8+PGcgZmlsbD0id2hpdGUiIGZvbnQtZmFtaWx5PSJUaW1lcyxzZXJpZiIgZm9udC13ZWlnaHQ9ImJvbGQiPjx0ZXh0IHg9IjE2IiB5PSIxMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxMiI+ZDwvdGV4dD48bGluZSB4MT0iOCIgeTE9IjE2IiB4Mj0iMjQiIHkyPSIxNiIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjUiLz48dGV4dCB4PSIxNiIgeT0iMjUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTAiPmR4PC90ZXh0PjwvZz48L3N2Zz4=">
+    <title>7.2 可分离变量的微分方程 - 高等数学复习</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']]
+            },
+            chtml: {
+                fontURL: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2'
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.26.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 50%, #9b59b6 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 20px;
+            color: #8e44ad;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 15px;
+            border-radius: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .back-link:hover {
+            color: #9b59b6;
+            transform: translateX(-5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+        
+        .back-link::before {
+            content: '←';
+            margin-right: 8px;
+            font-size: 1.2em;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            margin: 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            font-weight: 300;
+        }
+        
+        .subtitle {
+            font-size: 1.1em;
+            margin-top: 10px;
+            opacity: 0.9;
+        }
+        
+        .content-section {
+            background: white;
+            margin: 25px 0;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .content-section:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .section-header {
+            padding: 20px 30px;
+            background: linear-gradient(45deg, #8e44ad, #9b59b6);
+            color: white;
+        }
+        
+        .section-header h2 {
+            margin: 0;
+            font-size: 1.6em;
+            font-weight: 400;
+        }
+        
+        .section-content {
+            padding: 30px;
+        }
+        
+        .definition {
+            background: linear-gradient(135deg, #f4f0f8, #ece2f0);
+            border-left: 5px solid #8e44ad;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(142, 68, 173, 0.1);
+        }
+        
+        .definition h4 {
+            margin: 0 0 15px 0;
+            color: #8e44ad;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .theorem {
+            background: linear-gradient(135deg, #fef9e7, #fcf4dd);
+            border-left: 5px solid #f39c12;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(243, 156, 18, 0.1);
+        }
+        
+        .theorem h4 {
+            margin: 0 0 15px 0;
+            color: #f39c12;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .example {
+            background: linear-gradient(135deg, #ebf3fd, #d6e9f8);
+            border-left: 5px solid #3498db;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(52, 152, 219, 0.1);
+        }
+        
+        .example h4 {
+            margin: 0 0 15px 0;
+            color: #3498db;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .practice-problem {
+            background: linear-gradient(135deg, #fdf2e9, #fbeee0);
+            border-left: 5px solid #e67e22;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(230, 126, 34, 0.1);
+        }
+        
+        .practice-problem h4 {
+            margin: 0 0 15px 0;
+            color: #e67e22;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .difficulty {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: 500;
+            margin-left: 10px;
+        }
+        
+        .difficulty.medium {
+            background: #f39c12;
+            color: white;
+        }
+        
+        .difficulty.hard {
+            background: #e74c3c;
+            color: white;
+        }
+        
+        .difficulty.very-hard {
+            background: #8e44ad;
+            color: white;
+        }
+        
+        .solution {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px dashed #bdc3c7;
+        }
+        
+        .solution-header {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+        
+        .viz-container {
+            width: 100%;
+            height: 400px;
+            margin: 25px 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 40px;
+            padding: 20px 0;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 25px;
+            background: linear-gradient(45deg, #8e44ad, #9b59b6);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 15px rgba(142, 68, 173, 0.3);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(142, 68, 173, 0.4);
+        }
+        
+        .btn.prev::before {
+            content: '←';
+            margin-right: 8px;
+            font-size: 1.1em;
+        }
+        
+        .btn.next::after {
+            content: '→';
+            margin-left: 8px;
+            font-size: 1.1em;
+        }
+        
+        footer {
+            text-align: center;
+            color: white;
+            padding: 30px 0;
+            opacity: 0.9;
+            margin-top: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        footer p {
+            text-align: center;
+            margin: 0;
+        }
+        
+        .math-expression {
+            text-align: center;
+            margin: 15px 0;
+            font-size: 1.1em;
+        }
+        
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        .highlight {
+            background: linear-gradient(135deg, #fff3cd, #fce4a0);
+            padding: 15px;
+            border-left: 4px solid #ffc107;
+            border-radius: 0 8px 8px 0;
+            margin: 15px 0;
+        }
+        
+        .steps {
+            background: linear-gradient(135deg, #e8f4fd, #d1ecf1);
+            border-left: 4px solid #17a2b8;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+        }
+        
+        .steps h5 {
+            color: #17a2b8;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        
+        .step-item {
+            margin: 10px 0;
+            padding: 10px 15px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 8px;
+            border-left: 3px solid #17a2b8;
+        }
+        
+        .step-number {
+            font-weight: bold;
+            color: #17a2b8;
+            margin-right: 10px;
+        }
+        
+        .memory-tip {
+            background: linear-gradient(135deg, #fff0f6, #ffe6f3);
+            border: 1px solid #f8d7da;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        .memory-tip::before {
+            content: '💡';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            background: white;
+            padding: 0 10px;
+            font-size: 1.2em;
+        }
+        
+        .memory-tip h4 {
+            color: #8e44ad;
+            margin-bottom: 15px;
+            margin-top: 10px;
+        }
+
+        /* AI提示方块样式 */
+        .ai-warning {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            border: 2px solid #e0e0e0;
+        }
+        
+        .ai-warning:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            border-color: #ff4444;
+        }
+        
+        .ai-warning::before {
+            content: '!';
+            color: #e74c3c;
+            font-size: 20px;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+        }
+        
+        .ai-warning-tooltip {
+            position: absolute;
+            top: 50px;
+            left: 0;
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 16px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            line-height: 1.5;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1001;
+            width: 250px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .ai-warning-tooltip::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: 20px;
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid rgba(0, 0, 0, 0.9);
+        }
+        
+        .ai-warning:hover .ai-warning-tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .section-content {
+                padding: 20px;
+            }
+            
+            .definition, .theorem, .example, .practice-problem {
+                padding: 20px;
+            }
+            
+            .nav-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .ai-warning {
+                width: 35px;
+                height: 35px;
+                top: 15px;
+                left: 15px;
+            }
+            
+            .ai-warning::before {
+                font-size: 18px;
+            }
+            
+            .ai-warning-tooltip {
+                width: 280px;
+                font-size: 13px;
+                padding: 14px 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- AI内容提示 -->
+    <div class="ai-warning">
+        <div class="ai-warning-tooltip">
+            页面内容由AI生成，请谨慎对待。<br>如发现错误，欢迎反馈。
+        </div>
+    </div>
+    
+    <div class="container">
+        <a href="../index.html" class="back-link">返回章节概览</a>
+        
+        <header>
+            <h1>7.2 可分离变量的微分方程</h1>
+            <div class="subtitle">Separable Variables Differential Equations</div>
+        </header>
+        
+        <!-- 可分离变量微分方程的定义 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>7.2.1 可分离变量微分方程的概念</h2>
+            </div>
+            <div class="section-content">
+                <div class="definition">
+                    <h4>可分离变量的微分方程</h4>
+                    <p>如果一阶微分方程可以写成：</p>
+                    $$\frac{dy}{dx} = f(x)g(y)$$
+                    <p>的形式，其中 $f(x)$ 仅含自变量 $x$，$g(y)$ 仅含未知函数 $y$，则称此微分方程为<strong>可分离变量的微分方程</strong>。</p>
+                </div>
+                
+                <div class="definition">
+                    <h4>分离变量法</h4>
+                    <p>求解可分离变量微分方程的方法称为<strong>分离变量法</strong>，其基本思想是将方程中的变量 $x$ 和 $y$ 分别移到等号的两边。</p>
+                </div>
+                
+                <div class="highlight">
+                    <p><strong>注意：</strong>能化为 $\frac{dy}{dx} = f(x)g(y)$ 形式的微分方程都可以用分离变量法求解。</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 求解步骤 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>7.2.2 可分离变量微分方程的求解步骤</h2>
+            </div>
+            <div class="section-content">
+                <div class="steps">
+                    <h5>标准求解步骤</h5>
+                    <div class="step-item">
+                        <span class="step-number">步骤1：</span>将微分方程化为 $\frac{dy}{dx} = f(x)g(y)$ 的形式
+                    </div>
+                    <div class="step-item">
+                        <span class="step-number">步骤2：</span>分离变量，得到 $\frac{dy}{g(y)} = f(x)dx$
+                    </div>
+                    <div class="step-item">
+                        <span class="step-number">步骤3：</span>两边同时积分：$\int \frac{dy}{g(y)} = \int f(x)dx$
+                    </div>
+                    <div class="step-item">
+                        <span class="step-number">步骤4：</span>求出积分，得到通解
+                    </div>
+                    <div class="step-item">
+                        <span class="step-number">步骤5：</span>如有初始条件，代入求出特解
+                    </div>
+                </div>
+                
+                <div class="theorem">
+                    <h4>理论依据</h4>
+                    <p>分离变量法的理论基础是<strong>复合函数的积分法则</strong>：</p>
+                    <p>如果 $y = y(x)$，则：</p>
+                    $$\int \frac{1}{g(y)} \frac{dy}{dx} dx = \int \frac{1}{g(y)} dy$$
+                    <p>这是因为：$\frac{d}{dx}\left(\int \frac{1}{g(y)} dy\right) = \frac{1}{g(y)} \frac{dy}{dx}$</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 例题1 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>7.2.3 典型例题解析</h2>
+            </div>
+            <div class="section-content">
+                <div class="example">
+                    <h4>例题1：基础分离变量</h4>
+                    <p>求解微分方程：$\frac{dy}{dx} = 2xy$</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解题过程：</div>
+                        <p><strong>步骤1：</strong>识别方程类型</p>
+                        <p>方程已经是 $\frac{dy}{dx} = f(x)g(y)$ 的形式，其中 $f(x) = 2x$，$g(y) = y$</p>
+                        
+                        <p><strong>步骤2：</strong>分离变量</p>
+                        <p>当 $y \neq 0$ 时，将变量分离：</p>
+                        $$\frac{dy}{y} = 2x dx$$
+                        
+                        <p><strong>步骤3：</strong>两边积分</p>
+                        $$\int \frac{dy}{y} = \int 2x dx$$
+                        $$\ln|y| = x^2 + C_1$$
+                        
+                        <p><strong>步骤4：</strong>求通解</p>
+                        $$|y| = e^{x^2 + C_1} = e^{C_1} \cdot e^{x^2}$$
+                        <p>设 $C = \pm e^{C_1}$，得到：</p>
+                        $$y = Ce^{x^2}$$
+                        
+                        <p><strong>步骤5：</strong>验证特殊解</p>
+                        <p>当 $y = 0$ 时，代入原方程得 $0 = 0$，所以 $y = 0$ 也是解。</p>
+                        <p>这相当于 $C = 0$ 的情况，因此通解为：</p>
+                        $$y = Ce^{x^2} \quad (C \text{为任意常数})$$
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <h4>例题2：需要变形的分离变量方程</h4>
+                    <p>求解微分方程：$(1 + x^2)dy - xy dx = 0$</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解题过程：</div>
+                        <p><strong>步骤1：</strong>将方程变形为标准形式</p>
+                        $$(1 + x^2)dy = xy dx$$
+                        $$\frac{dy}{dx} = \frac{xy}{1 + x^2}$$
+                        
+                        <p><strong>步骤2：</strong>分离变量</p>
+                        <p>当 $y \neq 0$ 时：</p>
+                        $$\frac{dy}{y} = \frac{x dx}{1 + x^2}$$
+                        
+                        <p><strong>步骤3：</strong>两边积分</p>
+                        $$\int \frac{dy}{y} = \int \frac{x dx}{1 + x^2}$$
+                        <p>左边：$\ln|y|$</p>
+                        <p>右边：设 $u = 1 + x^2$，则 $du = 2x dx$</p>
+                        $$\int \frac{x dx}{1 + x^2} = \frac{1}{2}\int \frac{du}{u} = \frac{1}{2}\ln|u| = \frac{1}{2}\ln(1 + x^2)$$
+                        
+                        <p><strong>步骤4：</strong>求通解</p>
+                        $$\ln|y| = \frac{1}{2}\ln(1 + x^2) + C_1$$
+                        $$|y| = e^{C_1} \sqrt{1 + x^2}$$
+                        $$y = C\sqrt{1 + x^2} \quad (C \text{为任意常数})$$
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <h4>例题3：带初始条件的微分方程</h4>
+                    <p>求解初值问题：$\frac{dy}{dx} = \frac{y^2}{x^2}$，$y(1) = 1$</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解题过程：</div>
+                        <p><strong>步骤1：</strong>分离变量</p>
+                        <p>当 $y \neq 0$，$x \neq 0$ 时：</p>
+                        $$\frac{dy}{y^2} = \frac{dx}{x^2}$$
+                        
+                        <p><strong>步骤2：</strong>两边积分</p>
+                        $$\int y^{-2} dy = \int x^{-2} dx$$
+                        $$-\frac{1}{y} = -\frac{1}{x} + C$$
+                        
+                        <p><strong>步骤3：</strong>求通解</p>
+                        $$\frac{1}{y} = \frac{1}{x} - C$$
+                        $$y = \frac{x}{1 - Cx}$$
+                        
+                        <p><strong>步骤4：</strong>利用初始条件求特解</p>
+                        <p>代入 $y(1) = 1$：</p>
+                        $$1 = \frac{1}{1 - C \cdot 1} = \frac{1}{1 - C}$$
+                        $$1 - C = 1 \Rightarrow C = 0$$
+                        
+                        <p><strong>步骤5：</strong>特解</p>
+                        $$y = \frac{x}{1} = x$$
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 可视化演示 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>7.2.4 解曲线族的可视化演示</h2>
+            </div>
+            <div class="section-content">
+                <p>下图展示了微分方程 $\frac{dy}{dx} = 2xy$ 的解曲线族 $y = Ce^{x^2}$：</p>
+                <div class="viz-container" id="solutionCurves"></div>
+                
+                <div class="memory-tip">
+                    <h4>记忆技巧</h4>
+                    <ul>
+                        <li><strong>识别口诀：</strong>"左右分家，各自积分"</li>
+                        <li><strong>分离原则：</strong>$x$ 的函数放一边，$y$ 的函数放另一边</li>
+                        <li><strong>积分要点：</strong>别忘记积分常数，通常只需要一个</li>
+                        <li><strong>特殊情况：</strong>分母为零的情况需要单独讨论</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 练习题 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>7.2.5 练习题</h2>
+            </div>
+            <div class="section-content">
+                <div class="practice-problem">
+                    <h4>习题1 <span class="difficulty medium">中等难度</span></h4>
+                    <p>求解微分方程：$\frac{dy}{dx} = \frac{x}{y}$</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解题步骤：</div>
+                        <p><strong>步骤1：</strong>分离变量</p>
+                        <p>当 $y \neq 0$ 时：$y dy = x dx$</p>
+                        
+                        <p><strong>步骤2：</strong>两边积分</p>
+                        $$\int y dy = \int x dx$$
+                        $$\frac{y^2}{2} = \frac{x^2}{2} + C_1$$
+                        
+                        <p><strong>步骤3：</strong>整理得通解</p>
+                        $$y^2 = x^2 + C \quad (C = 2C_1)$$
+                        <p>或写成：$y^2 - x^2 = C$</p>
+                        <p>这表示双曲线族。</p>
+                    </div>
+                </div>
+                
+                <div class="practice-problem">
+                    <h4>习题2 <span class="difficulty hard">较难</span></h4>
+                    <p>求解微分方程：$\frac{dy}{dx} = \frac{1 + y^2}{1 + x^2}$</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解题步骤：</div>
+                        <p><strong>步骤1：</strong>分离变量</p>
+                        $$\frac{dy}{1 + y^2} = \frac{dx}{1 + x^2}$$
+                        
+                        <p><strong>步骤2：</strong>两边积分</p>
+                        $$\int \frac{dy}{1 + y^2} = \int \frac{dx}{1 + x^2}$$
+                        
+                        <p><strong>步骤3：</strong>利用标准积分公式</p>
+                        <p>$\int \frac{dt}{1 + t^2} = \arctan t + C$</p>
+                        $$\arctan y = \arctan x + C$$
+                        
+                        <p><strong>步骤4：</strong>求通解</p>
+                        $$y = \tan(\arctan x + C)$$
+                        <p>利用三角恒等式：</p>
+                        $$y = \frac{\tan(\arctan x) + \tan C}{1 - \tan(\arctan x)\tan C} = \frac{x + \tan C}{1 - x\tan C}$$
+                        <p>设 $k = \tan C$，则通解为：</p>
+                        $$y = \frac{x + k}{1 - kx}$$
+                    </div>
+                </div>
+                
+                <div class="practice-problem">
+                    <h4>习题3 <span class="difficulty very-hard">很难</span></h4>
+                    <p>求解初值问题：$x(1 + y^2)dx + y(1 + x^2)dy = 0$，$y(0) = 1$</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解题步骤：</div>
+                        <p><strong>步骤1：</strong>重新整理方程</p>
+                        $$x(1 + y^2)dx = -y(1 + x^2)dy$$
+                        $$\frac{x dx}{1 + x^2} = -\frac{y dy}{1 + y^2}$$
+                        
+                        <p><strong>步骤2：</strong>两边积分</p>
+                        $$\int \frac{x dx}{1 + x^2} = -\int \frac{y dy}{1 + y^2}$$
+                        
+                        <p><strong>步骤3：</strong>计算积分</p>
+                        <p>左边：设 $u = 1 + x^2$，则 $du = 2x dx$</p>
+                        $$\int \frac{x dx}{1 + x^2} = \frac{1}{2}\ln(1 + x^2)$$
+                        <p>右边：同理</p>
+                        $$-\int \frac{y dy}{1 + y^2} = -\frac{1}{2}\ln(1 + y^2)$$
+                        
+                        <p><strong>步骤4：</strong>得到通解</p>
+                        $$\frac{1}{2}\ln(1 + x^2) = -\frac{1}{2}\ln(1 + y^2) + C_1$$
+                        $$\ln(1 + x^2) + \ln(1 + y^2) = C$$
+                        $$(1 + x^2)(1 + y^2) = K \quad (K = e^C)$$
+                        
+                        <p><strong>步骤5：</strong>利用初始条件</p>
+                        <p>代入 $y(0) = 1$：</p>
+                        $$(1 + 0)(1 + 1) = K \Rightarrow K = 2$$
+                        
+                        <p><strong>步骤6：</strong>特解</p>
+                        $$(1 + x^2)(1 + y^2) = 2$$
+                        $$1 + y^2 = \frac{2}{1 + x^2}$$
+                        $$y^2 = \frac{2}{1 + x^2} - 1 = \frac{1 - x^2}{1 + x^2}$$
+                        <p>由于 $y(0) = 1 > 0$，取正号：</p>
+                        $$y = \sqrt{\frac{1 - x^2}{1 + x^2}} = \frac{\sqrt{1 - x^2}}{\sqrt{1 + x^2}}$$
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="nav-buttons">
+            <a href="7.1.html" class="btn prev">上一节：7.1 微分方程的基本概念</a>
+            <a href="7.3.html" class="btn next">下一节：7.3 齐次方程</a>
+        </div>
+        
+        <footer>
+            <p>&copy; 2024 高等数学复习系统 | 专注于数学可视化教学</p>
+        </footer>
+    </div>
+
+    <script>
+        // 解曲线族可视化
+        function plotSolutionCurves() {
+            const x = [];
+            const traces = [];
+            
+            // 生成x轴数据点
+            for (let i = -2; i <= 2; i += 0.05) {
+                x.push(i);
+            }
+            
+            // 不同C值对应的解曲线
+            const cValues = [-2, -1, -0.5, -0.1, 0.1, 0.5, 1, 2];
+            const colors = ['#e74c3c', '#f39c12', '#f1c40f', '#2ecc71', '#3498db', '#9b59b6', '#e67e22', '#1abc9c'];
+            
+            cValues.forEach((c, index) => {
+                const y = x.map(xi => {
+                    const val = c * Math.exp(xi * xi);
+                    return Math.abs(val) < 10 ? val : null; // 限制显示范围
+                });
+                
+                traces.push({
+                    x: x,
+                    y: y,
+                    type: 'scatter',
+                    mode: 'lines',
+                    name: `C = ${c}`,
+                    line: {
+                        color: colors[index],
+                        width: 2
+                    }
+                });
+            });
+            
+            const layout = {
+                title: {
+                    text: '微分方程 dy/dx = 2xy 的解曲线族 y = Ce^(x²)',
+                    font: { size: 16, color: '#2c3e50' }
+                },
+                xaxis: {
+                    title: 'x',
+                    range: [-2, 2],
+                    gridcolor: '#ecf0f1',
+                    zerolinecolor: '#bdc3c7'
+                },
+                yaxis: {
+                    title: 'y',
+                    range: [-10, 10],
+                    gridcolor: '#ecf0f1',
+                    zerolinecolor: '#bdc3c7'
+                },
+                plot_bgcolor: '#fafafa',
+                paper_bgcolor: 'white',
+                font: { family: 'Microsoft YaHei, Arial' },
+                legend: {
+                    orientation: 'v',
+                    x: 1.02,
+                    y: 1
+                },
+                margin: { t: 50, r: 150, b: 50, l: 50 }
+            };
+            
+            Plotly.newPlot('solutionCurves', traces, layout, {responsive: true});
+        }
+        
+        // 页面加载完成后执行可视化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 等待MathJax渲染完成
+            if (window.MathJax) {
+                MathJax.startup.promise.then(() => {
+                    plotSolutionCurves();
+                });
+            } else {
+                plotSolutionCurves();
+            }
+            
+            // 添加页面元素动画
+            gsap.from('.content-section', {
+                duration: 0.8,
+                y: 50,
+                opacity: 0,
+                stagger: 0.2,
+                ease: 'power2.out'
+            });
+        });
+    </script>
+</body>
+</html>

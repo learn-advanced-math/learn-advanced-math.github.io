@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="alternate icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTUiIGZpbGw9IiMzNDk4ZGIiIHN0cm9rZT0iIzJjM2U1MCIgc3Ryb2tlLXdpZHRoPSIyIi8+PGcgZmlsbD0id2hpdGUiIGZvbnQtZmFtaWx5PSJUaW1lcyxzZXJpZiIgZm9udC13ZWlnaHQ9ImJvbGQiPjx0ZXh0IHg9IjE2IiB5PSIxMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxMiI+ZDwvdGV4dD48bGluZSB4MT0iOCIgeTE9IjE2IiB4Mj0iMjQiIHkyPSIxNiIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjUiLz48dGV4dCB4PSIxNiIgeT0iMjUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTAiPmR4PC90ZXh0PjwvZz48L3N2Zz4=">
+    <title>5.4 反常积分 - 高等数学复习</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']]
+            },
+            chtml: {
+                fontURL: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2'
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 20px;
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 15px;
+            border-radius: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .back-link:hover {
+            color: #2980b9;
+            transform: translateX(-5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+        
+        .back-link::before {
+            content: '←';
+            margin-right: 8px;
+            font-size: 1.2em;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #8e44ad 0%, #6c3483 100%);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            margin: 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            font-weight: 300;
+        }
+        
+        .subtitle {
+            font-size: 1.1em;
+            margin-top: 10px;
+            opacity: 0.9;
+        }
+        
+        .content-section {
+            background: white;
+            margin: 25px 0;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .content-section:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .section-header {
+            padding: 20px 30px;
+            background: linear-gradient(45deg, #8e44ad, #6c3483);
+            color: white;
+        }
+        
+        .section-header h2 {
+            margin: 0;
+            font-size: 1.6em;
+            font-weight: 400;
+        }
+        
+        .section-content {
+            padding: 30px;
+        }
+        
+        .definition {
+            background: linear-gradient(135deg, #f4f0f8, #ece2f0);
+            border-left: 5px solid #8e44ad;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(142, 68, 173, 0.1);
+        }
+        
+        .definition h4 {
+            margin: 0 0 15px 0;
+            color: #8e44ad;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .theorem {
+            background: linear-gradient(135deg, #fef9e7, #fcf4dd);
+            border-left: 5px solid #f39c12;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(243, 156, 18, 0.1);
+        }
+        
+        .theorem h4 {
+            margin: 0 0 15px 0;
+            color: #f39c12;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .example {
+            background: linear-gradient(135deg, #ebf3fd, #d6e9f8);
+            border-left: 5px solid #3498db;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(52, 152, 219, 0.1);
+        }
+        
+        .example h4 {
+            margin: 0 0 15px 0;
+            color: #3498db;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .practice-problem {
+            background: linear-gradient(135deg, #fdf2e9, #fbeee0);
+            border-left: 5px solid #8e44ad;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(142, 68, 173, 0.1);
+        }
+        
+        .practice-problem h4 {
+            margin: 0 0 15px 0;
+            color: #8e44ad;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .difficulty {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: 500;
+            margin-left: 10px;
+        }
+        
+        .difficulty.medium {
+            background: #f39c12;
+            color: white;
+        }
+        
+        .difficulty.hard {
+            background: #e74c3c;
+            color: white;
+        }
+        
+        .difficulty.very-hard {
+            background: #8e44ad;
+            color: white;
+        }
+        
+        .solution {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px dashed #bdc3c7;
+        }
+        
+        .solution-header {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+        
+        .viz-container {
+            width: 100%;
+            height: 400px;
+            margin: 25px 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 40px;
+            padding: 20px 0;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 25px;
+            background: linear-gradient(45deg, #8e44ad, #6c3483);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 15px rgba(142, 68, 173, 0.3);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(142, 68, 173, 0.4);
+        }
+        
+        .btn.prev::before {
+            content: '←';
+            margin-right: 8px;
+            font-size: 1.1em;
+        }
+        
+        .btn.next::after {
+            content: '→';
+            margin-left: 8px;
+            font-size: 1.1em;
+        }
+        
+        footer {
+            text-align: center;
+            color: white;
+            padding: 30px 0;
+            opacity: 0.9;
+            margin-top: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        footer p {
+            text-align: center;
+            margin: 0;
+        }
+        
+        .math-expression {
+            text-align: center;
+            margin: 15px 0;
+            font-size: 1.1em;
+        }
+        
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        .highlight {
+            background: linear-gradient(135deg, #fff3cd, #fce4a0);
+            padding: 15px;
+            border-left: 4px solid #ffc107;
+            border-radius: 0 8px 8px 0;
+            margin: 15px 0;
+        }
+        
+        .convergence-comparison {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .convergence-card {
+            background: linear-gradient(135deg, #dda0dd 0%, #c8a2c8 100%);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(221, 160, 221, 0.3);
+            text-align: center;
+        }
+        
+        .convergence-card h5 {
+            color: #6c3483;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+        
+        .step-by-step {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #6c757d;
+        }
+        
+        .step {
+            margin: 10px 0;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+            border-left: 3px solid #8e44ad;
+        }
+        
+        .step-number {
+            display: inline-block;
+            background: #8e44ad;
+            color: white;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            text-align: center;
+            line-height: 25px;
+            font-size: 0.9em;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .integral-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .integral-type {
+            background: linear-gradient(135deg, #f8f9fc, #e9ecef);
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #8e44ad;
+            box-shadow: 0 2px 10px rgba(142, 68, 173, 0.1);
+        }
+        
+        .integral-type h6 {
+            color: #8e44ad;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+        
+        .warning {
+            background: linear-gradient(135deg, #fee2e2, #fecaca);
+            border-left: 4px solid #ef4444;
+            padding: 15px;
+            border-radius: 0 8px 8px 0;
+            margin: 15px 0;
+        }
+        
+        .warning h5 {
+            color: #dc2626;
+            margin-bottom: 10px;
+        }
+
+        /* AI提示方块样式 */
+        .ai-warning {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            border: 2px solid #e0e0e0;
+        }
+        
+        .ai-warning:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            border-color: #ff4444;
+        }
+        
+        .ai-warning::before {
+            content: '!';
+            color: #e74c3c;
+            font-size: 20px;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+        }
+        
+        .ai-warning-tooltip {
+            position: absolute;
+            top: 50px;
+            left: 0;
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 16px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            line-height: 1.5;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1001;
+            width: 250px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .ai-warning-tooltip::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: 20px;
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid rgba(0, 0, 0, 0.9);
+        }
+        
+        .ai-warning:hover .ai-warning-tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .section-content {
+                padding: 20px;
+            }
+            
+            .definition, .theorem, .example, .practice-problem {
+                padding: 20px;
+            }
+            
+            .nav-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .ai-warning {
+                width: 35px;
+                height: 35px;
+                top: 15px;
+                left: 15px;
+            }
+            
+            .ai-warning::before {
+                font-size: 18px;
+            }
+            
+            .ai-warning-tooltip {
+                width: 280px;
+                font-size: 13px;
+                padding: 14px 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- AI内容提示 -->
+    <div class="ai-warning">
+        <div class="ai-warning-tooltip">
+            页面内容由AI生成，请谨慎对待。<br>如发现错误，欢迎反馈。
+        </div>
+    </div>
+    
+    <div class="container">
+        <a href="../index.html" class="back-link">返回章节概览</a>
+        
+        <header>
+            <h1>5.4 反常积分</h1>
+            <div class="subtitle">Improper Integrals</div>
+        </header>
+        
+        <!-- 5.4.1 反常积分的概念；无穷限反常积分 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>5.4.1 反常积分的概念与无穷限反常积分</h2>
+            </div>
+            <div class="section-content">
+                <div class="definition">
+                    <h4>反常积分的概念</h4>
+                    <p>普通定积分 $\int_a^b f(x) dx$ 要求：</p>
+                    <ol>
+                        <li>积分区间 $[a,b]$ 是有限的</li>
+                        <li>被积函数 $f(x)$ 在 $[a,b]$ 上有界</li>
+                    </ol>
+                    <p>如果积分区间是无限的，或者被积函数在积分区间内无界，则称为<strong>反常积分</strong>（广义积分）。</p>
+                </div>
+                
+                <div class="theorem">
+                    <h4>无穷限反常积分的定义</h4>
+                    <p><strong>第一类反常积分：</strong>积分区间无限</p>
+                    
+                    <div class="integral-types">
+                        <div class="integral-type">
+                            <h6>上限为无穷</h6>
+                            <div class="math-expression">
+                                $$\int_a^{+\infty} f(x) dx = \lim_{t \to +\infty} \int_a^t f(x) dx$$
+                            </div>
+                        </div>
+                        <div class="integral-type">
+                            <h6>下限为无穷</h6>
+                            <div class="math-expression">
+                                $$\int_{-\infty}^b f(x) dx = \lim_{t \to -\infty} \int_t^b f(x) dx$$
+                            </div>
+                        </div>
+                        <div class="integral-type">
+                            <h6>双边无穷</h6>
+                            <div class="math-expression" style="font-size: 0.85em;">
+                                $$\int_{-\infty}^{+\infty} f(x) dx = \int_{-\infty}^c f(x) dx + \int_c^{+\infty} f(x) dx$$
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="highlight">
+                        <p><strong>收敛性：</strong>如果极限存在且有限，则称反常积分收敛；否则称为发散。</p>
+                    </div>
+                </div>
+                
+                <div class="convergence-comparison">
+                    <div class="convergence-card">
+                        <h5>收敛积分</h5>
+                        <div class="math-expression">$$\int_1^{+\infty} \frac{1}{x^p} dx$$</div>
+                        <p>当 $p > 1$ 时收敛<br>当 $p \leq 1$ 时发散</p>
+                    </div>
+                    <div class="convergence-card">
+                        <h5>发散积分</h5>
+                        <div class="math-expression">$$\int_1^{+\infty} \frac{1}{x} dx = +\infty$$</div>
+                        <p>调和积分发散到无穷</p>
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <h4>例1：计算无穷限反常积分</h4>
+                    <p>计算 $\int_1^{+\infty} \frac{1}{x^2} dx$</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解：</div>
+                        <div class="step-by-step">
+                            <div class="step">
+                                <span class="step-number">1</span>
+                                根据定义：$\int_1^{+\infty} \frac{1}{x^2} dx = \lim_{t \to +\infty} \int_1^t \frac{1}{x^2} dx$
+                            </div>
+                            <div class="step">
+                                <span class="step-number">2</span>
+                                计算定积分：$\int_1^t \frac{1}{x^2} dx = \left[-\frac{1}{x}\right]_1^t = -\frac{1}{t} - (-1) = 1 - \frac{1}{t}$
+                            </div>
+                            <div class="step">
+                                <span class="step-number">3</span>
+                                求极限：$\lim_{t \to +\infty} \left(1 - \frac{1}{t}\right) = 1 - 0 = 1$
+                            </div>
+                            <div class="step">
+                                <span class="step-number">4</span>
+                                因此 $\int_1^{+\infty} \frac{1}{x^2} dx = 1$，积分收敛
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <h4>例2：双边无穷限反常积分</h4>
+                    <p>计算 $\int_{-\infty}^{+\infty} \frac{1}{1+x^2} dx$</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解：</div>
+                        <div class="step-by-step">
+                            <div class="step">
+                                <span class="step-number">1</span>
+                                分解积分：$\int_{-\infty}^{+\infty} \frac{1}{1+x^2} dx = \int_{-\infty}^0 \frac{1}{1+x^2} dx + \int_0^{+\infty} \frac{1}{1+x^2} dx$
+                            </div>
+                            <div class="step">
+                                <span class="step-number">2</span>
+                                计算右半部分：$\int_0^{+\infty} \frac{1}{1+x^2} dx = \lim_{t \to +\infty} [\arctan x]_0^t = \lim_{t \to +\infty} \arctan t = \frac{\pi}{2}$
+                            </div>
+                            <div class="step">
+                                <span class="step-number">3</span>
+                                由对称性：$\int_{-\infty}^0 \frac{1}{1+x^2} dx = \frac{\pi}{2}$
+                            </div>
+                            <div class="step">
+                                <span class="step-number">4</span>
+                                因此 $\int_{-\infty}^{+\infty} \frac{1}{1+x^2} dx = \frac{\pi}{2} + \frac{\pi}{2} = \pi$
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 5.4.2 瑕点；无界函数的反常积分 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>5.4.2 瑕点与无界函数的反常积分</h2>
+            </div>
+            <div class="section-content">
+                <div class="definition">
+                    <h4>瑕点与第二类反常积分</h4>
+                    <p>如果函数 $f(x)$ 在点 $c$ 的某个邻域内无界，则称 $c$ 为函数 $f(x)$ 的<strong>瑕点</strong>（奇点）。</p>
+                    <p><strong>第二类反常积分：</strong>被积函数在积分区间内有瑕点</p>
+                    
+                    <div class="integral-types">
+                        <div class="integral-type">
+                            <h6>右端点为瑕点</h6>
+                            <div class="math-expression">
+                                $$\int_a^b f(x) dx = \lim_{t \to b^-} \int_a^t f(x) dx$$
+                            </div>
+                        </div>
+                        <div class="integral-type">
+                            <h6>左端点为瑕点</h6>
+                            <div class="math-expression">
+                                $$\int_a^b f(x) dx = \lim_{t \to a^+} \int_t^b f(x) dx$$
+                            </div>
+                        </div>
+                        <div class="integral-type">
+                            <h6>内部瑕点</h6>
+                            <div class="math-expression" style="font-size: 0.95em;">
+                                $$\int_a^b f(x) dx = \int_a^c f(x) dx + \int_c^b f(x) dx$$
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="theorem">
+                    <h4>瑕积分的收敛判别法</h4>
+                    <p>设 $f(x)$ 在 $(a,b]$ 上连续，$x = a$ 为瑕点，则：</p>
+                    <div class="math-expression">
+                        $$\int_a^b \frac{1}{(x-a)^p} dx \text{ 当 } p < 1 \text{ 时收敛，当 } p \geq 1 \text{ 时发散}$$
+                    </div>
+                    
+                    <div class="warning">
+                        <h5>⚠️ 注意</h5>
+                        <p>瑕积分的收敛性判别与无穷限积分恰好相反：</p>
+                        <ul>
+                            <li>$\int_1^{+\infty} \frac{1}{x^p} dx$ 在 $p > 1$ 时收敛</li>
+                            <li>$\int_0^1 \frac{1}{x^p} dx$ 在 $p < 1$ 时收敛</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <h4>例3：计算瑕积分</h4>
+                    <p>计算 $\int_0^1 \frac{1}{\sqrt{x}} dx$</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解：</div>
+                        <div class="step-by-step">
+                            <div class="step">
+                                <span class="step-number">1</span>
+                                识别瑕点：$x = 0$ 是瑕点，因为 $\lim_{x \to 0^+} \frac{1}{\sqrt{x}} = +\infty$
+                            </div>
+                            <div class="step">
+                                <span class="step-number">2</span>
+                                根据定义：$\int_0^1 \frac{1}{\sqrt{x}} dx = \lim_{t \to 0^+} \int_t^1 \frac{1}{\sqrt{x}} dx$
+                            </div>
+                            <div class="step">
+                                <span class="step-number">3</span>
+                                计算定积分：$\int_t^1 \frac{1}{\sqrt{x}} dx = \int_t^1 x^{-1/2} dx = [2\sqrt{x}]_t^1 = 2 - 2\sqrt{t}$
+                            </div>
+                            <div class="step">
+                                <span class="step-number">4</span>
+                                求极限：$\lim_{t \to 0^+} (2 - 2\sqrt{t}) = 2 - 0 = 2$
+                            </div>
+                            <div class="step">
+                                <span class="step-number">5</span>
+                                因此 $\int_0^1 \frac{1}{\sqrt{x}} dx = 2$，积分收敛
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <h4>例4：内部瑕点的处理</h4>
+                    <p>计算 $\int_{-1}^1 \frac{1}{x^2} dx$</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解：</div>
+                        <div class="step-by-step">
+                            <div class="step">
+                                <span class="step-number">1</span>
+                                识别瑕点：$x = 0$ 是内部瑕点
+                            </div>
+                            <div class="step">
+                                <span class="step-number">2</span>
+                                分解积分：$\int_{-1}^1 \frac{1}{x^2} dx = \int_{-1}^0 \frac{1}{x^2} dx + \int_0^1 \frac{1}{x^2} dx$
+                            </div>
+                            <div class="step">
+                                <span class="step-number">3</span>
+                                计算右半部分：$\int_0^1 \frac{1}{x^2} dx = \lim_{t \to 0^+} \int_t^1 \frac{1}{x^2} dx = \lim_{t \to 0^+} \left[-\frac{1}{x}\right]_t^1 = \lim_{t \to 0^+} \left(-1 + \frac{1}{t}\right) = +\infty$
+                            </div>
+                            <div class="step">
+                                <span class="step-number">4</span>
+                                由于一部分发散，整个积分发散
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="practice-problem">
+                    <h4>习题1 <span class="difficulty medium">中等难度</span></h4>
+                    <p>判断积分 $\int_0^{+\infty} xe^{-x} dx$ 的敛散性，如果收敛则求其值。</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解：</div>
+                        <p>使用分部积分法：设 $u = x$，$dv = e^{-x} dx$，则 $du = dx$，$v = -e^{-x}$</p>
+                        $$\int_0^t xe^{-x} dx = [-xe^{-x}]_0^t + \int_0^t e^{-x} dx$$
+                        $$= -te^{-t} + [-e^{-x}]_0^t = -te^{-t} - e^{-t} + 1 = 1 - e^{-t}(t+1)$$
+                        <p>当 $t \to +\infty$ 时，由洛必达法则：$\lim_{t \to +\infty} \frac{t+1}{e^t} = \lim_{t \to +\infty} \frac{1}{e^t} = 0$</p>
+                        <p>因此 $\int_0^{+\infty} xe^{-x} dx = 1$，积分收敛。</p>
+                    </div>
+                </div>
+                
+                <div class="practice-problem">
+                    <h4>习题2 <span class="difficulty hard">较难</span></h4>
+                    <p>判断积分 $\int_0^1 \frac{\ln x}{x} dx$ 的敛散性。</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解：</div>
+                        <p>$x = 0$ 是瑕点，因为 $\lim_{x \to 0^+} \ln x = -\infty$</p>
+                        $$\int_0^1 \frac{\ln x}{x} dx = \lim_{t \to 0^+} \int_t^1 \frac{\ln x}{x} dx$$
+                        <p>设 $u = \ln x$，则 $du = \frac{1}{x} dx$</p>
+                        $$\int_t^1 \frac{\ln x}{x} dx = \int_{\ln t}^0 u du = \left[\frac{u^2}{2}\right]_{\ln t}^0 = 0 - \frac{(\ln t)^2}{2} = -\frac{(\ln t)^2}{2}$$
+                        <p>当 $t \to 0^+$ 时，$\ln t \to -\infty$，所以 $(\ln t)^2 \to +\infty$</p>
+                        <p>因此 $\lim_{t \to 0^+} \left(-\frac{(\ln t)^2}{2}\right) = -\infty$，积分发散。</p>
+                    </div>
+                </div>
+                
+                <div class="practice-problem">
+                    <h4>习题3 <span class="difficulty very-hard">很难</span></h4>
+                    <p>讨论积分 $\int_0^{+\infty} \frac{\sin x}{x^p} dx$ 的敛散性（$p > 0$）。</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解：</div>
+                        <p>这是一个混合型的反常积分，需要分别讨论 $x = 0$ 附近和 $x \to +\infty$ 的行为。</p>
+                        
+                        <p><strong>在 $x = 0$ 附近：</strong></p>
+                        <p>当 $x \to 0$ 时，$\sin x \sim x$，所以 $\frac{\sin x}{x^p} \sim \frac{x}{x^p} = \frac{1}{x^{p-1}}$</p>
+                        <p>积分 $\int_0^1 \frac{1}{x^{p-1}} dx$ 在 $p-1 < 1$ 即 $p < 2$ 时收敛</p>
+                        
+                        <p><strong>在 $x \to +\infty$ 处：</strong></p>
+                        <p>使用Dirichlet判别法：$\sin x$ 的原函数有界，$\frac{1}{x^p}$ 单调趋于 $0$</p>
+                        <p>当 $p > 0$ 时，积分在无穷远处收敛</p>
+                        
+                        <p><strong>结论：</strong></p>
+                        <ul>
+                            <li>当 $0 < p < 2$ 时，积分收敛</li>
+                            <li>当 $p \geq 2$ 时，积分发散</li>
+                        </ul>
+                        
+                        <p><strong>特殊情况：</strong>当 $p = 1$ 时，这就是著名的Dirichlet积分：$\int_0^{+\infty} \frac{\sin x}{x} dx = \frac{\pi}{2}$</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="nav-buttons">
+            <a href="5.3.html" class="btn prev">上一节：5.3 定积分的换元法与分部积分法</a>
+            <a href="5.5.html" class="btn next">下一节：5.5 反常积分的审敛法与Gamma函数</a>
+        </div>
+        
+        <footer>
+            <p>&copy; 2025 高等数学复习系统 - 反常积分</p>
+        </footer>
+    </div>
+
+    <script>
+        // 页面加载动画
+        function initializeAnimations() {
+            const contentSections = document.querySelectorAll('.content-section');
+            if (contentSections.length > 0 && typeof gsap !== 'undefined') {
+                gsap.from('.content-section', {
+                    duration: 0.8,
+                    y: 30,
+                    opacity: 0,
+                    stagger: 0.2,
+                    ease: "power2.out"
+                });
+            }
+            
+            const convergenceCards = document.querySelectorAll('.convergence-card');
+            if (convergenceCards.length > 0 && typeof gsap !== 'undefined') {
+                gsap.from('.convergence-card', {
+                    duration: 0.6,
+                    scale: 0.8,
+                    opacity: 0,
+                    stagger: 0.1,
+                    delay: 1,
+                    ease: "back.out(1.7)"
+                });
+            }
+            
+            const integralTypes = document.querySelectorAll('.integral-type');
+            if (integralTypes.length > 0 && typeof gsap !== 'undefined') {
+                gsap.from('.integral-type', {
+                    duration: 0.5,
+                    x: -20,
+                    opacity: 0,
+                    stagger: 0.1,
+                    delay: 1.5,
+                    ease: "power2.out"
+                });
+            }
+        }
+        
+        // 滚动触发动画
+        function setupScrollAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && typeof gsap !== 'undefined') {
+                        gsap.from(entry.target.querySelectorAll('.definition, .theorem, .example, .step'), {
+                            duration: 0.6,
+                            y: 20,
+                            opacity: 0,
+                            stagger: 0.1,
+                            ease: "power2.out"
+                        });
+                    }
+                });
+            }, { threshold: 0.2 });
+            
+            document.querySelectorAll('.content-section').forEach(section => {
+                observer.observe(section);
+            });
+        }
+        
+        // 高亮数学警告
+        function highlightMathWarnings() {
+            const warnings = document.querySelectorAll('.warning');
+            warnings.forEach(warning => {
+                warning.addEventListener('mouseenter', function() {
+                    if (typeof gsap !== 'undefined') {
+                        gsap.to(this, {
+                            scale: 1.02,
+                            duration: 0.3,
+                            ease: "power2.out"
+                        });
+                    }
+                });
+                
+                warning.addEventListener('mouseleave', function() {
+                    if (typeof gsap !== 'undefined') {
+                        gsap.to(this, {
+                            scale: 1,
+                            duration: 0.3,
+                            ease: "power2.out"
+                        });
+                    }
+                });
+            });
+        }
+        
+        // 页面加载时初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 延迟执行以确保DOM完全加载
+            setTimeout(() => {
+                initializeAnimations();
+                setupScrollAnimations();
+                highlightMathWarnings();
+            }, 500);
+            
+            // MathJax 加载完成后的回调
+            if (typeof MathJax !== 'undefined') {
+                MathJax.startup.promise.then(() => {
+                    console.log('MathJax loaded successfully');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

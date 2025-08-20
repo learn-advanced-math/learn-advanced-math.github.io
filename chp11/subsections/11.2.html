@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="alternate icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTUiIGZpbGw9IiMzNDk4ZGIiIHN0cm9rZT0iIzJjM2U1MCIgc3Ryb2tlLXdpZHRoPSIyIi8+PGcgZmlsbD0id2hpdGUiIGZvbnQtZmFtaWx5PSJUaW1lcyxzZXJpZiIgZm9udC13ZWlnaHQ9ImJvbGQiPjx0ZXh0IHg9IjE2IiB5PSIxMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxMiI+ZDwvdGV4dD48bGluZSB4MT0iOCIgeTE9IjE2IiB4Mj0iMjQiIHkyPSIxNiIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjUiLz48dGV4dCB4PSIxNiIgeT0iMjUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTAiPmR4PC90ZXh0PjwvZz48L3N2Zz4=">
+    <title>11.2 对坐标的曲线积分 - 高等数学复习</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']]
+            },
+            chtml: {
+                fontURL: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2'
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 20px;
+            color: #2ecc71;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 15px;
+            border-radius: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .back-link:hover {
+            color: #27ae60;
+            transform: translateX(-5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+        
+        .back-link::before {
+            content: '←';
+            margin-right: 8px;
+            font-size: 1.2em;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            margin: 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            font-weight: 300;
+        }
+        
+        .subtitle {
+            font-size: 1.1em;
+            margin-top: 10px;
+            opacity: 0.9;
+        }
+        
+        .content-section {
+            background: white;
+            margin: 25px 0;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .content-section:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .section-header {
+            padding: 20px 30px;
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            color: white;
+        }
+        
+        .section-header h2 {
+            margin: 0;
+            font-size: 1.6em;
+            font-weight: 400;
+        }
+        
+        .section-content {
+            padding: 30px;
+        }
+        
+        .definition {
+            background: linear-gradient(135deg, #e8f5e8, #d4edda);
+            border-left: 5px solid #27ae60;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(39, 174, 96, 0.1);
+        }
+        
+        .definition h4 {
+            margin: 0 0 15px 0;
+            color: #27ae60;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .theorem {
+            background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+            border-left: 5px solid #ff9800;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(255, 152, 0, 0.1);
+        }
+        
+        .theorem h4 {
+            margin: 0 0 15px 0;
+            color: #ff9800;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .example {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-left: 5px solid #2196f3;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(33, 150, 243, 0.1);
+        }
+        
+        .example h4 {
+            margin: 0 0 15px 0;
+            color: #2196f3;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .application-box {
+            background: linear-gradient(135deg, #f3e5f5, #e1bee7);
+            border-left: 5px solid #9c27b0;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(156, 39, 176, 0.1);
+        }
+        
+        .application-box h4 {
+            margin: 0 0 15px 0;
+            color: #9c27b0;
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+        
+        .formula-card {
+            background: white;
+            border: 2px solid #27ae60;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            box-shadow: 0 3px 15px rgba(39, 174, 96, 0.1);
+        }
+        
+        .formula-card h5 {
+            color: #27ae60;
+            margin: 0 0 10px 0;
+            font-size: 1.1em;
+        }
+        
+        .visualization-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        
+        .viz-header {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+        }
+        
+        .viz-header h4 {
+            margin: 0;
+            font-size: 1.2em;
+            font-weight: 400;
+        }
+        
+        .viz-controls {
+            padding: 15px 20px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .viz-control-group {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .viz-control-group label {
+            font-weight: 500;
+            color: #2c3e50;
+            min-width: 80px;
+        }
+        
+        .viz-control-group input[type="range"] {
+            flex: 1;
+            min-width: 150px;
+        }
+        
+        .viz-control-group span {
+            font-weight: bold;
+            color: #27ae60;
+            min-width: 30px;
+        }
+        
+        #vector-canvas {
+            display: block;
+            width: 100%;
+            height: 400px;
+            background: white;
+        }
+        
+        .highlight {
+            background: linear-gradient(135deg, #fff3cd, #fce4a0);
+            padding: 15px;
+            border-left: 4px solid #ffc107;
+            border-radius: 0 8px 8px 0;
+            margin: 15px 0;
+        }
+        
+        .comparison-box {
+            background: linear-gradient(135deg, #fce4ec, #f8bbd9);
+            border-left: 5px solid #e91e63;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(233, 30, 99, 0.1);
+        }
+        
+        .comparison-box h4 {
+            margin: 0 0 15px 0;
+            color: #e91e63;
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 40px;
+            padding: 20px 0;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 25px;
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 15px rgba(39, 174, 96, 0.3);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(39, 174, 96, 0.4);
+        }
+        
+        .btn.prev::before {
+            content: '←';
+            margin-right: 8px;
+            font-size: 1.1em;
+        }
+        
+        .btn.next::after {
+            content: '→';
+            margin-left: 8px;
+            font-size: 1.1em;
+        }
+        
+        footer {
+            text-align: center;
+            color: white;
+            padding: 30px 0;
+            opacity: 0.9;
+            margin-top: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        footer p {
+            text-align: center;
+            margin: 0;
+        }
+        
+        .math-expression {
+            text-align: center;
+            margin: 15px 0;
+            font-size: 1.1em;
+        }
+        
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            align-items: start;
+        }
+
+        /* AI提示方块样式 */
+        .ai-warning {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            border: 2px solid #e0e0e0;
+        }
+        
+        .ai-warning:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            border-color: #ff4444;
+        }
+        
+        .ai-warning::before {
+            content: '!';
+            color: #e74c3c;
+            font-size: 20px;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+        }
+        
+        .ai-warning-tooltip {
+            position: absolute;
+            top: 50px;
+            left: 0;
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 16px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            line-height: 1.5;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1001;
+            width: 250px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .ai-warning-tooltip::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: 20px;
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid rgba(0, 0, 0, 0.9);
+        }
+        
+        .ai-warning:hover .ai-warning-tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .section-content {
+                padding: 20px;
+            }
+            
+            .definition, .theorem, .example {
+                padding: 20px;
+            }
+            
+            .nav-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+
+            .ai-warning {
+                width: 35px;
+                height: 35px;
+                top: 15px;
+                left: 15px;
+            }
+            
+            .ai-warning::before {
+                font-size: 18px;
+            }
+            
+            .ai-warning-tooltip {
+                width: 280px;
+                font-size: 13px;
+                padding: 14px 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- AI内容提示 -->
+    <div class="ai-warning">
+        <div class="ai-warning-tooltip">
+            页面内容由AI生成，请谨慎对待。<br>如发现错误，欢迎反馈。
+        </div>
+    </div>
+    
+    <div class="container">
+        <a href="../index.html" class="back-link">返回章节概览</a>
+        
+        <header>
+            <h1>11.2 对坐标的曲线积分</h1>
+            <div class="subtitle">Line Integrals with Respect to Coordinates</div>
+        </header>
+        
+        <!-- 11.2.1 对坐标的曲线积分的概念与性质 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>11.2.1 对坐标的曲线积分的概念与性质</h2>
+            </div>
+            <div class="section-content">
+                <div class="application-box">
+                    <h4>引例：变力沿曲线做功</h4>
+                    <p>设质点在平面上沿光滑曲线 $L$ 从点 $A$ 移动到点 $B$，受到变力 $\vec{F}(x,y) = P(x,y)\vec{i} + Q(x,y)\vec{j}$ 的作用，求变力对质点所做的功。</p>
+                    
+                    <p><strong>分析过程：</strong></p>
+                    <ol>
+                        <li>将曲线 $L$ 分割成 $n$ 小段，每小段可近似看作直线段</li>
+                        <li>在第 $i$ 小段上，取一点 $(\xi_i, \eta_i)$，该点处的力为 $\vec{F}(\xi_i, \eta_i) = P(\xi_i, \eta_i)\vec{i} + Q(\xi_i, \eta_i)\vec{j}$</li>
+                        <li>第 $i$ 小段的位移向量为 $\Delta \vec{r_i} = \Delta x_i \vec{i} + \Delta y_i \vec{j}$</li>
+                        <li>该段的功为 $\Delta W_i = \vec{F}(\xi_i, \eta_i) \cdot \Delta \vec{r_i} = P(\xi_i, \eta_i)\Delta x_i + Q(\xi_i, \eta_i)\Delta y_i$</li>
+                        <li>总功为 $W = \sum_{i=1}^{n} [P(\xi_i, \eta_i)\Delta x_i + Q(\xi_i, \eta_i)\Delta y_i]$</li>
+                        <li>当分割无限细化时，这个和式的极限就是变力所做的功</li>
+                    </ol>
+                </div>
+                
+                <div class="definition">
+                    <h4>第二类曲线积分（对坐标的曲线积分）的定义</h4>
+                    <p>设 $L$ 为 $xOy$ 平面内从点 $A$ 到点 $B$ 的有向光滑曲线弧，函数 $P(x,y)$、$Q(x,y)$ 在 $L$ 上有界。把 $L$ 分成 $n$ 小段，设第 $i$ 小段的起点为 $(x_{i-1}, y_{i-1})$，终点为 $(x_i, y_i)$，$(\xi_i, \eta_i)$ 为第 $i$ 小段上任意一点，作和式</p>
+                    $$\sum_{i=1}^{n} [P(\xi_i, \eta_i)\Delta x_i + Q(\xi_i, \eta_i)\Delta y_i]$$
+                    <p>其中 $\Delta x_i = x_i - x_{i-1}$，$\Delta y_i = y_i - y_{i-1}$</p>
+                    
+                    <p>如果当各小弧段长度的最大值趋于零时，上述和式的极限存在，且与曲线的分法及点的取法无关，则称此极限为函数 $P(x,y)$、$Q(x,y)$ 在有向曲线弧 $L$ 上的<strong>对坐标的曲线积分</strong>或<strong>第二类曲线积分</strong>，记作：</p>
+                    
+                    <div class="math-expression">
+                        $$\int_L P(x,y) \, dx + Q(x,y) \, dy$$
+                    </div>
+                    
+                    <p>其中 $L$ 叫做积分路径。</p>
+                </div>
+                
+                <div class="theorem">
+                    <h4>第二类曲线积分的性质</h4>
+                    <ol>
+                        <li><strong>线性性：</strong>$\int_L [aP_1(x,y) + bP_2(x,y)] \, dx + [aQ_1(x,y) + bQ_2(x,y)] \, dy$<br>
+                        $= a\int_L P_1(x,y) \, dx + Q_1(x,y) \, dy + b\int_L P_2(x,y) \, dx + Q_2(x,y) \, dy$</li>
+                        
+                        <li><strong>可加性：</strong>若有向曲线弧 $L$ 由 $L_1$ 与 $L_2$ 连接而成，则<br>
+                        $\int_L P(x,y) \, dx + Q(x,y) \, dy = \int_{L_1} P(x,y) \, dx + Q(x,y) \, dy + \int_{L_2} P(x,y) \, dx + Q(x,y) \, dy$</li>
+                        
+                        <li><strong>方向性：</strong>若 $L^-$ 表示与 $L$ 方向相反的曲线，则<br>
+                        $\int_{L^-} P(x,y) \, dx + Q(x,y) \, dy = -\int_L P(x,y) \, dx + Q(x,y) \, dy$</li>
+                    </ol>
+                </div>
+                
+                <div class="visualization-container">
+                    <div class="viz-header">
+                        <h4>变力沿曲线做功的可视化演示</h4>
+                    </div>
+                    <div class="viz-controls">
+                        <div class="viz-control-group">
+                            <label for="vector-density">向量密度：</label>
+                            <input type="range" id="vector-density" min="5" max="20" value="10" step="1">
+                            <span id="vector-density-display">10</span>
+                        </div>
+                    </div>
+                    <canvas id="vector-canvas"></canvas>
+                </div>
+                
+                <div class="highlight">
+                    <p><strong>几何意义：</strong>第二类曲线积分表示向量场 $\vec{F}(x,y) = P(x,y)\vec{i} + Q(x,y)\vec{j}$ 沿有向曲线 $L$ 的线积分。</p>
+                    <p><strong>物理意义：</strong>当 $\vec{F}(x,y)$ 表示力场时，积分值表示该力场对沿路径 $L$ 移动的质点所做的功。</p>
+                </div>
+                
+                <div class="example">
+                    <h4>例1：计算简单路径上的第二类曲线积分</h4>
+                    <p>计算 $\int_L x \, dy - y \, dx$，其中 $L$ 是从原点 $O(0,0)$ 到点 $A(1,1)$ 的直线段。</p>
+                    
+                    <p><strong>解：</strong></p>
+                    <p>直线段 $L$ 的方程为 $y = x$，$x$ 从 $0$ 到 $1$，所以 $dy = dx$</p>
+                    <p>因此：</p>
+                    $$\int_L x \, dy - y \, dx = \int_0^1 x \, dx - x \, dx = \int_0^1 0 \, dx = 0$$
+                </div>
+            </div>
+        </div>
+        
+        <!-- 11.2.2 对坐标的曲线积分的计算方法 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>11.2.2 对坐标的曲线积分的计算方法</h2>
+            </div>
+            <div class="section-content">
+                <div class="theorem">
+                    <h4>计算方法</h4>
+                    <p>设有向曲线弧 $L$ 的方程及积分区间如下，则第二类曲线积分可按下列方法计算：</p>
+                    
+                    <div class="formula-card">
+                        <h5>1. 参数方程形式</h5>
+                        <p>设曲线 $L$：$\begin{cases} x = \varphi(t) \\ y = \psi(t) \end{cases}$，$t$ 从 $\alpha$ 到 $\beta$（对应曲线的正方向），且 $\varphi'(t)$、$\psi'(t)$ 连续，则</p>
+                        <div class="math-expression">
+                            $$\int_L P(x,y) \, dx + Q(x,y) \, dy = \int_{\alpha}^{\beta} [P(\varphi(t), \psi(t))\varphi'(t) + Q(\varphi(t), \psi(t))\psi'(t)] \, dt$$
+                        </div>
+                    </div>
+                    
+                    <div class="formula-card">
+                        <h5>2. 直角坐标方程形式</h5>
+                        <p>设曲线 $L$：$y = \phi(x)$，$x$ 从 $a$ 到 $b$（对应曲线的正方向），且 $\phi'(x)$ 连续，则</p>
+                        <div class="math-expression">
+                            $$\int_L P(x,y) \, dx + Q(x,y) \, dy = \int_{a}^{b} [P(x, \phi(x)) + Q(x, \phi(x))\phi'(x)] \, dx$$
+                        </div>
+                        
+                        <p>或者，设曲线 $L$：$x = \psi(y)$，$y$ 从 $c$ 到 $d$（对应曲线的正方向），且 $\psi'(y)$ 连续，则</p>
+                        <div class="math-expression">
+                            $$\int_L P(x,y) \, dx + Q(x,y) \, dy = \int_{c}^{d} [P(\psi(y), y)\psi'(y) + Q(\psi(y), y)] \, dy$$
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <h4>例2：沿抛物线的第二类曲线积分</h4>
+                    <p>计算 $\int_L (x^2 + y^2) \, dx + 2xy \, dy$，其中 $L$ 是从点 $(0,0)$ 到点 $(1,1)$ 的抛物线弧 $y = x^2$。</p>
+                    
+                    <p><strong>解：</strong></p>
+                    <p>曲线方程为 $y = x^2$，$x$ 从 $0$ 到 $1$，$dy = 2x \, dx$</p>
+                    <p>所以：</p>
+                    $$P(x,y) = x^2 + y^2 = x^2 + x^4$$
+                    $$Q(x,y) = 2xy = 2x \cdot x^2 = 2x^3$$
+                    
+                    <p>因此：</p>
+                    $$\int_L (x^2 + y^2) \, dx + 2xy \, dy = \int_0^1 [(x^2 + x^4) + 2x^3 \cdot 2x] \, dx$$
+                    $$= \int_0^1 (x^2 + x^4 + 4x^4) \, dx = \int_0^1 (x^2 + 5x^4) \, dx$$
+                    $$= \left[\frac{x^3}{3} + x^5\right]_0^1 = \frac{1}{3} + 1 = \frac{4}{3}$$
+                </div>
+                
+                <div class="example">
+                    <h4>例3：沿圆弧的第二类曲线积分</h4>
+                    <p>计算 $\int_L (x + y) \, dx + (x - y) \, dy$，其中 $L$ 是圆周 $x^2 + y^2 = 1$ 从点 $(1,0)$ 到点 $(0,1)$ 的上半圆弧。</p>
+                    
+                    <p><strong>解：</strong></p>
+                    <p>使用参数方程：$\begin{cases} x = \cos t \\ y = \sin t \end{cases}$，$t$ 从 $0$ 到 $\frac{\pi}{2}$</p>
+                    <p>$dx = -\sin t \, dt$，$dy = \cos t \, dt$</p>
+                    <p>因此：</p>
+                    $$\int_L (x + y) \, dx + (x - y) \, dy$$
+                    $$= \int_0^{\pi/2} [(\cos t + \sin t)(-\sin t) + (\cos t - \sin t)(\cos t)] \, dt$$
+                    $$= \int_0^{\pi/2} [-\cos t \sin t - \sin^2 t + \cos^2 t - \sin t \cos t] \, dt$$
+                    $$= \int_0^{\pi/2} [-2\sin t \cos t - \sin^2 t + \cos^2 t] \, dt$$
+                    $$= \int_0^{\pi/2} [-\sin 2t + \cos 2t] \, dt$$
+                    $$= \left[\frac{1}{2}\cos 2t + \frac{1}{2}\sin 2t\right]_0^{\pi/2} = \left[-\frac{1}{2} + 0\right] - \left[\frac{1}{2} + 0\right] = -1$$
+                </div>
+            </div>
+        </div>
+        
+        <!-- 11.2.3 两类曲线积分之间的关系 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>11.2.3 两类曲线积分之间的关系</h2>
+            </div>
+            <div class="section-content">
+                <div class="theorem">
+                    <h4>两类曲线积分的联系</h4>
+                    <p>设有向曲线弧 $L$ 的正向与 $x$ 轴正向所成角为 $\alpha(s)$（$s$ 为弧长参数），则在 $L$ 上有：</p>
+                    $$dx = \cos \alpha(s) \, ds, \quad dy = \sin \alpha(s) \, ds$$
+                    
+                    <p>因此，第一类和第二类曲线积分之间有如下关系：</p>
+                    <div class="math-expression">
+                        $$\int_L P(x,y) \, dx + Q(x,y) \, dy = \int_L [P(x,y)\cos \alpha + Q(x,y)\sin \alpha] \, ds$$
+                    </div>
+                    
+                    <p>其中 $\alpha$ 是有向曲线弧 $L$ 在点 $(x,y)$ 处切向量的方向角。</p>
+                </div>
+                
+                <div class="comparison-box">
+                    <h4>两类曲线积分的比较</h4>
+                    <div class="grid-2">
+                        <div>
+                            <h5>第一类曲线积分（对弧长）</h5>
+                            <ul>
+                                <li><strong>记号：</strong>$\int_L f(x,y) \, ds$</li>
+                                <li><strong>几何意义：</strong>曲线形物体的质量</li>
+                                <li><strong>性质：</strong>与路径方向无关</li>
+                                <li><strong>被积函数：</strong>标量函数</li>
+                                <li><strong>积分元素：</strong>弧长元素 $ds$</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h5>第二类曲线积分（对坐标）</h5>
+                            <ul>
+                                <li><strong>记号：</strong>$\int_L P \, dx + Q \, dy$</li>
+                                <li><strong>物理意义：</strong>变力沿路径所做的功</li>
+                                <li><strong>性质：</strong>与路径方向有关</li>
+                                <li><strong>被积函数：</strong>向量函数的分量</li>
+                                <li><strong>积分元素：</strong>坐标增量 $dx, dy$</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="formula-card">
+                    <h5>向量形式的第二类曲线积分</h5>
+                    <p>如果记 $\vec{F}(x,y) = P(x,y)\vec{i} + Q(x,y)\vec{j}$，$d\vec{r} = dx\vec{i} + dy\vec{j}$，则第二类曲线积分可以写成：</p>
+                    <div class="math-expression">
+                        $$\int_L P(x,y) \, dx + Q(x,y) \, dy = \int_L \vec{F} \cdot d\vec{r}$$
+                    </div>
+                    <p>这表明第二类曲线积分就是向量场 $\vec{F}$ 沿路径 $L$ 的线积分。</p>
+                </div>
+                
+                <div class="example">
+                    <h4>例4：利用两类积分关系进行计算</h4>
+                    <p>已知 $\int_L (x^2 + y^2) \, ds = 2\pi a^3$，其中 $L$ 是圆周 $x^2 + y^2 = a^2$，求 $\int_L x \, dy - y \, dx$。</p>
+                    
+                    <p><strong>解：</strong></p>
+                    <p>对于圆周 $x^2 + y^2 = a^2$，有参数方程：$\begin{cases} x = a\cos t \\ y = a\sin t \end{cases}$，$t$ 从 $0$ 到 $2\pi$</p>
+                    
+                    <p>利用两类积分的关系：</p>
+                    $$\int_L x \, dy - y \, dx = \int_L [x \sin \alpha - y \cos \alpha] \, ds$$
+                    
+                    <p>其中 $\cos \alpha = \frac{dx/dt}{|d\vec{r}/dt|} = \frac{-a\sin t}{a} = -\sin t$，$\sin \alpha = \frac{dy/dt}{|d\vec{r}/dt|} = \frac{a\cos t}{a} = \cos t$</p>
+                    
+                    <p>所以：</p>
+                    $$\int_L x \, dy - y \, dx = \int_L [x \cos t - y(-\sin t)] \, ds = \int_L [x \cos t + y \sin t] \, ds$$
+                    $$= \int_L [a\cos t \cdot \cos t + a\sin t \cdot \sin t] \, ds = \int_L a(\cos^2 t + \sin^2 t) \, ds = a \int_L ds = a \cdot 2\pi a = 2\pi a^2$$
+                </div>
+            </div>
+        </div>
+        
+        <div class="nav-buttons">
+            <a href="11.1.html" class="btn prev">上一节：11.1 对弧长的曲线积分</a>
+            <a href="11.3.html" class="btn next">下一节：11.3 格林公式及其应用</a>
+        </div>
+        
+        <footer>
+            <p>&copy; 2025 高等数学复习系统 - 曲线积分与曲面积分</p>
+        </footer>
+    </div>
+
+    <script>
+        // 页面加载完成后的动画效果
+        document.addEventListener('DOMContentLoaded', function() {
+            // 为内容区块添加入场动画
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach((section, index) => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(30px)';
+                setTimeout(() => {
+                    section.style.transition = 'all 0.8s ease';
+                    section.style.opacity = '1';
+                    section.style.transform = 'translateY(0)';
+                }, index * 200);
+            });
+            
+            // 为定义、定理、例子添加悬停效果
+            const boxes = document.querySelectorAll('.definition, .theorem, .example, .application-box');
+            boxes.forEach(box => {
+                box.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateX(5px)';
+                });
+                
+                box.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateX(0)';
+                });
+            });
+            
+            // 初始化向量场可视化
+            initVectorFieldVisualization();
+        });
+        
+        // 向量场可视化
+        function initVectorFieldVisualization() {
+            const canvas = document.getElementById('vector-canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // 获取设备像素比，解决高DPI屏幕模糊问题
+            const dpr = window.devicePixelRatio || 1;
+            const rect = canvas.getBoundingClientRect();
+            
+            // 设置canvas的实际大小（考虑设备像素比）
+            canvas.width = rect.width * dpr;
+            canvas.height = rect.height * dpr;
+            
+            // 缩放canvas绘图上下文以匹配设备像素比
+            ctx.scale(dpr, dpr);
+            
+            // 设置canvas的CSS大小（显示大小）
+            canvas.style.width = rect.width + 'px';
+            canvas.style.height = rect.height + 'px';
+            
+            // 画布参数（基于CSS尺寸）
+            const padding = 40;
+            const plotWidth = rect.width - 2 * padding;
+            const plotHeight = rect.height - 2 * padding;
+            const xMin = -2, xMax = 2;
+            const yMin = -2, yMax = 2;
+            
+            // 向量场函数：F = (y, -x) 表示逆时针旋转场
+            function vectorField(x, y) {
+                return {
+                    u: y * 0.3,  // P(x,y) = y
+                    v: -x * 0.3  // Q(x,y) = -x
+                };
+            }
+            
+            // 坐标转换（基于CSS尺寸）
+            function toCanvasX(x) {
+                return padding + (x - xMin) / (xMax - xMin) * plotWidth;
+            }
+            
+            function toCanvasY(y) {
+                return rect.height - padding - (y - yMin) / (yMax - yMin) * plotHeight;
+            }
+            
+            // 绘制坐标轴
+            function drawAxes() {
+                ctx.strokeStyle = '#ccc';
+                ctx.lineWidth = 1;
+                
+                // 网格线
+                for (let x = xMin; x <= xMax; x += 0.5) {
+                    ctx.beginPath();
+                    ctx.moveTo(toCanvasX(x), padding);
+                    ctx.lineTo(toCanvasX(x), rect.height - padding);
+                    ctx.stroke();
+                }
+                
+                for (let y = yMin; y <= yMax; y += 0.5) {
+                    ctx.beginPath();
+                    ctx.moveTo(padding, toCanvasY(y));
+                    ctx.lineTo(rect.width - padding, toCanvasY(y));
+                    ctx.stroke();
+                }
+                
+                // 坐标轴
+                ctx.strokeStyle = '#666';
+                ctx.lineWidth = 2;
+                
+                // X轴
+                ctx.beginPath();
+                ctx.moveTo(padding, toCanvasY(0));
+                ctx.lineTo(rect.width - padding, toCanvasY(0));
+                ctx.stroke();
+                
+                // Y轴
+                ctx.beginPath();
+                ctx.moveTo(toCanvasX(0), padding);
+                ctx.lineTo(toCanvasX(0), rect.height - padding);
+                ctx.stroke();
+                
+                // 标签
+                ctx.fillStyle = '#666';
+                ctx.font = '12px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText('x', rect.width - padding + 15, toCanvasY(0) + 4);
+                ctx.textAlign = 'left';
+                ctx.fillText('y', toCanvasX(0) + 5, padding - 5);
+            }
+            
+            // 绘制向量
+            function drawVector(x, y, u, v, color = '#27ae60') {
+                const canvasX = toCanvasX(x);
+                const canvasY = toCanvasY(y);
+                const scale = 30; // 向量缩放因子
+                
+                const endX = canvasX + u * scale;
+                const endY = canvasY - v * scale; // 注意Y轴方向
+                
+                // 绘制向量主体
+                ctx.strokeStyle = color;
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(canvasX, canvasY);
+                ctx.lineTo(endX, endY);
+                ctx.stroke();
+                
+                // 绘制箭头
+                const arrowLength = 8;
+                const arrowAngle = Math.PI / 6;
+                const vectorAngle = Math.atan2(-(v * scale), u * scale);
+                
+                ctx.beginPath();
+                ctx.moveTo(endX, endY);
+                ctx.lineTo(
+                    endX - arrowLength * Math.cos(vectorAngle - arrowAngle),
+                    endY - arrowLength * Math.sin(vectorAngle - arrowAngle)
+                );
+                ctx.moveTo(endX, endY);
+                ctx.lineTo(
+                    endX - arrowLength * Math.cos(vectorAngle + arrowAngle),
+                    endY - arrowLength * Math.sin(vectorAngle + arrowAngle)
+                );
+                ctx.stroke();
+            }
+            
+            // 绘制曲线路径
+            function drawPath() {
+                ctx.strokeStyle = '#e74c3c';
+                ctx.lineWidth = 3;
+                ctx.beginPath();
+                
+                // 绘制一个从(-1, -1)到(1, 1)的曲线路径
+                const t_values = [];
+                for (let i = 0; i <= 100; i++) {
+                    t_values.push(i / 100);
+                }
+                
+                t_values.forEach((t, index) => {
+                    const x = -1 + 2 * t;
+                    const y = Math.sin(Math.PI * t) + 2 * t - 1;
+                    
+                    const canvasX = toCanvasX(x);
+                    const canvasY = toCanvasY(y);
+                    
+                    if (index === 0) {
+                        ctx.moveTo(canvasX, canvasY);
+                    } else {
+                        ctx.lineTo(canvasX, canvasY);
+                    }
+                });
+                ctx.stroke();
+                
+                // 绘制起点和终点
+                ctx.fillStyle = '#e74c3c';
+                ctx.beginPath();
+                ctx.arc(toCanvasX(-1), toCanvasY(-1), 5, 0, 2 * Math.PI);
+                ctx.fill();
+                
+                ctx.beginPath();
+                ctx.arc(toCanvasX(1), toCanvasY(1), 5, 0, 2 * Math.PI);
+                ctx.fill();
+                
+                // 标记起点和终点
+                ctx.fillStyle = '#333';
+                ctx.font = '12px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText('A', toCanvasX(-1), toCanvasY(-1) - 10);
+                ctx.fillText('B', toCanvasX(1), toCanvasY(1) + 20);
+            }
+            
+            // 绘制向量场
+            function drawVectorField(density) {
+                const step = 4 / density; // 根据密度调整步长
+                
+                for (let x = xMin + step/2; x < xMax; x += step) {
+                    for (let y = yMin + step/2; y < yMax; y += step) {
+                        const vector = vectorField(x, y);
+                        drawVector(x, y, vector.u, vector.v);
+                    }
+                }
+            }
+            
+            // 重绘函数
+            function redraw() {
+                ctx.clearRect(0, 0, rect.width, rect.height);
+                drawAxes();
+                
+                const density = parseInt(document.getElementById('vector-density').value);
+                drawVectorField(density);
+                drawPath();
+                
+                // 添加说明文字
+                ctx.fillStyle = '#2c3e50';
+                ctx.font = '14px Arial';
+                ctx.textAlign = 'left';
+                ctx.fillText('向量场: F(x,y) = (y, -x)', 10, 25);
+                ctx.fillText('积分路径: 从A到B的曲线', 10, 45);
+            }
+            
+            // 事件监听器
+            document.getElementById('vector-density').addEventListener('input', function() {
+                const value = this.value;
+                document.getElementById('vector-density-display').textContent = value;
+                redraw();
+            });
+            
+            // 初始化
+            redraw();
+        }
+    </script>
+</body>
+</html>

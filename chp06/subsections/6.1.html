@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="alternate icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTUiIGZpbGw9IiMzNDk4ZGIiIHN0cm9rZT0iIzJjM2U1MCIgc3Ryb2tlLXdpZHRoPSIyIi8+PGcgZmlsbD0id2hpdGUiIGZvbnQtZmFtaWx5PSJUaW1lcyxzZXJpZiIgZm9udC13ZWlnaHQ9ImJvbGQiPjx0ZXh0IHg9IjE2IiB5PSIxMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxMiI+ZDwvdGV4dD48bGluZSB4MT0iOCIgeTE9IjE2IiB4Mj0iMjQiIHkyPSIxNiIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjUiLz48dGV4dCB4PSIxNiIgeT0iMjUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTAiPmR4PC90ZXh0PjwvZz48L3N2Zz4=">
+    <title>6.1 定积分的元素法 - 高等数学复习</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']]
+            },
+            chtml: {
+                fontURL: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2'
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 20px;
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 15px;
+            border-radius: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .back-link:hover {
+            color: #2980b9;
+            transform: translateX(-5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+        
+        .back-link::before {
+            content: '←';
+            margin-right: 8px;
+            font-size: 1.2em;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            margin: 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            font-weight: 300;
+        }
+        
+        .subtitle {
+            font-size: 1.1em;
+            margin-top: 10px;
+            opacity: 0.9;
+        }
+        
+        .content-section {
+            background: white;
+            margin: 25px 0;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .content-section:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .section-header {
+            padding: 20px 30px;
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            color: white;
+        }
+        
+        .section-header h2 {
+            margin: 0;
+            font-size: 1.6em;
+            font-weight: 400;
+        }
+        
+        .section-content {
+            padding: 30px;
+        }
+        
+        .definition {
+            background: linear-gradient(135deg, #f4f0f8, #ece2f0);
+            border-left: 5px solid #e74c3c;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(231, 76, 60, 0.1);
+        }
+        
+        .definition h4 {
+            margin: 0 0 15px 0;
+            color: #e74c3c;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .theorem {
+            background: linear-gradient(135deg, #fef9e7, #fcf4dd);
+            border-left: 5px solid #f39c12;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(243, 156, 18, 0.1);
+        }
+        
+        .theorem h4 {
+            margin: 0 0 15px 0;
+            color: #f39c12;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .example {
+            background: linear-gradient(135deg, #ebf3fd, #d6e9f8);
+            border-left: 5px solid #3498db;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(52, 152, 219, 0.1);
+        }
+        
+        .example h4 {
+            margin: 0 0 15px 0;
+            color: #3498db;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .practice-problem {
+            background: linear-gradient(135deg, #fdf2e9, #fbeee0);
+            border-left: 5px solid #e67e22;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(230, 126, 34, 0.1);
+        }
+        
+        .practice-problem h4 {
+            margin: 0 0 15px 0;
+            color: #e67e22;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .difficulty {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: 500;
+            margin-left: 10px;
+        }
+        
+        .difficulty.medium {
+            background: #f39c12;
+            color: white;
+        }
+        
+        .difficulty.hard {
+            background: #e74c3c;
+            color: white;
+        }
+        
+        .difficulty.very-hard {
+            background: #8e44ad;
+            color: white;
+        }
+        
+        .solution {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px dashed #bdc3c7;
+        }
+        
+        .solution-header {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+        
+        .viz-container {
+            width: 100%;
+            height: 400px;
+            margin: 25px 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .interactive-demo {
+            width: 100%;
+            height: auto;
+            min-height: 480px;
+            margin: 25px 0;
+            background: #f8f9fa;
+            border-radius: 10px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            padding: 20px;
+            position: relative;
+        }
+        
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .controls label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #e74c3c;
+        }
+        
+        .controls input, .controls select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        .limit-visualization {
+            width: 100%;
+            height: 360px;
+            margin: 15px 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .squeeze-theorem-demo {
+            width: 100%;
+            height: 400px;
+            margin: 25px 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .important-limits {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .limit-card {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(255, 154, 158, 0.3);
+            text-align: center;
+        }
+        
+        .limit-card h5 {
+            color: #c0392b;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+        
+        .limit-card .limit-formula {
+            font-size: 1.3em;
+            margin: 15px 0;
+            color: #2c3e50;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 40px;
+            padding: 20px 0;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 25px;
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 15px rgba(231, 76, 60, 0.3);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(231, 76, 60, 0.4);
+        }
+        
+        .btn.prev::before {
+            content: '←';
+            margin-right: 8px;
+            font-size: 1.1em;
+        }
+        
+        .btn.next::after {
+            content: '→';
+            margin-left: 8px;
+            font-size: 1.1em;
+        }
+        
+        footer {
+            text-align: center;
+            color: white;
+            padding: 30px 0;
+            opacity: 0.9;
+            margin-top: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        footer p {
+            text-align: center;
+            margin: 0;
+        }
+        
+        .math-expression {
+            text-align: center;
+            margin: 15px 0;
+            font-size: 1.1em;
+        }
+        
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        .highlight {
+            background: linear-gradient(135deg, #fff3cd, #fce4a0);
+            padding: 15px;
+            border-left: 4px solid #ffc107;
+            border-radius: 0 8px 8px 0;
+            margin: 15px 0;
+        }
+        
+        .step-diagram {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .step-card {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #e74c3c;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .step-number {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: #e74c3c;
+            color: white;
+            border-radius: 50%;
+            line-height: 40px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .step-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        
+        .step-desc {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            line-height: 1.4;
+        }
+
+        /* AI提示方块样式 */
+        .ai-warning {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            border: 2px solid #e0e0e0;
+        }
+        
+        .ai-warning:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            border-color: #ff4444;
+        }
+        
+        .ai-warning::before {
+            content: '!';
+            color: #e74c3c;
+            font-size: 20px;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+        }
+        
+        .ai-warning-tooltip {
+            position: absolute;
+            top: 50px;
+            left: 0;
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 16px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            line-height: 1.5;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1001;
+            width: 250px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .ai-warning-tooltip::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: 20px;
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid rgba(0, 0, 0, 0.9);
+        }
+        
+        .ai-warning:hover .ai-warning-tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .section-content {
+                padding: 20px;
+            }
+            
+            .definition, .theorem, .example, .practice-problem {
+                padding: 20px;
+            }
+            
+            .nav-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .controls {
+                grid-template-columns: 1fr;
+            }
+
+            .ai-warning {
+                width: 35px;
+                height: 35px;
+                top: 15px;
+                left: 15px;
+            }
+            
+            .ai-warning::before {
+                font-size: 18px;
+            }
+            
+            .ai-warning-tooltip {
+                width: 280px;
+                font-size: 13px;
+                padding: 14px 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- AI内容提示 -->
+    <div class="ai-warning">
+        <div class="ai-warning-tooltip">
+            页面内容由AI生成，请谨慎对待。<br>如发现错误，欢迎反馈。
+        </div>
+    </div>
+    
+    <div class="container">
+        <a href="../index.html" class="back-link">返回章节概览</a>
+        
+        <header>
+            <h1>6.1 定积分的元素法</h1>
+            <div class="subtitle">Element Method in Definite Integration</div>
+        </header>
+        
+        <!-- 6.1.1 定积分的元素法相关的概念 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>6.1.1 定积分的元素法相关的概念</h2>
+            </div>
+            <div class="section-content">
+                <div class="definition">
+                    <h4>微元法（元素法）的基本思想</h4>
+                    <p><strong>微元法</strong>是解决定积分应用问题的基本方法，其核心思想是：</p>
+                    <ol>
+                        <li><strong>分割</strong>：将所求量的总体分割成许多微小部分</li>
+                        <li><strong>近似</strong>：每个微小部分近似表示为一个微元</li>
+                        <li><strong>求和</strong>：对所有微元求和</li>
+                        <li><strong>取极限</strong>：令分割无限细化，求和转化为定积分</li>
+                    </ol>
+                    
+                    <div class="math-expression">
+                        若所求量 $U$ 对应于区间 $[a,b]$，且在 $[x, x+dx]$ 上的微元为 $dU = f(x)dx$，<br>
+                        则总量为：$$U = \int_a^b f(x)dx$$
+                    </div>
+                </div>
+                
+                <div class="step-diagram">
+                    <div class="step-card">
+                        <div class="step-number">1</div>
+                        <div class="step-title">建立坐标系</div>
+                        <div class="step-desc">选择合适的坐标系，确定积分变量和积分区间</div>
+                    </div>
+                    
+                    <div class="step-card">
+                        <div class="step-number">2</div>
+                        <div class="step-title">设定微元</div>
+                        <div class="step-desc">取微小区间，写出微元表达式 $dU = f(x)dx$</div>
+                    </div>
+                    
+                    <div class="step-card">
+                        <div class="step-number">3</div>
+                        <div class="step-title">建立积分</div>
+                        <div class="step-desc">确定积分上下限，建立定积分表达式</div>
+                    </div>
+                    
+                    <div class="step-card">
+                        <div class="step-number">4</div>
+                        <div class="step-title">计算积分</div>
+                        <div class="step-desc">运用积分方法计算定积分，得到最终结果</div>
+                    </div>
+                </div>
+                
+                <div class="theorem">
+                    <h4>微元法的数学基础</h4>
+                    <p>微元法基于定积分的定义和微分的概念：</p>
+                    <ul>
+                        <li><strong>可加性</strong>：所求量具有可加性，即总量等于各部分量的和</li>
+                        <li><strong>连续性</strong>：被积函数在积分区间上连续</li>
+                        <li><strong>微分近似</strong>：在无穷小区间内，曲线可用直线近似</li>
+                    </ul>
+                    
+                    <div class="highlight">
+                        <p><strong>关键步骤：</strong>如何正确设定微元 $dU = f(x)dx$ 是应用微元法的核心。</p>
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <h4>例1：用微元法求曲边梯形面积</h4>
+                    <p>求由曲线 $y = x^2$、直线 $x = 0$、$x = 2$ 和 $x$ 轴所围成的图形面积。</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解：</div>
+                        <p><strong>第一步：建立坐标系</strong></p>
+                        <p>以给定的 $x$ 轴为横轴，$y$ 轴为纵轴，积分区间为 $[0, 2]$。</p>
+                        
+                        <p><strong>第二步：设定微元</strong></p>
+                        <p>在 $[x, x+dx]$ 上，面积微元为：</p>
+                        $$dS = y \cdot dx = x^2 dx$$
+                        
+                        <p><strong>第三步：建立积分</strong></p>
+                        <p>总面积为：</p>
+                        $$S = \int_0^2 x^2 dx$$
+                        
+                        <p><strong>第四步：计算积分</strong></p>
+                        $$S = \int_0^2 x^2 dx = \left[\frac{x^3}{3}\right]_0^2 = \frac{8}{3} - 0 = \frac{8}{3}$$
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <h4>例2：用微元法求变力做功</h4>
+                    <p>一个弹簧的自然长度为 $10$ cm，要把它拉长到 $15$ cm，需要力 $20$ N。求把弹簧从自然长度拉长到 $12$ cm 所做的功。</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解：</div>
+                        <p><strong>第一步：建立坐标系和力的关系</strong></p>
+                        <p>设弹簧的自然长度为原点，拉长 $x$ cm 时的力为 $F(x)$。</p>
+                        <p>由胡克定律：$F(x) = kx$，其中 $k$ 为弹性系数。</p>
+                        <p>由条件：当 $x = 5$ cm 时，$F = 20$ N，所以 $k = 4$ N/cm。</p>
+                        <p>因此：$F(x) = 4x$ (N)，$x$ 的单位为 cm。</p>
+                        
+                        <p><strong>第二步：设定微元</strong></p>
+                        <p>在 $[x, x+dx]$ 上，功的微元为：</p>
+                        $$dW = F(x) \cdot dx = 4x \, dx \text{ (N·cm)}$$
+                        
+                        <p><strong>第三步：建立积分</strong></p>
+                        <p>从 $x = 0$ 到 $x = 2$ cm 的总功为：</p>
+                        $$W = \int_0^2 4x \, dx$$
+                        
+                        <p><strong>第四步：计算积分</strong></p>
+                        $$W = \int_0^2 4x \, dx = 4 \cdot \frac{x^2}{2}\Big|_0^2 = 2x^2\Big|_0^2 = 8 \text{ N·cm} = 0.08 \text{ J}$$
+                    </div>
+                </div>
+                
+                <div class="practice-problem">
+                    <h4>习题1：平面图形面积 <span class="difficulty medium">中等难度</span></h4>
+                    <p>用微元法求由抛物线 $y^2 = 4x$ 和直线 $x = 4$ 所围成的图形面积。</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解题思路：</div>
+                        <ol>
+                            <li>选择适当的积分变量（$x$ 或 $y$）</li>
+                            <li>确定积分区间</li>
+                            <li>建立面积微元表达式</li>
+                            <li>建立并计算定积分</li>
+                        </ol>
+                        
+                        <div class="solution-header">详细解答：</div>
+                        <p>选择 $y$ 为积分变量，因为对于给定的 $y$，$x$ 的范围容易确定。</p>
+                        <p>抛物线 $y^2 = 4x$ 与直线 $x = 4$ 的交点：$y^2 = 16$，即 $y = \pm 4$</p>
+                        <p>面积微元：$dS = (4 - \frac{y^2}{4}) dy$</p>
+                        <p>总面积：$S = \int_{-4}^4 (4 - \frac{y^2}{4}) dy = 2\int_0^4 (4 - \frac{y^2}{4}) dy = 2[4y - \frac{y^3}{12}]_0^4 = \frac{64}{3}$</p>
+                    </div>
+                </div>
+                
+                <div class="practice-problem">
+                    <h4>习题2：旋转体体积 <span class="difficulty hard">较难</span></h4>
+                    <p>由曲线 $y = \sin x$，$x \in [0, \pi]$ 与 $x$ 轴围成的图形绕 $y$ 轴旋转所得旋转体的体积。</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解题思路：</div>
+                        <ol>
+                            <li>这是绕 $y$ 轴旋转，考虑用柱壳法</li>
+                            <li>设定体积微元为 $dV = 2\pi x \cdot y \, dx$</li>
+                            <li>建立积分表达式</li>
+                        </ol>
+                        
+                        <div class="solution-header">详细解答：</div>
+                        <p>使用柱壳法，体积微元为：$dV = 2\pi x \sin x \, dx$</p>
+                        <p>总体积：$V = \int_0^\pi 2\pi x \sin x \, dx = 2\pi \int_0^\pi x \sin x \, dx$</p>
+                        <p>使用分部积分：$\int x \sin x \, dx = -x \cos x + \sin x + C$</p>
+                        <p>$V = 2\pi[-x \cos x + \sin x]_0^\pi = 2\pi[(\pi + 0) - (0 + 0)] = 2\pi^2$</p>
+                    </div>
+                </div>
+                
+                <div class="practice-problem">
+                    <h4>习题3：物理应用 <span class="difficulty very-hard">很难</span></h4>
+                    <p>半径为 $R$ 的半圆形薄片，密度为 $\rho(x) = k(R - x)$（$k$ 为常数，$x$ 为到直径的距离），求该薄片的质量。</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解题思路：</div>
+                        <ol>
+                            <li>建立坐标系，以直径为 $x$ 轴</li>
+                            <li>考虑密度随位置变化，需要用微元法</li>
+                            <li>设定质量微元</li>
+                        </ol>
+                        
+                        <div class="solution-header">详细解答：</div>
+                        <p>建立坐标系：以半圆的直径为 $x$ 轴，圆心为原点</p>
+                        <p>半圆方程：$y = \sqrt{R^2 - x^2}$，$x \in [-R, R]$</p>
+                        <p>在 $[x, x+dx]$ 处，微元的面积：$dS = 2y \, dx = 2\sqrt{R^2 - x^2} \, dx$</p>
+                        <p>微元的质量：$dm = \rho(x) \cdot dS = k(R - |x|) \cdot 2\sqrt{R^2 - x^2} \, dx$</p>
+                        <p>由对称性，只需计算 $x \geq 0$ 的部分再乘以2：</p>
+                        <p>$M = 2 \int_0^R k(R - x) \cdot 2\sqrt{R^2 - x^2} \, dx = 4k \int_0^R (R - x)\sqrt{R^2 - x^2} \, dx$</p>
+                        <p>$= 4k[R \int_0^R \sqrt{R^2 - x^2} \, dx - \int_0^R x\sqrt{R^2 - x^2} \, dx]$</p>
+                        <p>$= 4k[R \cdot \frac{\pi R^2}{4} - \frac{R^3}{3}] = \pi kR^3 - \frac{4kR^3}{3}$</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="nav-buttons">
+            <a href="../index.html" class="btn prev">返回章节概览</a>
+            <a href="6.2.html" class="btn next">下一节：6.2 定积分在几何学上的应用</a>
+        </div>
+        
+        <footer>
+            <p>&copy; 2025 高等数学复习系统 - 定积分的应用</p>
+        </footer>
+    </div>
+
+    <script>
+        // 页面加载完成后的动画效果
+        document.addEventListener('DOMContentLoaded', function() {
+            // 为内容区块添加入场动画
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach((section, index) => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(30px)';
+                setTimeout(() => {
+                    section.style.transition = 'all 0.8s ease';
+                    section.style.opacity = '1';
+                    section.style.transform = 'translateY(0)';
+                }, index * 200);
+            });
+            
+            // 为步骤卡片添加动画
+            const stepCards = document.querySelectorAll('.step-card');
+            stepCards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'scale(0.9)';
+                setTimeout(() => {
+                    card.style.transition = 'all 0.6s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'scale(1)';
+                }, 1000 + index * 150);
+            });
+        });
+        
+        // MathJax 重新渲染
+        window.addEventListener('load', function() {
+            if (window.MathJax && window.MathJax.typesetPromise) {
+                window.MathJax.typesetPromise();
+            }
+        });
+    </script>
+</body>
+</html>

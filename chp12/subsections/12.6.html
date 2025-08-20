@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="alternate icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTUiIGZpbGw9IiMzNDk4ZGIiIHN0cm9rZT0iIzJjM2U1MCIgc3Ryb2tlLXdpZHRoPSIyIi8+PGcgZmlsbD0id2hpdGUiIGZvbnQtZmFtaWx5PSJUaW1lcyxzZXJpZiIgZm9udC13ZWlnaHQ9ImJvbGQiPjx0ZXh0IHg9IjE2IiB5PSIxMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxMiI+ZDwvdGV4dD48bGluZSB4MT0iOCIgeTE9IjE2IiB4Mj0iMjQiIHkyPSIxNiIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjUiLz48dGV4dCB4PSIxNiIgeT0iMjUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTAiPmR4PC90ZXh0PjwvZz48L3N2Zz4=">
+    <title>12.6 函数项级数的一致收敛性及一致收敛级数的基本性质 - 高等数学复习</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']]
+            },
+            chtml: {
+                fontURL: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2'
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/plotly.js-dist@2.25.2/plotly.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #ff8c00 0%, #ff7700 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 20px;
+            color: #ff7700;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 15px;
+            border-radius: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .back-link:hover {
+            color: #e65c00;
+            transform: translateX(-5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+        
+        .back-link::before {
+            content: '←';
+            margin-right: 8px;
+            font-size: 1.2em;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #ff7700 0%, #e65c00 100%);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            margin: 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            font-weight: 300;
+        }
+        
+        .subtitle {
+            font-size: 1.1em;
+            margin-top: 10px;
+            opacity: 0.9;
+        }
+        
+        .content-section {
+            background: white;
+            margin: 25px 0;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .content-section:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .section-header {
+            padding: 20px 30px;
+            background: linear-gradient(45deg, #ff7700, #e65c00);
+            color: white;
+        }
+        
+        .section-header h2 {
+            margin: 0;
+            font-size: 1.6em;
+            font-weight: 400;
+        }
+        
+        .section-content {
+            padding: 30px;
+        }
+        
+        .definition {
+            background: linear-gradient(135deg, #fff7e6, #ffe0b3);
+            border-left: 5px solid #ff8c00;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(255, 140, 0, 0.1);
+        }
+        
+        .definition h4 {
+            margin: 0 0 15px 0;
+            color: #ff8c00;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .theorem {
+            background: linear-gradient(135deg, #fff8e1, #fff3c4);
+            border-left: 5px solid #ff9800;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(255, 152, 0, 0.1);
+        }
+        
+        .theorem h4 {
+            margin: 0 0 15px 0;
+            color: #ff9800;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .example {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-left: 5px solid #2196f3;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(33, 150, 243, 0.1);
+        }
+        
+        .example h4 {
+            margin: 0 0 15px 0;
+            color: #2196f3;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .solution {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px dashed #bdc3c7;
+        }
+        
+        .solution-header {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 40px;
+            padding: 20px 0;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 25px;
+            background: linear-gradient(45deg, #ff7700, #e65c00);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 15px rgba(255, 119, 0, 0.3);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(255, 119, 0, 0.4);
+        }
+        
+        .btn.prev::before {
+            content: '←';
+            margin-right: 8px;
+            font-size: 1.1em;
+        }
+        
+        .btn.next::after {
+            content: '→';
+            margin-left: 8px;
+            font-size: 1.1em;
+        }
+        
+        footer {
+            text-align: center;
+            color: white;
+            padding: 30px 0;
+            opacity: 0.9;
+            margin-top: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        footer p {
+            text-align: center;
+            margin: 0;
+        }
+        
+        .math-expression {
+            text-align: center;
+            margin: 15px 0;
+            font-size: 1.1em;
+        }
+        
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        .highlight {
+            background: linear-gradient(135deg, #fff7e6, #ffe6cc);
+            padding: 15px;
+            border-left: 4px solid #ff8c00;
+            border-radius: 0 8px 8px 0;
+            margin: 15px 0;
+        }
+        
+        .convergence-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .comparison-card {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 50%, #e17055 100%);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(255, 140, 0, 0.2);
+            text-align: center;
+        }
+        
+        .comparison-card h5 {
+            color: #d63031;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+        
+        .convergence-table {
+            width: auto;
+            max-width: 95%;
+            border-collapse: collapse;
+            margin: 20px auto;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            display: table;
+        }
+        
+        .convergence-table th,
+        .convergence-table td {
+            padding: 15px 20px;
+            text-align: center;
+            border-bottom: 1px solid #ffe6cc;
+            white-space: nowrap;
+            min-width: auto;
+        }
+        
+        .convergence-table th {
+            background: linear-gradient(45deg, #ff7700, #e65c00);
+            color: white;
+            font-weight: 500;
+        }
+        
+        .convergence-table tr:hover {
+            background: #fffbf7;
+        }
+        
+        .test-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .method-card {
+            background: linear-gradient(135deg, #ff9f43 0%, #ff6348 50%, #ff3838 100%);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(255, 99, 72, 0.2);
+            text-align: center;
+            color: white;
+        }
+        
+        .method-card h5 {
+            color: white;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+        
+        .method-formula {
+            font-size: 1.1em;
+            margin: 15px 0;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px;
+            border-radius: 8px;
+        }
+        
+        .plot-container {
+            margin: 20px 0;
+            padding: 20px;
+            background: #fafafa;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            min-height: 400px;
+            height: auto;
+        }
+        
+        .visualization {
+            background: linear-gradient(135deg, #f1f2f6, #ddd);
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            min-height: 500px;
+        }
+        
+        .visualization h4 {
+            color: #ff6348;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .convergence-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .control-group label {
+            font-weight: 500;
+            color: #2c3e50;
+        }
+        
+        #n-slider {
+            width: 150px;
+            height: 6px;
+            background: #ddd;
+            outline: none;
+            border-radius: 3px;
+        }
+        
+        #n-slider::-webkit-slider-thumb {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #ff6348;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+        
+        #n-value {
+            font-weight: bold;
+            color: #ff6348;
+            min-width: 20px;
+        }
+        
+        .animate-button {
+            padding: 8px 16px;
+            background: linear-gradient(45deg, #ff6348, #ff4757);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .animate-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 99, 72, 0.3);
+        }
+        
+        .convergence-explanation {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .explanation-box {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .explanation-box h5 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        .explanation-box ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        
+        .explanation-box li {
+            margin-bottom: 8px;
+            color: #34495e;
+        }
+        
+        .convergence-analysis {
+            margin-top: 20px;
+        }
+        
+        .analysis-box {
+            background: linear-gradient(135deg, #fff9e6, #fff3d3);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-left: 4px solid #f39c12;
+        }
+        
+        .analysis-box h5 {
+            color: #e67e22;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+        
+        .analysis-box p {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        /* AI提示方块样式 */
+        .ai-warning {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            border: 2px solid #e0e0e0;
+        }
+        
+        .ai-warning:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            border-color: #ff4444;
+        }
+        
+        .ai-warning::before {
+            content: '!';
+            color: #e74c3c;
+            font-size: 20px;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+        }
+        
+        .ai-warning-tooltip {
+            position: absolute;
+            top: 50px;
+            left: 0;
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 16px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            line-height: 1.5;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1001;
+            width: 250px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .ai-warning-tooltip::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: 20px;
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid rgba(0, 0, 0, 0.9);
+        }
+        
+        .ai-warning:hover .ai-warning-tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .section-content {
+                padding: 20px;
+            }
+            
+            .definition, .theorem, .example {
+                padding: 20px;
+            }
+            
+            .nav-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .convergence-comparison,
+            .test-methods {
+                grid-template-columns: 1fr;
+            }
+            
+            .plot-container {
+                padding: 10px;
+                min-height: 300px;
+            }
+            
+            .visualization {
+                padding: 15px;
+                min-height: 350px;
+            }
+            
+            .convergence-controls {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .convergence-explanation {
+                grid-template-columns: 1fr;
+            }
+            
+            .control-group {
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .ai-warning {
+                width: 35px;
+                height: 35px;
+                top: 15px;
+                left: 15px;
+            }
+            
+            .ai-warning::before {
+                font-size: 18px;
+            }
+            
+            .ai-warning-tooltip {
+                width: 280px;
+                font-size: 13px;
+                padding: 14px 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- AI内容提示 -->
+    <div class="ai-warning">
+        <div class="ai-warning-tooltip">
+            页面内容由AI生成，请谨慎对待。<br>如发现错误，欢迎反馈。
+        </div>
+    </div>
+    
+    <div class="container">
+        <a href="../index.html" class="back-link">返回章节概览</a>
+        
+        <header>
+            <h1>12.6 函数项级数的一致收敛性及一致收敛级数的基本性质</h1>
+            <div class="subtitle">Uniform Convergence of Function Series</div>
+        </header>
+        
+        <!-- 12.6.1 函数项级数的一致收敛性 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>12.6.1 函数项级数的一致收敛性</h2>
+            </div>
+            <div class="section-content">
+                <div class="definition">
+                    <h4>逐点收敛</h4>
+                    <p>设函数项级数 $\sum_{n=1}^{\infty} u_n(x)$ 在区间 $I$ 上有定义。如果对于 $I$ 上的每一点 $x_0$，常数项级数 $\sum_{n=1}^{\infty} u_n(x_0)$ 收敛，则称函数项级数在区间 $I$ 上<strong>逐点收敛</strong>。</p>
+                    
+                    <p>用数学语言表述：对于任意 $x \in I$ 和任意 $\varepsilon > 0$，存在正整数 $N = N(\varepsilon, x)$，使得当 $n > N$ 时，有</p>
+                    <div class="math-expression">
+                        $$\left|S_n(x) - S(x)\right| < \varepsilon$$
+                    </div>
+                    <p>其中 $S_n(x) = \sum_{k=1}^{n} u_k(x)$，$S(x) = \sum_{k=1}^{\infty} u_k(x)$。</p>
+                </div>
+                
+                <div class="definition">
+                    <h4>一致收敛</h4>
+                    <p>设函数项级数 $\sum_{n=1}^{\infty} u_n(x)$ 在区间 $I$ 上逐点收敛于和函数 $S(x)$。如果对于任意 $\varepsilon > 0$，存在正整数 $N = N(\varepsilon)$（<strong>注意：$N$ 只依赖于 $\varepsilon$，不依赖于 $x$</strong>），使得当 $n > N$ 时，对于<strong>所有</strong> $x \in I$，都有</p>
+                    <div class="math-expression">
+                        $$\left|S_n(x) - S(x)\right| < \varepsilon$$
+                    </div>
+                    <p>则称函数项级数在区间 $I$ 上<strong>一致收敛</strong>于 $S(x)$。</p>
+                </div>
+                
+                <div class="convergence-comparison">
+                    <div class="comparison-card">
+                        <h5>逐点收敛</h5>
+                        <p>$N = N(\varepsilon, x)$</p>
+                        <p>$N$ 依赖于 $x$</p>
+                        <p>对每个固定的 $x$，级数收敛</p>
+                    </div>
+                    
+                    <div class="comparison-card">
+                        <h5>一致收敛</h5>
+                        <p>$N = N(\varepsilon)$</p>
+                        <p>$N$ 不依赖于 $x$</p>
+                        <p>在整个区间上"同步"收敛</p>
+                    </div>
+                </div>
+                
+                <div class="theorem">
+                    <h4>余项的一致收敛性</h4>
+                    <p>函数项级数 $\sum_{n=1}^{\infty} u_n(x)$ 在区间 $I$ 上一致收敛的充分必要条件是：余项 $r_n(x) = S(x) - S_n(x)$ 在 $I$ 上一致趋于零，即</p>
+                    <div class="math-expression">
+                        $$\lim_{n \to \infty} \sup_{x \in I} |r_n(x)| = 0$$
+                    </div>
+                </div>
+                
+                <div class="definition">
+                    <h4>Weierstrass 判别法（M判别法）</h4>
+                    <p>设函数项级数 $\sum_{n=1}^{\infty} u_n(x)$ 在区间 $I$ 上有定义，如果存在收敛的正项级数 $\sum_{n=1}^{\infty} M_n$，使得对于所有 $x \in I$ 和所有 $n \in \mathbb{N}$，都有</p>
+                    <div class="math-expression">
+                        $$|u_n(x)| \leq M_n$$
+                    </div>
+                    <p>则函数项级数 $\sum_{n=1}^{\infty} u_n(x)$ 在区间 $I$ 上<strong>一致收敛</strong>。</p>
+                </div>
+                
+                <div class="visualization">
+                    <h4>一致收敛与逐点收敛的可视化对比</h4>
+                    <div class="convergence-controls">
+                        <div class="control-group">
+                            <label for="n-slider">项数 n: </label>
+                            <input type="range" id="n-slider" min="1" max="20" value="5" step="1">
+                            <span id="n-value">5</span>
+                        </div>
+                        <div class="control-group">
+                            <button id="animate-btn" class="animate-button">自动演示</button>
+                            <button id="reset-btn" class="animate-button">重置</button>
+                        </div>
+                    </div>
+                    <div id="convergence-plot" class="plot-container"></div>
+                    <div class="convergence-explanation">
+                        <div class="explanation-box">
+                            <h5>📊 图表说明</h5>
+                            <ul>
+                                <li><strong>红色曲线：</strong>逐点收敛例子 - $S_n(x) = nx(1-x)^n$，收敛到 $S(x) = 0$</li>
+                                <li><strong>绿色曲线：</strong>一致收敛例子 - $S_n(x) = \sum_{k=1}^{n} \left(\frac{x}{2}\right)^k$，收敛到 $S(x) = \frac{x}{2-x}$</li>
+                                <li><strong>灰色虚线：</strong>极限函数（和函数）</li>
+                            </ul>
+                        </div>
+                        <div class="explanation-box">
+                            <h5>🔍 观察要点</h5>
+                            <ul>
+                                <li><strong>逐点收敛：</strong>随着 $n$ 增大，红色曲线在不同点的收敛速度不同，峰值在 $x = \frac{1}{n+1}$ 处</li>
+                                <li><strong>一致收敛：</strong>绿色曲线在整个区间 $[0,1]$ 上"同步"收敛到极限函数</li>
+                                <li><strong>关键差异：</strong>红色曲线的最大值始终约为 $\frac{1}{e} \approx 0.368$，不趋于零</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="convergence-analysis">
+                        <div class="analysis-box">
+                            <h5>📈 数学分析</h5>
+                            <p><strong>逐点收敛分析：</strong></p>
+                            <p>对于每个固定的 $x \in [0,1]$，都有 $\lim_{n \to \infty} nx(1-x)^n = 0$</p>
+                            <p>但 $\sup_{x \in [0,1]} |S_n(x) - 0| = \max_{x \in [0,1]} nx(1-x)^n \approx \frac{1}{e} \not\to 0$</p>
+                            
+                            <p><strong>一致收敛分析：</strong></p>
+                            <p>在 $[0,1]$ 上，$\left|\frac{x}{2-x} - S_n(x)\right| \leq \left(\frac{1}{2}\right)^{n+1} \cdot \frac{1}{1-1/2} = \frac{1}{2^n} \to 0$</p>
+                            <p>收敛速度不依赖于 $x$ 的选择。</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <h4>例1：判断级数的收敛性</h4>
+                    <p>判断函数项级数 $\sum_{n=1}^{\infty} \frac{x^n}{n}$ 在区间 $[0, 1]$ 上的收敛性。</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解：</div>
+                        <p><strong>逐点收敛性：</strong></p>
+                        <ul>
+                            <li>当 $x = 0$ 时：级数为 $0$，收敛</li>
+                            <li>当 $0 < x < 1$ 时：由比值判别法可知级数绝对收敛</li>
+                            <li>当 $x = 1$ 时：级数为 $\sum_{n=1}^{\infty} \frac{1}{n}$，发散</li>
+                        </ul>
+                        <p>所以级数在 $[0, 1)$ 上逐点收敛。</p>
+                        
+                        <p><strong>一致收敛性：</strong></p>
+                        <p>对于任意 $0 < a < 1$，在 $[0, a]$ 上：</p>
+                        $$|u_n(x)| = \left|\frac{x^n}{n}\right| \leq \frac{a^n}{n} = M_n$$
+                        <p>由于级数 $\sum_{n=1}^{\infty} \frac{a^n}{n}$ 收敛（$|a| < 1$），由 M 判别法可知，原级数在 $[0, a]$ 上一致收敛。</p>
+                        
+                        <p>但在 $[0, 1)$ 上不一致收敛，因为当 $x$ 接近 $1$ 时，收敛速度变慢。</p>
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <h4>例2：经典的非一致收敛例子</h4>
+                    <p>考虑函数项级数：$S_n(x) = nx(1-x)^n$，$x \in [0, 1]$。</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解：</div>
+                        <p><strong>逐点收敛性：</strong></p>
+                        <ul>
+                            <li>当 $x = 0$ 时：$S_n(0) = 0$，收敛于 $0$</li>
+                            <li>当 $x = 1$ 时：$S_n(1) = 0$，收敛于 $0$</li>
+                            <li>当 $0 < x < 1$ 时：$\lim_{n \to \infty} nx(1-x)^n = 0$</li>
+                        </ul>
+                        <p>所以 $S_n(x)$ 在 $[0, 1]$ 上逐点收敛于 $S(x) = 0$。</p>
+                        
+                        <p><strong>一致收敛性：</strong></p>
+                        <p>为了找到 $S_n(x)$ 的最大值，对 $x$ 求导：</p>
+                        $$\frac{d}{dx}[nx(1-x)^n] = n(1-x)^n - n^2x(1-x)^{n-1} = n(1-x)^{n-1}[1-x-nx]$$
+                        <p>令导数为零：$1-x-nx = 0$，得 $x = \frac{1}{n+1}$</p>
+                        <p>在此点处：</p>
+                        $$S_n\left(\frac{1}{n+1}\right) = n \cdot \frac{1}{n+1} \cdot \left(1-\frac{1}{n+1}\right)^n = \frac{n}{n+1} \cdot \left(\frac{n}{n+1}\right)^n$$
+                        <p>当 $n \to \infty$ 时，此值趋于 $\frac{1}{e} \neq 0$。</p>
+                        
+                        <p><strong>结论：</strong>$\sup_{x \in [0,1]} |S_n(x) - 0| = \frac{1}{e} \not\to 0$，所以不一致收敛。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 一致收敛级数的基本性质 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>一致收敛级数的基本性质</h2>
+            </div>
+            <div class="section-content">
+                <div class="theorem">
+                    <h4>连续性定理</h4>
+                    <p>如果函数项级数 $\sum_{n=1}^{\infty} u_n(x)$ 的每一项 $u_n(x)$ 在区间 $[a, b]$ 上连续，且级数在 $[a, b]$ 上一致收敛于 $S(x)$，则和函数 $S(x)$ 在 $[a, b]$ 上连续。</p>
+                    
+                    <div class="highlight">
+                        <p><strong>重要意义：</strong>一致收敛保证了连续性的传递，即"连续函数的一致收敛级数的和仍然连续"。</p>
+                    </div>
+                </div>
+                
+                <div class="theorem">
+                    <h4>逐项积分定理</h4>
+                    <p>如果函数项级数 $\sum_{n=1}^{\infty} u_n(x)$ 的每一项 $u_n(x)$ 在区间 $[a, b]$ 上连续，且级数在 $[a, b]$ 上一致收敛于 $S(x)$，则</p>
+                    <div class="math-expression">
+                        $$\int_a^b S(x) dx = \int_a^b \sum_{n=1}^{\infty} u_n(x) dx = \sum_{n=1}^{\infty} \int_a^b u_n(x) dx$$
+                    </div>
+                    <p>即积分与求和的次序可以交换。</p>
+                </div>
+                
+                <div class="theorem">
+                    <h4>逐项求导定理</h4>
+                    <p>如果函数项级数 $\sum_{n=1}^{\infty} u_n(x)$ 满足：</p>
+                    <ol>
+                        <li>每一项 $u_n(x)$ 在区间 $[a, b]$ 上有连续导数 $u_n'(x)$</li>
+                        <li>级数 $\sum_{n=1}^{\infty} u_n(x)$ 在 $[a, b]$ 上逐点收敛</li>
+                        <li>导数级数 $\sum_{n=1}^{\infty} u_n'(x)$ 在 $[a, b]$ 上一致收敛</li>
+                    </ol>
+                    <p>则和函数 $S(x) = \sum_{n=1}^{\infty} u_n(x)$ 在 $[a, b]$ 上可导，且</p>
+                    <div class="math-expression">
+                        $$S'(x) = \sum_{n=1}^{\infty} u_n'(x)$$
+                    </div>
+                </div>
+                
+                <div class="test-methods">
+                    <div class="method-card">
+                        <h5>Dini定理</h5>
+                        <div class="method-formula">
+                            设 $\{u_n(x)\}$ 在 $[a,b]$ 上连续且单调，若逐点收敛于连续函数，则一致收敛
+                        </div>
+                    </div>
+                    
+                    <div class="method-card">
+                        <h5>上确界判别法</h5>
+                        <div class="method-formula">
+                            $\lim_{n \to \infty} \sup_{x \in I} |S_n(x) - S(x)| = 0$
+                        </div>
+                    </div>
+                    
+                    <div class="method-card">
+                        <h5>柯西一致收敛判别法</h5>
+                        <div class="method-formula">
+                            $\sup_{x \in I} |S_{n+p}(x) - S_n(x)| \to 0$ (当 $n \to \infty$)
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="convergence-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>性质</th>
+                                <th>逐点收敛</th>
+                                <th>一致收敛</th>
+                                <th>备注</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>连续性</td>
+                                <td>可能不保持</td>
+                                <td>保持</td>
+                                <td>一致收敛的优势</td>
+                            </tr>
+                            <tr>
+                                <td>逐项积分</td>
+                                <td>不一定成立</td>
+                                <td>成立</td>
+                                <td>积分与求和交换</td>
+                            </tr>
+                            <tr>
+                                <td>逐项求导</td>
+                                <td>需要导数级数一致收敛</td>
+                                <td>需要导数级数一致收敛</td>
+                                <td>条件较强</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="example">
+                    <h4>例3：验证逐项积分定理</h4>
+                    <p>考虑幂级数 $\sum_{n=0}^{\infty} x^n = \frac{1}{1-x}$，$x \in [0, a]$（$0 < a < 1$）。</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解：</div>
+                        <p><strong>一致收敛性：</strong></p>
+                        <p>在 $[0, a]$ 上，$|x^n| \leq a^n$，而 $\sum_{n=0}^{\infty} a^n$ 收敛，由 M 判别法知级数一致收敛。</p>
+                        
+                        <p><strong>逐项积分：</strong></p>
+                        $$\int_0^x \frac{1}{1-t} dt = \int_0^x \sum_{n=0}^{\infty} t^n dt = \sum_{n=0}^{\infty} \int_0^x t^n dt = \sum_{n=0}^{\infty} \frac{x^{n+1}}{n+1}$$
+                        
+                        <p><strong>验证：</strong></p>
+                        <p>左边：$\int_0^x \frac{1}{1-t} dt = -\ln(1-x)$</p>
+                        <p>右边：$\sum_{n=0}^{\infty} \frac{x^{n+1}}{n+1} = \sum_{n=1}^{\infty} \frac{x^n}{n} = -\ln(1-x)$（当 $|x| < 1$）</p>
+                        
+                        <p><strong>结论：</strong>两边相等，验证了逐项积分定理。</p>
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <h4>例4：应用逐项求导定理</h4>
+                    <p>对于幂级数 $\sum_{n=1}^{\infty} \frac{x^n}{n} = -\ln(1-x)$，求其导数。</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解：</div>
+                        <p><strong>检验条件：</strong></p>
+                        <ol>
+                            <li>每项 $\frac{x^n}{n}$ 的导数为 $x^{n-1}$，在任意有界区间上连续</li>
+                            <li>原级数在 $(-1, 1)$ 内逐点收敛</li>
+                            <li>导数级数 $\sum_{n=1}^{\infty} x^{n-1} = \sum_{n=0}^{\infty} x^n$ 在任意 $[-a, a]$（$a < 1$）上一致收敛</li>
+                        </ol>
+                        
+                        <p><strong>逐项求导：</strong></p>
+                        $$\frac{d}{dx}\left(\sum_{n=1}^{\infty} \frac{x^n}{n}\right) = \sum_{n=1}^{\infty} \frac{d}{dx}\left(\frac{x^n}{n}\right) = \sum_{n=1}^{\infty} x^{n-1} = \sum_{n=0}^{\infty} x^n = \frac{1}{1-x}$$
+                        
+                        <p><strong>验证：</strong></p>
+                        $$\frac{d}{dx}[-\ln(1-x)] = \frac{1}{1-x}$$ ✓
+                        
+                        <p><strong>结论：</strong>逐项求导的结果正确。</p>
+                    </div>
+                </div>
+                
+                <div class="visualization">
+                    <h4>一致收敛性质的动态演示</h4>
+                    <div id="properties-demo" class="plot-container"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="nav-buttons">
+            <a href="12.5.html" class="btn prev">上一节：12.5 函数的幂级数展开式的应用</a>
+            <a href="12.7.html" class="btn next">下一节：12.7 傅里叶级数</a>
+        </div>
+        
+        <footer>
+            <p>&copy; 2025 高等数学复习系统 - 函数项级数的一致收敛性</p>
+        </footer>
+    </div>
+
+    <script>
+        // 页面加载动画
+        gsap.from(".content-section", {
+            duration: 0.8,
+            y: 50,
+            opacity: 0,
+            stagger: 0.2,
+            ease: "power2.out"
+        });
+
+        // 一致收敛与逐点收敛的可视化对比
+        let animationInterval;
+        let isAnimating = false;
+        
+        function createConvergencePlot() {
+            const x = [];
+            for (let i = 0; i <= 100; i++) {
+                x.push(i / 100);
+            }
+            
+            updatePlot(5); // 初始显示 n=5 的情况
+            
+            // 滑块事件监听
+            const slider = document.getElementById('n-slider');
+            const nValue = document.getElementById('n-value');
+            
+            slider.addEventListener('input', function() {
+                const n = parseInt(this.value);
+                nValue.textContent = n;
+                if (!isAnimating) {
+                    updatePlot(n);
+                }
+            });
+            
+            // 动画按钮事件
+            document.getElementById('animate-btn').addEventListener('click', function() {
+                if (isAnimating) {
+                    stopAnimation();
+                } else {
+                    startAnimation();
+                }
+            });
+            
+            // 重置按钮事件
+            document.getElementById('reset-btn').addEventListener('click', function() {
+                stopAnimation();
+                slider.value = 5;
+                nValue.textContent = '5';
+                updatePlot(5);
+            });
+        }
+        
+        function updatePlot(n) {
+            const x = [];
+            const pointwise = [];
+            const uniform = [];
+            const pointwiseLimit = [];
+            const uniformLimit = [];
+            
+            for (let i = 0; i <= 100; i++) {
+                const xi = i / 100;
+                x.push(xi);
+                
+                // 逐点收敛例子：S_n(x) = nx(1-x)^n
+                pointwise.push(n * xi * Math.pow(1 - xi, n));
+                pointwiseLimit.push(0); // 极限函数是 0
+                
+                // 一致收敛例子：几何级数的部分和 S_n(x) = sum_{k=1}^n (x/2)^k
+                let sum = 0;
+                for (let k = 1; k <= n; k++) {
+                    sum += Math.pow(xi / 2, k);
+                }
+                uniform.push(sum);
+                
+                // 一致收敛的极限函数：(x/2)/(1-x/2) = x/(2-x) （当 |x/2| < 1 即 x < 2）
+                if (xi < 2) {
+                    uniformLimit.push(xi / (2 - xi));
+                } else {
+                    uniformLimit.push(0);
+                }
+            }
+
+            const trace1 = {
+                x: x,
+                y: pointwise,
+                type: 'scatter',
+                mode: 'lines',
+                name: `逐点收敛：S_${n}(x) = ${n}x(1-x)^${n}`,
+                line: { color: '#ff6348', width: 3 }
+            };
+
+            const trace2 = {
+                x: x,
+                y: uniform,
+                type: 'scatter',
+                mode: 'lines',
+                name: `一致收敛：S_${n}(x) = Σ(x/2)^k (k=1到${n})`,
+                line: { color: '#20bf6b', width: 3 }
+            };
+            
+            const trace3 = {
+                x: x,
+                y: pointwiseLimit,
+                type: 'scatter',
+                mode: 'lines',
+                name: '逐点收敛极限：S(x) = 0',
+                line: { color: '#95a5a6', width: 2, dash: 'dash' }
+            };
+            
+            const trace4 = {
+                x: x,
+                y: uniformLimit,
+                type: 'scatter',
+                mode: 'lines',
+                name: '一致收敛极限：S(x) = x/(2-x)',
+                line: { color: '#7f8c8d', width: 2, dash: 'dash' }
+            };
+
+            // 动态调整高度
+            const isMobile = window.innerWidth <= 768;
+            const chartHeight = isMobile ? 300 : 400;
+
+            const layout = {
+                title: {
+                    text: `收敛性质对比 (n = ${n})`,
+                    font: { size: 18, color: '#2c3e50' }
+                },
+                xaxis: {
+                    title: 'x',
+                    gridcolor: '#ecf0f1',
+                    range: [0, 1]
+                },
+                yaxis: {
+                    title: 'S_n(x)',
+                    gridcolor: '#ecf0f1'
+                },
+                plot_bgcolor: 'rgba(0,0,0,0)',
+                paper_bgcolor: 'rgba(0,0,0,0)',
+                margin: { t: 50, r: 50, b: 50, l: 50 },
+                height: chartHeight,
+                legend: {
+                    x: 0.02,
+                    y: 0.98,
+                    bgcolor: 'rgba(255,255,255,0.8)'
+                }
+            };
+
+            const config = {
+                responsive: true,
+                displayModeBar: false
+            };
+
+            Plotly.newPlot('convergence-plot', [trace1, trace2, trace3, trace4], layout, config);
+        }
+        
+        function startAnimation() {
+            isAnimating = true;
+            document.getElementById('animate-btn').textContent = '停止演示';
+            let n = 1;
+            
+            animationInterval = setInterval(() => {
+                document.getElementById('n-slider').value = n;
+                document.getElementById('n-value').textContent = n;
+                updatePlot(n);
+                
+                n++;
+                if (n > 20) {
+                    n = 1; // 循环播放
+                }
+            }, 800); // 每800ms更新一次
+        }
+        
+        function stopAnimation() {
+            isAnimating = false;
+            document.getElementById('animate-btn').textContent = '自动演示';
+            if (animationInterval) {
+                clearInterval(animationInterval);
+            }
+        }
+
+        // 一致收敛性质动态演示
+        function createPropertiesDemo() {
+            const x = [];
+            const continuous = [];
+            const discontinuous = [];
+            
+            for (let i = 0; i <= 200; i++) {
+                const xi = (i - 100) / 100;
+                x.push(xi);
+                
+                // 连续和函数（一致收敛）
+                continuous.push(1 / (1 + xi * xi));
+                
+                // 不连续和函数（非一致收敛）
+                if (Math.abs(xi) < 0.01) {
+                    discontinuous.push(1);
+                } else {
+                    discontinuous.push(Math.exp(-1 / (xi * xi)));
+                }
+            }
+
+            const trace1 = {
+                x: x,
+                y: continuous,
+                type: 'scatter',
+                mode: 'lines',
+                name: '连续和函数（一致收敛）',
+                line: { color: '#3742fa', width: 3 }
+            };
+
+            const trace2 = {
+                x: x,
+                y: discontinuous,
+                type: 'scatter',
+                mode: 'lines',
+                name: '不连续和函数（非一致收敛）',
+                line: { color: '#ff3838', width: 3 }
+            };
+
+            // 动态调整高度
+            const isMobile = window.innerWidth <= 768;
+            const chartHeight = isMobile ? 300 : 400;
+
+            const layout = {
+                title: {
+                    text: '一致收敛与连续性',
+                    font: { size: 18, color: '#2c3e50' }
+                },
+                xaxis: {
+                    title: 'x',
+                    gridcolor: '#ecf0f1'
+                },
+                yaxis: {
+                    title: 'S(x)',
+                    gridcolor: '#ecf0f1'
+                },
+                plot_bgcolor: 'rgba(0,0,0,0)',
+                paper_bgcolor: 'rgba(0,0,0,0)',
+                margin: { t: 50, r: 50, b: 50, l: 50 },
+                height: chartHeight
+            };
+
+            const config = {
+                responsive: true,
+                displayModeBar: false
+            };
+
+            Plotly.newPlot('properties-demo', [trace1, trace2], layout, config);
+        }
+
+        // 等待页面加载完成后创建图表
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                createConvergencePlot();
+                createPropertiesDemo();
+                
+                // 响应式调整
+                window.addEventListener('resize', function() {
+                    Plotly.Plots.resize('convergence-plot');
+                    Plotly.Plots.resize('properties-demo');
+                });
+            }, 1000);
+        });
+
+        // 卡片悬停效果
+        document.querySelectorAll('.method-card, .comparison-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                gsap.to(card, {duration: 0.3, scale: 1.05, boxShadow: '0 10px 30px rgba(255,99,72,0.3)'});
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                gsap.to(card, {duration: 0.3, scale: 1, boxShadow: '0 5px 15px rgba(255,99,72,0.2)'});
+            });
+        });
+
+        // 数学公式高亮效果
+        document.querySelectorAll('.math-expression').forEach(expr => {
+            expr.addEventListener('mouseenter', () => {
+                gsap.to(expr, {duration: 0.3, scale: 1.05, backgroundColor: '#fff7e6'});
+            });
+            
+            expr.addEventListener('mouseleave', () => {
+                gsap.to(expr, {duration: 0.3, scale: 1, backgroundColor: 'transparent'});
+            });
+        });
+    </script>
+</body>
+</html>
