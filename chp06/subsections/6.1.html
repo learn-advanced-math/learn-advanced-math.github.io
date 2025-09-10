@@ -740,12 +740,12 @@
                         <div class="solution-header">详细解答：</div>
                         <p>建立坐标系：以半圆的直径为 $x$ 轴，圆心为原点</p>
                         <p>半圆方程：$y = \sqrt{R^2 - x^2}$，$x \in [-R, R]$</p>
-                        <p>在 $[x, x+dx]$ 处，微元的面积：$dS = 2y \, dx = 2\sqrt{R^2 - x^2} \, dx$</p>
-                        <p>微元的质量：$dm = \rho(x) \cdot dS = k(R - |x|) \cdot 2\sqrt{R^2 - x^2} \, dx$</p>
+                        <p>在 $[x, x+dx]$ 处，微元的面积：$dS = y \, dx = \sqrt{R^2 - x^2} \, dx$</p>
+                        <p>微元的质量：$dm = \rho(x) \cdot dS = k(R - |x|) \cdot \sqrt{R^2 - x^2} \, dx$</p>
                         <p>由对称性，只需计算 $x \geq 0$ 的部分再乘以2：</p>
-                        <p>$M = 2 \int_0^R k(R - x) \cdot 2\sqrt{R^2 - x^2} \, dx = 4k \int_0^R (R - x)\sqrt{R^2 - x^2} \, dx$</p>
-                        <p>$= 4k[R \int_0^R \sqrt{R^2 - x^2} \, dx - \int_0^R x\sqrt{R^2 - x^2} \, dx]$</p>
-                        <p>$= 4k[R \cdot \frac{\pi R^2}{4} - \frac{R^3}{3}] = \pi kR^3 - \frac{4kR^3}{3}$</p>
+                        <p>$M = 2 \int_0^R k(R - x) \cdot \sqrt{R^2 - x^2} \, dx = 2k \int_0^R (R - x)\sqrt{R^2 - x^2} \, dx$</p>
+                        <p>$= 2k[R \int_0^R \sqrt{R^2 - x^2} \, dx - \int_0^R x\sqrt{R^2 - x^2} \, dx]$</p>
+                        <p>$= 2k[R \cdot \frac{\pi R^2}{4} - \frac{R^3}{3}] = \frac{\pi kR^3}{2} - \frac{2kR^3}{3}$</p>
                     </div>
                 </div>
             </div>
