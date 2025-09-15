@@ -791,7 +791,7 @@
                         <div class="solution-step">
                             <div class="step-title">步骤1：检查比例关系</div>
                             <p>$\frac{2}{4} = \frac{3}{6} = \frac{1}{2}$，所以 $a_1 : a_2 = b_1 : b_2$</p>
-                            <p>方程可写成：$(2x + 3y + 1)dx + 2(2x + 3y) + 5)dy = 0$</p>
+                            <p>方程可写成：$(2x + 3y + 1)dx + (2(2x + 3y) + 5)dy = 0$</p>
                         </div>
                         
                         <div class="solution-step">
@@ -817,9 +817,11 @@
                         
                         <div class="solution-step">
                             <div class="step-title">步骤5：求解并回代</div>
-                            <p>这仍然不是直接可分离的。重新考虑，用 $y$ 作为独立变量：</p>
-                            <p>从 $u = 2x + 3y$ 得 $x = \frac{u - 3y}{2}$</p>
-                            <p>原方程最终可化简求解得到隐式解。</p>
+                            <p>上式可进一步分离变量：$\frac{u+1}{u+7}du = -dy$</p>
+                            <p>对左边进行积分得：$\int \frac{u+1}{u+7}du = u - 6 \ln|u+7| + C_1$</p>
+                            <p>对右边进行积分得：$-\int dy = -y + C_2$</p>
+                            <p>所以，$u - 6 \ln|u+7| = -y + C$</p>
+                            <p>代入 $u = 2x + 3y$ 得：x + 2y - 3 \ln|2x + 3y +7| = C</p>
                         </div>
                     </div>
                 </div>
@@ -856,8 +858,7 @@
                         <p><strong>步骤3：</strong>这是齐次方程，用 $v = \frac{Y}{X}$ 求解</p>
                         <p>$\frac{dY}{dX} = \frac{Y - X}{X + Y} = \frac{v - 1}{1 + v}$</p>
                         
-                        <p><strong>步骤4：</strong>分离变量并积分得到解</p>
-                        <p><strong>最终解：</strong>$(x-1)^2 + (y-2)^2 = C(x-1)$</p>
+                        <p><strong>步骤4：</strong>剩下的步骤可以参考上面的例3</p>
                     </div>
                 </div>
                 
@@ -884,7 +885,7 @@
                         </div>
                         
                         <div class="solution-step">
-                            <div class="step-title">步骤3：建立关于v的微分方程</div>
+                            <div class="step-title">步骤3：建立关于 $v$ 的微分方程</div>
                             <p>代入得：$v + x\frac{dv}{dx} = \frac{1}{v} + 2v$</p>
                             <p>简化：$x\frac{dv}{dx} = \frac{1}{v} + 2v - v = \frac{1}{v} + v$</p>
                             <p>进一步简化：$x\frac{dv}{dx} = \frac{1 + v^2}{v}$</p>
