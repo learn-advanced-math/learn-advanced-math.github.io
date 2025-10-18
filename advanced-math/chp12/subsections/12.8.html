@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="alternate icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTUiIGZpbGw9IiMzNDk4ZGIiIHN0cm9rZT0iIzJjM2U1MCIgc3Ryb2tlLXdpZHRoPSIyIi8+PGcgZmlsbD0id2hpdGUiIGZvbnQtZmFtaWx5PSJUaW1lcyxzZXJpZiIgZm9udC13ZWlnaHQ9ImJvbGQiPjx0ZXh0IHg9IjE2IiB5PSIxMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxMiI+ZDwvdGV4dD48bGluZSB4MT0iOCIgeTE9IjE2IiB4Mj0iMjQiIHkyPSIxNiIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjUiLz48dGV4dCB4PSIxNiIgeT0iMjUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTAiPmR4PC90ZXh0PjwvZz48L3N2Zz4=">
+    <title>12.8 一般周期函数的傅里叶级数 - 高等数学复习</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']]
+            },
+            chtml: {
+                fontURL: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2'
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #27ae60 0%, #2c3e50 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 20px;
+            color: #27ae60;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 15px;
+            border-radius: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .back-link:hover {
+            color: #1e8449;
+            transform: translateX(-5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+        
+        .back-link::before {
+            content: '←';
+            margin-right: 8px;
+            font-size: 1.2em;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #27ae60 0%, #2c3e50 100%);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            margin: 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            font-weight: 300;
+        }
+        
+        .subtitle {
+            font-size: 1.1em;
+            margin-top: 10px;
+            opacity: 0.9;
+        }
+        
+        .content-section {
+            background: white;
+            margin: 25px 0;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .content-section:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .section-header {
+            padding: 20px 30px;
+            background: linear-gradient(45deg, #27ae60, #2c3e50);
+            color: white;
+        }
+        
+        .section-header h2 {
+            margin: 0;
+            font-size: 1.6em;
+            font-weight: 400;
+        }
+        
+        .section-content {
+            padding: 30px;
+        }
+        
+        .definition {
+            background: linear-gradient(135deg, #e8f5e8, #d5f4e6);
+            border-left: 5px solid #27ae60;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(39, 174, 96, 0.1);
+        }
+        
+        .definition h4 {
+            margin: 0 0 15px 0;
+            color: #27ae60;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .theorem {
+            background: linear-gradient(135deg, #fff8e1, #fff3c4);
+            border-left: 5px solid #ff9800;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(255, 152, 0, 0.1);
+        }
+        
+        .theorem h4 {
+            margin: 0 0 15px 0;
+            color: #ff9800;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .example {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-left: 5px solid #2196f3;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(33, 150, 243, 0.1);
+        }
+        
+        .example h4 {
+            margin: 0 0 15px 0;
+            color: #2196f3;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .solution {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px dashed #bdc3c7;
+        }
+        
+        .solution-header {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 40px;
+            padding: 20px 0;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 25px;
+            background: linear-gradient(45deg, #27ae60, #2c3e50);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 15px rgba(39, 174, 96, 0.3);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(39, 174, 96, 0.4);
+        }
+        
+        .btn.prev::before {
+            content: '←';
+            margin-right: 8px;
+            font-size: 1.1em;
+        }
+        
+        .btn.next::after {
+            content: '→';
+            margin-left: 8px;
+            font-size: 1.1em;
+        }
+        
+        footer {
+            text-align: center;
+            color: white;
+            padding: 30px 0;
+            opacity: 0.9;
+            margin-top: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        footer p {
+            text-align: center;
+            margin: 0;
+        }
+        
+        .math-expression {
+            text-align: center;
+            margin: 15px 0;
+            font-size: 1.1em;
+        }
+        
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        .highlight {
+            background: linear-gradient(135deg, #e8f5e8, #d5f4e6);
+            padding: 15px;
+            border-left: 4px solid #27ae60;
+            border-radius: 0 8px 8px 0;
+            margin: 15px 0;
+        }
+        
+        .period-types {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .period-card {
+            background: linear-gradient(135deg, #a8e6cf 0%, #88d8a3 50%, #7fcdcd 100%);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.2);
+            text-align: center;
+        }
+        
+        .period-card h5 {
+            color: #1e8449;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+        
+        .period-formula {
+            font-size: 1.1em;
+            margin: 15px 0;
+            color: #2c3e50;
+        }
+        
+        .complex-demo {
+            margin: 20px 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 15px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+        }
+        
+        .complex-demo h5 {
+            color: #27ae60;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        #complex-plot {
+            width: 100%;
+            height: 400px;
+            border-radius: 10px;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .control-group label {
+            color: #27ae60;
+            font-weight: 500;
+        }
+        
+        .control-group input, .control-group select {
+            padding: 5px 10px;
+            border: 2px solid #27ae60;
+            border-radius: 5px;
+            background: white;
+        }
+        
+        .control-group button {
+            padding: 8px 15px;
+            background: linear-gradient(45deg, #27ae60, #2c3e50);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .control-group button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(39, 174, 96, 0.3);
+        }
+        
+        .comparison-table {
+            width: auto;
+            max-width: 95%;
+            border-collapse: collapse;
+            margin: 20px auto;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            display: table;
+        }
+        
+        .comparison-table th,
+        .comparison-table td {
+            padding: 15px 20px;
+            text-align: center;
+            border-bottom: 1px solid #d5f4e6;
+            white-space: nowrap;
+            min-width: auto;
+        }
+        
+        .comparison-table th {
+            background: linear-gradient(45deg, #27ae60, #2c3e50);
+            color: white;
+            font-weight: 500;
+        }
+        
+        .comparison-table tr:hover {
+            background: #e8f5e8;
+        }
+        
+        .complex-visualization {
+            margin: 20px 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #eef2f3, #d6eaf8);
+            border-radius: 15px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .complex-circle {
+            width: 300px;
+            height: 300px;
+            margin: 0;
+            position: relative;
+        }
+        
+        .euler-formula {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .euler-card {
+            background: linear-gradient(135deg, #d5e8d4 0%, #a2d2ff 50%, #bee1e6 100%);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.2);
+            text-align: center;
+        }
+        
+        .euler-card h5 {
+            color: #1e8449;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+        
+        .euler-formula-text {
+            font-size: 1.1em;
+            margin: 15px 0;
+            color: #2c3e50;
+        }
+
+        /* AI提示方块样式 */
+        .ai-warning {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            border: 2px solid #e0e0e0;
+        }
+        
+        .ai-warning:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            border-color: #ff4444;
+        }
+        
+        .ai-warning::before {
+            content: '!';
+            color: #e74c3c;
+            font-size: 20px;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+        }
+        
+        .ai-warning-tooltip {
+            position: absolute;
+            top: 50px;
+            left: 0;
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 16px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            line-height: 1.5;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1001;
+            width: 250px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .ai-warning-tooltip::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: 20px;
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid rgba(0, 0, 0, 0.9);
+        }
+        
+        .ai-warning:hover .ai-warning-tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .section-content {
+                padding: 20px;
+            }
+            
+            .definition, .theorem, .example {
+                padding: 20px;
+            }
+            
+            .nav-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .period-types,
+            .euler-formula {
+                grid-template-columns: 1fr;
+            }
+            
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .ai-warning {
+                width: 35px;
+                height: 35px;
+                top: 15px;
+                left: 15px;
+            }
+            
+            .ai-warning::before {
+                font-size: 18px;
+            }
+            
+            .ai-warning-tooltip {
+                width: 280px;
+                font-size: 13px;
+                padding: 14px 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- AI内容提示 -->
+    <div class="ai-warning">
+        <div class="ai-warning-tooltip">
+            页面内容由AI生成，请谨慎对待。<br>如发现错误，<a href="https://github.com/learn-advanced-math/learn-advanced-math.github.io/issues" target="_blank" style="color: #ff0000">欢迎反馈</a>。
+        </div>
+    </div>
+    
+    <div class="container">
+        <a href="../index.html" class="back-link">返回章节概览</a>
+        
+        <header>
+            <h1>12.8 一般周期函数的傅里叶级数</h1>
+            <div class="subtitle">Fourier Series for General Periodic Functions</div>
+        </header>
+        
+        <!-- 12.8.1 周期函数的傅里叶级数 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>12.8.1 周期函数的傅里叶级数</h2>
+            </div>
+            <div class="section-content">
+                <div class="definition">
+                    <h4>一般周期函数的傅里叶级数</h4>
+                    <p>设函数 $f(x)$ 是周期为 $T = 2l$ 的周期函数，即 $f(x+2l) = f(x)$，则其傅里叶级数为：</p>
+                    <div class="math-expression">
+                        $$f(x) = \frac{a_0}{2} + \sum_{n=1}^{\infty} \left(a_n \cos \frac{n\pi x}{l} + b_n \sin \frac{n\pi x}{l}\right)$$
+                    </div>
+                    
+                    <p>其中傅里叶系数为：</p>
+                    <div class="period-types">
+                        <div class="period-card">
+                            <h5>$a_0$ 系数</h5>
+                            <div class="period-formula">
+                                $a_0 = \frac{1}{l} \int_{-l}^{l} f(x) dx$
+                            </div>
+                            <p>（函数在一个周期内的平均值的两倍）</p>
+                        </div>
+                        
+                        <div class="period-card">
+                            <h5>$a_n$ 系数</h5>
+                            <div class="period-formula">
+                                $a_n = \frac{1}{l} \int_{-l}^{l} f(x) \cos \frac{n\pi x}{l} dx$
+                            </div>
+                            <p>（余弦分量的系数）</p>
+                        </div>
+                        
+                        <div class="period-card">
+                            <h5>$b_n$ 系数</h5>
+                            <div class="period-formula">
+                                $b_n = \frac{1}{l} \int_{-l}^{l} f(x) \sin \frac{n\pi x}{l} dx$
+                            </div>
+                            <p>（正弦分量的系数）</p>
+                        </div>
+                        
+                        <div class="period-card">
+                            <h5>变量替换</h5>
+                            <div class="period-formula">
+                                令 $t = \frac{\pi x}{l}$，则 $x = \frac{lt}{\pi}$
+                            </div>
+                            <p>（将一般周期转换为 $2\pi$ 周期）</p>
+                        </div>
+                    </div>
+                    
+                    <div class="highlight">
+                        <p><strong>注意：</strong>积分区间可以是任意一个完整周期，如 $[0, 2l]$、$[c, c+2l]$ 等。</p>
+                    </div>
+                </div>
+                
+                <div class="theorem">
+                    <h4>周期函数的性质</h4>
+                    <p><strong>周期性：</strong>如果 $f(x)$ 的周期为 $T$，则：</p>
+                    <ul>
+                        <li>$f(x+T) = f(x)$ 对所有 $x$ 成立</li>
+                        <li>$f(x)$ 的最小正周期是所有周期中最小的正数</li>
+                        <li>如果 $T$ 是周期，则 $nT$（$n$ 为正整数）也是周期</li>
+                    </ul>
+                    
+                    <p><strong>积分性质：</strong></p>
+                    <div class="math-expression">
+                        $$\int_a^{a+T} f(x) dx = \int_0^T f(x) dx$$
+                    </div>
+                    <p>即在任意一个完整周期上的积分值相等。</p>
+                </div>
+                
+                <div class="example">
+                    <h4>例1：周期为 $4$ 的矩形波</h4>
+                    <p>求周期为 $4$ 的函数 $f(x) = \begin{cases} 1, & 0 < x < 2 \\ -1, & -2 < x < 0 \end{cases}$ 的傅里叶级数。</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解：</div>
+                        <p><strong>步骤1：确定参数</strong></p>
+                        <p>周期 $T = 4$，所以 $2l = 4$，$l = 2$</p>
+                        
+                        <p><strong>步骤2：计算 $a_0$</strong></p>
+                        $$a_0 = \frac{1}{2} \int_{-2}^{2} f(x) dx = \frac{1}{2} \left[\int_{-2}^{0} (-1) dx + \int_{0}^{2} 1 dx\right]$$
+                        $$= \frac{1}{2}[-2 + 2] = 0$$
+                        
+                        <p><strong>步骤3：计算 $a_n$</strong></p>
+                        <p>由于 $f(x)$ 是奇函数，所以：</p>
+                        $$a_n = \frac{1}{2} \int_{-2}^{2} f(x) \cos \frac{n\pi x}{2} dx = 0$$
+                        
+                        <p><strong>步骤4：计算 $b_n$</strong></p>
+                        $$b_n = \frac{1}{2} \int_{-2}^{2} f(x) \sin \frac{n\pi x}{2} dx = \frac{2}{2} \int_{0}^{2} \sin \frac{n\pi x}{2} dx$$
+                        $$= \int_{0}^{2} \sin \frac{n\pi x}{2} dx = \left[-\frac{2}{n\pi} \cos \frac{n\pi x}{2}\right]_0^{2}$$
+                        $$= -\frac{2}{n\pi}[\cos n\pi - 1] = \frac{2}{n\pi}[1 - (-1)^n]$$
+                        $$= \begin{cases} \frac{4}{n\pi}, & n \text{为奇数} \\ 0, & n \text{为偶数} \end{cases}$$
+                        
+                        <p><strong>结果：</strong></p>
+                        $$f(x) = \frac{4}{\pi}\left(\sin \frac{\pi x}{2} + \frac{1}{3}\sin \frac{3\pi x}{2} + \frac{1}{5}\sin \frac{5\pi x}{2} + \cdots\right)$$
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <h4>例2：周期为 $6$ 的锯齿波</h4>
+                    <p>求周期为 $6$ 的函数 $f(x) = x$，$x \in (-3, 3)$ 的傅里叶级数。</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解：</div>
+                        <p><strong>步骤1：确定参数</strong></p>
+                        <p>周期 $T = 6$，所以 $2l = 6$，$l = 3$</p>
+                        
+                        <p><strong>步骤2：分析函数性质</strong></p>
+                        <p>$f(x) = x$ 在 $(-3, 3)$ 上是奇函数，所以 $a_0 = a_n = 0$</p>
+                        
+                        <p><strong>步骤3：计算 $b_n$</strong></p>
+                        $$b_n = \frac{1}{3} \int_{-3}^{3} x \sin \frac{n\pi x}{3} dx = \frac{2}{3} \int_{0}^{3} x \sin \frac{n\pi x}{3} dx$$
+                        
+                        <p>使用分部积分：</p>
+                        $$b_n = \frac{2}{3} \left[-\frac{3x}{n\pi} \cos \frac{n\pi x}{3}\Big|_0^{3} + \frac{3}{n\pi}\int_0^{3} \cos \frac{n\pi x}{3} dx\right]$$
+                        $$= \frac{2}{3} \left[-\frac{9}{n\pi} \cos n\pi + 0\right] = -\frac{6}{n\pi} (-1)^n = \frac{6(-1)^{n+1}}{n\pi}$$
+                        
+                        <p><strong>结果：</strong></p>
+                        $$f(x) = \frac{6}{\pi}\left(\sin \frac{\pi x}{3} - \frac{1}{2}\sin \frac{2\pi x}{3} + \frac{1}{3}\sin \pi x - \cdots\right)$$
+                        $$= \frac{6}{\pi}\sum_{n=1}^{\infty} \frac{(-1)^{n+1}}{n} \sin \frac{n\pi x}{3}$$
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <h4>例3：周期为 $8$ 的抛物线函数</h4>
+                    <p>求周期为 $8$ 的函数 $f(x) = x^2$，$x \in [-4, 4]$ 的傅里叶级数。</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解：</div>
+                        <p><strong>步骤1：确定参数</strong></p>
+                        <p>周期 $T = 8$，所以 $2l = 8$，$l = 4$</p>
+                        
+                        <p><strong>步骤2：分析函数性质</strong></p>
+                        <p>$f(x) = x^2$ 是偶函数，所以 $b_n = 0$</p>
+                        
+                        <p><strong>步骤3：计算 $a_0$</strong></p>
+                        $$a_0 = \frac{1}{4} \int_{-4}^{4} x^2 dx = \frac{2}{4} \int_{0}^{4} x^2 dx = \frac{1}{2} \cdot \frac{64}{3} = \frac{32}{3}$$
+                        
+                        <p><strong>步骤4：计算 $a_n$</strong></p>
+                        $$a_n = \frac{1}{4} \int_{-4}^{4} x^2 \cos \frac{n\pi x}{4} dx = \frac{2}{4} \int_{0}^{4} x^2 \cos \frac{n\pi x}{4} dx$$
+                        
+                        <p>使用两次分部积分：</p>
+                        $$a_n = \frac{1}{2} \left[\frac{4x^2}{n\pi} \sin \frac{n\pi x}{4}\Big|_0^{4} - \frac{8}{n\pi}\int_0^{4} x \sin \frac{n\pi x}{4} dx\right]$$
+                        
+                        <p>继续计算得：</p>
+                        $$a_n = \frac{64(-1)^n}{n^2\pi^2}$$
+                        
+                        <p><strong>结果：</strong></p>
+                        $$f(x) = \frac{16}{3} + \frac{64}{\pi^2}\left(-\cos \frac{\pi x}{4} + \frac{1}{4}\cos \frac{\pi x}{2} - \frac{1}{9}\cos \frac{3\pi x}{4} + \cdots\right)$$
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 12.8.2 傅里叶级数的复数形式 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>12.8.2 傅里叶级数的复数形式</h2>
+            </div>
+            <div class="section-content">
+                <div class="definition">
+                    <h4>欧拉公式</h4>
+                    <p>欧拉公式是连接三角函数和指数函数的桥梁：</p>
+                    <div class="math-expression">
+                        $$e^{i\theta} = \cos \theta + i \sin \theta$$
+                    </div>
+                    
+                    <div class="euler-formula">
+                        <div class="euler-card">
+                            <h5>正弦函数表示</h5>
+                            <div class="euler-formula-text">
+                                $\sin \theta = \frac{e^{i\theta} - e^{-i\theta}}{2i}$
+                            </div>
+                        </div>
+                        
+                        <div class="euler-card">
+                            <h5>余弦函数表示</h5>
+                            <div class="euler-formula-text">
+                                $\cos \theta = \frac{e^{i\theta} + e^{-i\theta}}{2}$
+                            </div>
+                        </div>
+                        
+                        <div class="euler-card">
+                            <h5>特殊值</h5>
+                            <div class="euler-formula-text">
+                                $e^{i\pi} + 1 = 0$
+                            </div>
+                            <p>（欧拉恒等式）</p>
+                        </div>
+                        
+                        <div class="euler-card">
+                            <h5>周期性</h5>
+                            <div class="euler-formula-text">
+                                $e^{i(\theta + 2\pi)} = e^{i\theta}$
+                            </div>
+                            <p>（复指数函数的周期性）</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="complex-demo">
+                    <h5>复数形式的几何意义</h5>
+                    <div class="controls">
+                        <div class="control-group">
+                            <label for="angle">角度 θ：</label>
+                            <input type="range" id="angle" min="0" max="360" value="45" oninput="updateComplexVisualization()">
+                            <span id="angleValue">45°</span>
+                        </div>
+                    </div>
+                    <div class="complex-visualization">
+                        <svg class="complex-circle" id="complex-circle">
+                            <!-- 将通过D3.js动态生成内容 -->
+                        </svg>
+                    </div>
+                </div>
+                
+                <div class="definition">
+                    <h4>傅里叶级数的复数形式</h4>
+                    <p>利用欧拉公式，可以将傅里叶级数写成复数形式：</p>
+                    <div class="math-expression">
+                        $$f(x) = \sum_{n=-\infty}^{\infty} c_n e^{i\frac{n\pi x}{l}}$$
+                    </div>
+                    
+                    <p>其中复数傅里叶系数为：</p>
+                    <div class="math-expression">
+                        $$c_n = \frac{1}{2l} \int_{-l}^{l} f(x) e^{-i\frac{n\pi x}{l}} dx$$
+                    </div>
+                    
+                    <div class="highlight">
+                        <p><strong>系数关系：</strong>复数形式与实数形式的系数关系为：</p>
+                        <ul>
+                            <li>$c_0 = \frac{a_0}{2}$</li>
+                            <li>$c_n = \frac{a_n - ib_n}{2}$（$n > 0$）</li>
+                            <li>$c_{-n} = \frac{a_n + ib_n}{2} = \overline{c_n}$（$n > 0$）</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="theorem">
+                    <h4>复数形式的优势</h4>
+                    <p><strong>简洁性：</strong></p>
+                    <ul>
+                        <li>统一了正弦和余弦项的表示</li>
+                        <li>对称的求和形式：$\sum_{n=-\infty}^{\infty}$</li>
+                        <li>便于理论分析和计算</li>
+                    </ul>
+                    
+                    <p><strong>物理意义：</strong></p>
+                    <ul>
+                        <li>$e^{i\frac{n\pi x}{l}}$ 表示频率为 $\frac{n}{2l}$ 的复振荡</li>
+                        <li>$|c_n|$ 表示第 $n$ 次谐波的振幅</li>
+                        <li>$\arg(c_n)$ 表示第 $n$ 次谐波的相位</li>
+                    </ul>
+                    
+                    <p><strong>频谱分析：</strong></p>
+                    <div class="math-expression">
+                        $$|c_n|^2 = \frac{a_n^2 + b_n^2}{4}$$
+                    </div>
+                    <p>表示第 $n$ 次谐波的功率。</p>
+                </div>
+                
+                <div class="comparison-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>形式</th>
+                                <th>表达式</th>
+                                <th>系数公式</th>
+                                <th>适用场合</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>实数形式</td>
+                                <td>$\frac{a_0}{2} + \sum_{n=1}^{\infty} (a_n \cos \frac{n\pi x}{l} + b_n \sin \frac{n\pi x}{l})$</td>
+                                <td>$a_n, b_n$ 分别计算</td>
+                                <td>工程应用，直观理解</td>
+                            </tr>
+                            <tr>
+                                <td>复数形式</td>
+                                <td>$\sum_{n=-\infty}^{\infty} c_n e^{i\frac{n\pi x}{l}}$</td>
+                                <td>$c_n = \frac{1}{2l} \int_{-l}^{l} f(x) e^{-i\frac{n\pi x}{l}} dx$</td>
+                                <td>理论分析，频谱分析</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="example">
+                    <h4>例4：矩形波的复数形式</h4>
+                    <p>求周期为 $2\pi$ 的矩形波函数 $f(x) = \begin{cases} 1, & 0 < x < \pi \\ -1, & -\pi < x < 0 \end{cases}$ 的复数形式傅里叶级数。</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解：</div>
+                        <p><strong>步骤1：确定参数</strong></p>
+                        <p>周期 $T = 2\pi$，所以 $l = \pi$</p>
+                        
+                        <p><strong>步骤2：计算复数系数 $c_n$</strong></p>
+                        $$c_n = \frac{1}{2\pi} \int_{-\pi}^{\pi} f(x) e^{-inx} dx$$
+                        $$= \frac{1}{2\pi} \left[\int_{-\pi}^{0} (-1) e^{-inx} dx + \int_{0}^{\pi} 1 \cdot e^{-inx} dx\right]$$
+                        
+                        <p>当 $n \neq 0$ 时：</p>
+                        $$c_n = \frac{1}{2\pi} \left[\frac{e^{-inx}}{in}\Big|_{-\pi}^{0} - \frac{e^{-inx}}{in}\Big|_{0}^{\pi}\right]$$
+                        $$= \frac{1}{2\pi} \left[\frac{1 - e^{in\pi}}{in} - \frac{e^{-in\pi} - 1}{in}\right]$$
+                        $$= \frac{1}{2\pi} \cdot \frac{2(1 - \cos n\pi)}{in} = \frac{1 - (-1)^n}{in\pi}$$
+                        
+                        <p>因此：</p>
+                        $$c_n = \begin{cases}
+                        0, & n = 0 \\
+                        \frac{2}{in\pi}, & n \text{为奇数} \\
+                        0, & n \text{为偶数且} n \neq 0
+                        \end{cases}$$
+                        
+                        <p><strong>步骤3：写出复数形式</strong></p>
+                        $$f(x) = \sum_{\substack{n=-\infty \\ n \text{为奇数}}}^{\infty} \frac{2}{in\pi} e^{inx}$$
+                        $$= \frac{2}{\pi} \sum_{k=0}^{\infty} \frac{1}{i(2k+1)} \left[e^{i(2k+1)x} - e^{-i(2k+1)x}\right]$$
+                        $$= \frac{4}{\pi} \sum_{k=0}^{\infty} \frac{\sin(2k+1)x}{2k+1}$$
+                        
+                        <p><strong>验证：</strong>这与实数形式的结果一致。</p>
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <h4>例5：复数系数与实数系数的关系</h4>
+                    <p>已知函数的实数傅里叶级数为 $f(x) = 1 + 2\cos x + \sin x - \cos 2x + 3\sin 2x$，求其复数形式。</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解：</div>
+                        <p><strong>步骤1：识别实数系数</strong></p>
+                        <ul>
+                            <li>$a_0 = 2$，所以 $c_0 = \frac{a_0}{2} = 1$</li>
+                            <li>$a_1 = 2$，$b_1 = 1$</li>
+                            <li>$a_2 = -1$，$b_2 = 3$</li>
+                        </ul>
+                        
+                        <p><strong>步骤2：计算复数系数</strong></p>
+                        <p>对于 $n = 1$：</p>
+                        $$c_1 = \frac{a_1 - ib_1}{2} = \frac{2 - i}{2} = 1 - \frac{i}{2}$$
+                        $$c_{-1} = \overline{c_1} = 1 + \frac{i}{2}$$
+                        
+                        <p>对于 $n = 2$：</p>
+                        $$c_2 = \frac{a_2 - ib_2}{2} = \frac{-1 - 3i}{2} = -\frac{1}{2} - \frac{3i}{2}$$
+                        $$c_{-2} = \overline{c_2} = -\frac{1}{2} + \frac{3i}{2}$$
+                        
+                        <p><strong>步骤3：写出复数形式</strong></p>
+                        $$f(x) = c_0 + c_1 e^{ix} + c_{-1} e^{-ix} + c_2 e^{2ix} + c_{-2} e^{-2ix}$$
+                        $$= 1 + \left(1 - \frac{i}{2}\right)e^{ix} + \left(1 + \frac{i}{2}\right)e^{-ix}$$
+                        $$+ \left(-\frac{1}{2} - \frac{3i}{2}\right)e^{2ix} + \left(-\frac{1}{2} + \frac{3i}{2}\right)e^{-2ix}$$
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <h4>例6：频谱分析应用</h4>
+                    <p>对于周期信号 $f(t) = 2\cos(100\pi t) + 0.5\sin(300\pi t)$，分析其频谱特性。</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解：</div>
+                        <p><strong>步骤1：转换为复数形式</strong></p>
+                        <p>利用欧拉公式：</p>
+                        $$\cos(100\pi t) = \frac{e^{i100\pi t} + e^{-i100\pi t}}{2}$$
+                        $$\sin(300\pi t) = \frac{e^{i300\pi t} - e^{-i300\pi t}}{2i}$$
+                        
+                        <p>因此：</p>
+                        $$f(t) = 2 \cdot \frac{e^{i100\pi t} + e^{-i100\pi t}}{2} + 0.5 \cdot \frac{e^{i300\pi t} - e^{-i300\pi t}}{2i}$$
+                        $$= e^{i100\pi t} + e^{-i100\pi t} - \frac{i}{4}e^{i300\pi t} + \frac{i}{4}e^{-i300\pi t}$$
+                        
+                        <p><strong>步骤2：识别频率分量</strong></p>
+                        <ul>
+                            <li>频率 $f_1 = \frac{100\pi}{2\pi} = 50$ Hz，幅度 $|c_1| = 1$</li>
+                            <li>频率 $f_2 = \frac{300\pi}{2\pi} = 150$ Hz，幅度 $|c_2| = \frac{1}{4}$</li>
+                        </ul>
+                        
+                        <p><strong>步骤3：功率谱</strong></p>
+                        <ul>
+                            <li>50 Hz 分量的功率：$|c_1|^2 = 1$</li>
+                            <li>150 Hz 分量的功率：$|c_2|^2 = \frac{1}{16}$</li>
+                        </ul>
+                        
+                        <p><strong>结论：</strong>信号主要包含50 Hz和150 Hz两个频率分量，50 Hz分量的功率远大于150 Hz分量。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="nav-buttons">
+            <a href="12.7.html" class="btn prev">上一节：12.7 傅里叶级数</a>
+            <a href="../index.html" class="btn next">返回章节概览</a>
+        </div>
+        
+        <footer>
+            <p>&copy; 2025 高等数学复习系统 - 一般周期函数的傅里叶级数</p>
+        </footer>
+    </div>
+    
+    <script>
+        // 复数可视化
+        function updateComplexVisualization() {
+            const angle = parseInt(document.getElementById('angle').value);
+            document.getElementById('angleValue').textContent = angle + '°';
+            
+            const theta = angle * Math.PI / 180;
+            const svg = d3.select('#complex-circle');
+            svg.selectAll("*").remove();
+            
+            const width = 300, height = 300;
+            const centerX = width / 2, centerY = height / 2;
+            const radius = 100;
+            
+            // 坐标轴
+            svg.append('line')
+                .attr('x1', 20).attr('y1', centerY)
+                .attr('x2', width - 20).attr('y2', centerY)
+                .attr('stroke', '#2c3e50').attr('stroke-width', 2);
+                
+            svg.append('line')
+                .attr('x1', centerX).attr('y1', 20)
+                .attr('x2', centerX).attr('y2', height - 20)
+                .attr('stroke', '#2c3e50').attr('stroke-width', 2);
+            
+            // 单位圆
+            svg.append('circle')
+                .attr('cx', centerX).attr('cy', centerY)
+                .attr('r', radius)
+                .attr('fill', 'none')
+                .attr('stroke', '#27ae60')
+                .attr('stroke-width', 2);
+            
+            // 复数点
+            const x = Math.cos(theta) * radius;
+            const y = -Math.sin(theta) * radius; // 负号因为SVG坐标系y轴向下
+            
+            svg.append('circle')
+                .attr('cx', centerX + x).attr('cy', centerY + y)
+                .attr('r', 5)
+                .attr('fill', '#e74c3c');
+            
+            // 向量
+            svg.append('line')
+                .attr('x1', centerX).attr('y1', centerY)
+                .attr('x2', centerX + x).attr('y2', centerY + y)
+                .attr('stroke', '#e74c3c')
+                .attr('stroke-width', 3);
+            
+            // 投影线
+            svg.append('line')
+                .attr('x1', centerX + x).attr('y1', centerY + y)
+                .attr('x2', centerX + x).attr('y2', centerY)
+                .attr('stroke', '#3498db')
+                .attr('stroke-width', 2)
+                .attr('stroke-dasharray', '5,5');
+                
+            svg.append('line')
+                .attr('x1', centerX + x).attr('y1', centerY + y)
+                .attr('x2', centerX).attr('y2', centerY + y)
+                .attr('stroke', '#f39c12')
+                .attr('stroke-width', 2)
+                .attr('stroke-dasharray', '5,5');
+            
+            // 标签
+            svg.append('text')
+                .attr('x', width - 15).attr('y', centerY - 5)
+                .text('Re').attr('fill', '#2c3e50').attr('font-size', '14px');
+                
+            svg.append('text')
+                .attr('x', centerX + 5).attr('y', 15)
+                .text('Im').attr('fill', '#2c3e50').attr('font-size', '14px');
+            
+            // 数值标签
+            svg.append('text')
+                .attr('x', centerX + x + 10).attr('y', centerY + y - 10)
+                .text(`e^{i${angle}°}`)
+                .attr('fill', '#e74c3c').attr('font-size', '12px');
+                
+            svg.append('text')
+                .attr('x', centerX + x + 5).attr('y', centerY + 15)
+                .text(`cos(${angle}°) = ${Math.cos(theta).toFixed(2)}`)
+                .attr('fill', '#3498db').attr('font-size', '10px');
+                
+            svg.append('text')
+                .attr('x', centerX - 80).attr('y', centerY + y - 5)
+                .text(`sin(${angle}°) = ${Math.sin(theta).toFixed(2)}`)
+                .attr('fill', '#f39c12').attr('font-size', '10px');
+        }
+        
+        // 页面加载时初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            updateComplexVisualization();
+        });
+        
+        // 页面加载动画
+        gsap.from(".content-section", {
+            duration: 0.8,
+            y: 50,
+            opacity: 0,
+            stagger: 0.2,
+            ease: "power2.out"
+        });
+    </script>
+</body>
+</html>

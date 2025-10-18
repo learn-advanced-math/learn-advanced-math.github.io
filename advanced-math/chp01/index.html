@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="alternate icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTUiIGZpbGw9IiMzNDk4ZGIiIHN0cm9rZT0iIzJjM2U1MCIgc3Ryb2tlLXdpZHRoPSIyIi8+PGcgZmlsbD0id2hpdGUiIGZvbnQtZmFtaWx5PSJUaW1lcyxzZXJpZiIgZm9udC13ZWlnaHQ9ImJvbGQiPjx0ZXh0IHg9IjE2IiB5PSIxMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxMiI+ZDwvdGV4dD48bGluZSB4MT0iOCIgeTE9IjE2IiB4Mj0iMjQiIHkyPSIxNiIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjUiLz48dGV4dCB4PSIxNiIgeT0iMjUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTAiPmR4PC90ZXh0PjwvZz48L3N2Zz4=">
+    <title>高等数学 - 第一章：函数与极限</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+            padding: 40px 0;
+        }
+        
+        h1 {
+            font-size: 3em;
+            margin: 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            font-weight: 300;
+        }
+        
+        .subtitle {
+            font-size: 1.2em;
+            margin-top: 10px;
+            opacity: 0.9;
+        }
+        
+        .home-link {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            display: inline-block;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .home-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            color: #ffffff;
+        }
+        
+        .home-link:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        .chart-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+        
+        .chart-header {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .chart-header h2 {
+            margin: 0;
+            font-size: 1.5em;
+            font-weight: 400;
+        }
+        
+        #knowledge-graph {
+            width: 100%;
+            height: 700px;
+        }
+        
+        .progress-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-top: 30px;
+        }
+        
+        .progress-section h3 {
+            color: #2c3e50;
+            margin: 0 0 20px 0;
+            font-size: 1.3em;
+        }
+        
+        .section-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+        }
+        
+        .section-item {
+            padding: 20px;
+            background: linear-gradient(45deg, #f8f9fa, #e9ecef);
+            border-radius: 10px;
+            border-left: 4px solid #3498db;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        
+        .section-item:hover {
+            background: linear-gradient(45deg, #e9ecef, #dee2e6);
+            transform: translateX(5px);
+            border-left-color: #2980b9;
+        }
+        
+        .section-number {
+            font-weight: bold;
+            color: #3498db;
+            font-size: 1.1em;
+        }
+        
+        .section-title {
+            margin: 5px 0;
+            font-size: 1.1em;
+            color: #2c3e50;
+        }
+        
+        .section-desc {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            line-height: 1.4;
+        }
+        
+        footer {
+            text-align: center;
+            color: white;
+            padding: 30px 0;
+            opacity: 0.8;
+            margin-top: 50px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .section-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>第一章：函数与极限</h1>
+            <div class="subtitle">
+                <a href="../index.html" class="home-link">高等数学知识点可视化复习系统</a>
+            </div>
+        </header>
+        
+        <div class="chart-container">
+            <div class="chart-header">
+                <h2>知识点关系图</h2>
+            </div>
+            <div id="knowledge-graph"></div>
+        </div>
+        
+        <div class="progress-section">
+            <h3>详细章节导航</h3>
+            <div class="section-list">
+                <a href="subsections/1.1.html" class="section-item">
+                    <div class="section-number">1.1</div>
+                    <div class="section-title">映射与函数</div>
+                    <div class="section-desc">映射、逆映射、复合映射；函数的定义域、值域；函数的性质；反函数；基本初等函数</div>
+                </a>
+                
+                <a href="subsections/1.2.html" class="section-item">
+                    <div class="section-number">1.2</div>
+                    <div class="section-title">数列与极限</div>
+                    <div class="section-desc">数列及其极限；收敛数列的性质</div>
+                </a>
+                
+                <a href="subsections/1.3.html" class="section-item">
+                    <div class="section-number">1.3</div>
+                    <div class="section-title">函数的极限</div>
+                    <div class="section-desc">函数及其极限；函数极限的性质</div>
+                </a>
+                
+                <a href="subsections/1.4.html" class="section-item">
+                    <div class="section-number">1.4</div>
+                    <div class="section-title">无穷小与无穷大</div>
+                    <div class="section-desc">无穷小与无穷大的定义及计算；渐近线</div>
+                </a>
+                
+                <a href="subsections/1.5.html" class="section-item">
+                    <div class="section-number">1.5</div>
+                    <div class="section-title">极限的运算法则</div>
+                    <div class="section-desc">无穷小的运算法则；极限的求法</div>
+                </a>
+                
+                <a href="subsections/1.6.html" class="section-item">
+                    <div class="section-number">1.6</div>
+                    <div class="section-title">极限的存在准则</div>
+                    <div class="section-desc">夹逼准则；单调有界数列必有极限；两个重要极限</div>
+                </a>
+                
+                <a href="subsections/1.7.html" class="section-item">
+                    <div class="section-number">1.7</div>
+                    <div class="section-title">无穷小的比较</div>
+                    <div class="section-desc">高阶无穷小、低阶无穷小、同阶无穷小、等价无穷小</div>
+                </a>
+                
+                <a href="subsections/1.8.html" class="section-item">
+                    <div class="section-number">1.8</div>
+                    <div class="section-title">函数的连续性和间断点</div>
+                    <div class="section-desc">函数连续性的定义；各种间断点的分类</div>
+                </a>
+                
+                <a href="subsections/1.9.html" class="section-item">
+                    <div class="section-number">1.9</div>
+                    <div class="section-title">连续函数的运算</div>
+                    <div class="section-desc">连续函数的和差积商；反函数、复合函数的连续性</div>
+                </a>
+                
+                <a href="subsections/1.10.html" class="section-item">
+                    <div class="section-number">1.10</div>
+                    <div class="section-title">闭区间上连续函数的性质</div>
+                    <div class="section-desc">有界性；最值定理；零点定理；介值定理；一致连续性</div>
+                </a>
+            </div>
+        </div>
+        
+        <footer>
+            <p>&copy; 2025 高等数学复习系统 - 函数与极限章节</p>
+        </footer>
+    </div>
+
+    <script>
+        // 初始化知识点关系图
+        const chart = echarts.init(document.getElementById('knowledge-graph'));
+        
+        // 知识点数据
+        const nodes = [
+            { id: '1.1', name: '映射与函数', category: 0, x: 100, y: 100, symbolSize: 80 },
+            { id: '1.2', name: '数列与极限', category: 1, x: 300, y: 80, symbolSize: 75 },
+            { id: '1.3', name: '函数的极限', category: 1, x: 500, y: 120, symbolSize: 85 },
+            { id: '1.4', name: '无穷小与无穷大', category: 2, x: 700, y: 100, symbolSize: 70 },
+            { id: '1.5', name: '极限运算法则', category: 2, x: 400, y: 280, symbolSize: 75 },
+            { id: '1.6', name: '极限存在准则', category: 3, x: 600, y: 260, symbolSize: 80 },
+            { id: '1.7', name: '无穷小比较', category: 2, x: 800, y: 240, symbolSize: 65 },
+            { id: '1.8', name: '连续性与间断点', category: 4, x: 200, y: 400, symbolSize: 85 },
+            { id: '1.9', name: '连续函数运算', category: 4, x: 450, y: 420, symbolSize: 75 },
+            { id: '1.10', name: '闭区间连续函数', category: 4, x: 700, y: 400, symbolSize: 80 }
+        ];
+        
+        // 知识点之间的关系
+        const links = [
+            { source: '1.1', target: '1.2', lineStyle: { width: 3 } },
+            { source: '1.1', target: '1.3', lineStyle: { width: 4 } },
+            { source: '1.2', target: '1.3', lineStyle: { width: 2 } },
+            { source: '1.3', target: '1.4', lineStyle: { width: 3 } },
+            { source: '1.2', target: '1.5', lineStyle: { width: 2 } },
+            { source: '1.3', target: '1.5', lineStyle: { width: 4 } },
+            { source: '1.4', target: '1.5', lineStyle: { width: 3 } },
+            { source: '1.5', target: '1.6', lineStyle: { width: 3 } },
+            { source: '1.4', target: '1.7', lineStyle: { width: 4 } },
+            { source: '1.6', target: '1.7', lineStyle: { width: 2 } },
+            { source: '1.1', target: '1.8', lineStyle: { width: 3 } },
+            { source: '1.3', target: '1.8', lineStyle: { width: 4 } },
+            { source: '1.8', target: '1.9', lineStyle: { width: 3 } },
+            { source: '1.9', target: '1.10', lineStyle: { width: 3 } },
+            { source: '1.8', target: '1.10', lineStyle: { width: 2 } }
+        ];
+        
+        // 图表配置
+        const option = {
+            backgroundColor: 'transparent',
+            tooltip: {
+                trigger: 'item',
+                formatter: function(params) {
+                    if (params.dataType === 'node') {
+                        return `<b>${params.data.name}</b><br/>点击查看详细内容`;
+                    } else if (params.dataType === 'edge') {
+                        return `${params.data.source} → ${params.data.target}`;
+                    }
+                }
+            },
+            legend: {
+                orient: 'horizontal',
+                bottom: 20,
+                data: [
+                    { name: '基础概念', icon: 'circle' },
+                    { name: '极限理论', icon: 'circle' },
+                    { name: '计算方法', icon: 'circle' },
+                    { name: '存在性', icon: 'circle' },
+                    { name: '连续性', icon: 'circle' }
+                ],
+                textStyle: {
+                    color: '#333',
+                    fontSize: 12
+                }
+            },
+            series: [{
+                type: 'graph',
+                layout: 'none',
+                symbolSize: 50,
+                roam: "move",
+                draggable: true,
+                label: {
+                    show: true,
+                    position: 'bottom',
+                    formatter: '{b}',
+                    fontSize: 25,
+                    fontWeight: 'bold'
+                },
+                edgeSymbol: ['none', 'arrow'],
+                edgeSymbolSize: [0, 15],
+                itemStyle: {
+                    borderColor: '#fff',
+                    borderWidth: 3,
+                    shadowColor: 'rgba(0, 0, 0, 0.3)',
+                    shadowBlur: 10
+                },
+                lineStyle: {
+                    opacity: 0.7,
+                    width: 2,
+                    curveness: 0.1,
+                    color: {
+                        type: 'linear',
+                        x: 0, y: 0, x2: 1, y2: 1,
+                        colorStops: [
+                            { offset: 0, color: '#3498db' },
+                            { offset: 1, color: '#2980b9' }
+                        ]
+                    }
+                },
+                emphasis: {
+                    focus: 'adjacency',
+                    lineStyle: {
+                        width: 4,
+                        opacity: 1
+                    },
+                    itemStyle: {
+                        shadowBlur: 20
+                    }
+                },
+                categories: [
+                    { name: '基础概念', itemStyle: { color: '#e74c3c' } },
+                    { name: '极限理论', itemStyle: { color: '#3498db' } },
+                    { name: '计算方法', itemStyle: { color: '#f39c12' } },
+                    { name: '存在性', itemStyle: { color: '#2ecc71' } },
+                    { name: '连续性', itemStyle: { color: '#9b59b6' } }
+                ],
+                data: nodes,
+                links: links,
+                animationDuration: 1500,
+                animationEasing: 'cubicInOut'
+            }]
+        };
+        
+        // 设置图表选项
+        chart.setOption(option);
+        
+        // 点击节点跳转到对应页面
+        chart.on('click', function(params) {
+            if (params.dataType === 'node') {
+                const nodeId = params.data.id;
+                window.location.href = `subsections/${nodeId}.html`;
+            }
+        });
+        
+        // 响应式调整
+        window.addEventListener('resize', function() {
+            chart.resize();
+        });
+        
+        // 页面加载完成后的动画效果
+        document.addEventListener('DOMContentLoaded', function() {
+            // 为章节导航卡片添加入场动画
+            const sectionItems = document.querySelectorAll('.section-item');
+            sectionItems.forEach((item, index) => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    item.style.transition = 'all 0.6s ease';
+                    item.style.opacity = '1';
+                    item.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html>

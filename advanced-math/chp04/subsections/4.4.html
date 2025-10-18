@@ -1,0 +1,1314 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="alternate icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTUiIGZpbGw9IiMzNDk4ZGIiIHN0cm9rZT0iIzJjM2U1MCIgc3Ryb2tlLXdpZHRoPSIyIi8+PGcgZmlsbD0id2hpdGUiIGZvbnQtZmFtaWx5PSJUaW1lcyxzZXJpZiIgZm9udC13ZWlnaHQ9ImJvbGQiPjx0ZXh0IHg9IjE2IiB5PSIxMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxMiI+ZDwvdGV4dD48bGluZSB4MT0iOCIgeTE9IjE2IiB4Mj0iMjQiIHkyPSIxNiIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjUiLz48dGV4dCB4PSIxNiIgeT0iMjUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTAiPmR4PC90ZXh0PjwvZz48L3N2Zz4=">
+    <title>4.4 有理函数的积分 - 高等数学复习</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']]
+            },
+            chtml: {
+                fontURL: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2'
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.26.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #7e57c2 0%, #5e35b1 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 20px;
+            color: #7e57c2;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 15px;
+            border-radius: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .back-link:hover {
+            color: #5e35b1;
+            transform: translateX(-5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+        
+        .back-link::before {
+            content: '←';
+            margin-right: 8px;
+            font-size: 1.2em;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #5e35b1 0%, #4527a0 100%);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            margin: 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            font-weight: 300;
+        }
+        
+        .subtitle {
+            font-size: 1.1em;
+            margin-top: 10px;
+            opacity: 0.9;
+        }
+        
+        .content-section {
+            background: white;
+            margin: 25px 0;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .content-section:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .section-header {
+            padding: 20px 30px;
+            background: linear-gradient(45deg, #5e35b1, #4527a0);
+            color: white;
+        }
+        
+        .section-header h2 {
+            margin: 0;
+            font-size: 1.6em;
+            font-weight: 400;
+        }
+        
+        .section-content {
+            padding: 30px;
+        }
+        
+        .definition {
+            background: linear-gradient(135deg, #f3e5f5, #e1bee7);
+            border-left: 5px solid #7e57c2;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(126, 87, 194, 0.1);
+        }
+        
+        .definition h4 {
+            margin: 0 0 15px 0;
+            color: #7e57c2;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .theorem {
+            background: linear-gradient(135deg, #e8f5e8, #c8e6c9);
+            border-left: 5px solid #4caf50;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(76, 175, 80, 0.1);
+        }
+        
+        .theorem h4 {
+            margin: 0 0 15px 0;
+            color: #4caf50;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .example {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-left: 5px solid #2196f3;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(33, 150, 243, 0.1);
+        }
+        
+        .example h4 {
+            margin: 0 0 15px 0;
+            color: #2196f3;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .practice-problem {
+            background: linear-gradient(135deg, #f3e5f5, #e1bee7);
+            border-left: 5px solid #9c27b0;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(156, 39, 176, 0.1);
+        }
+        
+        .practice-problem h4 {
+            margin: 0 0 15px 0;
+            color: #9c27b0;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .difficulty {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: 500;
+            margin-left: 10px;
+        }
+        
+        .difficulty.medium {
+            background: #7e57c2;
+            color: white;
+        }
+        
+        .difficulty.hard {
+            background: #f44336;
+            color: white;
+        }
+        
+        .difficulty.very-hard {
+            background: #9c27b0;
+            color: white;
+        }
+        
+        .solution {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px dashed #bdc3c7;
+        }
+        
+        .solution-header {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 40px;
+            padding: 20px 0;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 25px;
+            background: linear-gradient(45deg, #5e35b1, #4527a0);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 15px rgba(94, 53, 177, 0.3);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(94, 53, 177, 0.4);
+        }
+        
+        .btn.prev::before {
+            content: '←';
+            margin-right: 8px;
+            font-size: 1.1em;
+        }
+        
+        .btn.next::after {
+            content: '→';
+            margin-left: 8px;
+            font-size: 1.1em;
+        }
+        
+        footer {
+            text-align: center;
+            color: white;
+            padding: 30px 0;
+            opacity: 0.9;
+            margin-top: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        footer p {
+            text-align: center;
+            margin: 0;
+        }
+        
+        .math-expression {
+            text-align: center;
+            margin: 15px 0;
+            font-size: 1.1em;
+        }
+        
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        .highlight {
+            background: linear-gradient(135deg, #f3e5f5, #e1bee7);
+            padding: 15px;
+            border-left: 4px solid #7e57c2;
+            border-radius: 0 8px 8px 0;
+            margin: 15px 0;
+        }
+        
+        .memory-tip {
+            background: linear-gradient(135deg, #e8f5e8, #c8e6c9);
+            border-left: 4px solid #4caf50;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            position: relative;
+        }
+        
+        .memory-tip::before {
+            content: '💡';
+            position: absolute;
+            top: 15px;
+            left: -15px;
+            background: #4caf50;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+        
+        .memory-tip h5 {
+            color: #4caf50;
+            margin: 0 0 10px 0;
+            font-size: 1.1em;
+        }
+        
+        .decomposition-steps {
+            background: linear-gradient(135deg, #e8f5e8, #c8e6c9);
+            border-left: 4px solid #4caf50;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+        }
+        
+        .decomposition-steps h5 {
+            color: #4caf50;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        
+        .decomposition-steps ol {
+            counter-reset: step-counter;
+            list-style: none;
+            margin-left: 0;
+        }
+        
+        .decomposition-steps ol li {
+            counter-increment: step-counter;
+            position: relative;
+            margin-bottom: 15px;
+            padding-left: 40px;
+        }
+        
+        .decomposition-steps ol li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #4caf50;
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+        
+        .fraction-types {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .fraction-card {
+            background: linear-gradient(135deg, #f3e5f5, #e1bee7);
+            border: 2px solid #9c27b0;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 3px 15px rgba(156, 39, 176, 0.2);
+        }
+        
+        .fraction-card h5 {
+            color: #9c27b0;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        
+        .method-flow {
+            background: linear-gradient(135deg, #f3e5f5, #e1bee7);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        .flow-step {
+            background: white;
+            border: 2px solid #7e57c2;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px auto;
+            position: relative;
+            transition: all 0.3s ease;
+            max-width: 70%;
+            width: fit-content;
+            min-width: 300px;
+            text-align: center;
+        }
+        
+        .flow-step:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(126, 87, 194, 0.3);
+        }
+        
+        .flow-step::after {
+            content: '→';
+            position: absolute;
+            left: 50%;
+            bottom: -30px;
+            transform: translateX(-50%) rotate(90deg);
+            color: #7e57c2;
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+        
+        .flow-step:last-child::after {
+            display: none;
+        }
+        
+        .partial-fraction-demo {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .demo-equation {
+            background: white;
+            border: 2px solid #2196f3;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+            text-align: center;
+            font-size: 1.1em;
+        }
+        
+        .special-cases {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .case-card {
+            background: linear-gradient(135deg, #f3e5f5, #e1bee7);
+            border: 1px solid #7e57c2;
+            border-radius: 8px;
+            padding: 15px;
+            font-size: 0.95em;
+        }
+        
+        .case-card h6 {
+            color: #7e57c2;
+            margin-bottom: 10px;
+            font-size: 1em;
+            font-weight: 600;
+        }
+        
+        /* AI提示方块样式 */
+        .ai-warning {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            border: 2px solid #e0e0e0;
+        }
+        
+        .ai-warning:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            border-color: #ff4444;
+        }
+        
+        .ai-warning::before {
+            content: '!';
+            color: #e74c3c;
+            font-size: 20px;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+        }
+        
+        .ai-warning-tooltip {
+            position: absolute;
+            top: 50px;
+            left: 0;
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 16px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            line-height: 1.5;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1001;
+            width: 250px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .ai-warning-tooltip::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: 20px;
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid rgba(0, 0, 0, 0.9);
+        }
+        
+        .ai-warning:hover .ai-warning-tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .fraction-types {
+                grid-template-columns: 1fr;
+            }
+
+            .ai-warning {
+                width: 35px;
+                height: 35px;
+                top: 15px;
+                left: 15px;
+            }
+            
+            .ai-warning::before {
+                font-size: 18px;
+            }
+            
+            .ai-warning-tooltip {
+                width: 280px;
+                font-size: 13px;
+                padding: 14px 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- AI内容提示 -->
+    <div class="ai-warning">
+        <div class="ai-warning-tooltip">
+            页面内容由AI生成，请谨慎对待。<br>如发现错误，<a href="https://github.com/learn-advanced-math/learn-advanced-math.github.io/issues" target="_blank" style="color: #ff0000">欢迎反馈</a>。
+        </div>
+    </div>
+    
+    <div class="container">
+        <a href="../index.html" class="back-link">返回章节概览</a>
+        
+        <header>
+            <h1>4.4 有理函数的积分</h1>
+            <div class="subtitle">Integration of Rational Functions</div>
+        </header>
+        
+        <div class="content-section">
+            <div class="section-header">
+                <h2>4.4.1 有理函数的定义与基本概念</h2>
+            </div>
+            <div class="section-content">
+                <div class="definition">
+                    <h4>有理函数的定义</h4>
+                    <p>有理函数是两个多项式的比值，一般形式为：</p>
+                    <div class="math-expression">
+                        $$R(x) = \frac{P(x)}{Q(x)}$$
+                    </div>
+                    <p>其中 $P(x)$ 和 $Q(x)$ 都是关于 $x$ 的多项式，且 $Q(x) \neq 0$。</p>
+                    <ul>
+                        <li><strong>真分式</strong>：当 $\deg P(x) < \deg Q(x)$ 时</li>
+                        <li><strong>假分式</strong>：当 $\deg P(x) \geq \deg Q(x)$ 时</li>
+                    </ul>
+                </div>
+                
+                <div class="memory-tip">
+                    <h5>有理函数积分的基本策略</h5>
+                    <p><strong>化繁为简</strong>：通过部分分式分解，将复杂的有理函数积分转化为简单的基本积分形式的组合。</p>
+                    <p><strong>核心思想</strong>：任何有理真分式都可以分解为若干个简单分式的和，这些简单分式都有已知的积分公式。</p>
+                </div>
+                
+                <div class="method-flow">
+                    <h5 style="text-align: center; color: #7e57c2; margin-bottom: 20px;">有理函数积分的处理流程</h5>
+                    <div class="flow-step">
+                        <strong>第1步：判断分式类型</strong><br>
+                        检查是真分式还是假分式
+                    </div>
+                    <div class="flow-step">
+                        <strong>第2步：多项式长除法</strong><br>
+                        对假分式进行多项式除法，化为多项式加真分式
+                    </div>
+                    <div class="flow-step">
+                        <strong>第3步：因式分解</strong><br>
+                        将分母 $Q(x)$ 分解为不可约因式的乘积
+                    </div>
+                    <div class="flow-step">
+                        <strong>第4步：部分分式分解</strong><br>
+                        将真分式分解为基本分式的和
+                    </div>
+                    <div class="flow-step">
+                        <strong>第5步：逐项积分</strong><br>
+                        对每个基本分式分别积分
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-section">
+            <div class="section-header">
+                <h2>4.4.2 部分分式分解的四种基本类型</h2>
+            </div>
+            <div class="section-content">
+                <div class="theorem">
+                    <h4>部分分式分解的标准形式</h4>
+                    <p>根据分母的因式分解形式，有理真分式可以分解为以下四种基本类型：</p>
+                    
+                    <div class="fraction-types">
+                        <div class="fraction-card">
+                            <h5>类型I：简单线性因子</h5>
+                            <div class="math-expression">
+                                $$\frac{A}{x-a}$$
+                            </div>
+                            <p><strong>积分公式</strong>：</p>
+                            <div class="math-expression">
+                                $$\int \frac{A}{x-a} dx = A\ln|x-a| + C$$
+                            </div>
+                        </div>
+                        
+                        <div class="fraction-card">
+                            <h5>类型II：重复线性因子</h5>
+                            <div class="math-expression">
+                                $$\frac{A}{(x-a)^k} \quad (k \geq 2)$$
+                            </div>
+                            <p><strong>积分公式</strong>：</p>
+                            <div class="math-expression">
+                                $$\int \frac{A}{(x-a)^k} dx = \frac{A}{(1-k)(x-a)^{k-1}} + C$$
+                            </div>
+                        </div>
+                        
+                        <div class="fraction-card">
+                            <h5>类型III：简单二次因子</h5>
+                            <div class="math-expression">
+                                $$\frac{Ax+B}{x^2+px+q}$$
+                            </div>
+                            <p>其中 $p^2-4q < 0$（无实根）</p>
+                            <p><strong>处理方法</strong>：配方+换元积分</p>
+                        </div>
+                        
+                        <div class="fraction-card">
+                            <h5>类型IV：重复二次因子</h5>
+                            <div class="math-expression">
+                                $$\frac{Ax+B}{(x^2+px+q)^k} \quad (k \geq 2)$$
+                            </div>
+                            <p>其中 $p^2-4q < 0$（无实根）</p>
+                            <p><strong>处理方法</strong>：递推公式或三角代换</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="decomposition-steps">
+                    <h5>部分分式分解的具体步骤</h5>
+                    <ol>
+                        <li><strong>检查分式类型</strong>：确保是真分式，否则先进行多项式长除法</li>
+                        <li><strong>分解分母</strong>：将 $Q(x)$ 完全分解为不可约因式的乘积</li>
+                        <li><strong>写出分解形式</strong>：根据因式类型写出部分分式的一般形式</li>
+                        <li><strong>确定待定系数</strong>：通过通分比较系数或特殊值法求出各系数</li>
+                        <li><strong>验证结果</strong>：检查分解是否正确</li>
+                    </ol>
+                </div>
+                
+                <div class="partial-fraction-demo">
+                    <h5 style="color: #2196f3; text-align: center; margin-bottom: 15px;">部分分式分解示例</h5>
+                    <div class="demo-equation">
+                        $$\frac{x^2+1}{(x-1)(x-2)^2(x^2+x+1)} = \frac{A}{x-1} + \frac{B}{x-2} + \frac{C}{(x-2)^2} + \frac{Dx+E}{x^2+x+1}$$
+                    </div>
+                    <p style="text-align: center; margin-top: 10px; font-style: italic;">
+                        包含了所有四种基本类型的综合示例
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-section">
+            <div class="section-header">
+                <h2>4.4.3 特殊技巧与方法</h2>
+            </div>
+            <div class="section-content">
+                <div class="theorem">
+                    <h4>求解待定系数的常用方法</h4>
+                    <div class="special-cases">
+                        <div class="case-card">
+                            <h6>1. 特殊值法</h6>
+                            <p>通过代入特殊的 $x$ 值（如分母的零点）来快速求出某些系数</p>
+                            <div class="math-expression" style="font-size: 0.9em;">
+                                $$\text{令 } x = a \text{ 使某些分母为零}$$
+                            </div>
+                        </div>
+                        
+                        <div class="case-card">
+                            <h6>2. 比较系数法</h6>
+                            <p>通分后比较两边多项式对应项的系数</p>
+                            <div class="math-expression" style="font-size: 0.9em;">
+                                $$\text{比较 } x^n \text{ 的系数}$$
+                            </div>
+                        </div>
+                        
+                        <div class="case-card">
+                            <h6>3. 求导法</h6>
+                            <p>对等式两边求导，然后代入特殊值</p>
+                            <div class="math-expression" style="font-size: 0.9em;">
+                                $$\frac{d}{dx}[\text{等式}] \text{ 再代入值}$$
+                            </div>
+                        </div>
+                        
+                        <div class="case-card">
+                            <h6>4. 留数法</h6>
+                            <p>对于简单极点，直接计算留数</p>
+                            <div class="math-expression" style="font-size: 0.9em;">
+                                $$A = \lim_{x \to a}(x-a) \cdot f(x)$$
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="memory-tip">
+                    <h5>二次因子积分的处理技巧</h5>
+                    <p><strong>配方技术</strong>：将 $x^2+px+q$ 配方为 $(x+\frac{p}{2})^2 + (q-\frac{p^2}{4})$ 的形式</p>
+                    <p><strong>分离技术</strong>：将 $\frac{Ax+B}{x^2+px+q}$ 分离为 $\frac{A}{2} \cdot \frac{2x+p}{x^2+px+q} + \frac{B-\frac{Ap}{2}}{x^2+px+q}$</p>
+                    <p><strong>标准积分</strong>：熟记 $\int \frac{1}{x^2+a^2}dx = \frac{1}{a}\arctan\frac{x}{a} + C$ 和 $\int \frac{x}{x^2+a^2}dx = \frac{1}{2}\ln(x^2+a^2) + C$</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-section">
+            <div class="section-header">
+                <h2>4.4.4 典型例题</h2>
+            </div>
+            <div class="section-content">
+                <div class="example">
+                    <h4>例题1：简单线性因子分解</h4>
+                    <p><strong>问题</strong>：计算不定积分 $\int \frac{x+1}{x^2-1} dx$</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解答过程：</div>
+                        <p><strong>第1步：因式分解分母</strong></p>
+                        <div class="math-expression">
+                            $$x^2-1 = (x-1)(x+1)$$
+                        </div>
+                        
+                        <p><strong>第2步：部分分式分解</strong></p>
+                        <div class="math-expression">
+                            $$\frac{x+1}{(x-1)(x+1)} = \frac{x+1}{x^2-1} = \frac{A}{x-1} + \frac{B}{x+1}$$
+                        </div>
+                        
+                        <p><strong>第3步：求待定系数</strong></p>
+                        <p>通分得：$x+1 = A(x+1) + B(x-1)$</p>
+                        <p>令 $x=1$：$2 = 2A$，得 $A = 1$</p>
+                        <p>令 $x=-1$：$0 = -2B$，得 $B = 0$</p>
+                        
+                        <p><strong>第4步：积分计算</strong></p>
+                        <div class="math-expression">
+                            $$\int \frac{x+1}{x^2-1} dx = \int \frac{1}{x-1} dx = \ln|x-1| + C$$
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <h4>例题2：含重复因子的分解</h4>
+                    <p><strong>问题</strong>：计算不定积分 $\int \frac{x^2}{(x-1)^2(x+2)} dx$</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解答过程：</div>
+                        <p><strong>第1步：部分分式分解形式</strong></p>
+                        <div class="math-expression">
+                            $$\frac{x^2}{(x-1)^2(x+2)} = \frac{A}{x-1} + \frac{B}{(x-1)^2} + \frac{C}{x+2}$$
+                        </div>
+                        
+                        <p><strong>第2步：求待定系数</strong></p>
+                        <p>通分得：$x^2 = A(x-1)(x+2) + B(x+2) + C(x-1)^2$</p>
+                        <p>令 $x=1$：$1 = 3B$，得 $B = \frac{1}{3}$</p>
+                        <p>令 $x=-2$：$4 = 9C$，得 $C = \frac{4}{9}$</p>
+                        <p>令 $x=0$：$0 = -2A + 2B + C$，得 $A = \frac{5}{9}$</p>
+                        
+                        <p><strong>第3步：积分计算</strong></p>
+                        <div class="math-expression">
+                            $$\int \frac{x^2}{(x-1)^2(x+2)} dx = \frac{5}{9}\ln|x-1| - \frac{1}{3(x-1)} + \frac{4}{9}\ln|x+2| + C$$
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <h4>例题3：含不可约二次因子</h4>
+                    <p><strong>问题</strong>：计算不定积分 $\int \frac{x}{x^2+2x+2} dx$</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解答过程：</div>
+                        <p><strong>第1步：检验判别式</strong></p>
+                        <p>$\Delta = 4 - 8 = -4 < 0$，分母不能在实数范围内分解</p>
+                        
+                        <p><strong>第2步：配方</strong></p>
+                        <div class="math-expression">
+                            $$x^2+2x+2 = (x+1)^2 + 1$$
+                        </div>
+                        
+                        <p><strong>第3步：分离积分</strong></p>
+                        <div class="math-expression">
+                            $$\frac{x}{x^2+2x+2} = \frac{x+1-1}{(x+1)^2+1} = \frac{x+1}{(x+1)^2+1} - \frac{1}{(x+1)^2+1}$$
+                        </div>
+                        
+                        <p><strong>第4步：分别积分</strong></p>
+                        <p>设 $u = x+1$，则 $du = dx$</p>
+                        <div class="math-expression">
+                            $$\int \frac{x}{x^2+2x+2} dx = \int \frac{u}{u^2+1} du - \int \frac{1}{u^2+1} du$$
+                        </div>
+                        <div class="math-expression">
+                            $$= \frac{1}{2}\ln(u^2+1) - \arctan u + C$$
+                        </div>
+                        <div class="math-expression">
+                            $$= \frac{1}{2}\ln(x^2+2x+2) - \arctan(x+1) + C$$
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-section">
+            <div class="section-header">
+                <h2>4.4.5 含三角函数和根式的有理函数积分</h2>
+            </div>
+            <div class="section-content">
+                <div class="theorem">
+                    <h4>扩展的有理函数积分技巧</h4>
+                    <p>当被积函数中包含三角函数或根式时，通常需要通过特殊的代换将其转化为有理函数，然后应用部分分式分解方法。</p>
+                </div>
+                
+                <div class="special-cases">
+                    <div class="case-card">
+                        <h6>1. 三角有理函数积分</h6>
+                        <p><strong>万能代换</strong>：$t = \tan\frac{x}{2}$</p>
+                        <div class="math-expression" style="font-size: 0.9em;">
+                            $$\sin x = \frac{2t}{1+t^2}, \cos x = \frac{1-t^2}{1+t^2}$$
+                        </div>
+                        <div class="math-expression" style="font-size: 0.9em;">
+                            $$dx = \frac{2dt}{1+t^2}$$
+                        </div>
+                        <p>适用于 $R(\sin x, \cos x)$ 类型的积分</p>
+                    </div>
+                    
+                    <div class="case-card">
+                        <h6>2. 含根式的积分</h6>
+                        <p><strong>三角代换</strong>：针对 $\sqrt{a^2-x^2}$, $\sqrt{x^2+a^2}$, $\sqrt{x^2-a^2}$</p>
+                        <div class="math-expression" style="font-size: 0.9em;">
+                            $$x = a\sin\theta, x = a\tan\theta, x = a\sec\theta$$
+                        </div>
+                        <p>将根式转化为三角函数</p>
+                    </div>
+                    
+                    <div class="case-card">
+                        <h6>3. 双曲代换</h6>
+                        <p><strong>双曲函数代换</strong>：利用双曲函数恒等式</p>
+                        <div class="math-expression" style="font-size: 0.9em;">
+                            $$\cosh^2 t - \sinh^2 t = 1$$
+                        </div>
+                        <p>适用于某些特殊的根式积分</p>
+                    </div>
+                    
+                    <div class="case-card">
+                        <h6>4. 有理化代换</h6>
+                        <p><strong>适当的代换</strong>：消除根式或分母中的无理式</p>
+                        <div class="math-expression" style="font-size: 0.9em;">
+                            $$t = \sqrt[n]{f(x)} \text{ 或 } t = \sqrt{ax+b}$$
+                        </div>
+                        <p>将无理函数转化为有理函数</p>
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <h4>例题1：三角有理函数积分</h4>
+                    <p><strong>问题</strong>：计算不定积分 $\int \frac{1}{2+\cos x} dx$</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解答过程：</div>
+                        <p><strong>第1步：万能代换</strong></p>
+                        <p>令 $t = \tan\frac{x}{2}$，则：</p>
+                        <div class="math-expression">
+                            $$\cos x = \frac{1-t^2}{1+t^2}, \quad dx = \frac{2dt}{1+t^2}$$
+                        </div>
+                        
+                        <p><strong>第2步：代入积分</strong></p>
+                        <div class="math-expression">
+                            $$\int \frac{1}{2+\cos x} dx = \int \frac{1}{2+\frac{1-t^2}{1+t^2}} \cdot \frac{2dt}{1+t^2}$$
+                        </div>
+                        
+                        <p><strong>第3步：化简分母</strong></p>
+                        <div class="math-expression">
+                            $$2+\frac{1-t^2}{1+t^2} = \frac{2(1+t^2)+1-t^2}{1+t^2} = \frac{3+t^2}{1+t^2}$$
+                        </div>
+                        
+                        <p><strong>第4步：简化积分</strong></p>
+                        <div class="math-expression">
+                            $$\int \frac{2dt}{3+t^2} = \frac{2}{\sqrt{3}} \arctan\frac{t}{\sqrt{3}} + C$$
+                        </div>
+                        
+                        <p><strong>第5步：回代</strong></p>
+                        <div class="math-expression">
+                            $$\int \frac{1}{2+\cos x} dx = \frac{2}{\sqrt{3}} \arctan\frac{\tan\frac{x}{2}}{\sqrt{3}} + C$$
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <h4>例题2：含根式的有理函数积分</h4>
+                    <p><strong>问题</strong>：计算不定积分 $\int \frac{x}{\sqrt{4-x^2}} dx$</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解答过程：</div>
+                        <p><strong>第1步：三角代换</strong></p>
+                        <p>令 $x = 2\sin\theta$，则 $dx = 2\cos\theta d\theta$</p>
+                        <div class="math-expression">
+                            $$\sqrt{4-x^2} = \sqrt{4-4\sin^2\theta} = 2\cos\theta$$
+                        </div>
+                        
+                        <p><strong>第2步：代入积分</strong></p>
+                        <div class="math-expression">
+                            $$\int \frac{x}{\sqrt{4-x^2}} dx = \int \frac{2\sin\theta}{2\cos\theta} \cdot 2\cos\theta d\theta = \int 2\sin\theta d\theta$$
+                        </div>
+                        
+                        <p><strong>第3步：积分计算</strong></p>
+                        <div class="math-expression">
+                            $$\int 2\sin\theta d\theta = -2\cos\theta + C$$
+                        </div>
+                        
+                        <p><strong>第4步：回代</strong></p>
+                        <p>由 $x = 2\sin\theta$ 得 $\cos\theta = \frac{\sqrt{4-x^2}}{2}$</p>
+                        <div class="math-expression">
+                            $$\int \frac{x}{\sqrt{4-x^2}} dx = -2 \cdot \frac{\sqrt{4-x^2}}{2} + C = -\sqrt{4-x^2} + C$$
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <h4>例题3：有理化代换</h4>
+                    <p><strong>问题</strong>：计算不定积分 $\int \frac{1}{x+\sqrt{x}} dx$</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解答过程：</div>
+                        <p><strong>第1步：有理化代换</strong></p>
+                        <p>令 $t = \sqrt{x}$，则 $x = t^2$，$dx = 2t dt$</p>
+                        
+                        <p><strong>第2步：代入积分</strong></p>
+                        <div class="math-expression">
+                            $$\int \frac{1}{x+\sqrt{x}} dx = \int \frac{1}{t^2+t} \cdot 2t dt = \int \frac{2t}{t(t+1)} dt = \int \frac{2}{t+1} dt$$
+                        </div>
+                        
+                        <p><strong>第3步：积分计算</strong></p>
+                        <div class="math-expression">
+                            $$\int \frac{2}{t+1} dt = 2\ln|t+1| + C$$
+                        </div>
+                        
+                        <p><strong>第4步：回代</strong></p>
+                        <div class="math-expression">
+                            $$\int \frac{1}{x+\sqrt{x}} dx = 2\ln|\sqrt{x}+1| + C$$
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="memory-tip">
+                    <h5>代换选择的技巧</h5>
+                    <p><strong>三角代换选择原则</strong>：</p>
+                    <ul>
+                        <li>$\sqrt{a^2-x^2}$ → $x = a\sin\theta$ 或 $x = a\cos\theta$</li>
+                        <li>$\sqrt{x^2+a^2}$ → $x = a\tan\theta$</li>
+                        <li>$\sqrt{x^2-a^2}$ → $x = a\sec\theta$ 或 $x = a\csc\theta$</li>
+                    </ul>
+                    <p><strong>万能代换使用条件</strong>：当被积函数是 $\sin x$ 和 $\cos x$ 的有理函数时使用</p>
+                    <p><strong>有理化代换</strong>：当被积函数包含 $\sqrt[n]{ax+b}$ 或类似根式时，令 $t = \sqrt[n]{ax+b}$</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-section">
+            <div class="section-header">
+                <h2>4.4.6 练习题</h2>
+            </div>
+            <div class="section-content">
+                <div class="practice-problem">
+                    <h4>习题1：假分式处理 <span class="difficulty medium">中等</span></h4>
+                    <p>计算下列不定积分：</p>
+                    <div class="math-expression">
+                        $$\int \frac{x^3+1}{x^2-1} dx$$
+                    </div>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解答：</div>
+                        <p><strong>第1步：多项式长除法</strong></p>
+                        <p>由于分子次数 ≥ 分母次数，需要先进行长除法</p>
+                        <div class="math-expression">
+                            $$\frac{x^3+1}{x^2-1} = x + \frac{x+1}{x^2-1}$$
+                        </div>
+                        
+                        <p><strong>第2步：处理真分式部分</strong></p>
+                        <div class="math-expression">
+                            $$\frac{x+1}{x^2-1} = \frac{x+1}{(x-1)(x+1)} = \frac{1}{x-1}$$
+                        </div>
+                        
+                        <p><strong>第3步：积分</strong></p>
+                        <div class="math-expression">
+                            $$\int \frac{x^3+1}{x^2-1} dx = \int \left(x + \frac{1}{x-1}\right) dx$$
+                        </div>
+                        <div class="math-expression">
+                            $$= \frac{x^2}{2} + \ln|x-1| + C$$
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="practice-problem">
+                    <h4>习题2：复杂二次因子 <span class="difficulty hard">较难</span></h4>
+                    <p>计算下列不定积分：</p>
+                    <div class="math-expression">
+                        $$\int \frac{x^2+x+1}{(x+1)(x^2+1)} dx$$
+                    </div>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解答：</div>
+                        <p><strong>第1步：部分分式分解</strong></p>
+                        <div class="math-expression">
+                            $$\frac{x^2+x+1}{(x+1)(x^2+1)} = \frac{A}{x+1} + \frac{Bx+C}{x^2+1}$$
+                        </div>
+                        
+                        <p><strong>第2步：求待定系数</strong></p>
+                        <p>通分：$x^2+x+1 = A(x^2+1) + (Bx+C)(x+1)$</p>
+                        <p>令 $x=-1$：$1 = 2A$，得 $A = \frac{1}{2}$</p>
+                        <p>比较 $x^2$ 系数：$1 = A + B$，得 $B = \frac{1}{2}$</p>
+                        <p>比较常数项：$1 = A + C$，得 $C = \frac{1}{2}$</p>
+                        
+                        <p><strong>第3步：分别积分</strong></p>
+                        <div class="math-expression">
+                            $$\int \frac{x^2+x+1}{(x+1)(x^2+1)} dx = \frac{1}{2}\int \frac{1}{x+1} dx + \frac{1}{2}\int \frac{x+1}{x^2+1} dx$$
+                        </div>
+                        
+                        <p>对第二个积分分离：</p>
+                        <div class="math-expression">
+                            $$\frac{1}{2}\int \frac{x+1}{x^2+1} dx = \frac{1}{2}\int \frac{x}{x^2+1} dx + \frac{1}{2}\int \frac{1}{x^2+1} dx$$
+                        </div>
+                        <div class="math-expression">
+                            $$= \frac{1}{4}\ln(x^2+1) + \frac{1}{2}\arctan x$$
+                        </div>
+                        
+                        <p><strong>第4步：最终结果</strong></p>
+                        <div class="math-expression">
+                            $$\int \frac{x^2+x+1}{(x+1)(x^2+1)} dx = \frac{1}{2}\ln|x+1| + \frac{1}{4}\ln(x^2+1) + \frac{1}{2}\arctan x + C$$
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="practice-problem">
+                    <h4>习题3：三角有理函数积分 <span class="difficulty very-hard">很难</span></h4>
+                    <p>计算下列不定积分：</p>
+                    <div class="math-expression">
+                        $$\int \frac{1}{1+\sin x + \cos x} dx$$
+                    </div>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解答：</div>
+                        <p><strong>第1步：万能代换</strong></p>
+                        <p>令 $t = \tan\frac{x}{2}$，则：</p>
+                        <div class="math-expression">
+                            $$\sin x = \frac{2t}{1+t^2}, \quad \cos x = \frac{1-t^2}{1+t^2}, \quad dx = \frac{2dt}{1+t^2}$$
+                        </div>
+                        
+                        <p><strong>第2步：代入积分</strong></p>
+                        <div class="math-expression">
+                            $$\int \frac{1}{1+\sin x + \cos x} dx = \int \frac{1}{1+\frac{2t}{1+t^2}+\frac{1-t^2}{1+t^2}} \cdot \frac{2dt}{1+t^2}$$
+                        </div>
+                        
+                        <p><strong>第3步：化简分母</strong></p>
+                        <div class="math-expression">
+                            $$1+\frac{2t}{1+t^2}+\frac{1-t^2}{1+t^2} = \frac{1+t^2+2t+1-t^2}{1+t^2} = \frac{2+2t}{1+t^2} = \frac{2(1+t)}{1+t^2}$$
+                        </div>
+                        
+                        <p><strong>第4步：简化积分</strong></p>
+                        <div class="math-expression">
+                            $$\int \frac{1}{\frac{2(1+t)}{1+t^2}} \cdot \frac{2dt}{1+t^2} = \int \frac{1+t^2}{2(1+t)} \cdot \frac{2dt}{1+t^2} = \int \frac{1}{1+t} dt$$
+                        </div>
+                        
+                        <p><strong>第5步：积分计算</strong></p>
+                        <div class="math-expression">
+                            $$\int \frac{1}{1+t} dt = \ln|1+t| + C$$
+                        </div>
+                        
+                        <p><strong>第6步：回代</strong></p>
+                        <div class="math-expression">
+                            $$\int \frac{1}{1+\sin x + \cos x} dx = \ln\left|1+\tan\frac{x}{2}\right| + C$$
+                        </div>
+                        
+                        <p><strong>验证</strong>：可以进一步化简为</p>
+                        <div class="math-expression">
+                            $$= \ln\left|\frac{\cos\frac{x}{2}+\sin\frac{x}{2}}{\cos\frac{x}{2}}\right| + C = \ln\left|\cos\frac{x}{2}+\sin\frac{x}{2}\right| - \ln\left|\cos\frac{x}{2}\right| + C$$
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="nav-buttons">
+            <a href="4.3.html" class="btn prev">上一节：4.3 分部积分法</a>
+            <a href="4.5.html" class="btn next">下一节：4.5 积分表的使用</a>
+        </div>
+        
+        <footer>
+            <p>&copy; 2025 高等数学复习系统 - 有理函数的积分</p>
+        </footer>
+    </div>
+
+    <script>
+        // 页面加载动画
+        function initializeAnimations() {
+            const contentSections = document.querySelectorAll('.content-section');
+            if (contentSections.length > 0 && typeof gsap !== 'undefined') {
+                gsap.from('.content-section', {
+                    duration: 0.8,
+                    y: 30,
+                    opacity: 0,
+                    stagger: 0.2,
+                    ease: "power2.out"
+                });
+            }
+            
+            const fractionCards = document.querySelectorAll('.fraction-card');
+            if (fractionCards.length > 0 && typeof gsap !== 'undefined') {
+                gsap.from('.fraction-card', {
+                    duration: 0.6,
+                    scale: 0.8,
+                    opacity: 0,
+                    stagger: 0.1,
+                    delay: 1,
+                    ease: "back.out(1.7)"
+                });
+            }
+        }
+        
+        // 滚动触发动画
+        function setupScrollAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && typeof gsap !== 'undefined') {
+                        gsap.from(entry.target.querySelectorAll('.definition, .theorem, .example, .practice-problem'), {
+                            duration: 0.6,
+                            y: 20,
+                            opacity: 0,
+                            stagger: 0.1,
+                            ease: "power2.out"
+                        });
+                    }
+                });
+            }, { threshold: 0.2 });
+            
+            document.querySelectorAll('.content-section').forEach(section => {
+                observer.observe(section);
+            });
+        }
+        
+        // 卡片交互效果
+        function setupCardInteraction() {
+            const cards = document.querySelectorAll('.fraction-card, .case-card, .demo-equation');
+            cards.forEach(card => {
+                card.addEventListener('click', function() {
+                    if (typeof gsap !== 'undefined') {
+                        gsap.to(this, {
+                            duration: 0.2,
+                            scale: 1.05,
+                            yoyo: true,
+                            repeat: 1,
+                            ease: "power2.inOut"
+                        });
+                    }
+                });
+                
+                card.style.cursor = 'pointer';
+                card.title = '点击强调此内容';
+            });
+        }
+        
+        // 步骤动画
+        function setupStepAnimation() {
+            const steps = document.querySelectorAll('.decomposition-steps ol li');
+            steps.forEach((step, index) => {
+                step.addEventListener('mouseenter', function() {
+                    if (typeof gsap !== 'undefined') {
+                        gsap.to(this, {
+                            duration: 0.3,
+                            backgroundColor: 'rgba(76, 175, 80, 0.1)',
+                            paddingLeft: '45px',
+                            ease: "power2.out"
+                        });
+                    }
+                });
+                
+                step.addEventListener('mouseleave', function() {
+                    if (typeof gsap !== 'undefined') {
+                        gsap.to(this, {
+                            duration: 0.3,
+                            backgroundColor: 'transparent',
+                            paddingLeft: '40px',
+                            ease: "power2.out"
+                        });
+                    }
+                });
+            });
+        }
+        
+        // 流程步骤特效
+        function setupFlowEffect() {
+            const flowSteps = document.querySelectorAll('.flow-step');
+            flowSteps.forEach((step, index) => {
+                step.addEventListener('mouseenter', function() {
+                    if (typeof gsap !== 'undefined') {
+                        gsap.to(this, {
+                            duration: 0.3,
+                            scale: 1.02,
+                            backgroundColor: 'rgba(126, 87, 194, 0.1)',
+                            ease: "power2.out"
+                        });
+                        
+                        // 高亮后续步骤
+                        gsap.to(flowSteps, {
+                            duration: 0.3,
+                            opacity: 0.3,
+                            ease: "power2.out"
+                        });
+                        
+                        gsap.to(this, {
+                            duration: 0.3,
+                            opacity: 1,
+                            ease: "power2.out"
+                        });
+                    }
+                });
+                
+                step.addEventListener('mouseleave', function() {
+                    if (typeof gsap !== 'undefined') {
+                        gsap.to(this, {
+                            duration: 0.3,
+                            scale: 1,
+                            backgroundColor: 'white',
+                            ease: "power2.out"
+                        });
+                        
+                        gsap.to(flowSteps, {
+                            duration: 0.3,
+                            opacity: 1,
+                            ease: "power2.out"
+                        });
+                    }
+                });
+            });
+        }
+        
+        // 页面加载时初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 延迟执行以确保DOM完全加载
+            setTimeout(() => {
+                initializeAnimations();
+                setupScrollAnimations();
+                setupCardInteraction();
+                setupStepAnimation();
+                setupFlowEffect();
+            }, 500);
+            
+            // MathJax 加载完成后的回调
+            if (typeof MathJax !== 'undefined') {
+                MathJax.startup.promise.then(() => {
+                    console.log('MathJax loaded successfully');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

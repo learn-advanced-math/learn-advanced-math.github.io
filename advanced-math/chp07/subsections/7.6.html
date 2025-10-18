@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="alternate icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTUiIGZpbGw9IiMzNDk4ZGIiIHN0cm9rZT0iIzJjM2U1MCIgc3Ryb2tlLXdpZHRoPSIyIi8+PGcgZmlsbD0id2hpdGUiIGZvbnQtZmFtaWx5PSJUaW1lcyxzZXJpZiIgZm9udC13ZWlnaHQ9ImJvbGQiPjx0ZXh0IHg9IjE2IiB5PSIxMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxMiI+ZDwvdGV4dD48bGluZSB4MT0iOCIgeTE9IjE2IiB4Mj0iMjQiIHkyPSIxNiIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjUiLz48dGV4dCB4PSIxNiIgeT0iMjUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTAiPmR4PC90ZXh0PjwvZz48L3N2Zz4=">
+    <title>7.6 高阶线性微分方程 - 高等数学复习</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']]
+            },
+            chtml: {
+                fontURL: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2'
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="https://cdn.plot.ly/plotly-2.26.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 50%, #9b59b6 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 20px;
+            color: #8e44ad;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 15px;
+            border-radius: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .back-link:hover {
+            color: #9b59b6;
+            transform: translateX(-5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+        
+        .back-link::before {
+            content: '←';
+            margin-right: 8px;
+            font-size: 1.2em;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            margin: 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            font-weight: 300;
+        }
+        
+        .subtitle {
+            font-size: 1.1em;
+            margin-top: 10px;
+            opacity: 0.9;
+        }
+        
+        .content-section {
+            background: white;
+            margin: 25px 0;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .content-section:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .section-header {
+            padding: 20px 30px;
+            background: linear-gradient(45deg, #8e44ad, #9b59b6);
+            color: white;
+        }
+        
+        .section-header h2 {
+            margin: 0;
+            font-size: 1.6em;
+            font-weight: 400;
+        }
+        
+        .section-content {
+            padding: 30px;
+        }
+        
+        .definition {
+            background: linear-gradient(135deg, #f4f0f8, #ece2f0);
+            border-left: 5px solid #8e44ad;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(142, 68, 173, 0.1);
+        }
+        
+        .definition h4 {
+            margin: 0 0 15px 0;
+            color: #8e44ad;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .theorem {
+            background: linear-gradient(135deg, #fef9e7, #fcf4dd);
+            border-left: 5px solid #f39c12;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(243, 156, 18, 0.1);
+        }
+        
+        .theorem h4 {
+            margin: 0 0 15px 0;
+            color: #f39c12;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .example {
+            background: linear-gradient(135deg, #ebf3fd, #d6e9f8);
+            border-left: 5px solid #3498db;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(52, 152, 219, 0.1);
+        }
+        
+        .example h4 {
+            margin: 0 0 15px 0;
+            color: #3498db;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .practice-problem {
+            background: linear-gradient(135deg, #fdf2e9, #fbeee0);
+            border-left: 5px solid #e67e22;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(230, 126, 34, 0.1);
+        }
+        
+        .practice-problem h4 {
+            margin: 0 0 15px 0;
+            color: #e67e22;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .difficulty {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: 500;
+            margin-left: 10px;
+        }
+        
+        .difficulty.medium {
+            background: #f39c12;
+            color: white;
+        }
+        
+        .difficulty.hard {
+            background: #e74c3c;
+            color: white;
+        }
+        
+        .difficulty.very-hard {
+            background: #8e44ad;
+            color: white;
+        }
+        
+        .solution {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px dashed #bdc3c7;
+        }
+        
+        .solution-header {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+        
+        .viz-container {
+            width: 100%;
+            height: 400px;
+            margin: 25px 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 40px;
+            padding: 20px 0;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 25px;
+            background: linear-gradient(45deg, #8e44ad, #9b59b6);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 15px rgba(142, 68, 173, 0.3);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(142, 68, 173, 0.4);
+        }
+        
+        .btn.prev::before {
+            content: '←';
+            margin-right: 8px;
+            font-size: 1.1em;
+        }
+        
+        .btn.next::after {
+            content: '→';
+            margin-left: 8px;
+            font-size: 1.1em;
+        }
+        
+        footer {
+            text-align: center;
+            color: white;
+            padding: 30px 0;
+            opacity: 0.9;
+            margin-top: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        footer p {
+            text-align: center;
+            margin: 0;
+        }
+        
+        .math-expression {
+            text-align: center;
+            margin: 15px 0;
+            font-size: 1.1em;
+        }
+        
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        .highlight {
+            background: linear-gradient(135deg, #fff3cd, #fce4a0);
+            padding: 15px;
+            border-left: 4px solid #ffc107;
+            border-radius: 0 8px 8px 0;
+            margin: 15px 0;
+        }
+        
+        .steps {
+            background: linear-gradient(135deg, #e8f4fd, #d1ecf1);
+            border-left: 4px solid #17a2b8;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+        }
+        
+        .steps h5 {
+            color: #17a2b8;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        
+        .step-item {
+            margin: 10px 0;
+            padding: 10px 15px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 8px;
+            border-left: 3px solid #17a2b8;
+        }
+        
+        .step-number {
+            font-weight: bold;
+            color: #17a2b8;
+            margin-right: 10px;
+        }
+        
+        .memory-tip {
+            background: linear-gradient(135deg, #fff0f6, #ffe6f3);
+            border: 1px solid #f8d7da;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        .memory-tip::before {
+            content: '💡';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            background: white;
+            padding: 0 10px;
+            font-size: 1.2em;
+        }
+        
+        .memory-tip h4 {
+            color: #8e44ad;
+            margin-bottom: 15px;
+            margin-top: 10px;
+        }
+        
+        .spring-container {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .spring-system {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* AI提示方块样式 */
+        .ai-warning {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            border: 2px solid #e0e0e0;
+        }
+        
+        .ai-warning:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            border-color: #ff4444;
+        }
+        
+        .ai-warning::before {
+            content: '!';
+            color: #e74c3c;
+            font-size: 20px;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+        }
+        
+        .ai-warning-tooltip {
+            position: absolute;
+            top: 50px;
+            left: 0;
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 16px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            line-height: 1.5;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1001;
+            width: 250px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .ai-warning-tooltip::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: 20px;
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid rgba(0, 0, 0, 0.9);
+        }
+        
+        .ai-warning:hover .ai-warning-tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .section-content {
+                padding: 20px;
+            }
+            
+            .definition, .theorem, .example, .practice-problem {
+                padding: 20px;
+            }
+            
+            .nav-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .ai-warning {
+                width: 35px;
+                height: 35px;
+                top: 15px;
+                left: 15px;
+            }
+            
+            .ai-warning::before {
+                font-size: 18px;
+            }
+            
+            .ai-warning-tooltip {
+                width: 280px;
+                font-size: 13px;
+                padding: 14px 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- AI内容提示 -->
+    <div class="ai-warning">
+        <div class="ai-warning-tooltip">
+            页面内容由AI生成，请谨慎对待。<br>如发现错误，<a href="https://github.com/learn-advanced-math/learn-advanced-math.github.io/issues" target="_blank" style="color: #ff0000">欢迎反馈</a>。
+        </div>
+    </div>
+    
+    <div class="container">
+        <a href="../index.html" class="back-link">返回章节概览</a>
+        
+        <header>
+            <h1>7.6 高阶线性微分方程</h1>
+            <div class="subtitle">Higher-Order Linear Differential Equations</div>
+        </header>
+        
+        <!-- 二阶线性微分方程的概念 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>7.6.1 二阶线性微分方程的基本概念</h2>
+            </div>
+            <div class="section-content">
+                <div class="definition">
+                    <h4>二阶线性微分方程的一般形式</h4>
+                    <p>二阶线性微分方程的一般形式为：</p>
+                    $$y'' + P(x)y' + Q(x)y = f(x)$$
+                    <p>其中：</p>
+                    <ul>
+                        <li>$P(x)$、$Q(x)$ 称为<strong>系数函数</strong></li>
+                        <li>$f(x)$ 称为<strong>自由项</strong>或<strong>非齐次项</strong></li>
+                        <li>当 $f(x) = 0$ 时，称为<strong>齐次线性微分方程</strong></li>
+                        <li>当 $f(x) \neq 0$ 时，称为<strong>非齐次线性微分方程</strong></li>
+                    </ul>
+                </div>
+                
+                <div class="example">
+                    <h4>物理背景：弹簧振动系统</h4>
+                    <p>考虑一个质量为 $m$ 的物体悬挂在弹性系数为 $k$ 的弹簧上，受到阻尼系数为 $c$ 的阻力和外力 $F(t)$ 的作用。</p>
+                    
+                    <div class="spring-container" id="springSystem">
+                        <!-- 弹簧振动动画将在这里显示 -->
+                    </div>
+                    
+                    <p>根据牛顿第二定律，可以建立微分方程：</p>
+                    $$m\frac{d^2x}{dt^2} + c\frac{dx}{dt} + kx = F(t)$$
+                    <p>除以 $m$ 得到标准形式：</p>
+                    $$\frac{d^2x}{dt^2} + \frac{c}{m}\frac{dx}{dt} + \frac{k}{m}x = \frac{F(t)}{m}$$
+                    <p>这正是二阶线性微分方程的形式，其中：</p>
+                    <ul>
+                        <li>$x(t)$ 表示物体偏离平衡位置的位移</li>
+                        <li>$\frac{c}{m}$ 是阻尼系数</li>
+                        <li>$\frac{k}{m}$ 是弹性系数</li>
+                        <li>$\frac{F(t)}{m}$ 是外力项</li>
+                    </ul>
+                </div>
+                
+                <div class="definition">
+                    <h4>$n$ 阶线性微分方程的一般形式</h4>
+                    <p>$n$ 阶线性微分方程的一般形式为：</p>
+                    $$y^{(n)} + P_1(x)y^{(n-1)} + P_2(x)y^{(n-2)} + \cdots + P_{n-1}(x)y' + P_n(x)y = f(x)$$
+                    <p>其中 $y^{(k)}$ 表示 $y$ 的 $k$ 阶导数。</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 线性微分方程解的结构 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>7.6.2 线性微分方程解的结构</h2>
+            </div>
+            <div class="section-content">
+                <div class="theorem">
+                    <h4>齐次线性微分方程解的性质</h4>
+                    <p>对于齐次线性微分方程 $y'' + P(x)y' + Q(x)y = 0$：</p>
+                    <ol>
+                        <li><strong>叠加原理：</strong>如果 $y_1$ 和 $y_2$ 是方程的解，则 $C_1y_1 + C_2y_2$ 也是方程的解</li>
+                        <li><strong>解空间：</strong>所有解构成一个二维线性空间</li>
+                        <li><strong>基本解组：</strong>两个线性无关的解 $y_1$、$y_2$ 构成基本解组</li>
+                        <li><strong>通解：</strong>$y = C_1y_1 + C_2y_2$（$C_1$、$C_2$ 为任意常数）</li>
+                    </ol>
+                </div>
+                
+                <div class="definition">
+                    <h4>Wronskian行列式（朗斯基行列式）</h4>
+                    <p>对于两个函数 $y_1$ 和 $y_2$，定义Wronskian行列式为：</p>
+                    $$W(y_1, y_2) = \begin{vmatrix} y_1 & y_2 \\ y_1' & y_2' \end{vmatrix} = y_1y_2' - y_1'y_2$$
+                    <p><strong>线性无关的判定：</strong></p>
+                    <ul>
+                        <li>如果在某区间内 $W(y_1, y_2) \neq 0$，则 $y_1$ 和 $y_2$ 线性无关</li>
+                        <li>如果 $y_1$ 和 $y_2$ 是齐次方程的解且线性相关，则 $W(y_1, y_2) \equiv 0$</li>
+                    </ul>
+                </div>
+                
+                <div class="theorem">
+                    <h4>非齐次线性微分方程解的结构</h4>
+                    <p>对于非齐次线性微分方程 $y'' + P(x)y' + Q(x)y = f(x)$：</p>
+                    <div class="math-expression">
+                        $$\text{通解} = \text{齐次方程的通解} + \text{非齐次方程的一个特解}$$
+                    </div>
+                    <p>即：$y = y_h + y_p$，其中：</p>
+                    <ul>
+                        <li>$y_h = C_1y_1 + C_2y_2$ 是对应齐次方程的通解</li>
+                        <li>$y_p$ 是非齐次方程的任意一个特解</li>
+                    </ul>
+                </div>
+                
+                <div class="highlight">
+                    <p><strong>重要性质：</strong>两个非齐次方程的解的差是对应齐次方程的解。</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 常数变易法 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>7.6.3 常数变易法求解高阶线性微分方程</h2>
+            </div>
+            <div class="section-content">
+                <div class="definition">
+                    <h4>常数变易法的基本思想</h4>
+                    <p>设齐次方程 $y'' + P(x)y' + Q(x)y = 0$ 的通解为：</p>
+                    $$y_h = C_1y_1 + C_2y_2$$
+                    <p>对于非齐次方程，假设特解的形式为：</p>
+                    $$y_p = u_1(x)y_1 + u_2(x)y_2$$
+                    <p>其中 $u_1(x)$ 和 $u_2(x)$ 是待定函数，这就是"常数变易"的含义。</p>
+                </div>
+                
+                <div class="steps">
+                    <h5>常数变易法的求解步骤</h5>
+                    <div class="step-item">
+                        <span class="step-number">步骤1：</span>求出齐次方程 $y'' + P(x)y' + Q(x)y = 0$ 的通解 $y_h = C_1y_1 + C_2y_2$
+                    </div>
+                    <div class="step-item">
+                        <span class="step-number">步骤2：</span>设非齐次方程 $y'' + P(x)y' + Q(x)y = f(x)$ 的特解为 $y_p = u_1y_1 + u_2y_2$
+                    </div>
+                    <div class="step-item">
+                        <span class="step-number">步骤3：</span>建立约束条件：$u_1'y_1 + u_2'y_2 = 0$ (为了使 $y_p'$ 的二阶导数不含有 $u_1', u_2'$)
+                    </div>
+                    <div class="step-item">
+                        <span class="step-number">步骤4：</span>计算 $y_p'$ 和 $y_p''$，代入原非齐次方程
+                    </div>
+                    <div class="step-item">
+                        <span class="step-number">步骤5：</span>得到方程组：
+                        $$\begin{cases}
+                        u_1'y_1 + u_2'y_2 = 0 \\
+                        u_1'y_1' + u_2'y_2' = f(x)
+                        \end{cases}$$
+                    </div>
+                    <div class="step-item">
+                        <span class="step-number">步骤6：</span>解方程组求出 $u_1'$ 和 $u_2'$，然后积分得 $u_1$ 和 $u_2$
+                    </div>
+                </div>
+                
+                <div class="theorem">
+                    <h4>Cramer法则求解</h4>
+                    <p>由方程组可以用Cramer法则求解：</p>
+                    $$u_1' = -\frac{y_2 f(x)}{W(y_1, y_2)}, \quad u_2' = \frac{y_1 f(x)}{W(y_1, y_2)}$$
+                    <p>其中 $W(y_1, y_2) = y_1y_2' - y_1'y_2$ 是Wronskian行列式。</p>
+                    <p>积分得到：</p>
+                    $$u_1 = -\int \frac{y_2 f(x)}{W(y_1, y_2)} dx, \quad u_2 = \int \frac{y_1 f(x)}{W(y_1, y_2)} dx$$
+                </div>
+            </div>
+        </div>
+        
+        <!-- 典型例题 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>7.6.4 典型例题解析</h2>
+            </div>
+            <div class="section-content">
+                <div class="example">
+                    <h4>例题1：验证线性无关性</h4>
+                    <p>验证 $y_1 = e^x$ 和 $y_2 = e^{2x}$ 在 $(-\infty, +\infty)$ 上线性无关。</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解题过程：</div>
+                        <p><strong>方法：</strong>计算Wronskian行列式</p>
+                        $$W(y_1, y_2) = \begin{vmatrix} e^x & e^{2x} \\ e^x & 2e^{2x} \end{vmatrix}$$
+                        $$= e^x \cdot 2e^{2x} - e^{2x} \cdot e^x = 2e^{3x} - e^{3x} = e^{3x}$$
+                        <p>由于 $e^{3x} > 0$ 对所有 $x \in (-\infty, +\infty)$ 成立，所以 $W(y_1, y_2) \neq 0$。</p>
+                        <p><strong>结论：</strong>$y_1 = e^x$ 和 $y_2 = e^{2x}$ 在 $(-\infty, +\infty)$ 上线性无关。</p>
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <h4>例题2：用常数变易法求特解</h4>
+                    <p>已知齐次方程 $y'' - 3y' + 2y = 0$ 的通解为 $y_h = C_1e^x + C_2e^{2x}$，用常数变易法求非齐次方程 $y'' - 3y' + 2y = e^x$ 的通解。</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解题过程：</div>
+                        <p><strong>步骤1：</strong>确定基本解组</p>
+                        <p>$y_1 = e^x$，$y_2 = e^{2x}$</p>
+                        
+                        <p><strong>步骤2：</strong>计算Wronskian行列式</p>
+                        $$W(y_1, y_2) = \begin{vmatrix} e^x & e^{2x} \\ e^x & 2e^{2x} \end{vmatrix} = e^{3x}$$
+                        
+                        <p><strong>步骤3：</strong>应用常数变易法公式</p>
+                        <p>对于 $f(x) = e^x$：</p>
+                        $$u_1' = -\frac{y_2 f(x)}{W} = -\frac{e^{2x} \cdot e^x}{e^{3x}} = -1$$
+                        $$u_2' = \frac{y_1 f(x)}{W} = \frac{e^x \cdot e^x}{e^{3x}} = \frac{1}{e^x}$$
+                        
+                        <p><strong>步骤4：</strong>积分求 $u_1$ 和 $u_2$</p>
+                        $$u_1 = \int (-1) dx = -x$$
+                        $$u_2 = \int e^{-x} dx = -e^{-x}$$
+                        
+                        <p><strong>步骤5：</strong>得到特解</p>
+                        $$y_p = u_1y_1 + u_2y_2 = (-x)e^x + (-e^{-x})e^{2x} = -xe^x - e^x$$
+                        <p>化简：$y_p = -xe^x - e^x = -e^x(x + 1)$</p>
+                        
+                        <p><strong>步骤6：</strong>写出通解</p>
+                        $$y = y_h + y_p = C_1e^x + C_2e^{2x} - e^x(x + 1)$$
+                        $$= (C_1 - x - 1)e^x + C_2e^{2x}$$
+                        <p>重新命名常数：$y = C_1e^x + C_2e^{2x} - xe^x$</p>
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <h4>例题3：弹簧振动问题</h4>
+                    <p>质量为 $2$ kg的物体悬挂在弹性系数为 $8$ N/m的弹簧上，阻尼系数为 $4$ N·s/m。如果初始时刻物体从平衡位置向下 $0.1$ m处以向上的初速度 $0.2$ m/s开始运动，求运动方程。</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解题过程：</div>
+                        <p><strong>步骤1：</strong>建立微分方程</p>
+                        <p>根据牛顿第二定律：$m\frac{d^2x}{dt^2} + c\frac{dx}{dt} + kx = 0$</p>
+                        <p>代入数值：$2\frac{d^2x}{dt^2} + 4\frac{dx}{dt} + 8x = 0$</p>
+                        <p>化简：$\frac{d^2x}{dt^2} + 2\frac{dx}{dt} + 4x = 0$</p>
+                        
+                        <p><strong>步骤2：</strong>求解特征方程</p>
+                        <p>$r^2 + 2r + 4 = 0$</p>
+                        <p>$r = \frac{-2 \pm \sqrt{4 - 16}}{2} = \frac{-2 \pm 2\sqrt{3}i}{2} = -1 \pm \sqrt{3}i$</p>
+                        
+                        <p><strong>步骤3：</strong>写出通解</p>
+                        <p>$\alpha = -1$，$\beta = \sqrt{3}$</p>
+                        <p>$x(t) = e^{-t}(C_1\cos(\sqrt{3}t) + C_2\sin(\sqrt{3}t))$</p>
+                        
+                        <p><strong>步骤4：</strong>利用初始条件</p>
+                        <p>初始条件：$x(0) = 0.1$，$x'(0) = -0.2$（向上为负）</p>
+                        <p>由 $x(0) = 0.1$：$C_1 = 0.1$</p>
+                        <p>$x'(t) = -e^{-t}(C_1\cos(\sqrt{3}t) + C_2\sin(\sqrt{3}t)) + e^{-t}(-C_1\sqrt{3}\sin(\sqrt{3}t) + C_2\sqrt{3}\cos(\sqrt{3}t))$</p>
+                        <p>$x'(0) = -C_1 + C_2\sqrt{3} = -0.1 + C_2\sqrt{3} = -0.2$</p>
+                        <p>$C_2\sqrt{3} = -0.1$，$C_2 = -\frac{0.1}{\sqrt{3}} = -\frac{\sqrt{3}}{30}$</p>
+                        
+                        <p><strong>步骤5：</strong>最终解</p>
+                        $$x(t) = e^{-t}\left(0.1\cos(\sqrt{3}t) - \frac{\sqrt{3}}{30}\sin(\sqrt{3}t)\right)$$
+                        <p>这表示一个衰减振动，物体最终会回到平衡位置。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 可视化演示 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>7.6.5 弹簧振动的可视化演示</h2>
+            </div>
+            <div class="section-content">
+                <p>下图展示了不同阻尼情况下的弹簧振动：</p>
+                <div class="viz-container" id="oscillationPlot"></div>
+                
+                <div class="memory-tip">
+                    <h4>高阶线性微分方程记忆要点</h4>
+                    <ul>
+                        <li><strong>解的结构：</strong>齐次通解 + 非齐次特解</li>
+                        <li><strong>线性无关：</strong>Wronskian行列式不为零</li>
+                        <li><strong>常数变易：</strong>把通解中的常数换成函数</li>
+                        <li><strong>物理意义：</strong>弹簧振动是最典型的应用</li>
+                        <li><strong>叠加原理：</strong>线性方程的核心性质</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 练习题 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>7.6.6 练习题</h2>
+            </div>
+            <div class="section-content">
+                <div class="practice-problem">
+                    <h4>习题1 <span class="difficulty medium">中等难度</span></h4>
+                    <p>验证 $y_1 = \cos x$ 和 $y_2 = \sin x$ 是方程 $y'' + y = 0$ 的线性无关解，并写出通解。</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解题步骤：</div>
+                        <p><strong>步骤1：</strong>验证是解</p>
+                        <p>对于 $y_1 = \cos x$：$y_1' = -\sin x$，$y_1'' = -\cos x$</p>
+                        <p>代入方程：$-\cos x + \cos x = 0$ ✓</p>
+                        <p>对于 $y_2 = \sin x$：$y_2' = \cos x$，$y_2'' = -\sin x$</p>
+                        <p>代入方程：$-\sin x + \sin x = 0$ ✓</p>
+                        
+                        <p><strong>步骤2：</strong>验证线性无关</p>
+                        $$W(y_1, y_2) = \begin{vmatrix} \cos x & \sin x \\ -\sin x & \cos x \end{vmatrix}$$
+                        $$= \cos^2 x + \sin^2 x = 1 \neq 0$$
+                        
+                        <p><strong>步骤3：</strong>写出通解</p>
+                        $$y = C_1\cos x + C_2\sin x$$
+                    </div>
+                </div>
+                
+                <div class="practice-problem">
+                    <h4>习题2 <span class="difficulty hard">较难</span></h4>
+                    <p>用常数变易法求解：$y'' - 4y' + 4y = \frac{e^{2x}}{x}$</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解题步骤：</div>
+                        <p><strong>步骤1：</strong>求齐次方程的通解</p>
+                        <p>特征方程：$r^2 - 4r + 4 = 0$，$(r-2)^2 = 0$</p>
+                        <p>重根：$r_1 = r_2 = 2$</p>
+                        <p>齐次通解：$y_h = (C_1 + C_2x)e^{2x}$</p>
+                        <p>基本解组：$y_1 = e^{2x}$，$y_2 = xe^{2x}$</p>
+                        
+                        <p><strong>步骤2：</strong>计算Wronskian行列式</p>
+                        $$W = \begin{vmatrix} e^{2x} & xe^{2x} \\ 2e^{2x} & e^{2x} + 2xe^{2x} \end{vmatrix}$$
+                        $$= e^{2x}(e^{2x} + 2xe^{2x}) - xe^{2x} \cdot 2e^{2x} = e^{4x}$$
+                        
+                        <p><strong>步骤3：</strong>应用常数变易法</p>
+                        $$u_1' = -\frac{y_2 f(x)}{W} = -\frac{xe^{2x} \cdot \frac{e^{2x}}{x}}{e^{4x}} = -1$$
+                        $$u_2' = \frac{y_1 f(x)}{W} = \frac{e^{2x} \cdot \frac{e^{2x}}{x}}{e^{4x}} = \frac{1}{x}$$
+                        
+                        <p><strong>步骤4：</strong>积分</p>
+                        $$u_1 = -x, \quad u_2 = \ln|x|$$
+                        
+                        <p><strong>步骤5：</strong>特解和通解</p>
+                        $$y_p = (-x)e^{2x} + (\ln|x|)(xe^{2x}) = xe^{2x}(\ln|x| - 1)$$
+                        $$y = (C_1 + C_2x)e^{2x} + xe^{2x}(\ln|x| - 1)$$
+                    </div>
+                </div>
+                
+                <div class="practice-problem">
+                    <h4>习题3 <span class="difficulty very-hard">很难</span></h4>
+                    <p>一个质量为 $m$ 的物体在重力场中做阻尼运动，阻尼力与速度成正比，比例系数为 $k$。如果物体从高度 $h$ 处以初速度 $v_0$ 向下抛出，建立并求解运动方程。</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解题步骤：</div>
+                        <p><strong>步骤1：</strong>建立微分方程</p>
+                        <p>受力分析：重力 $mg$（向下），阻尼力 $kv$（与速度反向）</p>
+                        <p>牛顿第二定律：$m\frac{dv}{dt} = mg - kv$</p>
+                        <p>整理：$\frac{dv}{dt} + \frac{k}{m}v = g$</p>
+                        
+                        <p><strong>步骤2：</strong>这是一阶线性微分方程</p>
+                        <p>通解公式：$v(t) = e^{-\frac{k}{m}t}\left(\int g \cdot e^{\frac{k}{m}t} dt + C\right)$</p>
+                        <p>$= e^{-\frac{k}{m}t}\left(\frac{mg}{k}e^{\frac{k}{m}t} + C\right)$</p>
+                        <p>$= \frac{mg}{k} + Ce^{-\frac{k}{m}t}$</p>
+                        
+                        <p><strong>步骤3：</strong>利用初始条件</p>
+                        <p>$v(0) = v_0$：$v_0 = \frac{mg}{k} + C$</p>
+                        <p>$C = v_0 - \frac{mg}{k}$</p>
+                        <p>速度函数：$v(t) = \frac{mg}{k} + \left(v_0 - \frac{mg}{k}\right)e^{-\frac{k}{m}t}$</p>
+                        
+                        <p><strong>步骤4：</strong>求位移</p>
+                        <p>$\frac{dx}{dt} = v(t)$，积分得：</p>
+                        $$x(t) = \int v(t) dt = \frac{mg}{k}t - \frac{m}{k}\left(v_0 - \frac{mg}{k}\right)e^{-\frac{k}{m}t} + C_1$$
+                        <p>由 $x(0) = 0$（以抛出点为原点）：</p>
+                        <p>$0 = -\frac{m}{k}\left(v_0 - \frac{mg}{k}\right) + C_1$</p>
+                        <p>$C_1 = \frac{m}{k}\left(v_0 - \frac{mg}{k}\right)$</p>
+                        
+                        <p><strong>步骤5：</strong>最终的运动方程</p>
+                        $$x(t) = \frac{mg}{k}t + \frac{m}{k}\left(v_0 - \frac{mg}{k}\right)\left(1 - e^{-\frac{k}{m}t}\right)$$
+                        <p>当 $t \to \infty$ 时，物体趋向于匀速运动，终端速度为 $\frac{mg}{k}$。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="nav-buttons">
+            <a href="7.5.html" class="btn prev">上一节：7.5 可降阶的高阶微分方程</a>
+            <a href="7.7.html" class="btn next">下一节：7.7 常系数齐次线性微分方程</a>
+        </div>
+        
+        <footer>
+            <p>&copy; 2024 高等数学复习系统 - 高阶线性微分方程</p>
+        </footer>
+    </div>
+
+    <script>
+        // 弹簧振动可视化
+        function plotOscillations() {
+            const t = [];
+            const traces = [];
+            
+            // 生成时间数据点
+            for (let i = 0; i <= 20; i += 0.1) {
+                t.push(i);
+            }
+            
+            // 不同阻尼情况的振动
+            const cases = [
+                {
+                    name: '无阻尼 (ζ = 0)',
+                    func: (t) => Math.cos(2*t),
+                    color: '#3498db'
+                },
+                {
+                    name: '欠阻尼 (ζ = 0.2)',
+                    func: (t) => Math.exp(-0.4*t) * Math.cos(Math.sqrt(3.84)*t),
+                    color: '#2ecc71'
+                },
+                {
+                    name: '临界阻尼 (ζ = 1)',
+                    func: (t) => (1 + t) * Math.exp(-2*t),
+                    color: '#f39c12'
+                },
+                {
+                    name: '过阻尼 (ζ = 2)',
+                    func: (t) => 0.5 * (Math.exp(-t) - Math.exp(-4*t)),
+                    color: '#e74c3c'
+                }
+            ];
+            
+            cases.forEach((oscillation) => {
+                const y = t.map(oscillation.func);
+                
+                traces.push({
+                    x: t,
+                    y: y,
+                    type: 'scatter',
+                    mode: 'lines',
+                    name: oscillation.name,
+                    line: {
+                        color: oscillation.color,
+                        width: 2.5
+                    }
+                });
+            });
+            
+            const layout = {
+                title: {
+                    text: '不同阻尼条件下的振动响应',
+                    font: { size: 16, color: '#2c3e50' }
+                },
+                xaxis: {
+                    title: '时间 t',
+                    range: [0, 20],
+                    gridcolor: '#ecf0f1',
+                    zerolinecolor: '#bdc3c7'
+                },
+                yaxis: {
+                    title: '位移 x(t)',
+                    range: [-1.5, 1.5],
+                    gridcolor: '#ecf0f1',
+                    zerolinecolor: '#bdc3c7'
+                },
+                plot_bgcolor: '#fafafa',
+                paper_bgcolor: 'white',
+                font: { family: 'Microsoft YaHei, Arial' },
+                legend: {
+                    orientation: 'v',
+                    x: 1.02,
+                    y: 1
+                },
+                margin: { t: 50, r: 150, b: 50, l: 50 }
+            };
+            
+            Plotly.newPlot('oscillationPlot', traces, layout, {responsive: true});
+        }
+        
+        // 弹簧系统动画
+        function createSpringAnimation() {
+            const container = document.getElementById('springSystem');
+            
+            // 创建SVG元素
+            const svg = d3.select(container)
+                .append('svg')
+                .attr('width', '100%')
+                .attr('height', '100%')
+                .attr('viewBox', '0 0 400 300');
+            
+            // 固定支架
+            svg.append('rect')
+                .attr('x', 150)
+                .attr('y', 15)
+                .attr('width', 100)
+                .attr('height', 8)
+                .attr('fill', '#2c3e50');
+            
+            // 固定点
+            svg.append('rect')
+                .attr('x', 195)
+                .attr('y', 23)
+                .attr('width', 10)
+                .attr('height', 15)
+                .attr('fill', '#34495e');
+            
+            // 弹簧路径
+            const springPath = svg.append('path')
+                .attr('stroke', '#3498db')
+                .attr('stroke-width', 3)
+                .attr('fill', 'none');
+            
+            // 质量块
+            const mass = svg.append('rect')
+                .attr('x', 175)
+                .attr('y', 200)
+                .attr('width', 50)
+                .attr('height', 35)
+                .attr('fill', '#e74c3c')
+                .attr('rx', 5)
+                .attr('stroke', '#c0392b')
+                .attr('stroke-width', 2);
+            
+            // 质量标签
+            const massLabel = svg.append('text')
+                .attr('x', 200)
+                .attr('y', 220)
+                .attr('text-anchor', 'middle')
+                .attr('fill', 'white')
+                .attr('font-size', '16px')
+                .attr('font-weight', 'bold')
+                .text('m');
+            
+            // 添加阻尼器（可选）
+            const damper = svg.append('g');
+            damper.append('rect')
+                .attr('x', 160)
+                .attr('y', 0)
+                .attr('width', 20)
+                .attr('height', 25)
+                .attr('fill', '#95a5a6')
+                .attr('stroke', '#7f8c8d')
+                .attr('stroke-width', 1);
+            damper.append('rect')
+                .attr('x', 165)
+                .attr('y', 25)
+                .attr('width', 10)
+                .attr('height', 0)
+                .attr('fill', '#7f8c8d');
+            
+            // 生成螺旋弹簧路径的函数
+            function generateSpringPath(startY, endY, centerX) {
+                const springHeight = endY - startY;
+                const coils = 8; // 弹簧圈数
+                const amplitude = 15; // 弹簧振幅
+                const steps = coils * 8; // 每圈的步数
+                
+                let path = `M ${centerX} ${startY}`;
+                
+                for (let i = 0; i <= steps; i++) {
+                    const progress = i / steps;
+                    const y = startY + progress * springHeight;
+                    const angle = progress * coils * 2 * Math.PI;
+                    const x = centerX + Math.sin(angle) * amplitude;
+                    path += ` L ${x} ${y}`;
+                }
+                
+                path += ` L ${centerX} ${endY}`;
+                return path;
+            }
+            
+            // 动画函数
+            function animate() {
+                const t = Date.now() * 0.003;
+                const baseY = 160;
+                const amplitude = 25;
+                const damping = Math.exp(-0.08 * (t % 60));
+                const displacement = amplitude * Math.sin(2 * t) * damping;
+                const massY = baseY + displacement;
+                
+                // 更新弹簧路径（从固定点到质量块顶部）
+                const springStartY = 38;
+                const springEndY = massY;
+                const springPath_d = generateSpringPath(springStartY, springEndY, 200);
+                springPath.attr('d', springPath_d);
+                
+                // 更新质量块位置
+                mass.attr('y', massY);
+                massLabel.attr('y', massY + 22);
+                
+                // 更新阻尼器连接线
+                damper.select('rect:nth-child(2)')
+                    .attr('y', 25)
+                    .attr('height', massY - 25);
+                
+                requestAnimationFrame(animate);
+            }
+            
+            // 添加标签
+            svg.append('text')
+                .attr('x', 50)
+                .attr('y', 50)
+                .attr('fill', '#2c3e50')
+                .attr('font-size', '12px')
+                .text('弹簧-质量-阻尼系统');
+            
+            svg.append('text')
+                .attr('x', 50)
+                .attr('y', 70)
+                .attr('fill', '#7f8c8d')
+                .attr('font-size', '10px')
+                .text('衰减振动演示');
+            
+            animate();
+        }
+        
+        // 页面加载完成后执行
+        document.addEventListener('DOMContentLoaded', function() {
+            // 等待MathJax渲染完成
+            if (window.MathJax) {
+                MathJax.startup.promise.then(() => {
+                    plotOscillations();
+                    createSpringAnimation();
+                });
+            } else {
+                plotOscillations();
+                createSpringAnimation();
+            }
+            
+            // 添加页面元素动画
+            gsap.from('.content-section', {
+                duration: 0.8,
+                y: 50,
+                opacity: 0,
+                stagger: 0.2,
+                ease: 'power2.out'
+            });
+        });
+    </script>
+</body>
+</html>

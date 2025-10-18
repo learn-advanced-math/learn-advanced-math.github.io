@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="alternate icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTUiIGZpbGw9IiMzNDk4ZGIiIHN0cm9rZT0iIzJjM2U1MCIgc3Ryb2tlLXdpZHRoPSIyIi8+PGcgZmlsbD0id2hpdGUiIGZvbnQtZmFtaWx5PSJUaW1lcyxzZXJpZiIgZm9udC13ZWlnaHQ9ImJvbGQiPjx0ZXh0IHg9IjE2IiB5PSIxMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxMiI+ZDwvdGV4dD48bGluZSB4MT0iOCIgeTE9IjE2IiB4Mj0iMjQiIHkyPSIxNiIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjUiLz48dGV4dCB4PSIxNiIgeT0iMjUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTAiPmR4PC90ZXh0PjwvZz48L3N2Zz4=">
+    <title>高等数学 - 第十章：重积分</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+            padding: 40px 0;
+        }
+        
+        h1 {
+            font-size: 3em;
+            margin: 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            font-weight: 300;
+        }
+        
+        .subtitle {
+            font-size: 1.2em;
+            margin-top: 10px;
+            opacity: 0.9;
+        }
+
+        .home-link {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            display: inline-block;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .home-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            color: #ffffff;
+        }
+        
+        .home-link:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        .chart-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+        
+        .chart-header {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .chart-header h2 {
+            margin: 0;
+            font-size: 1.5em;
+            font-weight: 400;
+        }
+        
+        #knowledge-graph {
+            width: 100%;
+            height: 700px;
+        }
+        
+        .progress-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-top: 30px;
+        }
+        
+        .progress-section h3 {
+            color: #2c3e50;
+            margin: 0 0 20px 0;
+            font-size: 1.3em;
+        }
+        
+        .section-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+        }
+        
+        .section-item {
+            padding: 20px;
+            background: linear-gradient(45deg, #f8f9fa, #e9ecef);
+            border-radius: 10px;
+            border-left: 4px solid #3498db;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        
+        .section-item:hover {
+            background: linear-gradient(45deg, #e9ecef, #dee2e6);
+            transform: translateX(5px);
+            border-left-color: #2980b9;
+        }
+        
+        .section-number {
+            font-weight: bold;
+            color: #3498db;
+            font-size: 1.1em;
+        }
+        
+        .section-title {
+            margin: 5px 0;
+            font-size: 1.1em;
+            color: #2c3e50;
+        }
+        
+        .section-desc {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            line-height: 1.4;
+        }
+        
+        footer {
+            text-align: center;
+            color: white;
+            padding: 30px 0;
+            opacity: 0.8;
+            margin-top: 50px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .section-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>第十章：重积分</h1>
+            <div class="subtitle">
+                <a href="../index.html" class="home-link">高等数学知识点可视化复习系统</a>
+            </div>
+        </header>
+        
+        <div class="chart-container">
+            <div class="chart-header">
+                <h2>知识点关系图</h2>
+            </div>
+            <div id="knowledge-graph"></div>
+        </div>
+        
+        <div class="progress-section">
+            <h3>详细章节导航</h3>
+            <div class="section-list">
+                <a href="subsections/10.1.html" class="section-item">
+                    <div class="section-number">10.1</div>
+                    <div class="section-title">二重积分的概念与性质</div>
+                    <div class="section-desc">曲顶柱体的体积，平面薄片的质量；二重积分的定义；二重积分的性质</div>
+                </a>
+                
+                <a href="subsections/10.2.html" class="section-item">
+                    <div class="section-number">10.2</div>
+                    <div class="section-title">二重积分的计算方法</div>
+                    <div class="section-desc">利用直角坐标计算二重积分；利用极坐标计算二重积分；二重积分的换元法</div>
+                </a>
+                
+                <a href="subsections/10.3.html" class="section-item">
+                    <div class="section-number">10.3</div>
+                    <div class="section-title">三重积分</div>
+                    <div class="section-desc">三重积分的概念；直角坐标、柱面坐标、球面坐标系下的三重积分计算</div>
+                </a>
+                
+                <a href="subsections/10.4.html" class="section-item">
+                    <div class="section-number">10.4</div>
+                    <div class="section-title">重积分的应用</div>
+                    <div class="section-desc">曲面的面积；质心；转动惯量；引力</div>
+                </a>
+                
+                <a href="subsections/10.5.html" class="section-item">
+                    <div class="section-number">10.5</div>
+                    <div class="section-title">含参变量的积分</div>
+                    <div class="section-desc">含参变量的积分的概念及相关定理</div>
+                </a>
+            </div>
+        </div>
+        
+        <footer>
+            <p>&copy; 2025 高等数学复习系统 - 重积分章节</p>
+        </footer>
+    </div>
+
+    <script>
+        // 初始化知识点关系图
+        const chart = echarts.init(document.getElementById('knowledge-graph'));
+        
+        // 知识点数据
+        const nodes = [
+            { id: '10.1', name: '二重积分概念', category: 0, x: 150, y: 120, symbolSize: 85 },
+            { id: '10.2.1', name: '直角坐标计算', category: 1, x: 350, y: 80, symbolSize: 75 },
+            { id: '10.2.2', name: '极坐标计算', category: 1, x: 500, y: 120, symbolSize: 75 },
+            { id: '10.2.3', name: '换元法', category: 1, x: 450, y: 220, symbolSize: 70 },
+            { id: '10.3', name: '三重积分', category: 2, x: 300, y: 350, symbolSize: 90 },
+            { id: '10.3.1', name: '直角坐标系', category: 2, x: 150, y: 450, symbolSize: 65 },
+            { id: '10.3.2', name: '柱面坐标系', category: 2, x: 300, y: 480, symbolSize: 65 },
+            { id: '10.3.3', name: '球面坐标系', category: 2, x: 450, y: 450, symbolSize: 65 },
+            { id: '10.4', name: '重积分应用', category: 3, x: 650, y: 300, symbolSize: 85 },
+            { id: '10.5', name: '含参积分', category: 4, x: 750, y: 150, symbolSize: 70 }
+        ];
+        
+        // 知识点之间的关系
+        const links = [
+            { source: '10.1', target: '10.2.1', lineStyle: { width: 4 } },
+            { source: '10.1', target: '10.2.2', lineStyle: { width: 4 } },
+            { source: '10.2.1', target: '10.2.3', lineStyle: { width: 3 } },
+            { source: '10.2.2', target: '10.2.3', lineStyle: { width: 3 } },
+            { source: '10.1', target: '10.3', lineStyle: { width: 3 } },
+            { source: '10.2.1', target: '10.3', lineStyle: { width: 2 } },
+            { source: '10.3', target: '10.3.1', lineStyle: { width: 3 } },
+            { source: '10.3', target: '10.3.2', lineStyle: { width: 3 } },
+            { source: '10.3', target: '10.3.3', lineStyle: { width: 3 } },
+            { source: '10.1', target: '10.4', lineStyle: { width: 3 } },
+            { source: '10.3', target: '10.4', lineStyle: { width: 4 } },
+            { source: '10.2.1', target: '10.4', lineStyle: { width: 2 } },
+            { source: '10.1', target: '10.5', lineStyle: { width: 2 } },
+            { source: '10.2.1', target: '10.5', lineStyle: { width: 2 } }
+        ];
+        
+        // 图表配置
+        const option = {
+            backgroundColor: 'transparent',
+            tooltip: {
+                trigger: 'item',
+                formatter: function(params) {
+                    if (params.dataType === 'node') {
+                        return `<b>${params.data.name}</b><br/>点击查看详细内容`;
+                    } else if (params.dataType === 'edge') {
+                        return `${params.data.source} → ${params.data.target}`;
+                    }
+                }
+            },
+            legend: {
+                orient: 'horizontal',
+                bottom: 20,
+                data: [
+                    { name: '基本概念', icon: 'circle' },
+                    { name: '计算方法', icon: 'circle' },
+                    { name: '三重积分', icon: 'circle' },
+                    { name: '应用', icon: 'circle' },
+                    { name: '含参积分', icon: 'circle' }
+                ],
+                textStyle: {
+                    color: '#333',
+                    fontSize: 12
+                }
+            },
+            series: [{
+                type: 'graph',
+                layout: 'none',
+                symbolSize: 50,
+                roam: "move",
+                draggable: true,
+                label: {
+                    show: true,
+                    position: 'bottom',
+                    formatter: '{b}',
+                    fontSize: 25,
+                    fontWeight: 'bold'
+                },
+                edgeSymbol: ['none', 'arrow'],
+                edgeSymbolSize: [0, 15],
+                itemStyle: {
+                    borderColor: '#fff',
+                    borderWidth: 3,
+                    shadowColor: 'rgba(0, 0, 0, 0.3)',
+                    shadowBlur: 10
+                },
+                lineStyle: {
+                    opacity: 0.7,
+                    width: 2,
+                    curveness: 0.1,
+                    color: {
+                        type: 'linear',
+                        x: 0, y: 0, x2: 1, y2: 1,
+                        colorStops: [
+                            { offset: 0, color: '#3498db' },
+                            { offset: 1, color: '#2980b9' }
+                        ]
+                    }
+                },
+                emphasis: {
+                    focus: 'adjacency',
+                    lineStyle: {
+                        width: 4,
+                        opacity: 1
+                    },
+                    itemStyle: {
+                        shadowBlur: 20
+                    }
+                },
+                categories: [
+                    { name: '基本概念', itemStyle: { color: '#e74c3c' } },
+                    { name: '计算方法', itemStyle: { color: '#3498db' } },
+                    { name: '三重积分', itemStyle: { color: '#f39c12' } },
+                    { name: '应用', itemStyle: { color: '#2ecc71' } },
+                    { name: '含参积分', itemStyle: { color: '#9b59b6' } }
+                ],
+                data: nodes,
+                links: links,
+                animationDuration: 1500,
+                animationEasing: 'cubicInOut'
+            }]
+        };
+        
+        // 设置图表选项
+        chart.setOption(option);
+        
+        // 点击节点跳转到对应页面
+        chart.on('click', function(params) {
+            if (params.dataType === 'node') {
+                let nodeId = params.data.id;
+                // 对于复合节点ID，只取主要部分
+                if (nodeId.includes('.')) {
+                    const parts = nodeId.split('.');
+                    if (parts.length > 2) {
+                        nodeId = parts[0] + '.' + parts[1];
+                    }
+                }
+                window.location.href = `subsections/${nodeId}.html`;
+            }
+        });
+        
+        // 响应式调整
+        window.addEventListener('resize', function() {
+            chart.resize();
+        });
+        
+        // 页面加载完成后的动画效果
+        document.addEventListener('DOMContentLoaded', function() {
+            // 为章节导航卡片添加入场动画
+            const sectionItems = document.querySelectorAll('.section-item');
+            sectionItems.forEach((item, index) => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    item.style.transition = 'all 0.6s ease';
+                    item.style.opacity = '1';
+                    item.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html>

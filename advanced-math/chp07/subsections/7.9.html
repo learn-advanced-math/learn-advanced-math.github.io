@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="alternate icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTUiIGZpbGw9IiMzNDk4ZGIiIHN0cm9rZT0iIzJjM2U1MCIgc3Ryb2tlLXdpZHRoPSIyIi8+PGcgZmlsbD0id2hpdGUiIGZvbnQtZmFtaWx5PSJUaW1lcyxzZXJpZiIgZm9udC13ZWlnaHQ9ImJvbGQiPjx0ZXh0IHg9IjE2IiB5PSIxMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxMiI+ZDwvdGV4dD48bGluZSB4MT0iOCIgeTE9IjE2IiB4Mj0iMjQiIHkyPSIxNiIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjUiLz48dGV4dCB4PSIxNiIgeT0iMjUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTAiPmR4PC90ZXh0PjwvZz48L3N2Zz4=">
+    <title>7.9 欧拉方程 - 高等数学复习</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']]
+            },
+            chtml: {
+                fontURL: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2'
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #2d5016 0%, #16a085 50%, #27ae60 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 20px;
+            color: #27ae60;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 15px;
+            border-radius: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .back-link:hover {
+            color: #2ecc71;
+            transform: translateX(-5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+        
+        .back-link::before {
+            content: '←';
+            margin-right: 8px;
+            font-size: 1.2em;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            margin: 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            font-weight: 300;
+        }
+        
+        .subtitle {
+            font-size: 1.1em;
+            margin-top: 10px;
+            opacity: 0.9;
+        }
+        
+        .content-section {
+            background: white;
+            margin: 25px 0;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .content-section:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .section-header {
+            padding: 20px 30px;
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            color: white;
+        }
+        
+        .section-header h2 {
+            margin: 0;
+            font-size: 1.6em;
+            font-weight: 400;
+        }
+        
+        .section-content {
+            padding: 30px;
+        }
+        
+        .definition {
+            background: linear-gradient(135deg, #e8f5e8, #d4edda);
+            border-left: 5px solid #27ae60;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(39, 174, 96, 0.1);
+        }
+        
+        .definition h4 {
+            margin: 0 0 15px 0;
+            color: #27ae60;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .theorem {
+            background: linear-gradient(135deg, #fef9e7, #fcf4dd);
+            border-left: 5px solid #f39c12;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(243, 156, 18, 0.1);
+        }
+        
+        .theorem h4 {
+            margin: 0 0 15px 0;
+            color: #f39c12;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .example {
+            background: linear-gradient(135deg, #ebf3fd, #d6e9f8);
+            border-left: 5px solid #3498db;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(52, 152, 219, 0.1);
+        }
+        
+        .example h4 {
+            margin: 0 0 15px 0;
+            color: #3498db;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .practice-problem {
+            background: linear-gradient(135deg, #fdf2e9, #fbeee0);
+            border-left: 5px solid #e67e22;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(230, 126, 34, 0.1);
+        }
+        
+        .practice-problem h4 {
+            margin: 0 0 15px 0;
+            color: #e67e22;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .difficulty {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: 500;
+            margin-left: 10px;
+        }
+        
+        .difficulty.medium {
+            background: #f39c12;
+            color: white;
+        }
+        
+        .difficulty.hard {
+            background: #e74c3c;
+            color: white;
+        }
+        
+        .difficulty.very-hard {
+            background: #27ae60;
+            color: white;
+        }
+        
+        .solution {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px dashed #bdc3c7;
+        }
+        
+        .solution-header {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+        
+        .viz-container {
+            width: 100%;
+            height: 400px;
+            margin: 25px 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 40px;
+            padding: 20px 0;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 25px;
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 15px rgba(39, 174, 96, 0.3);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(39, 174, 96, 0.4);
+        }
+        
+        .btn.prev::before {
+            content: '←';
+            margin-right: 8px;
+            font-size: 1.1em;
+        }
+        
+        .btn.next::after {
+            content: '→';
+            margin-left: 8px;
+            font-size: 1.1em;
+        }
+        
+        footer {
+            text-align: center;
+            color: white;
+            padding: 30px 0;
+            opacity: 0.9;
+            margin-top: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        footer p {
+            text-align: center;
+            margin: 0;
+        }
+        
+        .math-expression {
+            text-align: center;
+            margin: 15px 0;
+            font-size: 1.1em;
+        }
+        
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        .highlight {
+            background: linear-gradient(135deg, #fff3cd, #fce4a0);
+            padding: 15px;
+            border-left: 4px solid #ffc107;
+            border-radius: 0 8px 8px 0;
+            margin: 15px 0;
+        }
+        
+        .steps {
+            background: linear-gradient(135deg, #e8f4fd, #d1ecf1);
+            border-left: 4px solid #17a2b8;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+        }
+        
+        .steps h5 {
+            color: #17a2b8;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        
+        .step-item {
+            margin: 10px 0;
+            padding: 10px 15px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 8px;
+            border-left: 3px solid #17a2b8;
+        }
+        
+        .step-number {
+            font-weight: bold;
+            color: #17a2b8;
+            margin-right: 10px;
+        }
+        
+        .memory-tip {
+            background: linear-gradient(135deg, #fff0f6, #ffe6f3);
+            border: 1px solid #f8d7da;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        .memory-tip::before {
+            content: '💡';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            background: white;
+            padding: 0 10px;
+            font-size: 1.2em;
+        }
+        
+        .memory-tip h4 {
+            color: #27ae60;
+            margin-bottom: 15px;
+            margin-top: 10px;
+        }
+
+        .euler-equation {
+            background: linear-gradient(135deg, #e8f5e8, #d4edda);
+            border: 2px solid #27ae60;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .euler-equation h4 {
+            color: #1e8449;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+
+        .substitution-box {
+            background: linear-gradient(135deg, #fff3cd, #fce4a0);
+            border: 2px solid #ffc107;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .substitution-box h4 {
+            color: #856404;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+            text-align: center;
+        }
+
+        .transformation-steps {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 20px;
+            align-items: center;
+            margin: 20px 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 10px;
+        }
+
+        .transformation-step {
+            text-align: center;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .arrow {
+            font-size: 1.5em;
+            color: #27ae60;
+            font-weight: bold;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 12px 15px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .comparison-table th {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            color: white;
+            font-weight: 500;
+        }
+
+        .comparison-table tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .formula-derivation {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-left: 4px solid #2196f3;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .formula-derivation h5 {
+            color: #1976d2;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .general-form {
+            background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+            border: 2px solid #16a34a;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .general-form h4 {
+            color: #15803d;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+
+        /* AI提示方块样式 */
+        .ai-warning {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            border: 2px solid #e0e0e0;
+        }
+        
+        .ai-warning:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            border-color: #ff4444;
+        }
+        
+        .ai-warning::before {
+            content: '!';
+            color: #e74c3c;
+            font-size: 20px;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+        }
+        
+        .ai-warning-tooltip {
+            position: absolute;
+            top: 50px;
+            left: 0;
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 16px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            line-height: 1.5;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1001;
+            width: 250px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .ai-warning-tooltip::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: 20px;
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid rgba(0, 0, 0, 0.9);
+        }
+        
+        .ai-warning:hover .ai-warning-tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .section-content {
+                padding: 20px;
+            }
+            
+            .definition, .theorem, .example, .practice-problem {
+                padding: 20px;
+            }
+            
+            .nav-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .transformation-steps {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .arrow {
+                transform: rotate(90deg);
+            }
+
+            .comparison-table {
+                font-size: 0.9em;
+            }
+
+            .ai-warning {
+                width: 35px;
+                height: 35px;
+                top: 15px;
+                left: 15px;
+            }
+            
+            .ai-warning::before {
+                font-size: 18px;
+            }
+            
+            .ai-warning-tooltip {
+                width: 280px;
+                font-size: 13px;
+                padding: 14px 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- AI内容提示 -->
+    <div class="ai-warning">
+        <div class="ai-warning-tooltip">
+            页面内容由AI生成，请谨慎对待。<br>如发现错误，<a href="https://github.com/learn-advanced-math/learn-advanced-math.github.io/issues" target="_blank" style="color: #ff0000">欢迎反馈</a>。
+        </div>
+    </div>
+    
+    <div class="container">
+        <a href="../index.html" class="back-link">返回章节概览</a>
+        
+        <header>
+            <h1>7.9 欧拉方程</h1>
+            <div class="subtitle">Euler Equation</div>
+        </header>
+        
+        <!-- 欧拉方程的定义与形式 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>7.9.1 欧拉方程的形式</h2>
+            </div>
+            <div class="section-content">
+                <div class="definition">
+                    <h4>欧拉方程的定义</h4>
+                    <p>形如：</p>
+                    $$x^n y^{(n)} + a_1 x^{n-1} y^{(n-1)} + a_2 x^{n-2} y^{(n-2)} + \cdots + a_{n-1} x y' + a_n y = f(x)$$
+                    <p>的微分方程称为<strong>$n$ 阶欧拉方程</strong>，其中 $a_1, a_2, \ldots, a_n$ 是常数，$x > 0$。</p>
+                </div>
+                
+                <div class="euler-equation">
+                    <h4>二阶欧拉方程的标准形式</h4>
+                    $$x^2 y'' + px y' + qy = f(x)$$
+                    <p>其中 $p$、$q$ 是常数</p>
+                </div>
+
+                <div class="highlight">
+                    <p><strong>特点：</strong>欧拉方程的特点是每一项中 $x$ 的幂次与对应导数的阶数相同。</p>
+                </div>
+
+                <div class="theorem">
+                    <h4>欧拉方程的历史背景</h4>
+                    <p>欧拉方程是由瑞士数学家莱昂哈德·欧拉（Leonhard Euler，1707-1783）首先研究的一类重要的变系数线性微分方程。虽然系数不是常数，但可以通过巧妙的变量替换转化为常系数线性微分方程。</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 欧拉方程的求解方法 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>7.9.2 欧拉方程的求解方法</h2>
+            </div>
+            <div class="section-content">
+                <div class="substitution-box">
+                    <h4>变量替换法</h4>
+                    <p>解欧拉方程的关键是进行<strong>变量替换</strong>：</p>
+                    <div class="math-expression">
+                        $$x = e^t \quad \text{或} \quad t = \ln x$$
+                    </div>
+                    <p>这样可以将欧拉方程转化为常系数线性微分方程。</p>
+
+                    <div class="transformation-steps">
+                        <div class="transformation-step">
+                            <h5>欧拉方程</h5>
+                            $$x^2 y'' + px y' + qy = 0$$
+                        </div>
+                        <div class="arrow">→</div>
+                        <div class="transformation-step">
+                            <h5>常系数方程</h5>
+                            $$\frac{d^2y}{dt^2} + (p-1)\frac{dy}{dt} + qy = 0$$
+                        </div>
+                    </div>
+                </div>
+
+                
+
+                <div class="formula-derivation">
+                    <h5>导数变换公式推导</h5>
+                    <p>设 $y = y(x)$，$x = e^t$，则：</p>
+                    
+                    <p><strong>一阶导数：</strong></p>
+                    $$\frac{dy}{dx} = \frac{dy}{dt} \cdot \frac{dt}{dx} = \frac{dy}{dt} \cdot \frac{1}{x} = \frac{1}{x}\frac{dy}{dt}$$
+                    
+                    <p><strong>二阶导数：</strong></p>
+                    $$\frac{d^2y}{dx^2} = \frac{d}{dx}\left(\frac{1}{x}\frac{dy}{dt}\right) = -\frac{1}{x^2}\frac{dy}{dt} + \frac{1}{x}\frac{d^2y}{dt^2}\cdot\frac{dt}{dx}$$
+                    $$= \frac{1}{x^2}\left(\frac{d^2y}{dt^2} - \frac{dy}{dt}\right)$$
+                    
+                    <p>因此：</p>
+                    $$x\frac{dy}{dx} = \frac{dy}{dt}, \quad x^2\frac{d^2y}{dx^2} = \frac{d^2y}{dt^2} - \frac{dy}{dt}$$
+                </div>
+
+                <div class="steps">
+                    <h5>标准求解步骤</h5>
+                    <div class="step-item">
+                        <span class="step-number">步骤1：</span>进行变量替换 $x = e^t$（或 $t = \ln x$）
+                    </div>
+                    <div class="step-item">
+                        <span class="step-number">步骤2：</span>利用导数变换公式，将欧拉方程转化为常系数线性微分方程
+                    </div>
+                    <div class="step-item">
+                        <span class="step-number">步骤3：</span>求解常系数线性微分方程
+                    </div>
+                    <div class="step-item">
+                        <span class="step-number">步骤4：</span>将解中的 $t$ 替换回 $\ln x$，得到原方程的解
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 典型例题 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>7.9.3 典型例题解析</h2>
+            </div>
+            <div class="section-content">
+                <div class="example">
+                    <h4>例题1：基本欧拉方程</h4>
+                    <p>求解欧拉方程：$x^2 y'' - 2xy' + 2y = 0$</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解题过程：</div>
+                        <p><strong>步骤1：</strong>变量替换</p>
+                        <p>设 $x = e^t$，则 $t = \ln x$</p>
+                        
+                        <p><strong>步骤2：</strong>导数变换</p>
+                        <p>$x \frac{dy}{dx} = \frac{dy}{dt}$，$x^2 \frac{d^2y}{dx^2} = \frac{d^2y}{dt^2} - \frac{dy}{dt}$</p>
+                        
+                        <p><strong>步骤3：</strong>代入原方程</p>
+                        <p>原方程变为：</p>
+                        $$\left(\frac{d^2y}{dt^2} - \frac{dy}{dt}\right) - 2\frac{dy}{dt} + 2y = 0$$
+                        $$\frac{d^2y}{dt^2} - 3\frac{dy}{dt} + 2y = 0$$
+                        
+                        <p><strong>步骤4：</strong>求解常系数方程</p>
+                        <p>特征方程：$r^2 - 3r + 2 = 0$</p>
+                        <p>解得：$(r-1)(r-2) = 0$，即 $r_1 = 1$，$r_2 = 2$</p>
+                        <p>通解：$y = C_1 e^t + C_2 e^{2t}$</p>
+                        
+                        <p><strong>步骤5：</strong>回代</p>
+                        <p>将 $t = \ln x$ 代入：</p>
+                        $$y = C_1 e^{\ln x} + C_2 e^{2\ln x} = C_1 x + C_2 x^2$$
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <h4>例题2：复根情况</h4>
+                    <p>求解欧拉方程：$x^2 y'' + xy' + y = 0$</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解题过程：</div>
+                        <p><strong>步骤1：</strong>变量替换和导数变换</p>
+                        <p>设 $x = e^t$，代入得：</p>
+                        $$\frac{d^2y}{dt^2} - \frac{dy}{dt} + \frac{dy}{dt} + y = 0$$
+                        $$\frac{d^2y}{dt^2} + y = 0$$
+                        
+                        <p><strong>步骤2：</strong>求解常系数方程</p>
+                        <p>特征方程：$r^2 + 1 = 0$</p>
+                        <p>解得：$r_{1,2} = \pm i$</p>
+                        <p>通解：$y = C_1 \cos t + C_2 \sin t$</p>
+                        
+                        <p><strong>步骤3：</strong>回代</p>
+                        <p>将 $t = \ln x$ 代入：</p>
+                        $$y = C_1 \cos(\ln x) + C_2 \sin(\ln x)$$
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <h4>例题3：非齐次欧拉方程</h4>
+                    <p>求解欧拉方程：$x^2 y'' - xy' + y = x^2$</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解题过程：</div>
+                        <p><strong>步骤1：</strong>求齐次方程的解</p>
+                        <p>齐次方程：$x^2 y'' - xy' + y = 0$</p>
+                        <p>设 $x = e^t$，得：$\frac{d^2y}{dt^2} - 2\frac{dy}{dt} + y = 0$</p>
+                        <p>特征方程：$r^2 - 2r + 1 = 0$，即 $(r-1)^2 = 0$</p>
+                        <p>齐次通解：$y_h = (C_1 + C_2 t)e^t = (C_1 + C_2 \ln x)x$</p>
+                        
+                        <p><strong>步骤2：</strong>处理非齐次项</p>
+                        <p>$f(x) = x^2 = e^{2t}$，非齐次方程变为：</p>
+                        $$\frac{d^2y}{dt^2} - 2\frac{dy}{dt} + y = e^{2t}$$
+                        
+                        <p><strong>步骤3：</strong>求特解</p>
+                        <p>设特解 $y_p = Ae^{2t}$</p>
+                        <p>代入得：$4Ae^{2t} - 4Ae^{2t} + Ae^{2t} = e^{2t}$</p>
+                        <p>解得：$A = 1$，特解：$y_p = e^{2t} = x^2$</p>
+                        
+                        <p><strong>步骤4：</strong>通解</p>
+                        $$y = (C_1 + C_2 \ln x)x + x^2$$
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 对照表 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>7.9.4 欧拉方程与常系数方程的对照</h2>
+            </div>
+            <div class="section-content">
+                <div class="general-form">
+                    <h4>通解形式对照表</h4>
+
+                    <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>特征根类型</th>
+                            <th>常系数方程通解</th>
+                            <th>欧拉方程通解</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>不相等实根 $r_1, r_2$</td>
+                            <td>$C_1 e^{r_1 t} + C_2 e^{r_2 t}$</td>
+                            <td>$C_1 x^{r_1} + C_2 x^{r_2}$</td>
+                        </tr>
+                        <tr>
+                            <td>相等实根 $r$（二重）</td>
+                            <td>$(C_1 + C_2 t) e^{rt}$</td>
+                            <td>$(C_1 + C_2 \ln x) x^r$</td>
+                        </tr>
+                        <tr>
+                            <td>复根 $\alpha \pm \beta i$</td>
+                            <td>$e^{\alpha t}(C_1 \cos \beta t + C_2 \sin \beta t)$</td>
+                            <td>$x^{\alpha}(C_1 \cos(\beta \ln x) + C_2 \sin(\beta \ln x))$</td>
+                        </tr>
+                    </tbody>
+                </table>
+                </div>
+                
+                <div class="memory-tip">
+                    <h4>记忆技巧与解题要点</h4>
+                    <ul>
+                        <li><strong>识别特征：</strong>"$x$ 的幂次 = 导数阶数"</li>
+                        <li><strong>替换公式：</strong>$x = e^t$ 是万能钥匙</li>
+                        <li><strong>导数关系：</strong>$x \frac{dy}{dx} = \frac{dy}{dt}$，$x^2 \frac{d^2y}{dx^2} = \frac{d^2y}{dt^2} - \frac{dy}{dt}$</li>
+                        <li><strong>解的形式：</strong>$e^{rt} \rightarrow x^r$，$t \rightarrow \ln x$</li>
+                        <li><strong>定义域：</strong>欧拉方程要求 $x > 0$</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 练习题 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>7.9.5 练习题</h2>
+            </div>
+            <div class="section-content">
+                <div class="practice-problem">
+                    <h4>习题1 <span class="difficulty medium">中等难度</span></h4>
+                    <p>求解欧拉方程：$x^2 y'' + 3xy' + y = 0$</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解题步骤：</div>
+                        <p><strong>步骤1：</strong>变量替换</p>
+                        <p>设 $x = e^t$，代入导数变换公式</p>
+                        
+                        <p><strong>步骤2：</strong>转化为常系数方程</p>
+                        $$\frac{d^2y}{dt^2} - \frac{dy}{dt} + 3\frac{dy}{dt} + y = 0$$
+                        $$\frac{d^2y}{dt^2} + 2\frac{dy}{dt} + y = 0$$
+                        
+                        <p><strong>步骤3：</strong>求解特征方程</p>
+                        <p>$r^2 + 2r + 1 = 0$，即 $(r+1)^2 = 0$</p>
+                        <p>二重根：$r = -1$</p>
+                        
+                        <p><strong>步骤4：</strong>写出通解</p>
+                        <p>$y = (C_1 + C_2 t)e^{-t} = (C_1 + C_2 \ln x)x^{-1}$</p>
+                        $$y = \frac{C_1 + C_2 \ln x}{x}$$
+                    </div>
+                </div>
+                
+                <div class="practice-problem">
+                    <h4>习题2 <span class="difficulty hard">较难</span></h4>
+                    <p>求解欧拉方程：$x^2 y'' - xy' + 2y = 0$</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解题步骤：</div>
+                        <p><strong>步骤1：</strong>变量替换</p>
+                        <p>设 $x = e^t$，转化得：</p>
+                        $$\frac{d^2y}{dt^2} - 2\frac{dy}{dt} + 2y = 0$$
+                        
+                        <p><strong>步骤2：</strong>求解特征方程</p>
+                        <p>$r^2 - 2r + 2 = 0$</p>
+                        <p>使用求根公式：$r = \frac{2 \pm \sqrt{4-8}}{2} = 1 \pm i$</p>
+                        
+                        <p><strong>步骤3：</strong>写出通解</p>
+                        <p>$\alpha = 1$，$\beta = 1$</p>
+                        <p>$y = e^t(C_1 \cos t + C_2 \sin t)$</p>
+                        
+                        <p><strong>步骤4：</strong>回代</p>
+                        $$y = x(C_1 \cos(\ln x) + C_2 \sin(\ln x))$$
+                    </div>
+                </div>
+                
+                <div class="practice-problem">
+                    <h4>习题3 <span class="difficulty very-hard">很难</span></h4>
+                    <p>求解非齐次欧拉方程：$x^2 y'' + xy' - y = x \ln x$</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解题步骤：</div>
+                        <p><strong>步骤1：</strong>求齐次方程的解</p>
+                        <p>设 $x = e^t$，齐次方程变为：</p>
+                        $$\frac{d^2y}{dt^2} - y = 0$$
+                        <p>特征方程：$r^2 - 1 = 0$，$r = \pm 1$</p>
+                        <p>齐次通解：$y_h = C_1 e^t + C_2 e^{-t} = C_1 x + C_2 x^{-1}$</p>
+                        
+                        <p><strong>步骤2：</strong>处理非齐次项</p>
+                        <p>$f(x) = x \ln x = e^t \cdot t$</p>
+                        <p>非齐次方程变为：$\frac{d^2y}{dt^2} - y = te^t$</p>
+                        
+                        <p><strong>步骤3：</strong>求特解</p>
+                        <p>由于 $1$ 是单重特征根，设特解：$y_p = t(at + b)e^t$</p>
+                        <p>代入方程求得：$a = \frac{1}{4}$，$b = -\frac{1}{4}$</p>
+                        <p>特解：$y_p = \frac{t^2 - t}{4}e^t = \frac{(\ln x)^2 - \ln x}{4} \cdot x$</p>
+                        
+                        <p><strong>步骤4：</strong>通解</p>
+                        $$y = C_1 x + \frac{C_2}{x} + \frac{(\ln x)^2 - \ln x}{4} \cdot x$$
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="nav-buttons">
+            <a href="7.8.html" class="btn prev">上一节：7.8 常系数非齐次线性微分方程</a>
+            <a href="7.10.html" class="btn next">下一节：7.10 常系数线性微分方程组</a>
+        </div>
+        
+        <footer>
+            <p>&copy; 2024 高等数学复习系统 - 欧拉方程</p>
+        </footer>
+    </div>
+
+    <script>
+        // 页面加载完成后执行动画
+        document.addEventListener('DOMContentLoaded', function() {
+            // 添加页面元素动画
+            gsap.from('.content-section', {
+                duration: 0.8,
+                y: 50,
+                opacity: 0,
+                stagger: 0.2,
+                ease: 'power2.out'
+            });
+            
+            // 欧拉方程框的动画效果
+            gsap.from('.euler-equation', {
+                duration: 1,
+                scale: 0.9,
+                opacity: 0,
+                ease: 'back.out(1.7)',
+                delay: 0.5
+            });
+            
+            // 变换步骤的动画
+            gsap.from('.transformation-step', {
+                duration: 0.6,
+                scale: 0.9,
+                opacity: 0,
+                stagger: 0.3,
+                ease: 'power2.out',
+                delay: 0.8
+            });
+            
+            // 箭头的动画
+            gsap.from('.arrow', {
+                duration: 0.5,
+                scale: 0,
+                opacity: 0,
+                ease: 'back.out(1.7)',
+                delay: 1.5
+            });
+            
+            // 表格的动画
+            gsap.from('.comparison-table', {
+                duration: 0.8,
+                y: 30,
+                opacity: 0,
+                ease: 'power2.out',
+                delay: 1.2
+            });
+        });
+    </script>
+</body>
+</html>

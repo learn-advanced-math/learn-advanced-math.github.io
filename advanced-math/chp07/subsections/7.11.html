@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="alternate icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTUiIGZpbGw9IiMzNDk4ZGIiIHN0cm9rZT0iIzJjM2U1MCIgc3Ryb2tlLXdpZHRoPSIyIi8+PGcgZmlsbD0id2hpdGUiIGZvbnQtZmFtaWx5PSJUaW1lcyxzZXJpZiIgZm9udC13ZWlnaHQ9ImJvbGQiPjx0ZXh0IHg9IjE2IiB5PSIxMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxMiI+ZDwvdGV4dD48bGluZSB4MT0iOCIgeTE9IjE2IiB4Mj0iMjQiIHkyPSIxNiIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjUiLz48dGV4dCB4PSIxNiIgeT0iMjUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTAiPmR4PC90ZXh0PjwvZz48L3N2Zz4=">
+    <title>7.11 各种形式的微分方程总结 - 高等数学复习</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']]
+            },
+            chtml: {
+                fontURL: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2'
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 50%, #9b59b6 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 20px;
+            color: #8e44ad;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 15px;
+            border-radius: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .back-link:hover {
+            color: #9b59b6;
+            transform: translateX(-5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+        
+        .back-link::before {
+            content: '←';
+            margin-right: 8px;
+            font-size: 1.2em;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            margin: 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            font-weight: 300;
+        }
+        
+        .subtitle {
+            font-size: 1.1em;
+            margin-top: 10px;
+            opacity: 0.9;
+        }
+        
+        .content-section {
+            background: white;
+            margin: 25px 0;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .content-section:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .section-header {
+            padding: 20px 30px;
+            background: linear-gradient(45deg, #8e44ad, #9b59b6);
+            color: white;
+        }
+        
+        .section-header h2 {
+            margin: 0;
+            font-size: 1.6em;
+            font-weight: 400;
+        }
+        
+        .section-content {
+            padding: 30px;
+        }
+        
+        .definition {
+            background: linear-gradient(135deg, #f4f0f8, #ece2f0);
+            border-left: 5px solid #8e44ad;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(142, 68, 173, 0.1);
+        }
+        
+        .definition h4 {
+            margin: 0 0 15px 0;
+            color: #8e44ad;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .theorem {
+            background: linear-gradient(135deg, #fef9e7, #fcf4dd);
+            border-left: 5px solid #f39c12;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(243, 156, 18, 0.1);
+        }
+        
+        .theorem h4 {
+            margin: 0 0 15px 0;
+            color: #f39c12;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .example {
+            background: linear-gradient(135deg, #ebf3fd, #d6e9f8);
+            border-left: 5px solid #3498db;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(52, 152, 219, 0.1);
+        }
+        
+        .example h4 {
+            margin: 0 0 15px 0;
+            color: #3498db;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .highlight {
+            background: linear-gradient(135deg, #fff3cd, #fce4a0);
+            padding: 15px;
+            border-left: 4px solid #ffc107;
+            border-radius: 0 8px 8px 0;
+            margin: 15px 0;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 40px;
+            padding: 20px 0;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 25px;
+            background: linear-gradient(45deg, #8e44ad, #9b59b6);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 15px rgba(142, 68, 173, 0.3);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(142, 68, 173, 0.4);
+        }
+        
+        .btn.prev::before {
+            content: '←';
+            margin-right: 8px;
+            font-size: 1.1em;
+        }
+        
+        .btn.next::after {
+            content: '→';
+            margin-left: 8px;
+            font-size: 1.1em;
+        }
+        
+        footer {
+            text-align: center;
+            color: white;
+            padding: 30px 0;
+            opacity: 0.9;
+            margin-top: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        footer p {
+            text-align: center;
+            margin: 0;
+        }
+        
+        .summary-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .summary-table th {
+            background: linear-gradient(145deg, #3498db, #2980b9);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .summary-table td {
+            padding: 15px;
+            border-bottom: 1px solid #ecf0f1;
+            text-align: center;
+        }
+        
+        .summary-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        .summary-table tr:hover {
+            background: #e3f2fd;
+            transform: scale(1.02);
+            transition: all 0.3s ease;
+        }
+        
+        /* 决策树样式 */
+        .decision-tree {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+        
+        .tree-category {
+            background: linear-gradient(145deg, #ffffff, #f8f9fa);
+            border: 2px solid #3498db;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .tree-category:hover {
+            transform: translateY(-5px);
+        }
+        
+        .tree-category.first-order {
+            border-color: #e74c3c;
+            background: linear-gradient(145deg, #fff5f5, #ffe6e6);
+        }
+        
+        .tree-category.higher-order {
+            border-color: #27ae60;
+            background: linear-gradient(145deg, #f0fff4, #e8f5e8);
+        }
+        
+        .tree-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .tree-items {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .tree-items li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            color: #555;
+            text-align: center;
+        }
+        
+        .tree-items li:last-child {
+            border-bottom: none;
+        }
+        
+        .memory-tip {
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 1.2em;
+            line-height: 2;
+            margin: 20px 0;
+        }
+
+        /* AI提示方块样式 */
+        .ai-warning {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            border: 2px solid #e0e0e0;
+        }
+        
+        .ai-warning:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            border-color: #ff4444;
+        }
+        
+        .ai-warning::before {
+            content: '!';
+            color: #e74c3c;
+            font-size: 20px;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+        }
+        
+        .ai-warning-tooltip {
+            position: absolute;
+            top: 50px;
+            left: 0;
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 16px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            line-height: 1.5;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1001;
+            width: 250px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .ai-warning-tooltip::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: 20px;
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid rgba(0, 0, 0, 0.9);
+        }
+        
+        .ai-warning:hover .ai-warning-tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .ai-warning {
+                width: 35px;
+                height: 35px;
+                top: 15px;
+                left: 15px;
+            }
+            
+            .ai-warning::before {
+                font-size: 18px;
+            }
+            
+            .ai-warning-tooltip {
+                width: 280px;
+                font-size: 13px;
+                padding: 14px 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- AI内容提示 -->
+    <div class="ai-warning">
+        <div class="ai-warning-tooltip">
+            页面内容由AI生成，请谨慎对待。<br>如发现错误，<a href="https://github.com/learn-advanced-math/learn-advanced-math.github.io/issues" target="_blank" style="color: #ff0000">欢迎反馈</a>。
+        </div>
+    </div>
+    
+    <div class="container">
+        <a href="../index.html" class="back-link">返回章节概览</a>
+        
+        <header>
+            <h1>7.11 微分方程总结</h1>
+            <div class="subtitle">Comprehensive Summary of Differential Equations</div>
+        </header>
+        
+        <!-- 7.11.1 微分方程分类体系 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>7.11.1 微分方程分类体系</h2>
+            </div>
+            <div class="section-content">
+                <div class="decision-tree">
+                    <div class="tree-category first-order">
+                        <div class="tree-title">一阶微分方程</div>
+                        <ul class="tree-items">
+                            <li>可分离变量</li>
+                            <li>齐次方程</li>
+                            <li>一阶线性</li>
+                            <li>伯努利方程</li>
+                        </ul>
+                    </div>
+                    <div class="tree-category higher-order">
+                        <div class="tree-title">高阶微分方程</div>
+                        <ul class="tree-items">
+                            <li>可降阶</li>
+                            <li>线性齐次</li>
+                            <li>线性非齐次</li>
+                            <li>欧拉方程</li>
+                        </ul>
+                    </div>
+                    <div class="tree-category">
+                        <div class="tree-title">求解方法</div>
+                        <ul class="tree-items">
+                            <li>分离变量法</li>
+                            <li>换元法</li>
+                            <li>常数变易法</li>
+                            <li>特征方程法</li>
+                        </ul>
+                    </div>
+                    <div class="tree-category">
+                        <div class="tree-title">关键技巧</div>
+                        <ul class="tree-items">
+                            <li>变量分离</li>
+                            <li>巧妙换元</li>
+                            <li>积分因子</li>
+                            <li>特征根法</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 7.11.2 微分方程类型总结表 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>7.11.2 微分方程类型总结表</h2>
+            </div>
+            <div class="section-content">
+                <table class="summary-table">
+                    <thead>
+                        <tr>
+                            <th>方程类型</th>
+                            <th>一般形式</th>
+                            <th>求解方法</th>
+                            <th>关键技巧</th>
+                            <th>适用条件</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong><a href="7.2.html">可分离变量</a></strong></td>
+                            <td>$$\frac{dy}{dx} = f(x)g(y)$$</td>
+                            <td>分离变量法</td>
+                            <td>$$\frac{dy}{g(y)} = f(x)dx$$</td>
+                            <td>$$g(y) \neq 0$$</td>
+                        </tr>
+                        <tr>
+                            <td><strong><a href="7.3.html">齐次方程</a></strong></td>
+                            <td>$$\frac{dy}{dx} = f\left(\frac{y}{x}\right)$$</td>
+                            <td>换元法</td>
+                            <td>设 $v = \frac{y}{x}$</td>
+                            <td>$f$ 为 $\frac{y}{x}$ 的函数</td>
+                        </tr>
+                        <tr>
+                            <td><strong><a href="7.4.html">一阶线性</a></strong></td>
+                            <td>$$y' + P(x)y = Q(x)$$</td>
+                            <td>常数变易法</td>
+                            <td>$$y = u(x) e^{-\int P(x)dx}$$</td>
+                            <td>$P(x), Q(x)$ 连续</td>
+                        </tr>
+                        <tr>
+                            <td><strong>伯努利方程</strong></td>
+                            <td>$$y' + P(x)y = Q(x)y^n$$</td>
+                            <td>换元法</td>
+                            <td>设 $z = y^{1-n}$<br>$\frac{dz}{dx} + (1-n)P(x)z = (1-n)Q(x)$</td>
+                            <td>$$n \neq 0, 1$$</td>
+                        </tr>
+                        <tr>
+                            <td><strong><a href="7.8.html">常系数线性</a></strong></td>
+                            <td>$$y'' + py' + qy = f(x)$$</td>
+                            <td>特征方程法</td>
+                            <td>$$r^2 + pr + q = 0$$</td>
+                            <td>$p, q$ 为常数</td>
+                        </tr>
+                        <tr>
+                            <td><strong><a href="7.9.html">欧拉方程</a></strong></td>
+                            <td>$$x^2y'' + pxy' + qy = f(x)$$</td>
+                            <td>换元法</td>
+                            <td>设 $x = e^t$<br>$\frac{d^2y}{dt^2} + (p-1)\frac{dy}{dt} + qy = f(t)$</td>
+                            <td>$$x > 0$$</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 7.11.3 记忆口诀与技巧 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>7.11.3 记忆口诀与技巧</h2>
+            </div>
+            <div class="section-content">
+                <div class="memory-tip">
+                    <strong>微分方程求解歌</strong><br><br>
+                    分离变量最简单，两边积分把解算；<br>
+                    齐次方程有技巧，设置新元来变形；<br>
+                    通解特解加一起，解锁非齐次方程；<br>
+                    线性方程找因子，常数变易是法宝；<br>
+                    高阶降阶有妙招，特征方程特征值；<br>
+                    欧拉方程要换元，指数换化常系数。
+                </div>
+            </div>
+        </div>
+
+        <div class="nav-buttons">
+            <a href="7.10.html" class="btn prev">上一节：7.10 微分方程的数值解法</a>
+            <a href="../index.html" class="btn next">返回章节概览</a>
+        </div>
+        
+        <footer>
+            <p>&copy; 2025 高等数学复习系统 - 微分方程总结</p>
+        </footer>
+    </div>
+
+    <script>
+        // 页面加载完成后的动画效果
+        document.addEventListener('DOMContentLoaded', function() {
+            // 为内容区块添加入场动画
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach((section, index) => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(30px)';
+                setTimeout(() => {
+                    section.style.transition = 'all 0.8s ease';
+                    section.style.opacity = '1';
+                    section.style.transform = 'translateY(0)';
+                }, index * 200);
+            });
+            
+            // 添加表格行的悬停效果
+            document.querySelectorAll('.summary-table tr').forEach((row, index) => {
+                if (index > 0) { // 跳过表头
+                    row.addEventListener('mouseenter', function() {
+                        this.style.transform = 'scale(1.02)';
+                        this.style.transition = 'transform 0.2s ease';
+                    });
+                    row.addEventListener('mouseleave', function() {
+                        this.style.transform = 'scale(1)';
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

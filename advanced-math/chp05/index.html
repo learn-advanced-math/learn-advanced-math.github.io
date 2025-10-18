@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="alternate icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTUiIGZpbGw9IiMzNDk4ZGIiIHN0cm9rZT0iIzJjM2U1MCIgc3Ryb2tlLXdpZHRoPSIyIi8+PGcgZmlsbD0id2hpdGUiIGZvbnQtZmFtaWx5PSJUaW1lcyxzZXJpZiIgZm9udC13ZWlnaHQ9ImJvbGQiPjx0ZXh0IHg9IjE2IiB5PSIxMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxMiI+ZDwvdGV4dD48bGluZSB4MT0iOCIgeTE9IjE2IiB4Mj0iMjQiIHkyPSIxNiIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjUiLz48dGV4dCB4PSIxNiIgeT0iMjUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTAiPmR4PC90ZXh0PjwvZz48L3N2Zz4=">
+    <title>高等数学 - 第五章：定积分</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+            padding: 40px 0;
+        }
+        
+        h1 {
+            font-size: 3em;
+            margin: 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            font-weight: 300;
+        }
+        
+        .subtitle {
+            font-size: 1.2em;
+            margin-top: 10px;
+            opacity: 0.9;
+        }
+
+        .home-link {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            display: inline-block;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .home-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            color: #ffffff;
+        }
+        
+        .home-link:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        .chart-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+        
+        .chart-header {
+            background: linear-gradient(45deg, #e67e22, #d35400);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .chart-header h2 {
+            margin: 0;
+            font-size: 1.5em;
+            font-weight: 400;
+        }
+        
+        #knowledge-graph {
+            width: 100%;
+            height: 700px;
+        }
+        
+        .progress-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-top: 30px;
+        }
+        
+        .progress-section h3 {
+            color: #2c3e50;
+            margin: 0 0 20px 0;
+            font-size: 1.3em;
+        }
+        
+        .section-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+        }
+        
+        .section-item {
+            padding: 20px;
+            background: linear-gradient(45deg, #f8f9fa, #e9ecef);
+            border-radius: 10px;
+            border-left: 4px solid #e67e22;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        
+        .section-item:hover {
+            background: linear-gradient(45deg, #e9ecef, #dee2e6);
+            transform: translateX(5px);
+            border-left-color: #d35400;
+        }
+        
+        .section-number {
+            font-weight: bold;
+            color: #e67e22;
+            font-size: 1.1em;
+        }
+        
+        .section-title {
+            margin: 5px 0;
+            font-size: 1.1em;
+            color: #2c3e50;
+        }
+        
+        .section-desc {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            line-height: 1.4;
+        }
+        
+        footer {
+            text-align: center;
+            color: white;
+            padding: 30px 0;
+            opacity: 0.8;
+            margin-top: 50px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .section-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>第五章：定积分</h1>
+            <div class="subtitle">
+                <a href="../index.html" class="home-link">高等数学知识点可视化复习系统</a>
+            </div>
+        </header>
+        
+        <div class="chart-container">
+            <div class="chart-header">
+                <h2>知识点关系图</h2>
+            </div>
+            <div id="knowledge-graph"></div>
+        </div>
+        
+        <div class="progress-section">
+            <h3>详细章节导航</h3>
+            <div class="section-list">
+                <a href="subsections/5.1.html" class="section-item">
+                    <div class="section-number">5.1</div>
+                    <div class="section-title">定积分的概念与性质</div>
+                    <div class="section-desc">曲边梯形面积引例；定积分的定义；定积分的性质；定积分的近似计算</div>
+                </a>
+                
+                <a href="subsections/5.2.html" class="section-item">
+                    <div class="section-number">5.2</div>
+                    <div class="section-title">微积分基本公式</div>
+                    <div class="section-desc">变速直线运动；积分上限函数及其导数；牛顿-莱布尼兹公式</div>
+                </a>
+                
+                <a href="subsections/5.3.html" class="section-item">
+                    <div class="section-number">5.3</div>
+                    <div class="section-title">定积分的换元法与分部积分法</div>
+                    <div class="section-desc">定积分的换元法；定积分的分部积分法</div>
+                </a>
+                
+                <a href="subsections/5.4.html" class="section-item">
+                    <div class="section-number">5.4</div>
+                    <div class="section-title">反常积分</div>
+                    <div class="section-desc">反常积分的概念；无穷限反常积分；无界函数的反常积分</div>
+                </a>
+                
+                <a href="subsections/5.5.html" class="section-item">
+                    <div class="section-number">5.5</div>
+                    <div class="section-title">反常积分的审敛法与Gamma函数</div>
+                    <div class="section-desc">无穷限反常积分的审敛法；无界函数反常积分的审敛法；Gamma函数</div>
+                </a>
+            </div>
+        </div>
+        
+        <footer>
+            <p>&copy; 2025 高等数学复习系统 - 定积分章节</p>
+        </footer>
+    </div>
+
+    <script>
+        // 初始化知识点关系图
+        const chart = echarts.init(document.getElementById('knowledge-graph'));
+        
+        // 知识点数据
+        const nodes = [
+            { id: '5.1', name: '定积分概念与性质', category: 0, x: 150, y: 100, symbolSize: 90 },
+            { id: '5.2', name: '微积分基本公式', category: 1, x: 400, y: 80, symbolSize: 95 },
+            { id: '5.3', name: '定积分计算方法', category: 2, x: 650, y: 120, symbolSize: 85 },
+            { id: '5.4', name: '反常积分', category: 3, x: 300, y: 300, symbolSize: 80 },
+            { id: '5.5', name: '反常积分审敛法', category: 3, x: 550, y: 320, symbolSize: 75 },
+            { id: 'riemann-sum', name: '黎曼和', category: 0, x: 50, y: 250, symbolSize: 60 },
+            { id: 'area-problem', name: '面积问题', category: 0, x: 250, y: 200, symbolSize: 65 },
+            { id: 'ftc', name: '牛顿-莱布尼兹公式', category: 1, x: 500, y: 200, symbolSize: 70 },
+            { id: 'substitution', name: '换元法', category: 2, x: 750, y: 250, symbolSize: 65 },
+            { id: 'integration-by-parts', name: '分部积分', category: 2, x: 650, y: 350, symbolSize: 65 },
+            { id: 'gamma-function', name: 'Gamma函数', category: 3, x: 450, y: 450, symbolSize: 60 }
+        ];
+        
+        // 知识点之间的关系
+        const links = [
+            { source: 'riemann-sum', target: '5.1', lineStyle: { width: 4 } },
+            { source: 'area-problem', target: '5.1', lineStyle: { width: 3 } },
+            { source: '5.1', target: '5.2', lineStyle: { width: 5 } },
+            { source: '5.2', target: 'ftc', lineStyle: { width: 4 } },
+            { source: '5.2', target: '5.3', lineStyle: { width: 4 } },
+            { source: '5.3', target: 'substitution', lineStyle: { width: 3 } },
+            { source: '5.3', target: 'integration-by-parts', lineStyle: { width: 3 } },
+            { source: '5.1', target: '5.4', lineStyle: { width: 3 } },
+            { source: '5.2', target: '5.4', lineStyle: { width: 2 } },
+            { source: '5.4', target: '5.5', lineStyle: { width: 3 } },
+            { source: '5.5', target: 'gamma-function', lineStyle: { width: 2 } },
+            { source: 'ftc', target: '5.3', lineStyle: { width: 2 } },
+            { source: 'substitution', target: 'integration-by-parts', lineStyle: { width: 2 } }
+        ];
+        
+        // 图表配置
+        const option = {
+            backgroundColor: 'transparent',
+            tooltip: {
+                trigger: 'item',
+                formatter: function(params) {
+                    if (params.dataType === 'node') {
+                        return `<b>${params.data.name}</b><br/>点击查看详细内容`;
+                    } else if (params.dataType === 'edge') {
+                        return `${params.data.source} → ${params.data.target}`;
+                    }
+                }
+            },
+            legend: {
+                orient: 'horizontal',
+                bottom: 20,
+                data: [
+                    { name: '基本概念', icon: 'circle' },
+                    { name: '基本定理', icon: 'circle' },
+                    { name: '计算方法', icon: 'circle' },
+                    { name: '拓展理论', icon: 'circle' }
+                ],
+                textStyle: {
+                    color: '#333',
+                    fontSize: 12
+                }
+            },
+            series: [{
+                type: 'graph',
+                layout: 'none',
+                symbolSize: 50,
+                roam: "move",
+                draggable: true,
+                label: {
+                    show: true,
+                    position: 'bottom',
+                    formatter: '{b}',
+                    fontSize: 25,
+                    fontWeight: 'bold'
+                },
+                edgeSymbol: ['none', 'arrow'],
+                edgeSymbolSize: [0, 15],
+                itemStyle: {
+                    borderColor: '#fff',
+                    borderWidth: 3,
+                    shadowColor: 'rgba(0, 0, 0, 0.3)',
+                    shadowBlur: 10
+                },
+                lineStyle: {
+                    opacity: 0.7,
+                    width: 2,
+                    curveness: 0.1,
+                    color: {
+                        type: 'linear',
+                        x: 0, y: 0, x2: 1, y2: 1,
+                        colorStops: [
+                            { offset: 0, color: '#e67e22' },
+                            { offset: 1, color: '#d35400' }
+                        ]
+                    }
+                },
+                emphasis: {
+                    focus: 'adjacency',
+                    lineStyle: {
+                        width: 4,
+                        opacity: 1
+                    },
+                    itemStyle: {
+                        shadowBlur: 20
+                    }
+                },
+                categories: [
+                    { name: '基本概念', itemStyle: { color: '#e67e22' } },
+                    { name: '基本定理', itemStyle: { color: '#2ecc71' } },
+                    { name: '计算方法', itemStyle: { color: '#3498db' } },
+                    { name: '拓展理论', itemStyle: { color: '#9b59b6' } }
+                ],
+                data: nodes,
+                links: links,
+                animationDuration: 1500,
+                animationEasing: 'cubicInOut'
+            }]
+        };
+        
+        // 设置图表选项
+        chart.setOption(option);
+        
+        // 点击节点跳转到对应页面
+        chart.on('click', function(params) {
+            if (params.dataType === 'node') {
+                const nodeId = params.data.id;
+                // 只对5.x节点进行跳转
+                if (nodeId.startsWith('5.')) {
+                    window.location.href = `subsections/${nodeId}.html`;
+                }
+            }
+        });
+        
+        // 响应式调整
+        window.addEventListener('resize', function() {
+            chart.resize();
+        });
+        
+        // 页面加载完成后的动画效果
+        document.addEventListener('DOMContentLoaded', function() {
+            // 为章节导航卡片添加入场动画
+            const sectionItems = document.querySelectorAll('.section-item');
+            sectionItems.forEach((item, index) => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    item.style.transition = 'all 0.6s ease';
+                    item.style.opacity = '1';
+                    item.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html>

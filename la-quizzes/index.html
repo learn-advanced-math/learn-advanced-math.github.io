@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="alternate icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTUiIGZpbGw9IiMzNDk4ZGIiIHN0cm9rZT0iIzJjM2U1MCIgc3Ryb2tlLXdpZHRoPSIyIi8+PGcgZmlsbD0id2hpdGUiIGZvbnQtZmFtaWx5PSJUaW1lcyxzZXJpZiIgZm9udC13ZWlnaHQ9ImJvbGQiPjx0ZXh0IHg9IjE2IiB5PSIxMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxMiI+QTwvdGV4dD48dGV4dCB4PSIxNiIgeT0iMjMiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iOCI+QXg9YjwvdGV4dD48L2c+PC9zdmc+">
+  <title>线性代数习题卡片</title>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f5f7fa;
+      --card-bg: #ffffff;
+      --border: #d5d9e2;
+      --accent: #2563eb;
+      --accent-hover: #1d4ed8;
+      --text: #1f2937;
+      --muted: #4b5563;
+      --danger: #b91c1c;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      padding: 2rem;
+      box-sizing: border-box;
+    }
+
+    .app {
+      width: min(960px, 100%);
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    header {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 2rem;
+      font-weight: 700;
+    }
+
+    p.subtitle {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.75rem;
+    }
+
+    button {
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 0.75rem;
+      background: var(--card-bg);
+      color: var(--text);
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(37, 99, 235, 0.12);
+      border-color: var(--accent);
+    }
+
+    button:active {
+      transform: translateY(0);
+      box-shadow: none;
+    }
+
+    button.primary {
+      background: var(--accent);
+      color: #ffffff;
+      border-color: transparent;
+    }
+
+    button.primary:hover {
+      background: var(--accent-hover);
+    }
+
+    .card {
+      position: relative;
+      width: 100%;
+      min-height: 320px;
+      perspective: 1600px;
+    }
+
+    .card-inner {
+      position: relative;
+      width: 100%;
+      min-height: 320px;
+      transition: transform 0.6s;
+      transform-style: preserve-3d;
+    }
+
+    .card-inner.flipped {
+      transform: rotateY(180deg);
+    }
+
+    .card-face {
+      position: absolute;
+      width: 100%;
+      min-height: 320px;
+      backface-visibility: hidden;
+      background: var(--card-bg);
+      border-radius: 1.25rem;
+      border: 1px solid var(--border);
+      padding: 2rem;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      box-shadow: 0 16px 28px rgba(15, 23, 42, 0.12);
+    }
+
+    .card-back {
+      transform: rotateY(180deg);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.2rem 0.7rem;
+      border-radius: 999px;
+      background: rgba(37, 99, 235, 0.1);
+      color: var(--accent);
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .level {
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.75rem;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .question-text,
+    .back-content {
+      flex: 1;
+      font-size: 1.1rem;
+      line-height: 1.75rem;
+    }
+
+    .question-text {
+      white-space: pre-wrap;
+    }
+
+    .back-content {
+      white-space: normal;
+    }
+
+    .keywords {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .keyword-pill {
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+      background: rgba(37, 99, 235, 0.12);
+      color: var(--accent);
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .status-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .hint-block {
+      border-left: 3px solid var(--accent);
+      padding-left: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .hint-block:last-child {
+      margin-bottom: 0;
+    }
+
+    .hint-block h3 {
+      margin: 0 0 0.25rem;
+      font-size: 0.95rem;
+      color: var(--accent);
+    }
+
+    .hint-block p {
+      margin: 0;
+      font-size: 0.9rem;
+      line-height: 1.5rem;
+      color: var(--text);
+    }
+
+    .wrong-collection {
+      margin-top: 1rem;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      box-shadow: 0 12px 20px rgba(15, 23, 42, 0.08);
+    }
+
+    .wrong-collection header {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .wrong-collection ul {
+      list-style: none;
+      padding: 0;
+      margin: 1rem 0 0;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.75rem;
+    }
+
+    .wrong-collection li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      border: 1px dashed var(--border);
+      border-radius: 0.75rem;
+      padding: 0.85rem 1rem;
+      background: rgba(37, 99, 235, 0.04);
+    }
+
+    .wrong-index-btn,
+    .wrong-delete-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.4rem 0.85rem;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      box-shadow: none;
+      transform: none;
+    }
+
+    .wrong-index-btn {
+      background: rgba(37, 99, 235, 0.15);
+      border: 1px solid var(--accent);
+      color: var(--accent);
+    }
+
+    .wrong-index-btn:hover {
+      background: rgba(37, 99, 235, 0.25);
+      box-shadow: none;
+      transform: none;
+    }
+
+    .wrong-index-btn:active,
+    .wrong-delete-btn:active {
+      transform: none;
+      box-shadow: none;
+    }
+
+    .wrong-delete-btn {
+      background: transparent;
+      border: 1px solid var(--danger);
+      color: var(--danger);
+    }
+
+    .wrong-delete-btn:hover {
+      background: rgba(185, 28, 28, 0.12);
+      box-shadow: none;
+      transform: none;
+    }
+
+    .empty-state {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .toast {
+      position: fixed;
+      top: 2rem;
+      right: 2rem;
+      background: var(--accent);
+      color: #ffffff;
+      padding: 0.75rem 1.25rem;
+      border-radius: 999px;
+      box-shadow: 0 8px 18px rgba(37, 99, 235, 0.25);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      transform: translateY(-10px);
+      font-weight: 600;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 1024px) {
+      .wrong-collection ul {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 1rem;
+      }
+
+      .controls {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .card, .card-face, .card-inner {
+        min-height: 380px;
+      }
+
+      .wrong-collection ul {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 520px) {
+      .wrong-collection ul {
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app" role="application">
+    <header style="border-bottom: 3px double #2c3e50; text-align:center; margin:0;">
+    <h1>线性代数习题集</h1>
+    <p>本项目大部分习题由大模型生成，欢迎通过<a href="https://github.com/learn-advanced-math/learn-advanced-math.github.io/issues" target="_blank" style="color: #ff0000">提交 issue</a> 贡献习题。</p>
+    </header>
+
+    <div class="controls" aria-label="习题操作">
+      <button id="record-btn">记录错题</button>
+      <button id="hint-btn">查看提示</button>
+      <button id="answer-btn">查看答案</button>
+      <button id="next-btn" class="primary">下一题</button>
+    </div>
+
+    <section class="card" aria-live="polite">
+      <div class="card-inner" id="card-inner">
+        <div class="card-face card-front" id="card-front">
+          <div class="card-header">
+            <span class="badge" id="catalog-badge">线性代数</span>
+            <span class="level" id="level-tag"></span>
+          </div>
+          <div class="question-text" id="question-text"></div>
+          <div class="keywords" id="keyword-list"></div>
+          <div class="status-bar">
+            <span id="progress-text">准备就绪</span>
+            <span id="mode-text">当前模式：题目</span>
+          </div>
+        </div>
+        <div class="card-face card-back" id="card-back">
+          <div class="card-header">
+            <span class="badge" id="back-badge">提示</span>
+            <span class="level" id="back-level"></span>
+          </div>
+          <div class="back-content" id="back-content"></div>
+          <div class="status-bar">
+            <span id="back-progress-text"></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrong-collection" aria-live="polite">
+      <header>
+        <h2>错题集</h2>
+        <span id="wrong-count">0 道题</span>
+      </header>
+      <div id="wrong-empty" class="empty-state">还没有记录错题，遇到难题时记得点“记录错题”。</div>
+      <ul id="wrong-list" hidden></ul>
+    </section>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="knowledge-data.js"></script>
+  <script src="exercises-data.js"></script>
+  <script>
+    const WRONG_KEY = 'la-quizzes-wrong-questions';
+
+    const recordBtn = document.getElementById('record-btn');
+    const hintBtn = document.getElementById('hint-btn');
+    const answerBtn = document.getElementById('answer-btn');
+    const nextBtn = document.getElementById('next-btn');
+
+    const card = document.querySelector('.card');
+    const cardInner = document.getElementById('card-inner');
+    const cardFront = document.getElementById('card-front');
+    const catalogBadge = document.getElementById('catalog-badge');
+    const questionText = document.getElementById('question-text');
+    const keywordList = document.getElementById('keyword-list');
+    const levelTag = document.getElementById('level-tag');
+    const progressText = document.getElementById('progress-text');
+    const modeText = document.getElementById('mode-text');
+
+    const cardBack = document.getElementById('card-back');
+    const backBadge = document.getElementById('back-badge');
+    const backContent = document.getElementById('back-content');
+    const backLevel = document.getElementById('back-level');
+    const backProgressText = document.getElementById('back-progress-text');
+
+    const wrongEmpty = document.getElementById('wrong-empty');
+    const wrongList = document.getElementById('wrong-list');
+    const wrongCount = document.getElementById('wrong-count');
+
+    const toast = document.getElementById('toast');
+
+    const knowledgeMap = new Map();
+    const BASE_CARD_HEIGHT = 320;
+    let exercises = [];
+    let currentExercise = null;
+    let currentExerciseIndex = -1;
+    let lastExerciseIndex = -1;
+    let wrongCollection = [];
+    let currentMode = 'question';
+
+    init();
+
+    async function init() {
+      try {
+        await loadData();
+        loadWrongCollection();
+        wireEvents();
+        showRandomExercise();
+      } catch (error) {
+        console.error('初始化失败:', error);
+        showToast('加载数据失败，请检查文件路径。', true);
+      }
+    }
+
+    function wireEvents() {
+      recordBtn.addEventListener('click', handleRecordWrong);
+      hintBtn.addEventListener('click', handleShowHint);
+      answerBtn.addEventListener('click', handleShowAnswer);
+      nextBtn.addEventListener('click', () => showRandomExercise(true));
+    }
+
+    async function loadData() {
+      const knowledgeData = Array.isArray(window.KNOWLEDGE_DATA) ? window.KNOWLEDGE_DATA : [];
+      const exerciseData = Array.isArray(window.EXERCISES_DATA) ? window.EXERCISES_DATA : [];
+
+      if (!knowledgeData.length || !exerciseData.length) {
+        throw new Error('未找到预加载的数据集。');
+      }
+
+      knowledgeMap.clear();
+      knowledgeData.forEach(item => {
+        knowledgeMap.set(item.keyword, item.content);
+      });
+
+      exercises = exerciseData.slice();
+    }
+
+    function loadWrongCollection() {
+      try {
+        const stored = JSON.parse(localStorage.getItem(WRONG_KEY) || '[]');
+        const normalized = normalizeWrongCollection(stored);
+        wrongCollection = normalized;
+        saveWrongCollection();
+        updateWrongList();
+      } catch (error) {
+        console.warn('读取错题集失败:', error);
+      }
+    }
+
+    function saveWrongCollection() {
+      localStorage.setItem(WRONG_KEY, JSON.stringify(wrongCollection));
+    }
+
+    function syncCardHeight() {
+      if (!card || !cardInner || !cardFront || !cardBack) {
+        return;
+      }
+
+      const elements = [card, cardInner, cardFront, cardBack];
+
+      elements.forEach(element => {
+        if (!element) { return; }
+        element.style.height = 'auto';
+        element.style.minHeight = '';
+      });
+
+      const frontHeight = cardFront.scrollHeight || 0;
+      const backHeight = cardBack.scrollHeight || 0;
+      const target = Math.max(BASE_CARD_HEIGHT, frontHeight, backHeight);
+      const targetPx = `${target}px`;
+
+      elements.forEach(element => {
+        if (!element) { return; }
+        element.style.height = targetPx;
+        element.style.minHeight = targetPx;
+      });
+    }
+
+    function normalizeWrongCollection(rawCollection) {
+      if (!Array.isArray(rawCollection)) {
+        return [];
+      }
+
+      const normalized = [];
+
+      rawCollection.forEach(item => {
+        let index = null;
+
+        if (Number.isInteger(item)) {
+          index = item;
+        } else if (item && typeof item.index === 'number') {
+          index = item.index;
+        } else if (item && typeof item.question === 'string') {
+          const foundIndex = exercises.findIndex(exercise => exercise.question === item.question);
+          if (foundIndex !== -1) {
+            index = foundIndex;
+          }
+        }
+
+        if (
+          Number.isInteger(index) &&
+          index >= 0 &&
+          index < exercises.length &&
+          !normalized.includes(index)
+        ) {
+          normalized.push(index);
+        }
+      });
+
+      return normalized;
+    }
+
+    function setCurrentExercise(index, options = {}) {
+      const { toastMessage, silent = false } = options;
+
+      if (!Number.isInteger(index) || index < 0 || index >= exercises.length) {
+        showToast('未找到对应的题目。', true);
+        return false;
+      }
+
+      currentExerciseIndex = index;
+      lastExerciseIndex = index;
+      currentExercise = exercises[index];
+
+      renderQuestion();
+      resetCardState();
+      progressText.textContent = `共有 ${exercises.length} 道练习，本题序号 #${index + 1}`;
+
+      if (!silent && toastMessage) {
+        showToast(toastMessage);
+      }
+
+      syncCardHeight();
+      return true;
+    }
+
+    function showRandomExercise(isNext = false) {
+      if (!exercises.length) {
+        showToast('未找到习题数据。', true);
+        return;
+      }
+
+      let index = Math.floor(Math.random() * exercises.length);
+      if (isNext && exercises.length > 1) {
+        while (index === lastExerciseIndex) {
+          index = Math.floor(Math.random() * exercises.length);
+        }
+      }
+      setCurrentExercise(index, { toastMessage: '已更新为新题目。' });
+    }
+
+    function renderQuestion() {
+      if (!currentExercise) { return; }
+      const { question, keywords = [], level, catalog } = currentExercise;
+
+      questionText.innerHTML = `<p>${question}</p>`;
+      levelTag.textContent = `难度：${level}`;
+      catalogBadge.textContent = catalog || 'No catalog';
+
+    //   keywordList.innerHTML = '';
+    //   keywords.forEach(keyword => {
+    //     const span = document.createElement('span');
+    //     span.className = 'keyword-pill';
+    //     span.textContent = keyword;
+    //     keywordList.appendChild(span);
+    //   });
+
+      modeText.textContent = '当前模式：题目';
+      syncCardHeight();
+      typeset(questionText);
+    }
+
+    function resetCardState() {
+      setMode('question', { force: true });
+    }
+
+    function handleRecordWrong() {
+      if (!currentExercise || currentExerciseIndex < 0) { return; }
+      const exists = wrongCollection.includes(currentExerciseIndex);
+      if (exists) {
+        showToast('这道题已经在错题集中。');
+        return;
+      }
+      wrongCollection.push(currentExerciseIndex);
+      saveWrongCollection();
+      updateWrongList();
+      showToast(`已记录第 ${currentExerciseIndex + 1} 题。`);
+    }
+
+    function handleShowHint() {
+      if (!currentExercise) { return; }
+      setMode('hint');
+    }
+
+    function handleShowAnswer() {
+      if (!currentExercise) { return; }
+      setMode('answer');
+    }
+
+    function showExerciseByIndex(index) {
+      setCurrentExercise(index, { toastMessage: `已定位到第 ${index + 1} 题。` });
+    }
+
+    function removeWrongEntry(index) {
+      if (!wrongCollection.includes(index)) {
+        showToast('未找到该错题。', true);
+        return;
+      }
+
+      wrongCollection = wrongCollection.filter(item => item !== index);
+      saveWrongCollection();
+      updateWrongList();
+      showToast(`已从错题集中移除第 ${index + 1} 题。`);
+    }
+
+    function buildHintContent(exercise) {
+      const { keywords = [] } = exercise;
+      if (!keywords.length) {
+        return '<p class="empty-state">暂无提示信息。</p>';
+      }
+      const blocks = keywords.map(keyword => {
+        const content = knowledgeMap.get(keyword) || '尚未找到对应的知识点说明。';
+        return `
+          <div class="hint-block">
+            <h3>${keyword}</h3>
+            <p>${content}</p>
+          </div>
+        `;
+      });
+      return blocks.join('');
+    }
+
+    function updateWrongList() {
+      wrongCount.textContent = `${wrongCollection.length} 道题`;
+      if (!wrongCollection.length) {
+        wrongEmpty.hidden = false;
+        wrongList.hidden = true;
+        wrongList.innerHTML = '';
+        return;
+      }
+      wrongEmpty.hidden = true;
+      wrongList.hidden = false;
+      wrongList.innerHTML = '';
+
+      wrongCollection.forEach(index => {
+        const li = document.createElement('li');
+        const indexBtn = document.createElement('button');
+        indexBtn.type = 'button';
+        indexBtn.className = 'wrong-index-btn';
+        indexBtn.textContent = `#${index + 1}`;
+        indexBtn.setAttribute('aria-label', `查看第 ${index + 1} 题`);
+        indexBtn.addEventListener('click', () => showExerciseByIndex(index));
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.type = 'button';
+        deleteBtn.className = 'wrong-delete-btn';
+        deleteBtn.textContent = '删除';
+        deleteBtn.setAttribute('aria-label', `删除第 ${index + 1} 题`);
+        deleteBtn.addEventListener('click', () => removeWrongEntry(index));
+
+        li.appendChild(indexBtn);
+        li.appendChild(deleteBtn);
+        wrongList.appendChild(li);
+      });
+    }
+
+    function setMode(mode, options = {}) {
+      const { force = false } = options;
+
+      if (!currentExercise) {
+        if (mode === 'question') {
+          cardInner.classList.remove('flipped');
+          backContent.innerHTML = '';
+          backBadge.textContent = '提示';
+          backLevel.textContent = '';
+          backProgressText.textContent = '';
+          modeText.textContent = '当前模式：题目';
+          catalogBadge.textContent = '线性方程组';
+          currentMode = 'question';
+        }
+        syncCardHeight();
+        return;
+      }
+
+      let targetMode = mode;
+
+      if (!force) {
+        if (mode === 'hint' && currentMode === 'hint') {
+          targetMode = 'question';
+        } else if (mode === 'answer' && currentMode === 'answer') {
+          targetMode = 'question';
+        }
+      }
+
+      switch (targetMode) {
+        case 'hint': {
+          cardInner.classList.add('flipped');
+          const hintHtml = buildHintContent(currentExercise);
+          backContent.innerHTML = hintHtml;
+          backBadge.textContent = '提示';
+          backLevel.textContent = `难度：${currentExercise.level}`;
+          const keywordCount = (currentExercise.keywords || []).length;
+          backProgressText.textContent = keywordCount
+            ? `涉及 ${keywordCount} 个关键词`
+            : '暂无关键词提示';
+          modeText.textContent = '当前模式：提示';
+          currentMode = 'hint';
+          typeset(backContent);
+          break;
+        }
+        case 'answer': {
+          cardInner.classList.add('flipped');
+          backContent.innerHTML = `<div class="answer-block"><p>${currentExercise.solution}</p></div>`;
+          backBadge.textContent = '答案';
+          backLevel.textContent = `难度：${currentExercise.level}`;
+          backProgressText.textContent = '请先理解解题思路，再进入下一题。';
+          modeText.textContent = '当前模式：答案';
+          currentMode = 'answer';
+          typeset(backContent);
+          break;
+        }
+        case 'question':
+        default: {
+          cardInner.classList.remove('flipped');
+          backContent.innerHTML = '';
+          backBadge.textContent = '提示';
+          backLevel.textContent = currentExercise ? `难度：${currentExercise.level}` : '';
+          backProgressText.textContent = '';
+          modeText.textContent = '当前模式：题目';
+          currentMode = 'question';
+          break;
+        }
+      }
+
+      syncCardHeight();
+    }
+
+    function showToast(message, isError = false) {
+      toast.textContent = message;
+      toast.style.background = isError ? varDanger() : 'var(--accent)';
+      toast.classList.add('show');
+      clearTimeout(showToast.timeoutId);
+      showToast.timeoutId = setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2200);
+    }
+
+    function varDanger() {
+      return getComputedStyle(document.documentElement).getPropertyValue('--danger') || '#b91c1c';
+    }
+
+    function typeset(element) {
+      const finalize = () => {
+        syncCardHeight();
+      };
+
+      if (!element) {
+        finalize();
+        return;
+      }
+
+      if (window.MathJax && window.MathJax.typesetPromise) {
+        window.MathJax.typesetPromise([element])
+          .then(finalize)
+          .catch(err => {
+            console.warn('MathJax 排版失败:', err);
+            finalize();
+          });
+      } else {
+        finalize();
+      }
+    }
+
+    window.addEventListener('resize', () => {
+      syncCardHeight();
+    });
+  </script>
+</body>
+</html>

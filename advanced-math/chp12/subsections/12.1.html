@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="alternate icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTUiIGZpbGw9IiMzNDk4ZGIiIHN0cm9rZT0iIzJjM2U1MCIgc3Ryb2tlLXdpZHRoPSIyIi8+PGcgZmlsbD0id2hpdGUiIGZvbnQtZmFtaWx5PSJUaW1lcyxzZXJpZiIgZm9udC13ZWlnaHQ9ImJvbGQiPjx0ZXh0IHg9IjE2IiB5PSIxMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxMiI+ZDwvdGV4dD48bGluZSB4MT0iOCIgeTE9IjE2IiB4Mj0iMjQiIHkyPSIxNiIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjUiLz48dGV4dCB4PSIxNiIgeT0iMjUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTAiPmR4PC90ZXh0PjwvZz48L3N2Zz4=">
+    <title>12.1 常数项级数的概念与性质 - 高等数学复习</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']]
+            },
+            chtml: {
+                fontURL: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2'
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 20px;
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 15px;
+            border-radius: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .back-link:hover {
+            color: #2980b9;
+            transform: translateX(-5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+        
+        .back-link::before {
+            content: '←';
+            margin-right: 8px;
+            font-size: 1.2em;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            margin: 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            font-weight: 300;
+        }
+        
+        .subtitle {
+            font-size: 1.1em;
+            margin-top: 10px;
+            opacity: 0.9;
+        }
+        
+        .content-section {
+            background: white;
+            margin: 25px 0;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .content-section:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .section-header {
+            padding: 20px 30px;
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            color: white;
+        }
+        
+        .section-header h2 {
+            margin: 0;
+            font-size: 1.6em;
+            font-weight: 400;
+        }
+        
+        .section-content {
+            padding: 30px;
+        }
+        
+        .definition {
+            background: linear-gradient(135deg, #f4f0f8, #ece2f0);
+            border-left: 5px solid #e74c3c;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(231, 76, 60, 0.1);
+        }
+        
+        .definition h4 {
+            margin: 0 0 15px 0;
+            color: #e74c3c;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .theorem {
+            background: linear-gradient(135deg, #fef9e7, #fcf4dd);
+            border-left: 5px solid #f39c12;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(243, 156, 18, 0.1);
+        }
+        
+        .theorem h4 {
+            margin: 0 0 15px 0;
+            color: #f39c12;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .example {
+            background: linear-gradient(135deg, #ebf3fd, #d6e9f8);
+            border-left: 5px solid #3498db;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(52, 152, 219, 0.1);
+        }
+        
+        .example h4 {
+            margin: 0 0 15px 0;
+            color: #3498db;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .property {
+            background: linear-gradient(135deg, #e8f6f3, #d5f4e6);
+            border-left: 5px solid #2ecc71;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(46, 204, 113, 0.1);
+        }
+        
+        .property h4 {
+            margin: 0 0 15px 0;
+            color: #2ecc71;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .viz-container {
+            width: 100%;
+            height: 400px;
+            margin: 25px 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .note {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            font-size: 0.95em;
+            color: #6c757d;
+        }
+        
+        .note::before {
+            content: "📝 ";
+            font-size: 1.1em;
+        }
+        
+        .math-block {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+        
+        .important {
+            background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .important::before {
+            content: "⚠️ ";
+            font-weight: bold;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 40px;
+            padding: 20px 0;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 25px;
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 15px rgba(231, 76, 60, 0.3);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(231, 76, 60, 0.4);
+        }
+        
+        .btn.prev::before {
+            content: '←';
+            margin-right: 8px;
+            font-size: 1.1em;
+        }
+        
+        .btn.next::after {
+            content: '→';
+            margin-left: 8px;
+            font-size: 1.1em;
+        }
+        
+        footer {
+            text-align: center;
+            color: white;
+            padding: 30px 0;
+            opacity: 0.9;
+            margin-top: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        footer p {
+            text-align: center;
+            margin: 0;
+        }
+
+        /* AI提示方块样式 */
+        .ai-warning {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            border: 2px solid #e0e0e0;
+        }
+        
+        .ai-warning:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            border-color: #ff4444;
+        }
+        
+        .ai-warning::before {
+            content: '!';
+            color: #e74c3c;
+            font-size: 20px;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+        }
+        
+        .ai-warning-tooltip {
+            position: absolute;
+            top: 50px;
+            left: 0;
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 16px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            line-height: 1.5;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1001;
+            width: 250px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .ai-warning-tooltip::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: 20px;
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid rgba(0, 0, 0, 0.9);
+        }
+        
+        .ai-warning:hover .ai-warning-tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .content-section {
+                margin: 15px 0;
+            }
+            
+            .section-content {
+                padding: 20px;
+            }
+            
+            .nav-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 250px;
+                justify-content: center;
+            }
+
+            .ai-warning {
+                width: 35px;
+                height: 35px;
+                top: 15px;
+                left: 15px;
+            }
+            
+            .ai-warning::before {
+                font-size: 18px;
+            }
+            
+            .ai-warning-tooltip {
+                width: 280px;
+                font-size: 13px;
+                padding: 14px 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- AI内容提示 -->
+    <div class="ai-warning">
+        <div class="ai-warning-tooltip">
+            页面内容由AI生成，请谨慎对待。<br>如发现错误，<a href="https://github.com/learn-advanced-math/learn-advanced-math.github.io/issues" target="_blank" style="color: #ff0000">欢迎反馈</a>。
+        </div>
+    </div>
+    
+    <div class="container">
+        <a href="../index.html" class="back-link">返回章节概览</a>
+        
+        <header>
+            <h1>$12.1$ 常数项级数的概念与性质</h1>
+            <div class="subtitle">Series of Constants: Concepts and Properties</div>
+        </header>
+        
+        <!-- 常数项无穷级数的定义 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>$12.1.1$ 常数项无穷级数、一般项、部分和</h2>
+            </div>
+            <div class="section-content">
+                <div class="definition">
+                    <h4>定义 1 - 常数项无穷级数</h4>
+                    <p>给定常数列 $\{u_n\}$，则称 $$u_1 + u_2 + u_3 + \cdots + u_n + \cdots = \sum_{n=1}^{\infty} u_n$$ 为<strong>常数项无穷级数</strong>，简称<strong>级数</strong>。</p>
+                    <p>其中：</p>
+                    <ul>
+                        <li>$u_n$ 称为级数的<strong>一般项</strong>（通项）</li>
+                        <li>$S_n = u_1 + u_2 + \cdots + u_n = \sum_{k=1}^{n} u_k$ 称为级数的<strong>部分和</strong>（前 $n$ 项部分和）</li>
+                    </ul>
+                </div>
+                
+                <div class="example">
+                    <h4>例 1 - 几何级数</h4>
+                    <p>考虑几何级数：$$\sum_{n=0}^{\infty} ar^n = a + ar + ar^2 + ar^3 + \cdots$$</p>
+                    <p>其中 $a \neq 0$，$r$ 为公比。</p>
+                    <p><strong>解：</strong>当 $r \neq 1$ 时，前 $n+1$ 项部分和为：</p>
+                    <div class="math-block">
+                        $$S_n = a + ar + ar^2 + \cdots + ar^n = a \cdot \frac{1-r^{n+1}}{1-r}$$
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <h4>例 2 - 调和级数</h4>
+                    <p>调和级数：$$\sum_{n=1}^{\infty} \frac{1}{n} = 1 + \frac{1}{2} + \frac{1}{3} + \frac{1}{4} + \cdots$$</p>
+                    <p>其前 $n$ 项部分和为：$$S_n = 1 + \frac{1}{2} + \frac{1}{3} + \cdots + \frac{1}{n}$$</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 级数的收敛与发散 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>$12.1.2$ 级数的收敛与发散、级数的和、余项</h2>
+            </div>
+            <div class="section-content">
+                <div class="definition">
+                    <h4>定义 2 - 级数的收敛与发散</h4>
+                    <p>对于级数 $\sum_{n=1}^{\infty} u_n$，设其前 $n$ 项部分和为 $S_n$。</p>
+                    <ul>
+                        <li>如果 $\lim_{n \to \infty} S_n = S$（有限数），则称级数<strong>收敛</strong>，$S$ 称为级数的<strong>和</strong>，记作 $\sum_{n=1}^{\infty} u_n = S$</li>
+                        <li>如果 $\lim_{n \to \infty} S_n$ 不存在或为无穷大，则称级数<strong>发散</strong></li>
+                        <li>$R_n = S - S_n = \sum_{k=n+1}^{\infty} u_k$ 称为级数的<strong>余项</strong></li>
+                    </ul>
+                </div>
+                
+                <div class="note">
+                    当级数收敛时，$\lim_{n \to \infty} R_n = 0$，即余项趋于零。
+                </div>
+                
+                <div class="example">
+                    <h4>例 3 - 几何级数的收敛性</h4>
+                    <p>判断几何级数 $\sum_{n=0}^{\infty} ar^n$ 的收敛性。</p>
+                    <p><strong>解：</strong></p>
+                    <div class="math-block">
+                        当 $|r| < 1$ 时：$\lim_{n \to \infty} S_n = \lim_{n \to \infty} a \cdot \frac{1-r^{n+1}}{1-r} = \frac{a}{1-r}$<br><br>
+                        因此级数收敛，和为 $\frac{a}{1-r}$<br><br>
+                        当 $|r| \geq 1$ 时：$\lim_{n \to \infty} S_n$ 不存在，级数发散
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 收敛级数的性质 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>$12.1.3$ 收敛级数的性质</h2>
+            </div>
+            <div class="section-content">
+                <div class="property">
+                    <h4>性质 1 - 线性性质</h4>
+                    <p>如果 $\sum_{n=1}^{\infty} u_n = S$，$\sum_{n=1}^{\infty} v_n = T$ 都收敛，$k$ 为常数，则：</p>
+                    <ul>
+                        <li>$\sum_{n=1}^{\infty} (u_n \pm v_n) = S \pm T$</li>
+                        <li>$\sum_{n=1}^{\infty} k u_n = k S$</li>
+                    </ul>
+                </div>
+                
+                <div class="property">
+                    <h4>性质 2 - 收敛的必要条件</h4>
+                    <p>如果级数 $\sum_{n=1}^{\infty} u_n$ 收敛，则 $\lim_{n \to \infty} u_n = 0$。</p>
+                    <div class="important">
+                        这是收敛的必要条件，不是充分条件！反之不成立。
+                    </div>
+                </div>
+                
+                <div class="property">
+                    <h4>性质 3 - 去掉或添加有限项</h4>
+                    <p>在级数中去掉、添加或改变有限个项，不影响级数的收敛性。</p>
+                </div>
+                
+                <div class="property">
+                    <h4>性质 4 - 级数收敛与其部分和序列收敛等价</h4>
+                    <p>级数 $\sum_{n=1}^{\infty} u_n$ 收敛 $\Leftrightarrow$ 其部分和序列 $\{S_n\}$ 收敛。</p>
+                </div>
+                
+                <div class="example">
+                    <h4>例 4 - 验证收敛的必要条件</h4>
+                    <p>证明调和级数 $\sum_{n=1}^{\infty} \frac{1}{n}$ 发散。</p>
+                    <p><strong>解：</strong>虽然 $\lim_{n \to \infty} \frac{1}{n} = 0$，满足必要条件，但我们可以用更强的方法证明其发散：</p>
+                    <div class="math-block">
+                        $S_{2^n} = 1 + \frac{1}{2} + \left(\frac{1}{3} + \frac{1}{4}\right) + \left(\frac{1}{5} + \frac{1}{6} + \frac{1}{7} + \frac{1}{8}\right) + \cdots$<br><br>
+                        $> 1 + \frac{1}{2} + \frac{2}{4} + \frac{4}{8} + \cdots = 1 + \frac{1}{2} + \frac{1}{2} + \frac{1}{2} + \cdots$<br><br>
+                        因此 $S_{2^n} > 1 + \frac{n}{2} \to \infty$，所以调和级数发散。
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 柯西审敛原理 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>$12.1.4$ 柯西审敛原理</h2>
+            </div>
+            <div class="section-content">
+                <div class="theorem">
+                    <h4>柯西审敛原理（Cauchy Criterion）</h4>
+                    <p>级数 $\sum_{n=1}^{\infty} u_n$ 收敛的充要条件是：</p>
+                    <div class="math-block">
+                        对于任意 $\varepsilon > 0$，存在正整数 $N$，使得当 $n > N$ 时，对于任意正整数 $p$，都有：
+                        $$|S_{n+p} - S_n| = |u_{n+1} + u_{n+2} + \cdots + u_{n+p}| < \varepsilon$$
+                    </div>
+                </div>
+                
+                <div class="note">
+                    柯西审敛原理是判断级数收敛性的一个重要理论工具，但在实际应用中通常使用其他更便于计算的判别法。
+                </div>
+                
+                <div class="important">
+                    <strong>特别地：</strong>当 $p = 1$ 时，柯西审敛原理给出：级数收敛的必要条件是 $\lim_{n \to \infty} u_n = 0$。
+                </div>
+            </div>
+        </div>
+        
+        <!-- 总结 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>本节要点总结</h2>
+            </div>
+            <div class="section-content">
+                <div class="property">
+                    <h4>核心概念</h4>
+                    <ul>
+                        <li><strong>级数：</strong>$\sum_{n=1}^{\infty} u_n$，其中 $u_n$ 为一般项</li>
+                        <li><strong>部分和：</strong>$S_n = \sum_{k=1}^{n} u_k$</li>
+                        <li><strong>收敛：</strong>$\lim_{n \to \infty} S_n$ 存在且有限</li>
+                        <li><strong>级数的和：</strong>$S = \lim_{n \to \infty} S_n$</li>
+                        <li><strong>余项：</strong>$R_n = S - S_n$</li>
+                    </ul>
+                </div>
+                
+                <div class="property">
+                    <h4>重要性质</h4>
+                    <ul>
+                        <li>收敛级数具有线性性质</li>
+                        <li>收敛的必要条件：$\lim_{n \to \infty} u_n = 0$</li>
+                        <li>去掉或添加有限项不影响收敛性</li>
+                        <li>柯西审敛原理是收敛的充要条件</li>
+                    </ul>
+                </div>
+                
+                <div class="property">
+                    <h4>典型例子</h4>
+                    <ul>
+                        <li><strong>几何级数：</strong>$|r| < 1$ 时收敛于 $\frac{a}{1-r}$</li>
+                        <li><strong>调和级数：</strong>发散（虽然一般项趋于零）</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="nav-buttons">
+            <a href="../index.html" class="btn prev">返回章节概览</a>
+            <a href="12.2.html" class="btn next">下一节：12.2 常数项级数的审敛法</a>
+        </div>
+        
+        <footer>
+            <p>&copy; 2025 高等数学复习系统 - 第十二章：无穷级数</p>
+        </footer>
+    </div>
+    
+    <script>
+        // 页面加载完成后的动画效果
+        document.addEventListener('DOMContentLoaded', function() {
+            // 为内容区块添加入场动画
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach((section, index) => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(30px)';
+                setTimeout(() => {
+                    section.style.transition = 'all 0.8s ease';
+                    section.style.opacity = '1';
+                    section.style.transform = 'translateY(0)';
+                }, index * 200);
+            });
+            
+            // 为导航按钮添加动画
+            const navButtons = document.querySelectorAll('.btn');
+            navButtons.forEach((button, index) => {
+                button.style.opacity = '0';
+                button.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    button.style.transition = 'all 0.6s ease';
+                    button.style.opacity = '1';
+                    button.style.transform = 'translateY(0)';
+                }, 1000 + index * 100);
+            });
+        });
+    </script>
+</body>
+</html>

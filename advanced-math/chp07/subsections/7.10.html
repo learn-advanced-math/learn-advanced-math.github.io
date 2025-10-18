@@ -1,0 +1,1385 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="alternate icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTUiIGZpbGw9IiMzNDk4ZGIiIHN0cm9rZT0iIzJjM2U1MCIgc3Ryb2tlLXdpZHRoPSIyIi8+PGcgZmlsbD0id2hpdGUiIGZvbnQtZmFtaWx5PSJUaW1lcyxzZXJpZiIgZm9udC13ZWlnaHQ9ImJvbGQiPjx0ZXh0IHg9IjE2IiB5PSIxMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxMiI+ZDwvdGV4dD48bGluZSB4MT0iOCIgeTE9IjE2IiB4Mj0iMjQiIHkyPSIxNiIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjUiLz48dGV4dCB4PSIxNiIgeT0iMjUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTAiPmR4PC90ZXh0PjwvZz48L3N2Zz4=">
+    <title>7.10 常系数线性微分方程组 - 高等数学复习</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']]
+            },
+            chtml: {
+                fontURL: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2'
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.26.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #27ae60 0%, #16a085 50%, #2d5016 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 20px;
+            color: #27ae60;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 15px;
+            border-radius: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .back-link:hover {
+            color: #2ecc71;
+            transform: translateX(-5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+        
+        .back-link::before {
+            content: '←';
+            margin-right: 8px;
+            font-size: 1.2em;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            margin: 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            font-weight: 300;
+        }
+        
+        .subtitle {
+            font-size: 1.1em;
+            margin-top: 10px;
+            opacity: 0.9;
+        }
+        
+        .content-section {
+            background: white;
+            margin: 25px 0;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .content-section:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .section-header {
+            padding: 20px 30px;
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            color: white;
+        }
+        
+        .section-header h2 {
+            margin: 0;
+            font-size: 1.6em;
+            font-weight: 400;
+        }
+        
+        .section-content {
+            padding: 30px;
+        }
+        
+        .definition {
+            background: linear-gradient(135deg, #e8f5e8, #d4edda);
+            border-left: 5px solid #27ae60;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(39, 174, 96, 0.1);
+        }
+        
+        .definition h4 {
+            margin: 0 0 15px 0;
+            color: #27ae60;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .theorem {
+            background: linear-gradient(135deg, #fef9e7, #fcf4dd);
+            border-left: 5px solid #f39c12;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(243, 156, 18, 0.1);
+        }
+        
+        .theorem h4 {
+            margin: 0 0 15px 0;
+            color: #f39c12;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .example {
+            background: linear-gradient(135deg, #ebf3fd, #d6e9f8);
+            border-left: 5px solid #3498db;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(52, 152, 219, 0.1);
+        }
+        
+        .example h4 {
+            margin: 0 0 15px 0;
+            color: #3498db;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .practice-problem {
+            background: linear-gradient(135deg, #fdf2e9, #fbeee0);
+            border-left: 5px solid #e67e22;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(230, 126, 34, 0.1);
+        }
+        
+        .practice-problem h4 {
+            margin: 0 0 15px 0;
+            color: #e67e22;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .difficulty {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: 500;
+            margin-left: 10px;
+        }
+        
+        .difficulty.medium {
+            background: #f39c12;
+            color: white;
+        }
+        
+        .difficulty.hard {
+            background: #e74c3c;
+            color: white;
+        }
+        
+        .difficulty.very-hard {
+            background: #27ae60;
+            color: white;
+        }
+        
+        .solution {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px dashed #bdc3c7;
+        }
+        
+        .solution-header {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+        
+        .viz-container {
+            width: 100%;
+            height: 400px;
+            margin: 25px 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 40px;
+            padding: 20px 0;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 25px;
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 15px rgba(39, 174, 96, 0.3);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(39, 174, 96, 0.4);
+        }
+        
+        .btn.prev::before {
+            content: '←';
+            margin-right: 8px;
+            font-size: 1.1em;
+        }
+        
+        .btn.next::after {
+            content: '→';
+            margin-left: 8px;
+            font-size: 1.1em;
+        }
+        
+        footer {
+            text-align: center;
+            color: white;
+            padding: 30px 0;
+            opacity: 0.9;
+            margin-top: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        footer p {
+            text-align: center;
+            margin: 0;
+        }
+        
+        .math-expression {
+            text-align: center;
+            margin: 15px 0;
+            font-size: 1.1em;
+        }
+        
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        .highlight {
+            background: linear-gradient(135deg, #fff3cd, #fce4a0);
+            padding: 15px;
+            border-left: 4px solid #ffc107;
+            border-radius: 0 8px 8px 0;
+            margin: 15px 0;
+        }
+        
+        .steps {
+            background: linear-gradient(135deg, #e8f4fd, #d1ecf1);
+            border-left: 4px solid #17a2b8;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+        }
+        
+        .steps h5 {
+            color: #17a2b8;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        
+        .step-item {
+            margin: 10px 0;
+            padding: 10px 15px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 8px;
+            border-left: 3px solid #17a2b8;
+        }
+        
+        .step-number {
+            font-weight: bold;
+            color: #17a2b8;
+            margin-right: 10px;
+        }
+        
+        .memory-tip {
+            background: linear-gradient(135deg, #fff0f6, #ffe6f3);
+            border: 1px solid #f8d7da;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        .memory-tip::before {
+            content: '💡';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            background: white;
+            padding: 0 10px;
+            font-size: 1.2em;
+        }
+        
+        .memory-tip h4 {
+            color: #27ae60;
+            margin-bottom: 15px;
+            margin-top: 10px;
+        }
+
+        .system-form {
+            background: linear-gradient(135deg, #e8f5e8, #d4edda);
+            border: 2px solid #27ae60;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .system-form h4 {
+            color: #1e8449;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+
+        .matrix-form {
+            background: linear-gradient(135deg, #fff3cd, #fce4a0);
+            border: 2px solid #ffc107;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .matrix-form h4 {
+            color: #856404;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+            text-align: center;
+        }
+
+        .solution-types {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .solution-types th,
+        .solution-types td {
+            padding: 12px 15px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .solution-types th {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            color: white;
+            font-weight: 500;
+        }
+
+        .solution-types tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .formula-derivation {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-left: 4px solid #2196f3;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .formula-derivation h5 {
+            color: #1976d2;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .phase-portrait {
+            background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+            border: 2px solid #16a34a;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .phase-portrait h4 {
+            color: #15803d;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+
+        /* AI提示方块样式 */
+        .ai-warning {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            border: 2px solid #e0e0e0;
+        }
+        
+        .ai-warning:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            border-color: #ff4444;
+        }
+        
+        .ai-warning::before {
+            content: '!';
+            color: #e74c3c;
+            font-size: 20px;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+        }
+        
+        .ai-warning-tooltip {
+            position: absolute;
+            top: 50px;
+            left: 0;
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 16px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            line-height: 1.5;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1001;
+            width: 250px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .ai-warning-tooltip::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: 20px;
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid rgba(0, 0, 0, 0.9);
+        }
+        
+        .ai-warning:hover .ai-warning-tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .section-content {
+                padding: 20px;
+            }
+            
+            .definition, .theorem, .example, .practice-problem {
+                padding: 20px;
+            }
+            
+            .nav-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .solution-types {
+                font-size: 0.9em;
+            }
+
+            .ai-warning {
+                width: 35px;
+                height: 35px;
+                top: 15px;
+                left: 15px;
+            }
+            
+            .ai-warning::before {
+                font-size: 18px;
+            }
+            
+            .ai-warning-tooltip {
+                width: 280px;
+                font-size: 13px;
+                padding: 14px 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- AI内容提示 -->
+    <div class="ai-warning">
+        <div class="ai-warning-tooltip">
+            页面内容由AI生成，请谨慎对待。<br>如发现错误，<a href="https://github.com/learn-advanced-math/learn-advanced-math.github.io/issues" target="_blank" style="color: #ff0000">欢迎反馈</a>。
+        </div>
+    </div>
+    
+    <div class="container">
+        <a href="../index.html" class="back-link">返回章节概览</a>
+        
+        <header>
+            <h1>7.10 常系数线性微分方程组</h1>
+            <div class="subtitle">Systems of Linear Differential Equations with Constant Coefficients</div>
+        </header>
+        
+        <!-- 微分方程组的概念 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>7.10.1 常系数线性微分方程组的基本概念</h2>
+            </div>
+            <div class="section-content">
+                <div class="definition">
+                    <h4>一阶常系数线性微分方程组</h4>
+                    <p>形如：</p>
+                    $$\begin{cases}
+                    \frac{dx_1}{dt} = a_{11}x_1 + a_{12}x_2 + \cdots + a_{1n}x_n + f_1(t) \\
+                    \frac{dx_2}{dt} = a_{21}x_1 + a_{22}x_2 + \cdots + a_{2n}x_n + f_2(t) \\
+                    \vdots \\
+                    \frac{dx_n}{dt} = a_{n1}x_1 + a_{n2}x_2 + \cdots + a_{nn}x_n + f_n(t)
+                    \end{cases}$$
+                    <p>的方程组称为<strong>一阶常系数线性微分方程组</strong>，其中 $a_{ij}$ 是常数。</p>
+                </div>
+
+                <div class="matrix-form">
+                    <h4>矩阵形式</h4>
+                    <p>微分方程组可以写成矩阵形式：</p>
+                    $$\frac{d\mathbf{X}}{dt} = A\mathbf{X} + \mathbf{F}(t)$$
+                    <p>其中：</p>
+                    $$\mathbf{X} = \begin{pmatrix} x_1 \\ x_2 \\ \vdots \\ x_n \end{pmatrix}, \quad 
+                    A = \begin{pmatrix} 
+                    a_{11} & a_{12} & \cdots & a_{1n} \\
+                    a_{21} & a_{22} & \cdots & a_{2n} \\
+                    \vdots & \vdots & \ddots & \vdots \\
+                    a_{n1} & a_{n2} & \cdots & a_{nn}
+                    \end{pmatrix}, \quad
+                    \mathbf{F}(t) = \begin{pmatrix} f_1(t) \\ f_2(t) \\ \vdots \\ f_n(t) \end{pmatrix}$$
+                </div>
+
+                <div class="highlight">
+                    <p><strong>重要性质：</strong></p>
+                    <ul>
+                        <li><strong>解的存在唯一性：</strong>在给定初值条件下，解存在且唯一</li>
+                        <li><strong>解的结构：</strong>通解 = 齐次方程组的通解 + 非齐次方程组的特解</li>
+                        <li><strong>线性无关性：</strong>$n$ 个线性无关的解构成基本解组</li>
+                    </ul>
+                </div>
+
+                <div class="definition">
+                    <h4>二阶常系数齐次线性微分方程组的标准形式</h4>
+                    <p>形如：</p>
+                    $$\begin{cases}
+                    \frac{d^2x}{dt^2} = a_{11}\frac{dx}{dt} + a_{12}\frac{dy}{dt} + a_{13}x + a_{14}y \\
+                    \frac{d^2y}{dt^2} = a_{21}\frac{dx}{dt} + a_{22}\frac{dy}{dt} + a_{23}x + a_{24}y
+                    \end{cases}$$
+                    <p>或者更常见的形式：</p>
+                    $$\begin{cases}
+                    \frac{d^2x}{dt^2} + a\frac{dx}{dt} + bx = cy + d\frac{dy}{dt} \\
+                    \frac{d^2y}{dt^2} + e\frac{dy}{dt} + fy = gx + h\frac{dx}{dt}
+                    \end{cases}$$
+                    <p>其中所有系数都是常数。</p>
+                    
+                    <div style="margin-top: 15px; padding: 10px; background: rgba(255,255,255,0.7); border-radius: 5px;">
+                        <strong>注意：</strong>二阶方程组通常可以通过引入新变量转化为一阶方程组来求解
+                    </div>
+                </div>
+
+                <div class="example" style="background: linear-gradient(135deg, #f3e5f5, #e1bee7); border-left: 5px solid #9c27b0;">
+                    <h4 style="color: #6a1b9a;">二阶方程组转化为一阶方程组的例子</h4>
+                    <p><strong>原二阶方程组：</strong></p>
+                    $$\begin{cases}
+                    \frac{d^2x}{dt^2} + 2\frac{dx}{dt} + 3x = y \\
+                    \frac{d^2y}{dt^2} + \frac{dy}{dt} + 2y = x
+                    \end{cases}$$
+                    
+                    <p><strong>引入新变量：</strong>设 $u = \frac{dx}{dt}$，$v = \frac{dy}{dt}$</p>
+                    
+                    <p><strong>转化为一阶方程组：</strong></p>
+                    $$\begin{cases}
+                    \frac{dx}{dt} = u \\
+                    \frac{dy}{dt} = v \\
+                    \frac{du}{dt} = -2u - 3x + y \\
+                    \frac{dv}{dt} = -v - 2y + x
+                    \end{cases}$$
+                    
+                    <p>这样就得到了一个 $4 \times 4$ 的一阶常系数线性微分方程组。</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 齐次方程组的求解方法 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>7.10.2 齐次方程组的特征值方法</h2>
+            </div>
+            <div class="section-content">
+                <div class="theorem">
+                    <h4>特征值方法的基本思想</h4>
+                    <p>对于齐次方程组 $\frac{d\mathbf{X}}{dt} = A\mathbf{X}$，设解的形式为：</p>
+                    $$\mathbf{X} = \mathbf{v}e^{\lambda t}$$
+                    <p>其中 $\mathbf{v}$ 是常向量，$\lambda$ 是常数。代入方程得到：</p>
+                    $$\lambda \mathbf{v}e^{\lambda t} = A\mathbf{v}e^{\lambda t}$$
+                    <p>即：$(A - \lambda I)\mathbf{v} = \mathbf{0}$</p>
+                </div>
+
+                <div class="steps">
+                    <h5>标准求解步骤</h5>
+                    <div class="step-item">
+                        <span class="step-number">步骤1：</span>写出特征方程 $\det(A - \lambda I) = 0$
+                    </div>
+                    <div class="step-item">
+                        <span class="step-number">步骤2：</span>求解特征方程，得到特征值 $\lambda_i$
+                    </div>
+                    <div class="step-item">
+                        <span class="step-number">步骤3：</span>对每个特征值，求对应的特征向量 $(A - \lambda_i I)\mathbf{v}_i = \mathbf{0}$
+                    </div>
+                    <div class="step-item">
+                        <span class="step-number">步骤4：</span>根据特征值类型，构造相应的解 $\mathbf{X_i}$
+                    </div>
+                    <div class="step-item">
+                        <span class="step-number">步骤5：</span>写出通解  $\mathbf{X} = \Sigma \mathbf{X_i}$
+                    </div>
+                </div>
+
+                <div class="formula-derivation">
+                    <h5>不同特征值情况的解的形式</h5>
+                    
+                    <p><strong>1. 不相等实特征值 $\lambda_1, \lambda_2$：</strong></p>
+                    $$\mathbf{X} = C_1 \mathbf{v}_1 e^{\lambda_1 t} + C_2 \mathbf{v}_2 e^{\lambda_2 t}$$
+                    
+                    <p><strong>2. 相等实特征值 $\lambda$（重数为2）：</strong></p>
+                    <ul>
+                        <li>两个线性无关特征向量：$\mathbf{X} = (C_1 \mathbf{v}_1 + C_2 \mathbf{v}_2) e^{\lambda t}$</li>
+                        <li>一个特征向量：$\mathbf{X} = (C_1 \mathbf{v} + C_2 (\mathbf{w} + t\mathbf{v})) e^{\lambda t}$</li>
+                    </ul>
+                    
+                    <p><strong>3. 复特征值 $\lambda = \alpha \pm \beta i$：</strong></p>
+                    $$\mathbf{X} = e^{\alpha t}[C_1(\mathbf{u}\cos \beta t - \mathbf{v}\sin \beta t) + C_2(\mathbf{v}\cos \beta t + \mathbf{u}\sin \beta t)]$$
+                    <p>其中特征向量 $\mathbf{w} = \mathbf{u} + i\mathbf{v}$</p>
+                </div>
+
+                <div class="theorem">
+                    <h4>广义特征向量的求解方法</h4>
+                    <p>当 $n$ 重特征值 $\lambda$ 对应的线性无关特征向量个数小于 $n$ 时，需要求广义特征向量。</p>
+                    
+                    <p><strong>定义：</strong>对于特征值 $\lambda$，如果向量 $\mathbf{w}$ 满足：</p>
+                    $$(A - \lambda I)\mathbf{w} = \mathbf{v}$$
+                    <p>其中 $\mathbf{v}$ 是对应于 $\lambda$ 的特征向量，则 $\mathbf{w}$ 称为<strong>广义特征向量</strong>。</p>
+                    
+                    <p><strong>求解步骤：</strong></p>
+                    <ol>
+                        <li>先求出特征向量 $\mathbf{v}$：$(A - \lambda I)\mathbf{v} = \mathbf{0}$</li>
+                        <li>解方程 $(A - \lambda I)\mathbf{w} = \mathbf{v}$ 求出 $\mathbf{w}$</li>
+                        <li>通解为：$\mathbf{X} = C_1 \mathbf{v} e^{\lambda t} + C_2 (\mathbf{w} + t\mathbf{v}) e^{\lambda t}$</li>
+                    </ol>
+                    
+                    <p><strong>注意：</strong>广义特征向量 $\mathbf{w}$ 的解不唯一，可以加上特征向量 $\mathbf{v}$ 的任意倍数。</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 典型例题 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>7.10.3 典型例题解析</h2>
+            </div>
+            <div class="section-content">
+                <div class="example">
+                    <h4>例题1：不同实特征值</h4>
+                    <p>求解微分方程组：</p>
+                    $$\begin{cases}
+                    \frac{dx}{dt} = x + 2y \\
+                    \frac{dy}{dt} = 3x + 2y
+                    \end{cases}$$
+                    
+                    <div class="solution">
+                        <div class="solution-header">解题过程：</div>
+                        <p><strong>步骤1：</strong>写出系数矩阵</p>
+                        $$A = \begin{pmatrix} 1 & 2 \\ 3 & 2 \end{pmatrix}$$
+                        
+                        <p><strong>步骤2：</strong>求特征方程</p>
+                        $$\det(A - \lambda I) = \begin{vmatrix} 1-\lambda & 2 \\ 3 & 2-\lambda \end{vmatrix} = (1-\lambda)(2-\lambda) - 6 = \lambda^2 - 3\lambda - 4 = 0$$
+                        <p>解得：$\lambda_1 = 4$，$\lambda_2 = -1$</p>
+                        
+                        <p><strong>步骤3：</strong>求特征向量</p>
+                        <p>对 $\lambda_1 = 4$：</p>
+                        $$(A - 4I)\mathbf{v}_1 = \begin{pmatrix} -3 & 2 \\ 3 & -2 \end{pmatrix}\mathbf{v}_1 = \mathbf{0}$$
+                        <p>特征向量：$\mathbf{v}_1 = \begin{pmatrix} 2 \\ 3 \end{pmatrix}$</p>
+                        
+                        <p>对 $\lambda_2 = -1$：</p>
+                        $$(A + I)\mathbf{v}_2 = \begin{pmatrix} 2 & 2 \\ 3 & 3 \end{pmatrix}\mathbf{v}_2 = \mathbf{0}$$
+                        <p>特征向量：$\mathbf{v}_2 = \begin{pmatrix} 1 \\ -1 \end{pmatrix}$</p>
+                        
+                        <p><strong>步骤4：</strong>写出通解</p>
+                        $$\begin{pmatrix} x \\ y \end{pmatrix} = C_1 \begin{pmatrix} 2 \\ 3 \end{pmatrix} e^{4t} + C_2 \begin{pmatrix} 1 \\ -1 \end{pmatrix} e^{-t}$$
+                        <p>即：$x = 2C_1 e^{4t} + C_2 e^{-t}$，$y = 3C_1 e^{4t} - C_2 e^{-t}$</p>
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <h4>例题2：重特征值</h4>
+                    <p>求解微分方程组：</p>
+                    $$\begin{cases}
+                    \frac{dx}{dt} = 3x + y \\
+                    \frac{dy}{dt} = -x + y
+                    \end{cases}$$
+                    
+                    <div class="solution">
+                        <div class="solution-header">解题过程：</div>
+                        <p><strong>步骤1：</strong>系数矩阵</p>
+                        $$A = \begin{pmatrix} 3 & 1 \\ -1 & 1 \end{pmatrix}$$
+                        
+                        <p><strong>步骤2：</strong>特征方程</p>
+                        $$\det(A - \lambda I) = (3-\lambda)(1-\lambda) + 1 = \lambda^2 - 4\lambda + 4 = (\lambda-2)^2 = 0$$
+                        <p>二重特征值：$\lambda = 2$</p>
+                        
+                        <p><strong>步骤3：</strong>求特征向量</p>
+                        $$(A - 2I) = \begin{pmatrix} 1 & 1 \\ -1 & -1 \end{pmatrix}$$
+                        <p>只有一个线性无关特征向量：$\mathbf{v} = \begin{pmatrix} 1 \\ -1 \end{pmatrix}$</p>
+                        
+                        <p><strong>步骤4：</strong>求广义特征向量</p>
+                        <p>解 $(A - 2I)\mathbf{w} = \mathbf{v}$：</p>
+                        $$\begin{pmatrix} 1 & 1 \\ -1 & -1 \end{pmatrix}\mathbf{w} = \begin{pmatrix} 1 \\ -1 \end{pmatrix}$$
+                        <p>取 $\mathbf{w} = \begin{pmatrix} 1 \\ 0 \end{pmatrix}$</p>
+                        
+                        <p><strong>步骤5：</strong>通解</p>
+                        $$\begin{pmatrix} x \\ y \end{pmatrix} = C_1 \begin{pmatrix} 1 \\ -1 \end{pmatrix} e^{2t} + C_2 \left[\begin{pmatrix} 1 \\ 0 \end{pmatrix} + t\begin{pmatrix} 1 \\ -1 \end{pmatrix}\right] e^{2t}$$
+                        <p>即：$x = (C_1 + C_2 + C_2 t)e^{2t}$，$y = (-C_1 - C_2 t)e^{2t}$</p>
+                    </div>
+                </div>
+
+                <div class="example">
+                    <h4>例题3：复特征值</h4>
+                    <p>求解微分方程组：</p>
+                    $$\begin{cases}
+                    \frac{dx}{dt} = -y \\
+                    \frac{dy}{dt} = x
+                    \end{cases}$$
+                    
+                    <div class="solution">
+                        <div class="solution-header">解题过程：</div>
+                        <p><strong>步骤1：</strong>系数矩阵</p>
+                        $$A = \begin{pmatrix} 0 & -1 \\ 1 & 0 \end{pmatrix}$$
+                        
+                        <p><strong>步骤2：</strong>特征方程</p>
+                        $$\det(A - \lambda I) = \lambda^2 + 1 = 0$$
+                        <p>特征值：$\lambda_{1,2} = \pm i$</p>
+                        
+                        <p><strong>步骤3：</strong>求特征向量</p>
+                        <p>对 $\lambda = i$：</p>
+                        $$(A - iI)\mathbf{v} = \begin{pmatrix} -i & -1 \\ 1 & -i \end{pmatrix}\mathbf{v} = \mathbf{0}$$
+                        <p>特征向量：$\mathbf{v} = \begin{pmatrix} 1 \\ -i \end{pmatrix} = \begin{pmatrix} 1 \\ 0 \end{pmatrix} + i\begin{pmatrix} 0 \\ -1 \end{pmatrix}$</p>
+                        
+                        <p><strong>步骤4：</strong>构造实解</p>
+                        <p>$\mathbf{u} = \begin{pmatrix} 1 \\ 0 \end{pmatrix}$，$\mathbf{v} = \begin{pmatrix} 0 \\ -1 \end{pmatrix}$，$\alpha = 0$，$\beta = 1$</p>
+                        
+                        <p><strong>步骤5：</strong>通解</p>
+                        $$\begin{pmatrix} x \\ y \end{pmatrix} = C_1 \begin{pmatrix} \cos t \\ \sin t \end{pmatrix} + C_2 \begin{pmatrix} \sin t \\ -\cos t \end{pmatrix}$$
+                        <p>即：$x = C_1 \cos t + C_2 \sin t$，$y = C_1 \sin t - C_2 \cos t$</p>
+                    </div>
+                </div>
+                
+                
+            </div>
+        </div>
+        
+        <!-- 解的性质与相图分析 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>7.10.4 解的性质与相图分析</h2>
+            </div>
+            <div class="section-content">
+                <div class="phase-portrait">
+                    <h4>二维系统的相图类型</h4>
+
+                    <table class="solution-types">
+                        <thead>
+                            <tr>
+                                <th>特征值类型</th>
+                                <th>相图类型</th>
+                                <th>稳定性</th>
+                                <th>解的行为</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>$\lambda_1 > \lambda_2 > 0$</td>
+                                <td>不稳定结点</td>
+                                <td>不稳定</td>
+                                <td>轨线远离原点</td>
+                            </tr>
+                            <tr>
+                                <td>$0 > \lambda_1 > \lambda_2$</td>
+                                <td>稳定结点</td>
+                                <td>渐近稳定</td>
+                                <td>轨线趋向原点</td>
+                            </tr>
+                            <tr>
+                                <td>$\lambda_1 > 0 > \lambda_2$</td>
+                                <td>鞍点</td>
+                                <td>不稳定</td>
+                                <td>双曲型轨线</td>
+                            </tr>
+                            <tr>
+                                <td>$\lambda = \alpha \pm \beta i, \alpha < 0$</td>
+                                <td>稳定焦点</td>
+                                <td>渐近稳定</td>
+                                <td>螺旋趋向原点</td>
+                            </tr>
+                            <tr>
+                                <td>$\lambda = \alpha \pm \beta i, \alpha > 0$</td>
+                                <td>不稳定焦点</td>
+                                <td>不稳定</td>
+                                <td>螺旋远离原点</td>
+                            </tr>
+                            <tr>
+                                <td>$\lambda = \pm \beta i$</td>
+                                <td>中心</td>
+                                <td>中性稳定</td>
+                                <td>椭圆轨线</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="memory-tip">
+                    <h4>稳定性判别法则</h4>
+                    <ul>
+                        <li><strong>渐近稳定：</strong>所有特征值的实部都小于零</li>
+                        <li><strong>不稳定：</strong>至少有一个特征值的实部大于零</li>
+                        <li><strong>临界情况：</strong>特征值的实部为零</li>
+                        <li><strong>李雅普诺夫稳定：</strong>需要进一步分析</li>
+                    </ul>
+                </div>
+
+                <div class="viz-container" id="phasePortrait"></div>
+            </div>
+        </div>
+        
+        <!-- 练习题 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>7.10.5 练习题</h2>
+            </div>
+            <div class="section-content">
+                <div class="practice-problem">
+                    <h4>习题1 <span class="difficulty medium">中等难度</span></h4>
+                    <p>求解微分方程组：</p>
+                    $$\begin{cases}
+                    \frac{dx}{dt} = 2x + y \\
+                    \frac{dy}{dt} = x + 2y
+                    \end{cases}$$
+                    
+                    <div class="solution">
+                        <div class="solution-header">解题步骤：</div>
+                        <p><strong>步骤1：</strong>系数矩阵</p>
+                        $$A = \begin{pmatrix} 2 & 1 \\ 1 & 2 \end{pmatrix}$$
+                        
+                        <p><strong>步骤2：</strong>特征方程</p>
+                        $$\det(A - \lambda I) = (2-\lambda)^2 - 1 = \lambda^2 - 4\lambda + 3 = 0$$
+                        <p>特征值：$\lambda_1 = 3$，$\lambda_2 = 1$</p>
+                        
+                        <p><strong>步骤3：</strong>特征向量</p>
+                        <p>对 $\lambda_1 = 3$：$\mathbf{v}_1 = \begin{pmatrix} 1 \\ 1 \end{pmatrix}$</p>
+                        <p>对 $\lambda_2 = 1$：$\mathbf{v}_2 = \begin{pmatrix} 1 \\ -1 \end{pmatrix}$</p>
+                        
+                        <p><strong>步骤4：</strong>通解</p>
+                        $$\begin{pmatrix} x \\ y \end{pmatrix} = C_1 \begin{pmatrix} 1 \\ 1 \end{pmatrix} e^{3t} + C_2 \begin{pmatrix} 1 \\ -1 \end{pmatrix} e^{t}$$
+                        <p>即：$x = C_1 e^{3t} + C_2 e^t$，$y = C_1 e^{3t} - C_2 e^t$</p>
+                    </div>
+                </div>
+                
+                <div class="practice-problem">
+                    <h4>习题2 <span class="difficulty hard">较难</span></h4>
+                    <p>求解微分方程组的初值问题：</p>
+                    $$\begin{cases}
+                    \frac{dx}{dt} = y \\
+                    \frac{dy}{dt} = -4x - 4y
+                    \end{cases}, \quad x(0) = 1, y(0) = 0$$
+                    
+                    <div class="solution">
+                        <div class="solution-header">解题步骤：</div>
+                        <p><strong>步骤1：</strong>系数矩阵</p>
+                        $$A = \begin{pmatrix} 0 & 1 \\ -4 & -4 \end{pmatrix}$$
+                        
+                        <p><strong>步骤2：</strong>特征方程</p>
+                        $$\det(A - \lambda I) = \lambda(\lambda + 4) + 4 = \lambda^2 + 4\lambda + 4 = (\lambda + 2)^2 = 0$$
+                        <p>二重特征值：$\lambda = -2$</p>
+                        
+                        <p><strong>步骤3：</strong>特征向量</p>
+                        $$(A + 2I) = \begin{pmatrix} 2 & 1 \\ -4 & -2 \end{pmatrix}$$
+                        <p>特征向量：$\mathbf{v} = \begin{pmatrix} 1 \\ -2 \end{pmatrix}$</p>
+                        
+                        <p><strong>步骤4：</strong>广义特征向量</p>
+                        <p>解 $(A + 2I)\mathbf{w} = \mathbf{v}$，取 $\mathbf{w} = \begin{pmatrix} 0 \\ 1 \end{pmatrix}$</p>
+                        
+                        <p><strong>步骤5：</strong>通解</p>
+                        $$\begin{pmatrix} x \\ y \end{pmatrix} = C_1 \begin{pmatrix} 1 \\ -2 \end{pmatrix} e^{-2t} + C_2 \left[\begin{pmatrix} 0 \\ 1 \end{pmatrix} + t\begin{pmatrix} 1 \\ -2 \end{pmatrix}\right] e^{-2t}$$
+                        
+                        <p><strong>步骤6：</strong>应用初值条件</p>
+                        <p>$x(0) = C_1 = 1$，$y(0) = -2C_1 + C_2 = 0$，得 $C_2 = 2$</p>
+                        
+                        <p><strong>步骤7：</strong>特解</p>
+                        $$x = (1 + 2t)e^{-2t}, \quad y = (-2 + 2 - 4t)e^{-2t} = -4te^{-2t}$$
+                    </div>
+                </div>
+                
+                <div class="practice-problem">
+                    <h4>习题3：二阶微分方程组求解 <span class="difficulty very-hard">很难</span></h4>
+                    <p>求解二阶微分方程组：</p>
+                    $$\begin{cases}
+                    x''(t) + y'(t) - x = e^t \\
+                    y''(t) + x'(t) + y = 0
+                    \end{cases}$$
+                    
+                    <div class="solution">
+                        <div class="solution-header">解题步骤：</div>
+                        <p><strong>步骤1：</strong>引入新变量进行降阶</p>
+                        <p>设 $u = x'(t)$，$v = y'(t)$，则：</p>
+                        $$x' = u, \quad y' = v, \quad u' = x'', \quad v' = y''$$
+                        
+                        <p>原方程组转化为：</p>
+                        $$\begin{cases}
+                        x' = u \\
+                        y' = v \\
+                        u' = -v + x + e^t \\
+                        v' = -u - y
+                        \end{cases}$$
+                        
+                        <p><strong>步骤2：</strong>写成矩阵形式</p>
+                        $$\frac{d}{dt}\begin{pmatrix} x \\ y \\ u \\ v \end{pmatrix} = \begin{pmatrix} 
+                        0 & 0 & 1 & 0 \\
+                        0 & 0 & 0 & 1 \\
+                        1 & 0 & 0 & -1 \\
+                        0 & -1 & -1 & 0
+                        \end{pmatrix}\begin{pmatrix} x \\ y \\ u \\ v \end{pmatrix} + \begin{pmatrix} 0 \\ 0 \\ e^t \\ 0 \end{pmatrix}$$
+                        
+                        <p><strong>步骤3：</strong>求齐次方程组的通解</p>
+                        <p>先求系数矩阵的特征值：</p>
+                        $$\det(A - \lambda I) = \begin{vmatrix}
+                        -\lambda & 0 & 1 & 0 \\
+                        0 & -\lambda & 0 & 1 \\
+                        1 & 0 & -\lambda & -1 \\
+                        0 & -1 & -1 & -\lambda
+                        \end{vmatrix} = 0$$
+                        
+                        <p>按第一行展开：</p>
+                        $$= -\lambda \begin{vmatrix}
+                        -\lambda & 0 & 1 \\
+                        0 & -\lambda & -1 \\
+                        -1 & -1 & -\lambda
+                        \end{vmatrix} + 1 \begin{vmatrix}
+                        0 & -\lambda & 1 \\
+                        1 & 0 & -1 \\
+                        0 & -1 & -\lambda
+                        \end{vmatrix}$$
+                        
+                        <p>计算第一个3×3行列式：</p>
+                        $$\begin{vmatrix}
+                        -\lambda & 0 & 1 \\
+                        0 & -\lambda & -1 \\
+                        -1 & -1 & -\lambda
+                        \end{vmatrix} = -\lambda^3$$
+                        
+                        <p>计算第二个3×3行列式：</p>
+                        $$\begin{vmatrix}
+                        0 & -\lambda & 1 \\
+                        1 & 0 & -1 \\
+                        0 & -1 & -\lambda
+                        \end{vmatrix} = -1 -\lambda^2$$
+                        
+                        <p>因此特征方程为：</p>
+                        $$\lambda^4 - \lambda^2 - 1 = 0$$
+                        
+                        <p>设 $z = \lambda^2$，得到：$z^2 - z - 1 = 0$</p>
+                        $$z = \frac{1 \pm \sqrt{5}}{2}$$
+                        
+                        <p>由于 $z = \lambda^2$，所有</p>
+                        $$\lambda_{1,2} =\pm\alpha = \pm \sqrt{\frac{\sqrt{5}+1}{2}}$$
+                        $$\lambda_{3,4}=\pm\beta i = \pm i \sqrt{\frac{\sqrt{5}-1}{2}}$$
+                                                
+                        <p><strong>步骤4：</strong>求通解</p>
+                        <p>可求得原非齐次方程的一个特解 $y^* = e^t$，所以通解为：</p>
+                        $$y = C_1 e^{\alpha t} + C_2 e^{-\alpha t} + C_3 \cos \beta t + C_4 \sin \beta t + e^t$$
+                        
+                        <p>进而解得：</p>
+                        $$x = -\frac{\alpha^2+1}{\alpha} C_1 e^{\alpha t} + \frac{\alpha^2+1}{\alpha} C_2 e^{-\alpha t} - \frac{1-\beta^2}{\beta} C_3 \sin \beta t + \frac{1-\beta^2}{\beta} C_4 \cos \beta t - 2e^t$$
+                        
+                        <div style="background: linear-gradient(135deg, #e8f5e8, #d4edda); padding: 15px; border-radius: 8px; margin: 15px 0;">
+                            <p><strong>解题要点：</strong></p>
+                            <ul>
+                                <li>非齐次二阶方程组需要求齐次解和特解</li>
+                                <li>特解的形式由非齐次项决定</li>
+                                <li>复特征值对应的解需要构造实函数形式</li>
+                                <li>最终解包含4个任意常数，可由初始条件确定</li>
+                            </ul>
+                        </div>
+                        
+                        <div style="background: linear-gradient(135deg, #fff3cd, #fce4a0); padding: 15px; border-radius: 8px; margin: 15px 0;">
+                            <p><strong>注意：</strong>由于特征值计算较复杂，在实际应用中常使用数值方法。这里主要掌握转化思路和求解步骤。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="nav-buttons">
+            <a href="7.9.html" class="btn prev">上一节：7.9 欧拉方程</a>
+            <a href="7.11.html" class="btn next">下一节：7.11 微分方程总结</a>
+        </div>
+        
+        <footer>
+            <p>&copy; 2024 高等数学复习系统 - 常系数线性微分方程组</p>
+        </footer>
+    </div>
+
+    <script>
+        // 相图可视化
+        function plotPhasePortrait() {
+            const traces = [];
+            const types = ['stable', 'saddle', 'spiral', 'center'];
+            const names = ['稳定结点', '鞍点', '稳定焦点', '中心'];
+            const colors = ['#e74c3c', '#f39c12', '#27ae60', '#3498db'];
+            
+            // 计算不同系统的特征值和特征向量
+            function getSystemInfo(type) {
+                switch(type) {
+                    case 'stable':
+                        return {
+                            matrix: [[-1, 0], [0, -0.5]], // 稳定结点
+                            eigenvalues: [-1, -0.5]
+                        };
+                    case 'saddle':
+                        return {
+                            matrix: [[1, 0], [0, -1]], // 鞍点
+                            eigenvalues: [1, -1]
+                        };
+                    case 'spiral':
+                        return {
+                            matrix: [[-0.3, -1], [1, -0.3]], // 稳定焦点
+                            eigenvalues: [-0.3, -0.3] // 复数特征值的实部
+                        };
+                    case 'center':
+                        return {
+                            matrix: [[0, -1], [1, 0]], // 中心
+                            eigenvalues: [0, 0] // 纯虚数特征值
+                        };
+                }
+            }
+            
+            // 向量场函数
+            function vectorField(x, y, matrix) {
+                const dx = matrix[0][0] * x + matrix[0][1] * y;
+                const dy = matrix[1][0] * x + matrix[1][1] * y;
+                return [dx, dy];
+            }
+            
+            // 为每种类型创建向量场箭头
+            types.forEach((type, index) => {
+                const systemInfo = getSystemInfo(type);
+                const matrix = systemInfo.matrix;
+                
+                // 创建向量场箭头
+                const arrowX = [];
+                const arrowY = [];
+                const arrowU = [];
+                const arrowV = [];
+                
+                for (let i = -2.5; i <= 2.5; i += 0.5) {
+                    for (let j = -2.5; j <= 2.5; j += 0.5) {
+                        if (Math.abs(i) > 0.1 || Math.abs(j) > 0.1) { // 避开原点附近
+                            const [dx, dy] = vectorField(i, j, matrix);
+                            const magnitude = Math.sqrt(dx*dx + dy*dy);
+                            if (magnitude > 0.01) {
+                                const scale = 0.2 / Math.max(magnitude, 0.1);
+                                arrowX.push(i, i + dx*scale, null);
+                                arrowY.push(j, j + dy*scale, null);
+                            }
+                        }
+                    }
+                }
+                
+                // 向量场线段
+                const vectorTrace = {
+                    x: arrowX,
+                    y: arrowY,
+                    type: 'scatter',
+                    mode: 'lines',
+                    line: { 
+                        color: colors[index], 
+                        width: 1.5,
+                        shape: 'linear'
+                    },
+                    name: names[index] + '向量场',
+                    visible: index === 0 ? true : 'legendonly',
+                    showlegend: true,
+                    hoverinfo: 'skip'
+                };
+                
+                traces.push(vectorTrace);
+            });
+            
+            // 创建特征轨线
+            types.forEach((type, index) => {
+                const systemInfo = getSystemInfo(type);
+                const matrix = systemInfo.matrix;
+                let trajectories = [];
+                
+                switch(type) {
+                    case 'stable':
+                        // 只显示一条代表性的稳定轨线
+                        const stableStart = [2, 1];
+                        const t = [];
+                        for (let i = 0; i <= 100; i++) t.push(i * 0.05);
+                        trajectories = [{
+                            x: t.map(ti => stableStart[0] * Math.exp(-ti)),
+                            y: t.map(ti => stableStart[1] * Math.exp(-0.5*ti))
+                        }];
+                        break;
+                        
+                    case 'saddle':
+                        // 鞍点的稳定和不稳定流形
+                        trajectories = [
+                            // 稳定流形 (λ = -1)
+                            {
+                                x: Array.from({length: 101}, (_, i) => 2 * Math.exp(-(i * 0.05))),
+                                y: Array.from({length: 101}, (_, i) => 0)
+                            },
+                            {
+                                x: Array.from({length: 101}, (_, i) => -2 * Math.exp(-(i * 0.05))),
+                                y: Array.from({length: 101}, (_, i) => 0)
+                            },
+                            // 不稳定流形 (λ = 1)
+                            {
+                                x: Array.from({length: 51}, (_, i) => 0),
+                                y: Array.from({length: 51}, (_, i) => 0.5 * Math.exp(i * 0.05))
+                            },
+                            {
+                                x: Array.from({length: 51}, (_, i) => 0),
+                                y: Array.from({length: 51}, (_, i) => -0.5 * Math.exp(i * 0.05))
+                            }
+                        ];
+                        break;
+                        
+                    case 'spiral':
+                        // 螺旋轨线
+                        const spiralStarts = [[2, 0], [0, 2], [-1.5, 1], [1, -1.5]];
+                        trajectories = spiralStarts.map(start => {
+                            const t = [];
+                            for (let i = 0; i <= 200; i++) t.push(i * 0.03);
+                            return {
+                                x: t.map(ti => Math.exp(-0.1*ti) * (start[0] * Math.cos(ti) - start[1] * Math.sin(ti))),
+                                y: t.map(ti => Math.exp(-0.1*ti) * (start[0] * Math.sin(ti) + start[1] * Math.cos(ti)))
+                            };
+                        });
+                        break;
+                        
+                    case 'center':
+                        // 椭圆轨线（完整闭合）
+                        const centerRadii = [0.8, 1.3, 1.8, 2.3];
+                        trajectories = centerRadii.map(r => {
+                            const t = [];
+                            for (let i = 0; i <= 126; i++) t.push(i * 0.05); // 确保完整周期
+                            return {
+                                x: t.map(ti => r * Math.cos(ti)),
+                                y: t.map(ti => r * Math.sin(ti))
+                            };
+                        });
+                        break;
+                }
+                
+                // 添加轨线到traces
+                trajectories.forEach((traj, trajIndex) => {
+                    const trajectoryTrace = {
+                        x: traj.x,
+                        y: traj.y,
+                        type: 'scatter',
+                        mode: 'lines',
+                        name: trajIndex === 0 ? names[index] + '轨线' : '',
+                        line: { 
+                            color: colors[index], 
+                            width: 2,
+                            dash: type === 'center' ? 'solid' : 'dot'
+                        },
+                        visible: index === 0 ? true : 'legendonly',
+                        showlegend: trajIndex === 0,
+                        hoverinfo: 'skip'
+                    };
+                    
+                    traces.push(trajectoryTrace);
+                });
+            });
+            
+            traces.push({
+                x: [0, 0],
+                y: [-3, 3],
+                type: 'scatter',
+                mode: 'lines',
+                line: { color: '#34495e', width: 1 },
+                showlegend: false,
+                visible: true,
+                hoverinfo: 'skip'
+            });
+            
+            const layout = {
+                title: {
+                    text: '常系数线性微分方程组的相图类型',
+                    font: { size: 18, color: '#2c3e50' }
+                },
+                xaxis: {
+                    title: 'x',
+                    range: [-3, 3],
+                    gridcolor: '#ecf0f1',
+                    zerolinecolor: '#34495e',
+                    zerolinewidth: 2,
+                    showgrid: true,
+                    scaleanchor: 'y',
+                    scaleratio: 1
+                },
+                yaxis: {
+                    title: 'y',
+                    range: [-3, 3],
+                    gridcolor: '#ecf0f1',
+                    zerolinecolor: '#34495e',
+                    zerolinewidth: 2,
+                    showgrid: true
+                },
+                plot_bgcolor: '#fafafa',
+                paper_bgcolor: 'white',
+                font: { family: 'Microsoft YaHei, Arial' },
+                legend: {
+                    orientation: 'v',
+                    x: 1.02,
+                    y: 1,
+                    bgcolor: 'rgba(255,255,255,0.9)',
+                    bordercolor: '#bdc3c7',
+                    borderwidth: 1
+                },
+                margin: { t: 60, r: 220, b: 50, l: 50 }
+            };
+            
+            Plotly.newPlot('phasePortrait', traces, layout, {
+                responsive: true,
+                displayModeBar: false
+            });
+        }
+        
+        // 页面加载完成后执行可视化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 等待MathJax渲染完成
+            if (window.MathJax) {
+                MathJax.startup.promise.then(() => {
+                    plotPhasePortrait();
+                });
+            } else {
+                plotPhasePortrait();
+            }
+            
+            // 添加页面元素动画
+            gsap.from('.content-section', {
+                duration: 0.8,
+                y: 50,
+                opacity: 0,
+                stagger: 0.2,
+                ease: 'power2.out'
+            });
+            
+            // 系统形式框的动画效果
+            gsap.from('.system-form', {
+                duration: 1,
+                scale: 0.9,
+                opacity: 0,
+                ease: 'back.out(1.7)',
+                delay: 0.5
+            });
+            
+            // 矩阵形式的动画
+            gsap.from('.matrix-form', {
+                duration: 0.8,
+                x: -30,
+                opacity: 0,
+                ease: 'power2.out',
+                delay: 0.7
+            });
+            
+            // 表格的动画
+            gsap.from('.solution-types', {
+                duration: 0.8,
+                y: 30,
+                opacity: 0,
+                ease: 'power2.out',
+                delay: 1.5
+            });
+            
+            // 相图容器的动画
+            gsap.from('.viz-container', {
+                duration: 1,
+                scale: 0.95,
+                opacity: 0,
+                ease: 'power2.out',
+                delay: 2.0
+            });
+        });
+    </script>
+</body>
+</html>

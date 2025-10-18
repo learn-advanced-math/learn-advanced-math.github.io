@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="alternate icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTUiIGZpbGw9IiMzNDk4ZGIiIHN0cm9rZT0iIzJjM2U1MCIgc3Ryb2tlLXdpZHRoPSIyIi8+PGcgZmlsbD0id2hpdGUiIGZvbnQtZmFtaWx5PSJUaW1lcyxzZXJpZiIgZm9udC13ZWlnaHQ9ImJvbGQiPjx0ZXh0IHg9IjE2IiB5PSIxMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxMiI+ZDwvdGV4dD48bGluZSB4MT0iOCIgeTE9IjE2IiB4Mj0iMjQiIHkyPSIxNiIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjUiLz48dGV4dCB4PSIxNiIgeT0iMjUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTAiPmR4PC90ZXh0PjwvZz48L3N2Zz4=">
+    <title>5.1 定积分的概念与性质 - 高等数学复习</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']]
+            },
+            chtml: {
+                fontURL: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2'
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.26.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 20px;
+            color: #e67e22;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 15px;
+            border-radius: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .back-link:hover {
+            color: #d35400;
+            transform: translateX(-5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+        
+        .back-link::before {
+            content: '←';
+            margin-right: 8px;
+            font-size: 1.2em;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #e67e22 0%, #d35400 100%);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            margin: 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            font-weight: 300;
+        }
+        
+        .subtitle {
+            font-size: 1.1em;
+            margin-top: 10px;
+            opacity: 0.9;
+        }
+        
+        .content-section {
+            background: white;
+            margin: 25px 0;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .content-section:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .section-header {
+            padding: 20px 30px;
+            background: linear-gradient(45deg, #e67e22, #d35400);
+            color: white;
+        }
+        
+        .section-header h2 {
+            margin: 0;
+            font-size: 1.6em;
+            font-weight: 400;
+        }
+        
+        .section-content {
+            padding: 30px;
+        }
+        
+        .definition {
+            background: linear-gradient(135deg, #fef5e7, #fdebd0);
+            border-left: 5px solid #e67e22;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(230, 126, 34, 0.1);
+        }
+        
+        .definition h4 {
+            margin: 0 0 15px 0;
+            color: #e67e22;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .theorem {
+            background: linear-gradient(135deg, #eafaf1, #d5f4e6);
+            border-left: 5px solid #27ae60;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(39, 174, 96, 0.1);
+        }
+        
+        .theorem h4 {
+            margin: 0 0 15px 0;
+            color: #27ae60;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .example {
+            background: linear-gradient(135deg, #ebf3fd, #d6e9f8);
+            border-left: 5px solid #3498db;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(52, 152, 219, 0.1);
+        }
+        
+        .example h4 {
+            margin: 0 0 15px 0;
+            color: #3498db;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .practice-problem {
+            background: linear-gradient(135deg, #fdf2e9, #fbeee0);
+            border-left: 5px solid #e74c3c;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(231, 76, 60, 0.1);
+        }
+        
+        .practice-problem h4 {
+            margin: 0 0 15px 0;
+            color: #e74c3c;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .difficulty {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: 500;
+            margin-left: 10px;
+        }
+        
+        .difficulty.medium {
+            background: #f39c12;
+            color: white;
+        }
+        
+        .difficulty.hard {
+            background: #e74c3c;
+            color: white;
+        }
+        
+        .difficulty.very-hard {
+            background: #8e44ad;
+            color: white;
+        }
+        
+        .solution {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px dashed #bdc3c7;
+        }
+        
+        .solution-header {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+        
+        .viz-container {
+            width: 100%;
+            height: 400px;
+            margin: 25px 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .interactive-demo {
+            width: 100%;
+            height: auto;
+            min-height: 480px;
+            margin: 25px 0;
+            background: #f8f9fa;
+            border-radius: 10px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            padding: 20px;
+            position: relative;
+        }
+        
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .controls label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #e67e22;
+        }
+        
+        .controls input, .controls select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 40px;
+            padding: 20px 0;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 25px;
+            background: linear-gradient(45deg, #e67e22, #d35400);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 15px rgba(230, 126, 34, 0.3);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(230, 126, 34, 0.4);
+        }
+        
+        .btn.prev::before {
+            content: '←';
+            margin-right: 8px;
+            font-size: 1.1em;
+        }
+        
+        .btn.next::after {
+            content: '→';
+            margin-left: 8px;
+            font-size: 1.1em;
+        }
+        
+        footer {
+            text-align: center;
+            color: white;
+            padding: 30px 0;
+            opacity: 0.9;
+            margin-top: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        footer p {
+            text-align: center;
+            margin: 0;
+        }
+        
+        .math-expression {
+            text-align: center;
+            margin: 15px 0;
+            font-size: 1.1em;
+        }
+        
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        .highlight {
+            background: linear-gradient(135deg, #fff3cd, #fce4a0);
+            padding: 15px;
+            border-left: 4px solid #ffc107;
+            border-radius: 0 8px 8px 0;
+            margin: 15px 0;
+        }
+        
+        .integral-visualization {
+            width: 100%;
+            height: 400px;
+            margin: 15px 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .riemann-sum-demo {
+            width: 100%;
+            height: 450px;
+            margin: 25px 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .memory-card {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(255, 154, 158, 0.3);
+            margin: 20px 0;
+            border-left: 5px solid #e74c3c;
+        }
+        
+        .memory-card h4 {
+            color: #c0392b;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .memory-card h4::before {
+            content: '💡';
+            margin-right: 10px;
+            font-size: 1.3em;
+        }
+        
+        .formula-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .formula-card {
+            background: linear-gradient(135deg, #e8f5e8, #d4edda);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.2);
+            text-align: center;
+            border: 2px solid #27ae60;
+        }
+        
+        .formula-card h5 {
+            color: #27ae60;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+        
+        .formula-card .formula {
+            font-size: 1.2em;
+            margin: 15px 0;
+            color: #2c3e50;
+        }
+
+        /* AI提示方块样式 */
+        .ai-warning {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            border: 2px solid #e0e0e0;
+        }
+        
+        .ai-warning:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            border-color: #ff4444;
+        }
+        
+        .ai-warning::before {
+            content: '!';
+            color: #e74c3c;
+            font-size: 20px;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+        }
+        
+        .ai-warning-tooltip {
+            position: absolute;
+            top: 50px;
+            left: 0;
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 16px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            line-height: 1.5;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1001;
+            width: 250px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .ai-warning-tooltip::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: 20px;
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid rgba(0, 0, 0, 0.9);
+        }
+        
+        .ai-warning:hover .ai-warning-tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .section-content {
+                padding: 20px;
+            }
+            
+            .definition, .theorem, .example, .practice-problem {
+                padding: 20px;
+            }
+            
+            .nav-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .controls {
+                grid-template-columns: 1fr;
+            }
+            
+            .formula-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .ai-warning {
+                width: 35px;
+                height: 35px;
+                top: 15px;
+                left: 15px;
+            }
+            
+            .ai-warning::before {
+                font-size: 18px;
+            }
+            
+            .ai-warning-tooltip {
+                width: 280px;
+                font-size: 13px;
+                padding: 14px 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- AI内容提示 -->
+    <div class="ai-warning">
+        <div class="ai-warning-tooltip">
+            页面内容由AI生成，请谨慎对待。<br>如发现错误，<a href="https://github.com/learn-advanced-math/learn-advanced-math.github.io/issues" target="_blank" style="color: #ff0000">欢迎反馈</a>。
+        </div>
+    </div>
+    
+    <div class="container">
+        <a href="../index.html" class="back-link">返回章节概览</a>
+        
+        <header>
+            <h1>5.1 定积分的概念与性质</h1>
+            <div class="subtitle">Concept and Properties of Definite Integrals</div>
+        </header>
+        
+        <!-- 5.1.1 引例 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>5.1.1 引例：曲边梯形的面积与变速直线运动的路程</h2>
+            </div>
+            <div class="section-content">
+                <div class="memory-card">
+                    <h4>记忆要点</h4>
+                    <p><strong>定积分的本质：</strong>将"无限细分，以直代曲，无限求和，取极限"的思想具体化为数学概念。通过<strong>分割→近似→求和→取极限</strong>四个步骤来解决实际问题。</p>
+                </div>
+                
+                <div class="definition">
+                    <h4>问题1：曲边梯形的面积</h4>
+                    <p>设函数 $f(x)$ 在区间 $[a,b]$ 上连续且 $f(x) \geq 0$，求由曲线 $y = f(x)$、直线 $x = a$、$x = b$ 和 $x$ 轴所围成的曲边梯形的面积。</p>
+                    
+                    <div class="highlight">
+                        <p><strong>解决思路：</strong></p>
+                        <ol>
+                            <li><strong>分割：</strong>将区间 $[a,b]$ 分成 $n$ 个小区间</li>
+                            <li><strong>近似：</strong>在每个小区间上用矩形面积近似曲边梯形面积</li>
+                            <li><strong>求和：</strong>将所有小矩形的面积相加</li>
+                            <li><strong>取极限：</strong>令分割的细度趋于零，求和式的极限即为所求面积</li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="definition">
+                    <h4>问题2：变速直线运动的路程</h4>
+                    <p>设物体在直线上运动，其速度函数为 $v(t)$（$v(t) \geq 0$），求物体在时间区间 $[T_1, T_2]$ 内所走过的路程。</p>
+                    
+                    <div class="highlight">
+                        <p><strong>解决思路：</strong>同样采用"分割→近似→求和→取极限"的方法，将时间区间细分，在每个小时间段内认为速度不变，从而转化为匀速运动问题。</p>
+                    </div>
+                </div>
+                
+                <div class="interactive-demo">
+                    <div class="controls">
+                        <div class="control-group">
+                            <label for="function-type">选择函数：</label>
+                            <select id="function-type">
+                                <option value="quadratic">y = x²</option>
+                                <option value="cubic">y = x³</option>
+                                <option value="sin">y = sin(x)</option>
+                                <option value="sqrt">y = √x</option>
+                            </select>
+                        </div>
+                        <div class="control-group">
+                            <label for="num-intervals">分割数 n：</label>
+                            <input type="range" id="num-intervals" min="1" max="100" value="10" step="1">
+                            <span id="intervals-display">10</span>
+                        </div>
+                        <div class="control-group">
+                            <label for="interval-start">积分下限：</label>
+                            <input type="range" id="interval-start" value="0" step="0.1">
+                        </div>
+                        <div class="control-group">
+                            <label for="interval-end">积分上限：</label>
+                            <input type="range" id="interval-end" min="1" value="2" step="0.5">
+                        </div>
+                    </div>
+                    
+                    
+                    
+                    <div id="riemann-sum-value" style="text-align: center; font-size: 1.2em; margin-top: 15px; color: #e67e22; font-weight: bold;"></div>
+                    <div class="riemann-sum-demo" id="riemann-sum-plot"></div>
+                </div>
+                
+                <div class="example">
+                    <h4>例1：用定义求曲边梯形面积</h4>
+                    <p>用分割求和的方法求函数 $f(x) = x^2$ 在区间 $[0, 1]$ 上与 $x$ 轴围成的面积。</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解：</div>
+                        <p><strong>第一步：分割</strong></p>
+                        <p>将区间 $[0, 1]$ 等分为 $n$ 个小区间，每个小区间的长度为 $\Delta x = \frac{1}{n}$</p>
+                        <p>分点为：$x_k = k \cdot \frac{1}{n} = \frac{k}{n}$，其中 $k = 0, 1, 2, \ldots, n$</p>
+                        
+                        <p><strong>第二步：近似</strong></p>
+                        <p>在第 $k$ 个小区间 $[\frac{k-1}{n}, \frac{k}{n}]$ 上，取右端点处的函数值：$f(\frac{k}{n}) = (\frac{k}{n})^2$</p>
+                        <p>第 $k$ 个小矩形的面积为：$\Delta S_k = f(\frac{k}{n}) \cdot \Delta x = (\frac{k}{n})^2 \cdot \frac{1}{n} = \frac{k^2}{n^3}$</p>
+                        
+                        <p><strong>第三步：求和</strong></p>
+                        $$S_n = \sum_{k=1}^{n} \Delta S_k = \sum_{k=1}^{n} \frac{k^2}{n^3} = \frac{1}{n^3} \sum_{k=1}^{n} k^2$$
+                        <p>利用公式 $\sum_{k=1}^{n} k^2 = \frac{n(n+1)(2n+1)}{6}$：</p>
+                        $$S_n = \frac{1}{n^3} \cdot \frac{n(n+1)(2n+1)}{6} = \frac{(n+1)(2n+1)}{6n^2}$$
+                        
+                        <p><strong>第四步：取极限</strong></p>
+                        $$S = \lim_{n \to \infty} S_n = \lim_{n \to \infty} \frac{(n+1)(2n+1)}{6n^2} = \lim_{n \to \infty} \frac{2n^2 + 3n + 1}{6n^2} = \frac{1}{3}$$
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 5.1.2 定积分的定义 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>5.1.2 定积分的定义与性质</h2>
+            </div>
+            <div class="section-content">
+                <div class="definition">
+                    <h4>定积分的定义</h4>
+                    <p>设函数 $f(x)$ 在区间 $[a,b]$ 上有界，将区间 $[a,b]$ 任意分割为 $n$ 个小区间：</p>
+                    $$a = x_0 < x_1 < x_2 < \cdots < x_{n-1} < x_n = b$$
+                    <p>在每个小区间 $[x_{i-1}, x_i]$ 上任取一点 $\xi_i$，作和式：</p>
+                    $$S = \sum_{i=1}^{n} f(\xi_i) \Delta x_i$$
+                    <p>其中 $\Delta x_i = x_i - x_{i-1}$，记 $\lambda = \max\{|\Delta x_1|, |\Delta x_2|, \ldots, |\Delta x_n|\}$</p>
+                    
+                    <div class="math-expression">
+                        <p>如果当 $\lambda \to 0$ 时，和式 $S$ 的极限存在且与分割方式和 $\xi_i$ 的选取无关，则称此极限为函数 $f(x)$ 在区间 $[a,b]$ 上的<strong>定积分</strong>，记作：</p>
+                        $$\int_a^b f(x) \, dx = \lim_{\lambda \to 0} \sum_{i=1}^{n} f(\xi_i) \Delta x_i$$
+                    </div>
+                    
+                    <div class="highlight">
+                        <p><strong>符号说明：</strong></p>
+                        <ul>
+                            <li>$\int$ —— 积分号（Integral sign）</li>
+                            <li>$f(x)$ —— 被积函数（Integrand）</li>
+                            <li>$x$ —— 积分变量（Variable of integration）</li>
+                            <li>$dx$ —— 微分元素（Differential element）</li>
+                            <li>$a$ —— 积分下限（Lower limit）</li>
+                            <li>$b$ —— 积分上限（Upper limit）</li>
+                            <li>$[a,b]$ —— 积分区间（Integration interval）</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="theorem">
+                    <h4>定积分存在定理</h4>
+                    <p>如果函数 $f(x)$ 在区间 $[a,b]$ 上连续，则定积分 $\int_a^b f(x) \, dx$ 存在。</p>
+                    
+                    <div class="highlight">
+                        <p><strong>充分条件：</strong></p>
+                        <ul>
+                            <li>$f(x)$ 在 $[a,b]$ 上连续</li>
+                            <li>$f(x)$ 在 $[a,b]$ 上有界且只有有限个间断点</li>
+                            <li>$f(x)$ 在 $[a,b]$ 上单调</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="formula-grid">
+                    <div class="formula-card">
+                        <h5>定积分的几何意义</h5>
+                        <div class="formula">
+                            当 $f(x) \geq 0$ 时：<br>
+                            $\int_a^b f(x) \, dx$ = 曲边梯形面积
+                        </div>
+                    </div>
+                    <div class="formula-card">
+                        <h5>定积分的物理意义</h5>
+                        <div class="formula">
+                            $\int_{t_1}^{t_2} v(t) \, dt$ = 路程<br>
+                            $\int_{t_1}^{t_2} a(t) \, dt$ = 速度变化量
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="theorem">
+                    <h4>定积分的性质</h4>
+                    
+                    <div class="highlight">
+                        <p><strong>性质1：</strong>$\int_a^a f(x) \, dx = 0$</p>
+                        <p><strong>性质2：</strong>$\int_a^b f(x) \, dx = -\int_b^a f(x) \, dx$</p>
+                        <p><strong>性质3（线性性）：</strong>$\int_a^b [k_1 f(x) + k_2 g(x)] \, dx = k_1 \int_a^b f(x) \, dx + k_2 \int_a^b g(x) \, dx$</p>
+                        <p><strong>性质4（区间可加性）：</strong>$\int_a^b f(x) \, dx = \int_a^c f(x) \, dx + \int_c^b f(x) \, dx$（$c$ 可在 $[a,b]$ 内外）</p>
+                        <p><strong>性质5（保号性）：</strong>若在 $[a,b]$ 上 $f(x) \geq 0$，则 $\int_a^b f(x) \, dx \geq 0$</p>
+                        <p><strong>性质6（比较性）：</strong>若在 $[a,b]$ 上 $f(x) \leq g(x)$，则 $\int_a^b f(x) \, dx \leq \int_a^b g(x) \, dx$</p>
+                    </div>
+                </div>
+                
+                <div class="theorem">
+                    <h4>定积分的估值定理</h4>
+                    <p>设 $M$ 和 $m$ 分别是函数 $f(x)$ 在区间 $[a,b]$ 上的最大值和最小值，则：</p>
+                    <div class="math-expression">
+                        $$m(b-a) \leq \int_a^b f(x) \, dx \leq M(b-a)$$
+                    </div>
+                    
+                    <p><strong>积分中值定理：</strong>如果函数 $f(x)$ 在区间 $[a,b]$ 上连续，则在 $[a,b]$ 上至少存在一点 $\xi$，使得：</p>
+                    <div class="math-expression">
+                        $$\int_a^b f(x) \, dx = f(\xi)(b-a)$$
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <h4>例2：利用定积分性质计算</h4>
+                    <p>已知 $\int_0^1 x^2 \, dx = \frac{1}{3}$，$\int_0^1 x^3 \, dx = \frac{1}{4}$，计算 $\int_0^1 (2x^2 - 3x^3) \, dx$</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解：</div>
+                        <p>利用定积分的线性性质：</p>
+                        $$\int_0^1 (2x^2 - 3x^3) \, dx = 2\int_0^1 x^2 \, dx - 3\int_0^1 x^3 \, dx$$
+                        $$= 2 \cdot \frac{1}{3} - 3 \cdot \frac{1}{4} = \frac{2}{3} - \frac{3}{4} = \frac{8-9}{12} = -\frac{1}{12}$$
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 5.1.3 定积分的近似计算 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>5.1.3 定积分的近似计算</h2>
+            </div>
+            <div class="section-content">
+                <div class="memory-card">
+                    <h4>数值积分方法对比</h4>
+                    <p>掌握三种基本的数值积分方法：<strong>矩形公式、梯形公式、辛普森公式</strong>。记住它们的精度递增：矩形 < 梯形 < 辛普森，计算量也相应增加。</p>
+                </div>
+                
+                <div class="theorem">
+                    <h4>矩形公式（Rectangle Rule）</h4>
+                    <p>将积分区间 $[a,b]$ 等分为 $n$ 个小区间，在每个小区间上用矩形面积近似：</p>
+                    
+                    <div class="formula-grid">
+                        <div class="formula-card">
+                            <h5>左矩形公式</h5>
+                            <div class="formula">
+                                $\int_a^b f(x) \, dx \approx h \sum_{i=0}^{n-1} f(x_i)$<br>
+                                其中 $h = \frac{b-a}{n}$，$x_i = a + ih$
+                            </div>
+                        </div>
+                        <div class="formula-card">
+                            <h5>右矩形公式</h5>
+                            <div class="formula">
+                                $\int_a^b f(x) \, dx \approx h \sum_{i=1}^{n} f(x_i)$<br>
+                                其中 $h = \frac{b-a}{n}$，$x_i = a + ih$
+                            </div>
+                        </div>
+                        <div class="formula-card">
+                            <h5>中点矩形公式</h5>
+                            <div class="formula">
+                                $\int_a^b f(x) \, dx \approx h \sum_{i=1}^{n} f(\bar{x}_i)$<br>
+                                其中 $\bar{x}_i = a + (i-\frac{1}{2})h$
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="theorem">
+                    <h4>梯形公式（Trapezoidal Rule）</h4>
+                    <p>用梯形面积代替曲边梯形面积：</p>
+                    <div class="math-expression">
+                        $$\int_a^b f(x) \, dx \approx \frac{h}{2} [f(a) + 2\sum_{i=1}^{n-1} f(x_i) + f(b)]$$
+                    </div>
+                    <p>其中 $h = \frac{b-a}{n}$，$x_i = a + ih$</p>
+                </div>
+                
+                <div class="theorem">
+                    <h4>辛普森公式（Simpson's Rule）</h4>
+                    <p>用抛物线段代替曲线段（$n$ 必须为偶数）：</p>
+                    <div class="math-expression">
+                        $$\int_a^b f(x) \, dx \approx \frac{h}{3} [f(a) + 4\sum_{i=1,3,5,...}^{n-1} f(x_i) + 2\sum_{i=2,4,6,...}^{n-2} f(x_i) + f(b)]$$
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <h4>例3：用不同方法近似计算积分</h4>
+                    <p>用矩形公式、梯形公式计算 $\int_0^1 e^{-x^2} \, dx$（取 $n = 4$）</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解：</div>
+                        <p>$h = \frac{1-0}{4} = 0.25$，分点为：$x_0 = 0$，$x_1 = 0.25$，$x_2 = 0.5$，$x_3 = 0.75$，$x_4 = 1$</p>
+                        
+                        <p>函数值：</p>
+                        <ul>
+                            <li>$f(0) = e^0 = 1$</li>
+                            <li>$f(0.25) = e^{-0.0625} \approx 0.9394$</li>
+                            <li>$f(0.5) = e^{-0.25} \approx 0.7788$</li>
+                            <li>$f(0.75) = e^{-0.5625} \approx 0.5698$</li>
+                            <li>$f(1) = e^{-1} \approx 0.3679$</li>
+                        </ul>
+                        
+                        <p><strong>左矩形公式：</strong></p>
+                        $$I \approx 0.25 \times (1 + 0.9394 + 0.7788 + 0.5698) = 0.25 \times 3.288 = 0.822$$
+                        
+                        <p><strong>梯形公式：</strong></p>
+                        $$I \approx \frac{0.25}{2} [1 + 2(0.9394 + 0.7788 + 0.5698) + 0.3679]$$
+                        $$= 0.125 \times [1 + 4.576 + 0.3679] = 0.125 \times 5.9439 = 0.743$$
+                    </div>
+                </div>
+                
+                <div class="practice-problem">
+                    <h4>习题1 <span class="difficulty medium">中等难度</span></h4>
+                    <p>利用定积分的定义计算 $\int_0^2 x \, dx$</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解：</div>
+                        <p>将区间 $[0, 2]$ 等分为 $n$ 个小区间，$\Delta x = \frac{2}{n}$，$x_k = \frac{2k}{n}$</p>
+                        <p>选择右端点：$\xi_k = x_k = \frac{2k}{n}$</p>
+                        $$S_n = \sum_{k=1}^{n} f(\xi_k) \Delta x = \sum_{k=1}^{n} \frac{2k}{n} \cdot \frac{2}{n} = \frac{4}{n^2} \sum_{k=1}^{n} k$$
+                        <p>利用 $\sum_{k=1}^{n} k = \frac{n(n+1)}{2}$：</p>
+                        $$S_n = \frac{4}{n^2} \cdot \frac{n(n+1)}{2} = \frac{2(n+1)}{n} = 2 + \frac{2}{n}$$
+                        <p>因此：$\int_0^2 x \, dx = \lim_{n \to \infty} S_n = \lim_{n \to \infty} (2 + \frac{2}{n}) = 2$</p>
+                    </div>
+                </div>
+                
+                <div class="practice-problem">
+                    <h4>习题2 <span class="difficulty hard">较难</span></h4>
+                    <p>利用定积分的性质，比较 $\int_0^{\pi/2} \sin x \, dx$ 与 $\int_0^{\pi/2} \cos x \, dx$ 的大小</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解：</div>
+                        <p>考虑函数 $g(x) = \sin x - \cos x$ 在 $[0, \frac{\pi}{2}]$ 上的符号。</p>
+                        <p>令 $g(x) = \sin x - \cos x = 0$，得 $\sin x = \cos x$，即 $\tan x = 1$，所以 $x = \frac{\pi}{4}$</p>
+                        
+                        <p>当 $x \in [0, \frac{\pi}{4})$ 时，$\sin x < \cos x$，即 $g(x) < 0$</p>
+                        <p>当 $x \in (\frac{\pi}{4}, \frac{\pi}{2}]$ 时，$\sin x > \cos x$，即 $g(x) > 0$</p>
+                        
+                        <p>利用对称性：令 $t = \frac{\pi}{2} - x$，则当 $x$ 从 $0$ 变到 $\frac{\pi}{4}$ 时，$t$ 从 $\frac{\pi}{2}$ 变到 $\frac{\pi}{4}$</p>
+                        $$\int_0^{\pi/4} (\sin x - \cos x) \, dx = -\int_{\pi/4}^{\pi/2} (\sin x - \cos x) \, dx$$
+                        
+                        <p>因此：$\int_0^{\pi/2} (\sin x - \cos x) \, dx = 0$</p>
+                        <p>所以：$\int_0^{\pi/2} \sin x \, dx = \int_0^{\pi/2} \cos x \, dx$</p>
+                    </div>
+                </div>
+                
+                <div class="practice-problem">
+                    <h4>习题3 <span class="difficulty very-hard">很难</span></h4>
+                    <p>设 $f(x)$ 在 $[0, 1]$ 上连续，且 $\int_0^1 f(x) \, dx = \frac{1}{2}$，$\int_0^1 xf(x) \, dx = \frac{1}{3}$。求证：在 $[0, 1]$ 内至少存在一点 $c$，使得 $f(c) = 1$</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">详细证明过程：</div>
+
+                        <p>构造函数：</p>
+                        $$h(x) = (x-1) f(x)$$
+
+                        <p>计算 $h(x)$ 的积分：</p>
+                        $$\int_0^1 h(x) \, dx = \int_0^1 (x-1) f(x) \, dx = \int_0^1 xf(x) \, dx - \int_0^1 f(x) \, dx = \frac{1}{3} - \frac{1}{2} = -\frac{1}{6}$$
+
+                        <p>由积分中值定理，存在 $c \in [0, 1]$，使得 $\int_0^1 h(x) \, dx = h(c)$</p>
+
+                        <p>进而可得：</p>
+                        $$ h(c)= (c-1) f(c) = -\frac{1}{6}$$
+
+                        <p>易知，</p>
+                        $$当 \, c = \frac{5}{6} \, 时，f(c) = 1 $$
+                        
+                        <div class="highlight">
+                            <p><strong>结论：</strong>通过构造辅助函数和运用积分中值定理，使得某个特定值（这里是1）必须被函数取到。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="nav-buttons">
+            <a href="../index.html" class="btn prev">返回章节概览</a>
+            <a href="5.2.html" class="btn next">下一节：5.2 微积分基本公式</a>
+        </div>
+        
+        <footer>
+            <p>&copy; 2025 高等数学复习系统 - 定积分的概念与性质</p>
+        </footer>
+    </div>
+
+    <script>
+        // 黎曼和可视化演示
+        function createRiemannSumVisualization() {
+            const plotDiv = document.getElementById('riemann-sum-plot');
+            const functionTypeSelect = document.getElementById('function-type');
+            const numIntervalsSlider = document.getElementById('num-intervals');
+            const intervalsDisplay = document.getElementById('intervals-display');
+            const intervalStartInput = document.getElementById('interval-start');
+            const intervalEndInput = document.getElementById('interval-end');
+            const riemannSumValue = document.getElementById('riemann-sum-value');
+            
+            // 定义函数
+            const functions = {
+                quadratic: {
+                    f: x => x * x,
+                    name: 'y = x²',
+                    analytical: (a, b) => (Math.pow(b, 3) - Math.pow(a, 3)) / 3
+                },
+                cubic: {
+                    f: x => x * x * x,
+                    name: 'y = x³',
+                    analytical: (a, b) => (Math.pow(b, 4) - Math.pow(a, 4)) / 4
+                },
+                sin: {
+                    f: x => Math.sin(x),
+                    name: 'y = sin(x)',
+                    analytical: (a, b) => -Math.cos(b) + Math.cos(a)
+                },
+                sqrt: {
+                    f: x => Math.sqrt(Math.abs(x)),
+                    name: 'y = √x',
+                    analytical: (a, b) => (2/3) * (Math.pow(Math.abs(b), 1.5) - Math.pow(Math.abs(a), 1.5))
+                }
+            };
+            
+            function updatePlot() {
+                const functionType = functionTypeSelect.value;
+                const n = parseInt(numIntervalsSlider.value);
+                const a = parseFloat(intervalStartInput.value);
+                const b = parseFloat(intervalEndInput.value);
+                
+                if (a >= b) return;
+                
+                const func = functions[functionType];
+                const h = (b - a) / n;
+                
+                // 生成函数曲线数据
+                const xCurve = [];
+                const yCurve = [];
+                for (let i = 0; i <= 200; i++) {
+                    const x = a + (b - a) * i / 200;
+                    xCurve.push(x);
+                    yCurve.push(func.f(x));
+                }
+                
+                // 生成矩形数据
+                const xRect = [];
+                const yRect = [];
+                let riemannSum = 0;
+                
+                for (let i = 0; i < n; i++) {
+                    const x1 = a + i * h;
+                    const x2 = a + (i + 1) * h;
+                    const xi = x2; // 使用右端点
+                    const yi = func.f(xi);
+                    
+                    riemannSum += yi * h;
+                    
+                    // 添加矩形的四个顶点
+                    xRect.push(x1, x1, x2, x2, x1, null);
+                    yRect.push(0, yi, yi, 0, 0, null);
+                }
+                
+                const traces = [
+                    {
+                        x: xCurve,
+                        y: yCurve,
+                        type: 'scatter',
+                        mode: 'lines',
+                        name: func.name,
+                        line: { color: '#e67e22', width: 3 }
+                    },
+                    {
+                        x: xRect,
+                        y: yRect,
+                        type: 'scatter',
+                        mode: 'lines',
+                        fill: 'tozeroy',
+                        fillcolor: 'rgba(52, 152, 219, 0.3)',
+                        line: { color: '#3498db', width: 1 },
+                        name: `矩形近似 (n=${n})`
+                    }
+                ];
+                
+                const layout = {
+                    title: `黎曼和近似：${func.name}`,
+                    xaxis: {
+                        title: 'x',
+                        range: [a - 0.1 * (b - a), b + 0.1 * (b - a)]
+                    },
+                    yaxis: {
+                        title: 'y',
+                        range: [Math.min(0, Math.min(...yCurve)) * 1.1, Math.max(...yCurve) * 1.1]
+                    },
+                    showlegend: true,
+                    plot_bgcolor: 'rgba(0,0,0,0)',
+                    paper_bgcolor: 'rgba(0,0,0,0)',
+                    font: { family: 'Microsoft YaHei', size: 12 }
+                };
+                
+                Plotly.newPlot(plotDiv, traces, layout, {responsive: true});
+                
+                // 显示数值结果
+                const exactValue = func.analytical(a, b);
+                const error = Math.abs(riemannSum - exactValue);
+                const errorPercent = (error / Math.abs(exactValue) * 100).toFixed(2);
+                
+                riemannSumValue.innerHTML = `
+                    <div>黎曼和近似值：${riemannSum.toFixed(6)} | 精确值：${exactValue.toFixed(6)} | 误差：${error.toFixed(6)} (${errorPercent}%)</div>
+                `;
+            }
+            
+            // 事件监听器
+            functionTypeSelect.addEventListener('change', updatePlot);
+            numIntervalsSlider.addEventListener('input', function() {
+                intervalsDisplay.textContent = this.value;
+                updatePlot();
+            });
+            intervalStartInput.addEventListener('change', updatePlot);
+            intervalEndInput.addEventListener('change', updatePlot);
+            
+            // 初始化
+            updatePlot();
+        }
+        
+        // 页面加载动画
+        function initializeAnimations() {
+            const contentSections = document.querySelectorAll('.content-section');
+            if (contentSections.length > 0 && typeof gsap !== 'undefined') {
+                gsap.from('.content-section', {
+                    duration: 0.8,
+                    y: 30,
+                    opacity: 0,
+                    stagger: 0.2,
+                    ease: "power2.out"
+                });
+            }
+            
+            const formulaCards = document.querySelectorAll('.formula-card');
+            if (formulaCards.length > 0 && typeof gsap !== 'undefined') {
+                gsap.from('.formula-card', {
+                    duration: 0.6,
+                    scale: 0.8,
+                    opacity: 0,
+                    stagger: 0.1,
+                    delay: 1,
+                    ease: "back.out(1.7)"
+                });
+            }
+            
+            const memoryCards = document.querySelectorAll('.memory-card');
+            if (memoryCards.length > 0 && typeof gsap !== 'undefined') {
+                gsap.from('.memory-card', {
+                    duration: 0.8,
+                    x: -50,
+                    opacity: 0,
+                    stagger: 0.2,
+                    delay: 0.5,
+                    ease: "power2.out"
+                });
+            }
+        }
+        
+        // 滚动触发动画
+        function setupScrollAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && typeof gsap !== 'undefined') {
+                        gsap.from(entry.target.querySelectorAll('.definition, .theorem, .example'), {
+                            duration: 0.6,
+                            y: 20,
+                            opacity: 0,
+                            stagger: 0.1,
+                            ease: "power2.out"
+                        });
+                    }
+                });
+            }, { threshold: 0.2 });
+            
+            document.querySelectorAll('.content-section').forEach(section => {
+                observer.observe(section);
+            });
+        }
+        
+        // 页面加载时初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 延迟执行以确保DOM完全加载
+            setTimeout(() => {
+                createRiemannSumVisualization();
+                initializeAnimations();
+                setupScrollAnimations();
+            }, 500);
+            
+            // MathJax 加载完成后的回调
+            if (typeof MathJax !== 'undefined') {
+                MathJax.startup.promise.then(() => {
+                    console.log('MathJax loaded successfully');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

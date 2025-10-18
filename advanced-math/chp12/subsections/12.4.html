@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="alternate icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTUiIGZpbGw9IiMzNDk4ZGIiIHN0cm9rZT0iIzJjM2U1MCIgc3Ryb2tlLXdpZHRoPSIyIi8+PGcgZmlsbD0id2hpdGUiIGZvbnQtZmFtaWx5PSJUaW1lcyxzZXJpZiIgZm9udC13ZWlnaHQ9ImJvbGQiPjx0ZXh0IHg9IjE2IiB5PSIxMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxMiI+ZDwvdGV4dD48bGluZSB4MT0iOCIgeTE9IjE2IiB4Mj0iMjQiIHkyPSIxNiIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjUiLz48dGV4dCB4PSIxNiIgeT0iMjUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTAiPmR4PC90ZXh0PjwvZz48L3N2Zz4=">
+    <title>12.4 函数展开成幂级数 - 高等数学复习</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']],
+                packages: {'[+]': ['noerrors', 'ams']},
+                macros: {
+                    R: "\\mathbf{R}",
+                    C: "\\mathbf{C}",
+                    N: "\\mathbf{N}",
+                    Z: "\\mathbf{Z}",
+                    Q: "\\mathbf{Q}"
+                }
+            },
+            chtml: {
+                fontURL: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2',
+                displayAlign: 'center'
+            },
+            loader: {
+                load: ['[tex]/noerrors', '[tex]/ams']
+            },
+            options: {
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            },
+            startup: {
+                ready: () => {
+                    console.log('MathJax is loading...');
+                    MathJax.startup.defaultReady();
+                    console.log('MathJax is ready');
+                }
+            }
+        };
+    </script>
+    <!-- 优先加载MathJax -->
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <!-- 延迟加载其他库 -->
+    <script>
+        // 延迟加载非关键资源
+        window.addEventListener('load', function() {
+            // 加载GSAP
+            const gsapScript = document.createElement('script');
+            gsapScript.src = 'https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js';
+            gsapScript.async = true;
+            document.head.appendChild(gsapScript);
+            
+            // 加载Plotly（更轻量的版本）
+            const plotlyScript = document.createElement('script');
+            plotlyScript.src = 'https://cdn.jsdelivr.net/npm/plotly.js-basic-dist@2.26.0/plotly-basic.min.js';
+            plotlyScript.async = true;
+            document.head.appendChild(plotlyScript);
+        });
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #4caf50 0%, #388e3c 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 20px;
+            color: #388e3c;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 15px;
+            border-radius: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .back-link:hover {
+            color: #2e7d32;
+            transform: translateX(-5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+        
+        .back-link::before {
+            content: '←';
+            margin-right: 8px;
+            font-size: 1.2em;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #388e3c 0%, #2e7d32 100%);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            margin: 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            font-weight: 300;
+        }
+        
+        .subtitle {
+            font-size: 1.1em;
+            margin-top: 10px;
+            opacity: 0.9;
+        }
+        
+        .content-section {
+            background: white;
+            margin: 25px 0;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .content-section:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .section-header {
+            padding: 20px 30px;
+            background: linear-gradient(45deg, #388e3c, #2e7d32);
+            color: white;
+        }
+        
+        .section-header h2 {
+            margin: 0;
+            font-size: 1.6em;
+            font-weight: 400;
+        }
+        
+        .section-content {
+            padding: 30px;
+        }
+        
+        .definition {
+            background: linear-gradient(135deg, #f1f8e9, #e8f5e8);
+            border-left: 5px solid #388e3c;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(56, 142, 60, 0.1);
+        }
+        
+        .definition h4 {
+            margin: 0 0 15px 0;
+            color: #388e3c;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .theorem {
+            background: linear-gradient(135deg, #fff8e1, #fff3c4);
+            border-left: 5px solid #ff9800;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(255, 152, 0, 0.1);
+        }
+        
+        .theorem h4 {
+            margin: 0 0 15px 0;
+            color: #ff9800;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .example {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-left: 5px solid #2196f3;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(33, 150, 243, 0.1);
+        }
+        
+        .example h4 {
+            margin: 0 0 15px 0;
+            color: #2196f3;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .solution {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px dashed #bdc3c7;
+        }
+        
+        .solution-header {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 40px;
+            padding: 20px 0;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 25px;
+            background: linear-gradient(45deg, #388e3c, #2e7d32);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 15px rgba(56, 142, 60, 0.3);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(56, 142, 60, 0.4);
+        }
+        
+        .btn.prev::before {
+            content: '←';
+            margin-right: 8px;
+            font-size: 1.1em;
+        }
+        
+        .btn.next::after {
+            content: '→';
+            margin-left: 8px;
+            font-size: 1.1em;
+        }
+        
+        footer {
+            text-align: center;
+            color: white;
+            padding: 30px 0;
+            opacity: 0.9;
+            margin-top: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        footer p {
+            text-align: center;
+            margin: 0;
+        }
+        
+        .math-expression {
+            text-align: center;
+            margin: 15px 0;
+            font-size: 1.1em;
+        }
+        
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        .highlight {
+            background: linear-gradient(135deg, #f1f8e9, #e8f0e8);
+            padding: 15px;
+            border-left: 4px solid #388e3c;
+            border-radius: 0 8px 8px 0;
+            margin: 15px 0;
+        }
+        
+        .series-expansion-types {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .expansion-card {
+            background: linear-gradient(135deg, #c8e6c9 0%, #a5d6a7 50%, #81c784 100%);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(56, 142, 60, 0.2);
+            text-align: center;
+        }
+        
+        .expansion-card h5 {
+            color: #2e7d32;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+        
+        .expansion-formula {
+            font-size: 1.1em;
+            margin: 15px 0;
+            color: #2c3e50;
+        }
+        
+        .common-expansions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .common-card {
+            background: linear-gradient(135deg, #e8f5e8 0%, #c8e6c9 50%, #a5d6a7 100%);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.2);
+            text-align: center;
+        }
+        
+        .common-card h5 {
+            color: #1b5e20;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+        
+        .common-formula {
+            font-size: 1em;
+            margin: 10px 0;
+            color: #2c3e50;
+        }
+        
+        .convergence-table {
+            width: auto;
+            max-width: 95%;
+            border-collapse: collapse;
+            margin: 20px auto;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            display: table;
+        }
+        
+        .convergence-table th,
+        .convergence-table td {
+            padding: 15px 20px;
+            text-align: center;
+            border-bottom: 1px solid #e8f0e8;
+            white-space: nowrap;
+            min-width: auto;
+        }
+        
+        .convergence-table th {
+            background: linear-gradient(45deg, #388e3c, #2e7d32);
+            color: white;
+            font-weight: 500;
+        }
+        
+        .convergence-table tr:hover {
+            background: #f9fcf9;
+        }
+        
+        .visualization-container {
+            background: #f8fff8;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 3px 15px rgba(76, 175, 80, 0.1);
+        }
+        
+        .visualization-container h4 {
+            color: #2e7d32;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        #taylorPlot {
+            height: 400px;
+            border-radius: 10px;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+        
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .control-group label {
+            font-weight: 500;
+            color: #2e7d32;
+        }
+        
+        .control-group input, .control-group select {
+            padding: 5px 10px;
+            border: 2px solid #c8e6c9;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        .control-group input:focus, .control-group select:focus {
+            outline: none;
+            border-color: #388e3c;
+        }
+        
+        .binomial-expansion {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 50%, #ffcc80 100%);
+            border-left: 5px solid #ff9800;
+            padding: 20px;
+            border-radius: 0 15px 15px 0;
+            margin: 20px 0;
+            box-shadow: 0 3px 15px rgba(255, 152, 0, 0.1);
+        }
+        
+        .binomial-expansion h4 {
+            color: #ef6c00;
+            margin-bottom: 15px;
+        }
+
+        /* AI提示方块样式 */
+        .ai-warning {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            border: 2px solid #e0e0e0;
+        }
+        
+        .ai-warning:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            border-color: #ff4444;
+        }
+        
+        .ai-warning::before {
+            content: '!';
+            color: #e74c3c;
+            font-size: 20px;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+        }
+        
+        .ai-warning-tooltip {
+            position: absolute;
+            top: 50px;
+            left: 0;
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 16px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            line-height: 1.5;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1001;
+            width: 250px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .ai-warning-tooltip::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: 20px;
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid rgba(0, 0, 0, 0.9);
+        }
+        
+        .ai-warning:hover .ai-warning-tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .section-content {
+                padding: 20px;
+            }
+            
+            .definition, .theorem, .example {
+                padding: 20px;
+            }
+            
+            .nav-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .series-expansion-types,
+            .common-expansions {
+                grid-template-columns: 1fr;
+            }
+            
+            .controls {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .ai-warning {
+                width: 35px;
+                height: 35px;
+                top: 15px;
+                left: 15px;
+            }
+            
+            .ai-warning::before {
+                font-size: 18px;
+            }
+            
+            .ai-warning-tooltip {
+                width: 280px;
+                font-size: 13px;
+                padding: 14px 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- AI内容提示 -->
+    <div class="ai-warning">
+        <div class="ai-warning-tooltip">
+            页面内容由AI生成，请谨慎对待。<br>如发现错误，<a href="https://github.com/learn-advanced-math/learn-advanced-math.github.io/issues" target="_blank" style="color: #ff0000">欢迎反馈</a>。
+        </div>
+    </div>
+    
+    <div class="container">
+        <a href="../index.html" class="back-link">返回章节概览</a>
+        
+        <header>
+            <h1>12.4 函数展开成幂级数</h1>
+            <div class="subtitle">Function Expansion into Power Series</div>
+        </header>
+        
+        <!-- 12.4.1 函数的泰勒展开式、麦克劳林展开式；二项展开式 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>12.4.1 函数的泰勒展开式、麦克劳林展开式；二项展开式</h2>
+            </div>
+            <div class="section-content">
+                <div class="definition">
+                    <h4>泰勒级数（Taylor Series）</h4>
+                    <p>设函数 $f(x)$ 在点 $x_0$ 的某个邻域内有任意阶导数，则称</p>
+                    <div class="math-expression">
+                        $$\sum_{n=0}^{\infty} \frac{f^{(n)}(x_0)}{n!}(x-x_0)^n = f(x_0) + f'(x_0)(x-x_0) + \frac{f''(x_0)}{2!}(x-x_0)^2 + \cdots$$
+                    </div>
+                    <p>为函数 $f(x)$ 在点 $x_0$ 处的<strong>泰勒级数</strong>。</p>
+                    
+                    <p><strong>收敛条件：</strong>如果在某个区间内，泰勒级数收敛到 $f(x)$，即</p>
+                    <div class="math-expression">
+                        $$f(x) = \sum_{n=0}^{\infty} \frac{f^{(n)}(x_0)}{n!}(x-x_0)^n$$
+                    </div>
+                    <p>则称函数 $f(x)$ 在该区间内能展开成泰勒级数。</p>
+                </div>
+                
+                <div class="definition">
+                    <h4>麦克劳林级数（Maclaurin Series）</h4>
+                    <p>当 $x_0 = 0$ 时，泰勒级数变为<strong>麦克劳林级数</strong>：</p>
+                    <div class="math-expression">
+                        $$f(x) = \sum_{n=0}^{\infty} \frac{f^{(n)}(0)}{n!}x^n = f(0) + f'(0)x + \frac{f''(0)}{2!}x^2 + \frac{f'''(0)}{3!}x^3 + \cdots$$
+                    </div>
+                    
+                    <div class="highlight">
+                        <p><strong>注：</strong>麦克劳林级数是泰勒级数在 $x_0 = 0$ 处的特殊情况。</p>
+                    </div>
+                </div>
+                
+                <div class="theorem">
+                    <h4>函数展开成幂级数的充要条件</h4>
+                    <p>函数 $f(x)$ 在区间 $(x_0-R, x_0+R)$ 内能展开成幂级数的充要条件是：</p>
+                    <div class="math-expression">
+                        $$\lim_{n \to \infty} R_n(x) = 0$$
+                    </div>
+                    <p>其中 $R_n(x) = f(x) - T_n(x)$ 是泰勒公式的余项，$T_n(x)$ 是 $n$ 次泰勒多项式：</p>
+                    <div class="math-expression">
+                        $$T_n(x) = \sum_{k=0}^{n} \frac{f^{(k)}(x_0)}{k!}(x-x_0)^k$$
+                    </div>
+                </div>
+                
+                <div class="series-expansion-types">
+                    <div class="expansion-card">
+                        <h5>拉格朗日余项</h5>
+                        <div class="expansion-formula">
+                            $R_n(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!}(x-x_0)^{n+1}$
+                        </div>
+                        <p>其中 $\xi$ 在 $x$ 与 $x_0$ 之间</p>
+                    </div>
+                    
+                    <div class="expansion-card">
+                        <h5>积分余项</h5>
+                        <div class="expansion-formula">
+                            $R_n(x) = \frac{1}{n!}\int_{x_0}^{x} (x-t)^n f^{(n+1)}(t) dt$
+                        </div>
+                        <p>适用于积分计算的情况</p>
+                    </div>
+                </div>
+                
+                <div class="common-expansions">
+                    <div class="common-card">
+                        <h5>指数函数</h5>
+                        <div class="common-formula">
+                            $e^x = \sum_{n=0}^{\infty} \frac{x^n}{n!} = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \cdots$
+                        </div>
+                        <p>收敛区间：$(-\infty, +\infty)$</p>
+                    </div>
+                    
+                    <div class="common-card">
+                        <h5>正弦函数</h5>
+                        <div class="common-formula" style="font-size: 0.8em;">
+                            $\sin x = \sum_{n=0}^{\infty} \frac{(-1)^n}{(2n+1)!}x^{2n+1} = x - \frac{x^3}{3!} + \frac{x^5}{5!} - \cdots$
+                        </div>
+                        <p>收敛区间：$(-\infty, +\infty)$</p>
+                    </div>
+                    
+                    <div class="common-card">
+                        <h5>余弦函数</h5>
+                        <div class="common-formula" style="font-size: 0.8em;">
+                            $\cos x = \sum_{n=0}^{\infty} \frac{(-1)^n}{(2n)!}x^{2n} = 1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \cdots$
+                        </div>
+                        <p>收敛区间：$(-\infty, +\infty)$</p>
+                    </div>
+                    
+                    <div class="common-card">
+                        <h5>对数函数</h5>
+                        <div class="common-formula" style="font-size: 0.8em;">
+                            $\ln(1+x) = \sum_{n=1}^{\infty} \frac{(-1)^{n-1}}{n}x^n = x - \frac{x^2}{2} + \frac{x^3}{3} - \cdots$
+                        </div>
+                        <p>收敛区间：$(-1, 1]$</p>
+                    </div>
+                    
+                    <div class="common-card">
+                        <h5>几何级数</h5>
+                        <div class="common-formula" style="font-size: 0.8em;">
+                            $\frac{1}{1-x} = \sum_{n=0}^{\infty} x^n = 1 + x + x^2 + x^3 + \cdots$
+                        </div>
+                        <p>收敛区间：$(-1, 1)$</p>
+                    </div>
+                    
+                    <div class="common-card">
+                        <h5>反几何级数</h5>
+                        <div class="common-formula" style="font-size: 0.8em;">
+                            $\frac{1}{1+x} = \sum_{n=0}^{\infty} (-1)^n x^n = 1 - x + x^2 - x^3 + \cdots$
+                        </div>
+                        <p>收敛区间：$(-1, 1)$</p>
+                    </div>
+                </div>
+                
+                <div class="binomial-expansion">
+                    <h4>二项级数</h4>
+                    <p>对于任意实数 $\alpha$，函数 $(1+x)^{\alpha}$ 的麦克劳林展开式为：</p>
+                    <div class="math-expression">
+                        $$(1+x)^{\alpha} = \sum_{n=0}^{\infty} \binom{\alpha}{n} x^n = 1 + \alpha x + \frac{\alpha(\alpha-1)}{2!}x^2 + \frac{\alpha(\alpha-1)(\alpha-2)}{3!}x^3 + \cdots$$
+                    </div>
+                    <p>其中广义二项式系数：</p>
+                    <div class="math-expression">
+                        $$\binom{\alpha}{n} = \frac{\alpha(\alpha-1)(\alpha-2)\cdots(\alpha-n+1)}{n!}$$
+                    </div>
+                    
+                    <p><strong>收敛性：</strong></p>
+                    <ul>
+                        <li>当 $\alpha \geq 0$ 且为整数时，级数在 $n > \alpha$ 后所有项为 $0$，在 $\mathbf{R}$ 上成立</li>
+                        <li>当 $\alpha > 0$ 且不为整数时，收敛区间为 $(-1, 1]$</li>
+                        <li>当 $-1 < \alpha < 0$ 时，收敛区间为 $(-1, 1)$</li>
+                        <li>当 $\alpha \leq -1$ 时，收敛区间为 $(-1, 1)$</li>
+                    </ul>
+                    
+                    <p><strong>常用特殊情况：</strong></p>
+                    <ul>
+                        <li>$\sqrt{1+x} = (1+x)^{1/2} = 1 + \frac{1}{2}x - \frac{1}{8}x^2 + \frac{1}{16}x^3 - \cdots$，$|x| < 1$</li>
+                        <li>$\frac{1}{\sqrt{1+x}} = (1+x)^{-1/2} = 1 - \frac{1}{2}x + \frac{3}{8}x^2 - \frac{5}{16}x^3 + \cdots$，$|x| < 1$</li>
+                        <li>$\frac{1}{1+x} = (1+x)^{-1} = 1 - x + x^2 - x^3 + \cdots$，$|x| < 1$</li>
+                    </ul>
+                </div>
+                
+                <div class="visualization-container">
+                    <h4>泰勒级数近似可视化</h4>
+                    <div class="controls">
+                        <div class="control-group">
+                            <label for="functionSelect">函数:</label>
+                            <select id="functionSelect">
+                                <option value="exp">e^x</option>
+                                <option value="sin">sin(x)</option>
+                                <option value="cos">cos(x)</option>
+                                <option value="ln">ln(1+x)</option>
+                            </select>
+                        </div>
+                        <div class="control-group">
+                            <label for="orderInput">阶数:</label>
+                            <input type="range" id="orderInput" min="1" max="10" value="5">
+                            <span id="orderValue">5</span>
+                        </div>
+                        <div class="control-group">
+                            <label for="rangeInput">显示范围:</label>
+                            <input type="range" id="rangeInput" min="1" max="10" value="5" step="0.5">
+                            <span id="rangeValue">5</span>
+                        </div>
+                    </div>
+                    <div id="taylorPlot"></div>
+                </div>
+                
+                <div class="example">
+                    <h4>例1：求函数的麦克劳林展开式</h4>
+                    <p>求函数 $f(x) = e^{2x}$ 的麦克劳林展开式。</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解：</div>
+                        <p><strong>方法1：直接计算各阶导数</strong></p>
+                        <p>$f(x) = e^{2x}$，$f(0) = 1$</p>
+                        <p>$f'(x) = 2e^{2x}$，$f'(0) = 2$</p>
+                        <p>$f''(x) = 4e^{2x}$，$f''(0) = 4 = 2^2$</p>
+                        <p>$f'''(x) = 8e^{2x}$，$f'''(0) = 8 = 2^3$</p>
+                        <p>一般地，$f^{(n)}(0) = 2^n$</p>
+                        
+                        <p>因此：</p>
+                        $$e^{2x} = \sum_{n=0}^{\infty} \frac{2^n}{n!}x^n = \sum_{n=0}^{\infty} \frac{(2x)^n}{n!}$$
+                        
+                        <p><strong>方法2：利用已知展开式</strong></p>
+                        <p>由于 $e^u = \sum_{n=0}^{\infty} \frac{u^n}{n!}$，令 $u = 2x$：</p>
+                        $$e^{2x} = \sum_{n=0}^{\infty} \frac{(2x)^n}{n!} = 1 + 2x + \frac{(2x)^2}{2!} + \frac{(2x)^3}{3!} + \cdots$$
+                        $$= 1 + 2x + 2x^2 + \frac{4x^3}{3} + \frac{2x^4}{3} + \cdots$$
+                        
+                        <p><strong>收敛区间：</strong>$(-\infty, +\infty)$</p>
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <h4>例2：间接法求麦克劳林展开式</h4>
+                    <p>求函数 $f(x) = x \cos x$ 的麦克劳林展开式。</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解：</div>
+                        <p>利用 $\cos x$ 的麦克劳林展开式：</p>
+                        $$\cos x = \sum_{n=0}^{\infty} \frac{(-1)^n}{(2n)!}x^{2n} = 1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \frac{x^6}{6!} + \cdots$$
+                        
+                        <p>两边同时乘以 $x$：</p>
+                        $$x \cos x = x \sum_{n=0}^{\infty} \frac{(-1)^n}{(2n)!}x^{2n} = \sum_{n=0}^{\infty} \frac{(-1)^n}{(2n)!}x^{2n+1}$$
+                        
+                        $$= x - \frac{x^3}{2!} + \frac{x^5}{4!} - \frac{x^7}{6!} + \cdots$$
+                        
+                        <p><strong>收敛区间：</strong>$(-\infty, +\infty)$</p>
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <h4>例3：利用积分求麦克劳林展开式</h4>
+                    <p>求函数 $f(x) = \arctan x$ 的麦克劳林展开式。</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解：</div>
+                        <p>我们知道 $\frac{d}{dx}(\arctan x) = \frac{1}{1+x^2}$</p>
+                        
+                        <p>先求 $\frac{1}{1+x^2}$ 的展开式：</p>
+                        <p>由 $\frac{1}{1-u} = \sum_{n=0}^{\infty} u^n$，令 $u = -x^2$：</p>
+                        $$\frac{1}{1+x^2} = \frac{1}{1-(-x^2)} = \sum_{n=0}^{\infty} (-x^2)^n = \sum_{n=0}^{\infty} (-1)^n x^{2n}$$
+                        $$= 1 - x^2 + x^4 - x^6 + \cdots$$
+                        
+                        <p>对两边从 $0$ 到 $x$ 积分：</p>
+                        $$\arctan x = \int_0^x \frac{1}{1+t^2} dt = \int_0^x \sum_{n=0}^{\infty} (-1)^n t^{2n} dt$$
+                        $$= \sum_{n=0}^{\infty} (-1)^n \int_0^x t^{2n} dt = \sum_{n=0}^{\infty} (-1)^n \frac{x^{2n+1}}{2n+1}$$
+                        $$= x - \frac{x^3}{3} + \frac{x^5}{5} - \frac{x^7}{7} + \cdots$$
+                        
+                        <p><strong>收敛区间：</strong>$[-1, 1]$</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="nav-buttons">
+            <a href="12.3.html" class="btn prev">上一节：12.3 幂级数</a>
+            <a href="12.5.html" class="btn next">下一节：12.5 函数的幂级数展开式的应用</a>
+        </div>
+        
+        <footer>
+            <p>&copy; 2025 高等数学复习系统 - 函数展开成幂级数</p>
+        </footer>
+    </div>
+    
+    <script>
+        // 泰勒级数可视化
+        function updateTaylorPlot() {
+            // 检查Plotly是否已加载
+            if (typeof Plotly === 'undefined') {
+                console.log('等待Plotly加载...');
+                setTimeout(updateTaylorPlot, 100);
+                return;
+            }
+            
+            const functionType = document.getElementById('functionSelect').value;
+            const order = parseInt(document.getElementById('orderInput').value);
+            const range = parseFloat(document.getElementById('rangeInput').value);
+            
+            document.getElementById('orderValue').textContent = order;
+            document.getElementById('rangeValue').textContent = range;
+            
+            const x = [];
+            const originalFunc = [];
+            const taylorApprox = [];
+            
+            for (let i = -range; i <= range; i += 0.1) {
+                x.push(i);
+                
+                let original, taylor = 0;
+                
+                switch(functionType) {
+                    case 'exp':
+                        original = Math.exp(i);
+                        for (let n = 0; n <= order; n++) {
+                            taylor += Math.pow(i, n) / factorial(n);
+                        }
+                        break;
+                    case 'sin':
+                        original = Math.sin(i);
+                        for (let n = 0; n <= order; n++) {
+                            if ((2*n+1) <= 2*order+1) {
+                                taylor += Math.pow(-1, n) * Math.pow(i, 2*n+1) / factorial(2*n+1);
+                            }
+                        }
+                        break;
+                    case 'cos':
+                        original = Math.cos(i);
+                        for (let n = 0; n <= order; n++) {
+                            if ((2*n) <= 2*order) {
+                                taylor += Math.pow(-1, n) * Math.pow(i, 2*n) / factorial(2*n);
+                            }
+                        }
+                        break;
+                    case 'ln':
+                        if (i > -1 && i <= 1) {
+                            original = Math.log(1 + i);
+                            for (let n = 1; n <= order; n++) {
+                                taylor += Math.pow(-1, n-1) * Math.pow(i, n) / n;
+                            }
+                        } else {
+                            original = null;
+                            taylor = null;
+                        }
+                        break;
+                }
+                
+                originalFunc.push(original);
+                taylorApprox.push(taylor);
+            }
+            
+            const functionNames = {
+                'exp': 'e^x',
+                'sin': 'sin(x)',
+                'cos': 'cos(x)',
+                'ln': 'ln(1+x)'
+            };
+            
+            const data = [
+                {
+                    x: x,
+                    y: originalFunc,
+                    type: 'scatter',
+                    mode: 'lines',
+                    name: functionNames[functionType],
+                    line: {color: '#2e7d32', width: 3}
+                },
+                {
+                    x: x,
+                    y: taylorApprox,
+                    type: 'scatter',
+                    mode: 'lines',
+                    name: `泰勒近似 (${order}阶)`,
+                    line: {color: '#ff9800', width: 2, dash: 'dot'}
+                }
+            ];
+            
+            const layout = {
+                title: `${functionNames[functionType]} 的泰勒级数近似`,
+                xaxis: {title: 'x', gridcolor: '#e8f0e8'},
+                yaxis: {title: 'y', gridcolor: '#e8f0e8'},
+                plot_bgcolor: '#fafff8',
+                paper_bgcolor: '#fafff8',
+                font: {family: 'Microsoft YaHei', size: 12},
+                showlegend: true,
+                legend: {x: 0.02, y: 0.98}
+            };
+            
+            const config = {
+                displayModeBar: false,
+                responsive: true
+            };
+            
+            Plotly.newPlot('taylorPlot', data, layout, config);
+        }
+        
+        function factorial(n) {
+            if (n <= 1) return 1;
+            return n * factorial(n - 1);
+        }
+        
+        // 初始化函数
+        function initializeInteractivity() {
+            // 事件监听器
+            const functionSelect = document.getElementById('functionSelect');
+            const orderInput = document.getElementById('orderInput');
+            const rangeInput = document.getElementById('rangeInput');
+            
+            if (functionSelect && orderInput && rangeInput) {
+                functionSelect.addEventListener('change', updateTaylorPlot);
+                orderInput.addEventListener('input', updateTaylorPlot);
+                rangeInput.addEventListener('input', updateTaylorPlot);
+                
+                // 初始化图表
+                updateTaylorPlot();
+            }
+        }
+        
+        // 动画效果函数
+        function initializeAnimations() {
+            // 检查GSAP是否已加载
+            if (typeof gsap !== 'undefined') {
+                gsap.from('.content-section', {
+                    duration: 0.8,
+                    y: 50,
+                    opacity: 0,
+                    stagger: 0.2,
+                    ease: 'power2.out'
+                });
+                
+                gsap.from('.common-card', {
+                    duration: 0.6,
+                    scale: 0.9,
+                    opacity: 0,
+                    stagger: 0.1,
+                    ease: 'back.out(1.7)',
+                    delay: 0.5
+                });
+            } else {
+                // 如果GSAP未加载，使用CSS动画备选方案
+                const sections = document.querySelectorAll('.content-section');
+                sections.forEach((section, index) => {
+                    section.style.animation = `fadeInUp 0.8s ease-out ${index * 0.2}s both`;
+                });
+                
+                const cards = document.querySelectorAll('.common-card');
+                cards.forEach((card, index) => {
+                    card.style.animation = `scaleIn 0.6s ease-out ${0.5 + index * 0.1}s both`;
+                });
+            }
+        }
+        
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM内容已加载');
+            
+            // 立即初始化交互功能
+            initializeInteractivity();
+            
+            // 延迟初始化动画
+            setTimeout(initializeAnimations, 100);
+            
+            // 确保MathJax渲染完成
+            if (window.MathJax) {
+                MathJax.startup.promise.then(() => {
+                    console.log('MathJax渲染完成');
+                });
+            }
+        });
+        
+        // 为CSS动画添加备选样式
+        const fallbackStyles = `
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(50px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            
+            @keyframes scaleIn {
+                from {
+                    opacity: 0;
+                    transform: scale(0.9);
+                }
+                to {
+                    opacity: 1;
+                    transform: scale(1);
+                }
+            }
+        `;
+        
+        // 添加备选CSS样式
+        const styleSheet = document.createElement('style');
+        styleSheet.textContent = fallbackStyles;
+        document.head.appendChild(styleSheet);
+    </script>
+</body>
+</html>

@@ -1,0 +1,1620 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="alternate icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTUiIGZpbGw9IiMzNDk4ZGIiIHN0cm9rZT0iIzJjM2U1MCIgc3Ryb2tlLXdpZHRoPSIyIi8+PGcgZmlsbD0id2hpdGUiIGZvbnQtZmFtaWx5PSJUaW1lcyxzZXJpZiIgZm9udC13ZWlnaHQ9ImJvbGQiPjx0ZXh0IHg9IjE2IiB5PSIxMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxMiI+ZDwvdGV4dD48bGluZSB4MT0iOCIgeTE9IjE2IiB4Mj0iMjQiIHkyPSIxNiIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjUiLz48dGV4dCB4PSIxNiIgeT0iMjUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTAiPmR4PC90ZXh0PjwvZz48L3N2Zz4=">
+    <title>10.3 三重积分 - 高等数学复习</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']]
+            },
+            chtml: {
+                fontURL: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2'
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #9c27b0 0%, #673ab7 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 20px;
+            color: #7b1fa2;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 15px;
+            border-radius: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .back-link:hover {
+            color: #4a148c;
+            transform: translateX(-5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+        
+        .back-link::before {
+            content: '←';
+            margin-right: 8px;
+            font-size: 1.2em;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #7b1fa2 0%, #4a148c 100%);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            margin: 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            font-weight: 300;
+        }
+        
+        .subtitle {
+            font-size: 1.1em;
+            margin-top: 10px;
+            opacity: 0.9;
+        }
+        
+        .content-section {
+            background: white;
+            margin: 25px 0;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .content-section:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .section-header {
+            padding: 20px 30px;
+            background: linear-gradient(45deg, #7b1fa2, #4a148c);
+            color: white;
+        }
+        
+        .section-header h2 {
+            margin: 0;
+            font-size: 1.6em;
+            font-weight: 400;
+        }
+        
+        .section-content {
+            padding: 30px;
+        }
+        
+        .definition {
+            background: linear-gradient(135deg, #f3e5f5, #e1bee7);
+            border-left: 5px solid #7b1fa2;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(123, 31, 162, 0.1);
+        }
+        
+        .definition h4 {
+            margin: 0 0 15px 0;
+            color: #7b1fa2;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .theorem {
+            background: linear-gradient(135deg, #ede7f6, #d1c4e9);
+            border-left: 5px solid #673ab7;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(103, 58, 183, 0.1);
+        }
+        
+        .theorem h4 {
+            margin: 0 0 15px 0;
+            color: #673ab7;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .example {
+            background: linear-gradient(135deg, #f8bbd9, #f48fb1);
+            border-left: 5px solid #e91e63;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(233, 30, 99, 0.1);
+        }
+        
+        .example h4 {
+            margin: 0 0 15px 0;
+            color: #c2185b;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .practice-problem {
+            background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+            border-left: 5px solid #ff9800;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(255, 152, 0, 0.1);
+        }
+        
+        .practice-problem h4 {
+            margin: 0 0 15px 0;
+            color: #f57c00;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .difficulty {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: 500;
+            margin-left: 10px;
+        }
+        
+        .difficulty.medium {
+            background: #ff9800;
+            color: white;
+        }
+        
+        .difficulty.hard {
+            background: #f44336;
+            color: white;
+        }
+        
+        .difficulty.very-hard {
+            background: #9c27b0;
+            color: white;
+        }
+        
+        .solution {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px dashed #bdc3c7;
+        }
+        
+        .solution-header {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 40px;
+            padding: 20px 0;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 25px;
+            background: linear-gradient(45deg, #7b1fa2, #4a148c);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 15px rgba(123, 31, 162, 0.3);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(123, 31, 162, 0.4);
+        }
+        
+        .btn.prev::before {
+            content: '←';
+            margin-right: 8px;
+            font-size: 1.1em;
+        }
+        
+        .btn.next::after {
+            content: '→';
+            margin-left: 8px;
+            font-size: 1.1em;
+        }
+        
+        footer {
+            text-align: center;
+            color: white;
+            padding: 30px 0;
+            opacity: 0.9;
+            margin-top: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        footer p {
+            text-align: center;
+            margin: 0;
+        }
+        
+        .math-expression {
+            text-align: center;
+            margin: 15px 0;
+            font-size: 1.1em;
+        }
+        
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        .highlight {
+            background: linear-gradient(135deg, #f3e5f5, #e1bee7);
+            padding: 15px;
+            border-left: 4px solid #9c27b0;
+            border-radius: 0 8px 8px 0;
+            margin: 15px 0;
+        }
+        
+        .coordinate-systems {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .coordinate-card {
+            background: linear-gradient(135deg, #e8eaf6 0%, #c5cae9 50%, #9fa8da 100%);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(103, 58, 183, 0.3);
+            text-align: center;
+        }
+        
+        .coordinate-card h5 {
+            color: #3f51b5;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+        
+        .coordinate-card .coordinate-formula {
+            font-size: 1.05em;
+            margin: 15px 0;
+            color: #2c3e50;
+        }
+        
+        .volume-elements {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .volume-element {
+            background: linear-gradient(135deg, #fce4ec, #f8bbd9);
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #e91e63;
+            box-shadow: 0 2px 10px rgba(233, 30, 99, 0.1);
+        }
+        
+        .volume-element h6 {
+            color: #c2185b;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        .cylindrical-coordinate-demo {
+            width: 100%;
+            height: 450px;
+            margin: 25px 0;
+            background: linear-gradient(135deg, #fafafa, #f5f5f5);
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cylindrical-coordinate-demo svg {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .spherical-coordinate-demo {
+            width: 100%;
+            height: 450px;
+            margin: 25px 0;
+            background: linear-gradient(135deg, #f3e5f5, #e8eaf6);
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .spherical-coordinate-demo svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* AI提示方块样式 */
+        .ai-warning {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            border: 2px solid #e0e0e0;
+        }
+        
+        .ai-warning:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            border-color: #ff4444;
+        }
+        
+        .ai-warning::before {
+            content: '!';
+            color: #e74c3c;
+            font-size: 20px;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+        }
+        
+        .ai-warning-tooltip {
+            position: absolute;
+            top: 50px;
+            left: 0;
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 16px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            line-height: 1.5;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1001;
+            width: 250px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .ai-warning-tooltip::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: 20px;
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid rgba(0, 0, 0, 0.9);
+        }
+        
+        .ai-warning:hover .ai-warning-tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .section-content {
+                padding: 20px;
+            }
+            
+            .definition, .theorem, .example, .practice-problem {
+                padding: 20px;
+            }
+            
+            .nav-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .coordinate-systems {
+                grid-template-columns: 1fr;
+            }
+
+            .ai-warning {
+                width: 35px;
+                height: 35px;
+                top: 15px;
+                left: 15px;
+            }
+            
+            .ai-warning::before {
+                font-size: 18px;
+            }
+            
+            .ai-warning-tooltip {
+                width: 280px;
+                font-size: 13px;
+                padding: 14px 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- AI内容提示 -->
+    <div class="ai-warning">
+        <div class="ai-warning-tooltip">
+            页面内容由AI生成，请谨慎对待。<br>如发现错误，<a href="https://github.com/learn-advanced-math/learn-advanced-math.github.io/issues" target="_blank" style="color: #ff0000">欢迎反馈</a>。
+        </div>
+    </div>
+    
+    <div class="container">
+        <a href="../index.html" class="back-link">返回章节概览</a>
+        
+        <header>
+            <h1>10.3 三重积分</h1>
+            <div class="subtitle">Triple Integrals</div>
+        </header>
+        
+        <!-- 10.3.1 三重积分的概念 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>10.3.1 三重积分的概念</h2>
+            </div>
+            <div class="section-content">
+                <div class="definition">
+                    <h4>三重积分的引例</h4>
+                    <p>类似于二重积分由求曲顶柱体的体积问题引出，三重积分可以由以下实际问题引出：</p>
+                    <ul>
+                        <li><strong>非均匀物体的质量：</strong>设空间区域 $\Omega$ 内有一个密度为 $\rho(x, y, z)$ 的物体，求其质量</li>
+                        <li><strong>空间区域的"广义体积"：</strong>当被积函数为 $f(x, y, z) = 1$ 时，三重积分就是区域 $\Omega$ 的体积</li>
+                        <li><strong>物理量的累积：</strong>如电荷分布、温度分布等在空间区域内的总量</li>
+                    </ul>
+                </div>
+                
+                <div class="theorem">
+                    <h4>三重积分的定义</h4>
+                    <p>设函数 $f(x, y, z)$ 在有界闭区域 $\Omega$ 上有界，将区域 $\Omega$ 任意分割成 $n$ 个小区域：</p>
+                    $$\Delta \Omega_1, \Delta \Omega_2, \cdots, \Delta \Omega_n$$
+                    
+                    <p>各小区域的体积分别为 $\Delta V_1, \Delta V_2, \cdots, \Delta V_n$，在每个小区域 $\Delta \Omega_i$ 内任取一点 $(\xi_i, \eta_i, \zeta_i)$，作和式：</p>
+                    
+                    <div class="math-expression">
+                        $$S = \sum_{i=1}^n f(\xi_i, \eta_i, \zeta_i) \Delta V_i$$
+                    </div>
+                    
+                    <p>如果当各小区域的直径的最大值趋于零时，和式 $S$ 的极限存在且不依赖于区域的分割方式和点的选取方式，则称此极限为函数 $f(x, y, z)$ 在区域 $\Omega$ 上的<strong>三重积分</strong>，记作：</p>
+                    
+                    <div class="math-expression">
+                        $$\iiint_\Omega f(x, y, z) \, dV = \lim_{\lambda \to 0} \sum_{i=1}^n f(\xi_i, \eta_i, \zeta_i) \Delta V_i$$
+                    </div>
+                    
+                    <p>其中，$\lambda$ 是各小区域直径的最大值。</p>
+                </div>
+                
+                <div class="definition">
+                    <h4>三重积分的基本概念</h4>
+                    <ul>
+                        <li><strong>被积函数：</strong>$f(x, y, z)$</li>
+                        <li><strong>被积表达式：</strong>$f(x, y, z) \, dV$ 或 $f(x, y, z) \, dxdydz$</li>
+                        <li><strong>体积元素：</strong>$dV = dxdydz$（直角坐标系下）</li>
+                        <li><strong>积分变量：</strong>$x$、$y$、$z$</li>
+                        <li><strong>积分区域：</strong>三维有界闭区域 $\Omega$</li>
+                    </ul>
+                    
+                    <div class="highlight">
+                        <p><strong>几何意义：</strong>当 $f(x, y, z) = 1$ 时，三重积分 $\iiint_\Omega 1 \, dV$ 表示区域 $\Omega$ 的体积。</p>
+                        <p><strong>物理意义：</strong>当 $f(x, y, z) = \rho(x, y, z)$ 表示密度函数时，三重积分表示物体的总质量。</p>
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <h4>例1：三重积分的概念理解</h4>
+                    <p>设空间区域 $\Omega$ 是单位球 $x^2 + y^2 + z^2 \leq 1$，密度函数为 $\rho(x, y, z) = x^2 + y^2 + z^2$，写出求该物体质量的三重积分表达式。</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解：</div>
+                        <p>根据三重积分的物理意义，物体的质量为：</p>
+                        $$M = \iiint_\Omega \rho(x, y, z) \, dV = \iiint_\Omega (x^2 + y^2 + z^2) \, dxdydz$$
+                        <p>其中积分区域 $\Omega = \{(x, y, z) | x^2 + y^2 + z^2 \leq 1\}$</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 10.3.2 利用直角坐标计算三重积分 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>10.3.2 利用直角坐标计算三重积分</h2>
+            </div>
+            <div class="section-content">
+                <div class="theorem">
+                    <h4>三重积分的计算公式</h4>
+                    <p>设函数 $f(x, y, z)$ 在区域 $\Omega$ 上连续，则三重积分可以化为三次积分来计算。根据积分区域的不同特征，有以下几种积分次序：</p>
+                    
+                    <div class="volume-elements">
+                        <div class="volume-element">
+                            <h6>先 $z$ 后 $y$ 再 $x$</h6>
+                            <p>适用于区域：</p>$\{(x,y,z) | a \leq x \leq b, \varphi_1(x) \leq y \leq \varphi_2(x), z_1(x,y) \leq z \leq z_2(x,y)\}$
+                            $$\iiint_\Omega f(x,y,z) \, dV = \int_a^b dx \int_{\varphi_1(x)}^{\varphi_2(x)} dy \int_{z_1(x,y)}^{z_2(x,y)} f(x,y,z) \, dz$$
+                        </div>
+                    </div>
+                    <div class="volume-elements">
+                        <div class="volume-element">
+                            <h6>先 $y$ 后 $z$ 再 $x$</h6>
+                            <p>适用于区域：$\{(x,y,z) | a \leq x \leq b, z_1(x) \leq z \leq z_2(x), y_1(x,z) \leq y \leq y_2(x,z)\}$</p>
+                            $$\iiint_\Omega f(x,y,z) \, dV = \int_a^b dx \int_{z_1(x)}^{z_2(x)} dz \int_{y_1(x,z)}^{y_2(x,z)} f(x,y,z) \, dy$$
+                        </div>
+                    </div>
+                    
+                    <div class="highlight">
+                        <p><strong>体积元素：</strong>在直角坐标系中，体积元素为 $dV = dxdydz$</p>
+                        <p><strong>积分次序选择原则：</strong>选择使得积分限尽可能简单的次序，避免复杂的分区域积分</p>
+                    </div>
+                </div>
+                
+                <div class="definition">
+                    <h4>常见的积分区域类型</h4>
+                    <ul>
+                        <li><strong>长方体区域：</strong>$a \leq x \leq b$，$c \leq y \leq d$，$p \leq z \leq q$</li>
+                        <li><strong>柱体区域：</strong>底面为平面区域 $D$，高度由两个函数界定</li>
+                        <li><strong>椎体区域：</strong>以平面区域为底，顶点在某一点的椎体</li>
+                        <li><strong>球体区域：</strong>$(x-a)^2 + (y-b)^2 + (z-c)^2 \leq R^2$</li>
+                        <li><strong>椭球区域：</strong>$\frac{x^2}{a^2} + \frac{y^2}{b^2} + \frac{z^2}{c^2} \leq 1$</li>
+                    </ul>
+                </div>
+                
+                <div class="example">
+                    <h4>例2：长方体区域上的三重积分</h4>
+                    <p>计算 $\iiint_\Omega xyz \, dV$，其中 $\Omega = \{(x,y,z) | 0 \leq x \leq 1, 0 \leq y \leq 2, 0 \leq z \leq 3\}$。</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解：</div>
+                        <p>由于积分区域是长方体，可以直接化为三次积分：</p>
+                        \begin{align}
+                        \iiint_\Omega xyz \, dV &= \int_0^1 dx \int_0^2 dy \int_0^3 xyz \, dz \\
+                        &= \int_0^1 x \, dx \int_0^2 y \, dy \int_0^3 z \, dz \\
+                        &= \left[\frac{x^2}{2}\right]_0^1 \cdot \left[\frac{y^2}{2}\right]_0^2 \cdot \left[\frac{z^2}{2}\right]_0^3 \\
+                        &= \frac{1}{2} \cdot \frac{4}{2} \cdot \frac{9}{2} = \frac{9}{4}
+                        \end{align}
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <h4>例3：锥体区域上的三重积分</h4>
+                    <p>计算 $\iiint_\Omega z \, dV$，其中 $\Omega$ 是由平面 $z = 0$、$z = 1$ 和曲面 $x^2 + y^2 = z^2$ 围成的区域。</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解：</div>
+                        <p><strong>步骤1：分析积分区域</strong></p>
+                        <p>区域 $\Omega$ 是一个圆锥，底面在 $z = 1$ 平面上为单位圆，顶点在原点。</p>
+                        <p>对于固定的 $z \in [0, 1]$，截面为圆 $x^2 + y^2 \leq z^2$</p>
+                        
+                        <p><strong>步骤2：建立三次积分</strong></p>
+                        <p>选择积分次序：先 $x$，后 $y$，最后 $z$</p>
+                        $$\Omega = \{(x,y,z) | 0 \leq z \leq 1, -z \leq y \leq z, -\sqrt{z^2-y^2} \leq x \leq \sqrt{z^2-y^2}\}$$
+                        
+                        <p><strong>步骤3：计算积分</strong></p>
+                        \begin{align}
+                        \iiint_\Omega z \, dV &= \int_0^1 z \, dz \int_{-z}^z dy \int_{-\sqrt{z^2-y^2}}^{\sqrt{z^2-y^2}} dx \\
+                        &= \int_0^1 z \, dz \int_{-z}^z 2\sqrt{z^2-y^2} \, dy
+                        \end{align}
+                        
+                        <p>对于内层积分，使用三角替换 $y = z\sin\theta$：</p>
+                        $$\int_{-z}^z 2\sqrt{z^2-y^2} \, dy = \int_{-\pi/2}^{\pi/2} 2z^2\cos^2\theta \, d\theta = z^2 \cdot \pi$$
+                        
+                        <p>因此：</p>
+                        $$\iiint_\Omega z \, dV = \int_0^1 z \cdot z^2 \pi \, dz = \pi \int_0^1 z^3 \, dz = \pi \left[\frac{z^4}{4}\right]_0^1 = \frac{\pi}{4}$$
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 10.3.3 利用柱面坐标计算三重积分 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>10.3.3 利用柱面坐标计算三重积分</h2>
+            </div>
+            <div class="section-content">
+                <div class="theorem">
+                    <h4>柱面坐标系</h4>
+                    <p>柱面坐标系是直角坐标系的一种推广，特别适用于具有轴对称性的积分区域。</p>
+                    
+                    <div class="coordinate-systems">
+                        <div class="coordinate-card">
+                            <h5>坐标变换公式</h5>
+                            <div class="coordinate-formula">
+                                $x = r\cos\theta$ <br>
+                                $y = r\sin\theta$ <br>
+                                $z = z$
+                            </div>
+                            <p>其中：$r \geq 0$，$0 \leq \theta \leq 2\pi$，$-\infty < z < +\infty$</p>
+                        </div>
+                        
+                        <div class="coordinate-card">
+                            <h5>体积元素变换</h5>
+                            <div class="coordinate-formula">
+                                $dV = dxdydz = r \, dr \, d\theta \, dz$
+                            </div>
+                            <p>雅可比行列式：$J = r$</p>
+                        </div>
+                    </div>
+                    
+                    <div class="math-expression">
+                        $$\iiint_\Omega f(x,y,z) \, dV = \iiint_{\Omega'} f(r\cos\theta, r\sin\theta, z) \cdot r \, dr \, d\theta \, dz$$
+                    </div>
+                    
+                    <div class="cylindrical-coordinate-demo" id="cylindrical-demo">
+                        <h5 style="text-align: center; color: #673ab7; margin-bottom: 15px;">柱面坐标系示意图</h5>
+                    </div>
+                    
+                    <div class="highlight">
+                        <p><strong>图解说明：</strong></p>
+                        <ul>
+                            <li>点 $P(r, \theta, z)$ 的位置由三个坐标确定</li>
+                            <li><span style="color: #4caf50; font-weight: bold;">$r$</span>：点在 $xy$ 平面上的投影到原点的距离</li>
+                            <li><span style="color: #2196f3; font-weight: bold;">$\theta$</span>：点在 $xy$ 平面上的投影与正 $x$ 轴的夹角</li>
+                            <li><span style="color: #ff4081; font-weight: bold;">$z$</span>：点到 $xy$ 平面的有向距离</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="definition">
+                    <h4>柱面坐标的适用条件</h4>
+                    <ul>
+                        <li><strong>积分区域具有轴对称性：</strong>关于 $z$ 轴旋转对称的区域</li>
+                        <li><strong>被积函数含有 $x^2 + y^2$：</strong>如 $\sqrt{x^2 + y^2}$、$x^2 + y^2$ 等</li>
+                        <li><strong>圆柱形区域：</strong>底面为圆形或环形的柱体</li>
+                        <li><strong>圆锥形区域：</strong>以 $z$ 轴为轴线的圆锥</li>
+                    </ul>
+                    
+                    <div class="highlight">
+                        <p><strong>注意：</strong>柱面坐标中的体积元素 $dV = r \, dr \, d\theta \, dz$，不要忘记因子 $r$！</p>
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <h4>例4：圆柱体区域上的三重积分</h4>
+                    <p>计算 $\iiint_\Omega (x^2 + y^2) \, dV$，其中 $\Omega$ 是由圆柱面 $x^2 + y^2 = 4$ 和平面 $z = 0$，$z = 3$ 围成的区域。</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解：</div>
+                        <p><strong>步骤1：坐标变换</strong></p>
+                        <p>$x = r\cos\theta$，$y = r\sin\theta$，$z = z$</p>
+                        <p>积分区域：$0 \leq r \leq 2$，$0 \leq \theta \leq 2\pi$，$0 \leq z \leq 3$</p>
+                        
+                        <p><strong>步骤2：变换被积函数和体积元素</strong></p>
+                        <p>$x^2 + y^2 = r^2$，$dV = r \, dr \, d\theta \, dz$</p>
+                        
+                        <p><strong>步骤3：建立并计算积分</strong></p>
+                        \begin{align}
+                        \iiint_\Omega (x^2 + y^2) \, dV &= \int_0^{2\pi} d\theta \int_0^2 dr \int_0^3 r^2 \cdot r \, dz \\
+                        &= \int_0^{2\pi} d\theta \int_0^2 r^3 \, dr \int_0^3 dz \\
+                        &= 2\pi \cdot \left[\frac{r^4}{4}\right]_0^2 \cdot 3 \\
+                        &= 2\pi \cdot 4 \cdot 3 = 24\pi
+                        \end{align}
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <h4>例5：圆锥区域上的三重积分</h4>
+                    <p>计算 $\iiint_\Omega z \, dV$，其中 $\Omega$ 是由圆锥面 $z = \sqrt{x^2 + y^2}$ 和平面 $z = 1$ 围成的区域。</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解：</div>
+                        <p><strong>步骤1：分析积分区域</strong></p>
+                        <p>在柱面坐标系中，圆锥面方程为 $z = r$</p>
+                        <p>积分区域：$0 \leq r \leq 1$，$0 \leq \theta \leq 2\pi$，$r \leq z \leq 1$</p>
+                        
+                        <p><strong>步骤2：建立积分</strong></p>
+                        $$\iiint_\Omega z \, dV = \int_0^{2\pi} d\theta \int_0^1 r \, dr \int_r^1 z \, dz$$
+                        
+                        <p><strong>步骤3：计算积分</strong></p>
+                        <p>内层积分：$\int_r^1 z \, dz = \left[\frac{z^2}{2}\right]_r^1 = \frac{1 - r^2}{2}$</p>
+                        
+                        <p>中层积分：$\int_0^1 r \cdot \frac{1 - r^2}{2} \, dr = \frac{1}{2} \int_0^1 (r - r^3) \, dr = \frac{1}{2} \left[\frac{r^2}{2} - \frac{r^4}{4}\right]_0^1 = \frac{1}{8}$</p>
+                        
+                        <p>外层积分：$\int_0^{2\pi} \frac{1}{8} \, d\theta = \frac{\pi}{4}$</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 10.3.4 利用球面坐标计算三重积分 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>10.3.4 利用球面坐标计算三重积分</h2>
+            </div>
+            <div class="section-content">
+                <div class="theorem">
+                    <h4>球面坐标系</h4>
+                    <p>球面坐标系特别适用于球形区域或具有球对称性的积分问题。</p>
+                    
+                    <div class="coordinate-systems">
+                        <div class="coordinate-card">
+                            <h5>坐标变换公式</h5>
+                            <div class="coordinate-formula">
+                                $x = r\sin\varphi\cos\theta$ <br>
+                                $y = r\sin\varphi\sin\theta$ <br>
+                                $z = r\cos\varphi$
+                            </div>
+                            <p>其中：$r \geq 0$，$0 \leq \varphi \leq \pi$，$0 \leq \theta \leq 2\pi$</p>
+                        </div>
+                        
+                        <div class="coordinate-card">
+                            <h5>体积元素变换</h5>
+                            <div class="coordinate-formula">
+                                $dV = r^2\sin\varphi \, dr \, d\varphi \, d\theta$
+                            </div>
+                            <p>雅可比行列式：$J = r^2\sin\varphi$</p>
+                        </div>
+                    </div>
+                    
+                    <div class="math-expression">
+                        $$\iiint_\Omega f(x,y,z) \, dV = \iiint_{\Omega'} f(r\sin\varphi\cos\theta, r\sin\varphi\sin\theta, r\cos\varphi) \cdot r^2\sin\varphi \, dr \, d\varphi \, d\theta$$
+                    </div>
+                    
+                    <div class="highlight">
+                        <p><strong>角度含义：</strong></p>
+                        <ul>
+                            <li>$r$：到原点的距离（径向距离）</li>
+                            <li>$\varphi$：与正 $z$ 轴的夹角（极角或倾斜角）</li>
+                            <li>$\theta$：在 $xy$ 平面上的投影与正 $x$ 轴的夹角（方位角）</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="definition">
+                    <h4>球面坐标的适用条件</h4>
+                    <ul>
+                        <li><strong>球形区域：</strong>$x^2 + y^2 + z^2 \leq R^2$</li>
+                        <li><strong>球壳区域：</strong>$R_1^2 \leq x^2 + y^2 + z^2 \leq R_2^2$</li>
+                        <li><strong>球扇形区域：</strong>球的一部分，由角度限制</li>
+                        <li><strong>被积函数含有 $x^2 + y^2 + z^2$：</strong>如 $(x^2 + y^2 + z^2)^n$ 等</li>
+                        <li><strong>具有球对称性的问题</strong></li>
+                    </ul>
+                    
+                    <div class="spherical-coordinate-demo" id="spherical-demo">
+                        <h5 style="text-align: center; color: #673ab7; margin-bottom: 15px;">球面坐标系示意图</h5>
+                    </div>
+                    
+                    <div class="highlight">
+                        <p><strong>图解说明：</strong></p>
+                        <ul>
+                            <li>点 $P(r, \varphi, \theta)$ 的位置由三个坐标确定</li>
+                            <li><span style="color: #e74c3c; font-weight: bold;">$r$</span>：点到原点的距离（径向距离）</li>
+                            <li><span style="color: #ff9800; font-weight: bold;">$\varphi$</span>：与正 $z$ 轴的夹角（极角，$0 \leq \varphi \leq \pi$）</li>
+                            <li><span style="color: #2196f3; font-weight: bold;">$\theta$</span>：在 $xy$ 平面上的投影与正 $x$ 轴的夹角（方位角，$0 \leq \theta \leq 2\pi$）</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="highlight">
+                        <p><strong>重要提醒：</strong>球面坐标的体积元素是 $dV = r^2\sin\varphi \, dr \, d\varphi \, d\theta$，千万不要遗漏 $r^2\sin\varphi$ 因子！</p>
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <h4>例6：球体区域上的三重积分</h4>
+                    <p>计算 $\iiint_\Omega (x^2 + y^2 + z^2) \, dV$，其中 $\Omega$ 是球面 $x^2 + y^2 + z^2 \leq a^2$ 围成的区域。</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解：</div>
+                        <p><strong>步骤1：坐标变换</strong></p>
+                        <p>在球面坐标中：$x^2 + y^2 + z^2 = r^2$</p>
+                        <p>积分区域：$0 \leq r \leq a$，$0 \leq \varphi \leq \pi$，$0 \leq \theta \leq 2\pi$</p>
+                        
+                        <p><strong>步骤2：建立积分</strong></p>
+                        $$\iiint_\Omega (x^2 + y^2 + z^2) \, dV = \int_0^{2\pi} d\theta \int_0^\pi \sin\varphi \, d\varphi \int_0^a r^2 \cdot r^2 \, dr$$
+                        
+                        <p><strong>步骤3：计算各层积分</strong></p>
+                        <p>内层积分：$\int_0^a r^4 \, dr = \left[\frac{r^5}{5}\right]_0^a = \frac{a^5}{5}$</p>
+                        
+                        <p>中层积分：$\int_0^\pi \sin\varphi \, d\varphi = [-\cos\varphi]_0^\pi = -(-1 - 1) = 2$</p>
+                        
+                        <p>外层积分：$\int_0^{2\pi} d\theta = 2\pi$</p>
+                        
+                        <p><strong>步骤4：最终结果</strong></p>
+                        $$\iiint_\Omega (x^2 + y^2 + z^2) \, dV = 2\pi \cdot 2 \cdot \frac{a^5}{5} = \frac{4\pi a^5}{5}$$
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <h4>例7：球扇形区域上的三重积分</h4>
+                    <p>计算 $\iiint_\Omega z \, dV$，其中 $\Omega$ 是球面 $x^2 + y^2 + z^2 \leq 1$ 在第一卦限（$x \geq 0, y \geq 0, z \geq 0$）的部分。</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解：</div>
+                        <p><strong>步骤1：确定积分区域</strong></p>
+                        <p>第一卦限对应的球面坐标范围：</p>
+                        <ul>
+                            <li>$0 \leq r \leq 1$</li>
+                            <li>$0 \leq \varphi \leq \frac{\pi}{2}$（对应 $z \geq 0$）</li>
+                            <li>$0 \leq \theta \leq \frac{\pi}{2}$（对应 $x \geq 0, y \geq 0$）</li>
+                        </ul>
+                        
+                        <p><strong>步骤2：变换被积函数</strong></p>
+                        <p>$z = r\cos\varphi$，$dV = r^2\sin\varphi \, dr \, d\varphi \, d\theta$</p>
+                        
+                        <p><strong>步骤3：建立并计算积分</strong></p>
+                        \begin{align}
+                        \iiint_\Omega z \, dV &= \int_0^{\pi/2} d\theta \int_0^{\pi/2} \sin\varphi \, d\varphi \int_0^1 r\cos\varphi \cdot r^2 \, dr \\
+                        &= \int_0^{\pi/2} d\theta \int_0^{\pi/2} \cos\varphi\sin\varphi \, d\varphi \int_0^1 r^3 \, dr
+                        \end{align}
+                        
+                        <p><strong>步骤4：分别计算各积分</strong></p>
+                        <p>$\int_0^1 r^3 \, dr = \frac{1}{4}$</p>
+                        
+                        <p>$\int_0^{\pi/2} \cos\varphi\sin\varphi \, d\varphi = \int_0^{\pi/2} \frac{1}{2}\sin(2\varphi) \, d\varphi = \frac{1}{4}[-\cos(2\varphi)]_0^{\pi/2} = \frac{1}{4}[1-(-1)] = \frac{1}{2}$</p>
+                        
+                        <p>$\int_0^{\pi/2} d\theta = \frac{\pi}{2}$</p>
+                        
+                        <p><strong>步骤5：最终结果</strong></p>
+                        $$\iiint_\Omega z \, dV = \frac{\pi}{2} \cdot \frac{1}{2} \cdot \frac{1}{4} = \frac{\pi}{16}$$
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="nav-buttons">
+            <a href="10.2.html" class="btn prev">上一节：10.2 二重积分的计算方法</a>
+            <a href="10.4.html" class="btn next">下一节：10.4 重积分的应用</a>
+        </div>
+        
+        <footer>
+            <p>&copy; 2025 高等数学复习系统 - 三重积分</p>
+        </footer>
+    </div>
+
+    <script>
+        // 柱面坐标系示意图
+        function createCylindricalCoordinateDemo() {
+            const container = document.getElementById('cylindrical-demo');
+            if (!container) return;
+            
+            const width = container.clientWidth - 40;
+            const height = container.clientHeight - 60;
+            
+            const svg = d3.select('#cylindrical-demo')
+                .append('svg')
+                .attr('width', width)
+                .attr('height', height);
+            
+            const centerX = width / 2;
+            const centerY = height / 2;
+            
+            // 定义投影参数（伪3D效果）
+            const scale = Math.min(width, height) / 6;
+            const angleX = -0.3; // 绕X轴旋转角度
+            const angleZ = 0.5;  // 绕Z轴旋转角度
+            
+            // 3D到2D投影函数
+            function project3D(x, y, z) {
+                // 简单的等轴投影
+                const cosX = Math.cos(angleX);
+                const sinX = Math.sin(angleX);
+                const cosZ = Math.cos(angleZ);
+                const sinZ = Math.sin(angleZ);
+                
+                // 旋转变换
+                const x1 = x * cosZ - y * sinZ;
+                const y1 = x * sinZ + y * cosZ;
+                const z1 = z;
+                
+                const x2 = x1;
+                const y2 = y1 * cosX - z1 * sinX;
+                const z2 = y1 * sinX + z1 * cosX;
+                
+                return [
+                    centerX + x2 * scale,
+                    centerY - y2 * scale
+                ];
+            }
+            
+            // 创建渐变定义
+            const defs = svg.append('defs');
+            
+            // 圆柱面渐变
+            const cylinderGradient = defs.append('linearGradient')
+                .attr('id', 'cylinderGradient')
+                .attr('x1', '0%').attr('y1', '0%')
+                .attr('x2', '100%').attr('y2', '100%');
+            cylinderGradient.append('stop')
+                .attr('offset', '0%')
+                .attr('style', 'stop-color:#e1bee7;stop-opacity:0.6');
+            cylinderGradient.append('stop')
+                .attr('offset', '100%')
+                .attr('style', 'stop-color:#9c27b0;stop-opacity:0.3');
+            
+            // 平面渐变
+            const planeGradient = defs.append('linearGradient')
+                .attr('id', 'planeGradient')
+                .attr('x1', '0%').attr('y1', '0%')
+                .attr('x2', '100%').attr('y2', '0%');
+            planeGradient.append('stop')
+                .attr('offset', '0%')
+                .attr('style', 'stop-color:#c5cae9;stop-opacity:0.4');
+            planeGradient.append('stop')
+                .attr('offset', '100%')
+                .attr('style', 'stop-color:#673ab7;stop-opacity:0.2');
+            
+            // 绘制坐标轴
+            function drawAxis(from, to, color, width = 2) {
+                const fromProj = project3D(...from);
+                const toProj = project3D(...to);
+                
+                svg.append('line')
+                    .attr('x1', fromProj[0])
+                    .attr('y1', fromProj[1])
+                    .attr('x2', toProj[0])
+                    .attr('y2', toProj[1])
+                    .attr('stroke', color)
+                    .attr('stroke-width', width)
+                    .attr('marker-end', 'url(#arrowhead-' + color.replace('#', '') + ')');
+            }
+            
+            // 创建箭头标记
+            function createArrowhead(color) {
+                const colorId = color.replace('#', '');
+                defs.append('marker')
+                    .attr('id', 'arrowhead-' + colorId)
+                    .attr('viewBox', '0 -5 10 10')
+                    .attr('refX', 8)
+                    .attr('refY', 0)
+                    .attr('markerWidth', 6)
+                    .attr('markerHeight', 6)
+                    .attr('orient', 'auto')
+                    .append('path')
+                    .attr('d', 'M0,-5L10,0L0,5')
+                    .attr('fill', color);
+            }
+            
+            // 创建箭头
+            createArrowhead('#e74c3c'); // X轴
+            createArrowhead('#27ae60'); // Y轴  
+            createArrowhead('#3498db'); // Z轴
+            
+            // 绘制坐标平面（xy平面的一部分）
+            const xyPlanePoints = [
+                project3D(-2, -2, 0),
+                project3D(2, -2, 0),
+                project3D(2, 2, 0),
+                project3D(-2, 2, 0)
+            ];
+            
+            svg.append('path')
+                .attr('d', 'M' + xyPlanePoints.map(p => p.join(',')).join('L') + 'Z')
+                .attr('fill', 'url(#planeGradient)')
+                .attr('stroke', '#9e9e9e')
+                .attr('stroke-width', 1)
+                .attr('opacity', 0.3);
+            
+            // 绘制柱面（圆柱的一部分）
+            const r = 1.5;  // 柱面半径
+            const cylinderPoints = [];
+            for (let theta = 0; theta <= Math.PI; theta += Math.PI/20) {
+                const x = r * Math.cos(theta);
+                const y = r * Math.sin(theta);
+                cylinderPoints.push(project3D(x, y, -1.5));
+            }
+            for (let theta = Math.PI; theta >= 0; theta -= Math.PI/20) {
+                const x = r * Math.cos(theta);
+                const y = r * Math.sin(theta);
+                cylinderPoints.push(project3D(x, y, 1.5));
+            }
+            
+            svg.append('path')
+                .attr('d', 'M' + cylinderPoints.map(p => p.join(',')).join('L') + 'Z')
+                .attr('fill', 'url(#cylinderGradient)')
+                .attr('stroke', '#7b1fa2')
+                .attr('stroke-width', 1.5)
+                .attr('opacity', 0.6);
+            
+            // 绘制坐标轴
+            drawAxis([-2.5, 0, 0], [2.5, 0, 0], '#e74c3c'); // X轴
+            drawAxis([0, -2.5, 0], [0, 2.5, 0], '#27ae60'); // Y轴
+            drawAxis([0, 0, -2], [0, 0, 2], '#3498db');     // Z轴
+            
+            // 绘制示例点和其柱面坐标
+            const pointR = 1.2;
+            const pointTheta = Math.PI / 4;
+            const pointZ = 0.8;
+            const pointX = pointR * Math.cos(pointTheta);
+            const pointY = pointR * Math.sin(pointTheta);
+            
+            const pointProj = project3D(pointX, pointY, pointZ);
+            
+            // 示例点
+            svg.append('circle')
+                .attr('cx', pointProj[0])
+                .attr('cy', pointProj[1])
+                .attr('r', 4)
+                .attr('fill', '#ff4081')
+                .attr('stroke', '#c2185b')
+                .attr('stroke-width', 2);
+            
+            // 点到z轴的投影
+            const projToZ = project3D(0, 0, pointZ);
+            svg.append('line')
+                .attr('x1', pointProj[0])
+                .attr('y1', pointProj[1])
+                .attr('x2', projToZ[0])
+                .attr('y2', projToZ[1])
+                .attr('stroke', '#ff4081')
+                .attr('stroke-width', 1.5)
+                .attr('stroke-dasharray', '4,2');
+            
+            // 点在xy平面的投影
+            const projToXY = project3D(pointX, pointY, 0);
+            svg.append('line')
+                .attr('x1', pointProj[0])
+                .attr('y1', pointProj[1])
+                .attr('x2', projToXY[0])
+                .attr('y2', projToXY[1])
+                .attr('stroke', '#ff4081')
+                .attr('stroke-width', 1.5)
+                .attr('stroke-dasharray', '4,2');
+            
+            svg.append('circle')
+                .attr('cx', projToXY[0])
+                .attr('cy', projToXY[1])
+                .attr('r', 3)
+                .attr('fill', '#ff80ab')
+                .attr('stroke', '#c2185b')
+                .attr('stroke-width', 1);
+            
+            // r距离线
+            const origin = project3D(0, 0, 0);
+            svg.append('line')
+                .attr('x1', origin[0])
+                .attr('y1', origin[1])
+                .attr('x2', projToXY[0])
+                .attr('y2', projToXY[1])
+                .attr('stroke', '#4caf50')
+                .attr('stroke-width', 2);
+            
+            // 角度弧线
+            const arcRadius = 0.4;
+            const arcPoints = [];
+            for (let angle = 0; angle <= pointTheta; angle += pointTheta/10) {
+                const x = arcRadius * Math.cos(angle);
+                const y = arcRadius * Math.sin(angle);
+                arcPoints.push(project3D(x, y, 0));
+            }
+            
+            svg.append('path')
+                .attr('d', 'M' + arcPoints.map(p => p.join(',')).join('L'))
+                .attr('stroke', '#2196f3')
+                .attr('stroke-width', 2)
+                .attr('fill', 'none');
+            
+            // 添加坐标轴标签
+            const labelOffset = 20;
+            svg.append('text')
+                .attr('x', project3D(2.7, 0, 0)[0])
+                .attr('y', project3D(2.7, 0, 0)[1] + 5)
+                .attr('text-anchor', 'middle')
+                .attr('font-size', '14')
+                .attr('font-weight', 'bold')
+                .attr('fill', '#e74c3c')
+                .text('x');
+            
+            svg.append('text')
+                .attr('x', project3D(0, 2.7, 0)[0] + 5)
+                .attr('y', project3D(0, 2.7, 0)[1] + 5)
+                .attr('text-anchor', 'middle')
+                .attr('font-size', '14')
+                .attr('font-weight', 'bold')
+                .attr('fill', '#27ae60')
+                .text('y');
+            
+            svg.append('text')
+                .attr('x', project3D(0, 0, 2.2)[0] + 5)
+                .attr('y', project3D(0, 0, 2.2)[1])
+                .attr('text-anchor', 'middle')
+                .attr('font-size', '14')
+                .attr('font-weight', 'bold')
+                .attr('fill', '#3498db')
+                .text('z');
+            
+            // 添加参数标签
+            svg.append('text')
+                .attr('x', (origin[0] + projToXY[0]) / 2 - 10)
+                .attr('y', (origin[1] + projToXY[1]) / 2 - 5)
+                .attr('text-anchor', 'middle')
+                .attr('font-size', '12')
+                .attr('font-weight', 'bold')
+                .attr('fill', '#4caf50')
+                .text('r');
+            
+            svg.append('text')
+                .attr('x', project3D(0.6, 0.2, 0)[0])
+                .attr('y', project3D(0.6, 0.2, 0)[1])
+                .attr('text-anchor', 'middle')
+                .attr('font-size', '12')
+                .attr('font-weight', 'bold')
+                .attr('fill', '#2196f3')
+                .text('θ');
+            
+            svg.append('text')
+                .attr('x', (pointProj[0] + projToZ[0]) / 2 + 15)
+                .attr('y', (pointProj[1] + projToZ[1]) / 2)
+                .attr('text-anchor', 'middle')
+                .attr('font-size', '12')
+                .attr('font-weight', 'bold')
+                .attr('fill', '#ff4081')
+                .text('z');
+            
+            // 添加点的坐标标签
+            svg.append('text')
+                .attr('x', pointProj[0] + 10)
+                .attr('y', pointProj[1] - 10)
+                .attr('text-anchor', 'start')
+                .attr('font-size', '11')
+                .attr('font-weight', 'bold')
+                .attr('fill', '#c2185b')
+                .text('P(r,θ,z)');
+        }
+        
+        // 球面坐标系示意图
+        function createSphericalCoordinateDemo() {
+            const container = document.getElementById('spherical-demo');
+            if (!container) return;
+            
+            const width = container.clientWidth - 40;
+            const height = container.clientHeight - 60;
+            
+            const svg = d3.select('#spherical-demo')
+                .append('svg')
+                .attr('width', width)
+                .attr('height', height);
+            
+            const centerX = width / 2;
+            const centerY = height / 2;
+            
+            // 定义投影参数（伪3D效果）
+            const scale = Math.min(width, height) / 7;
+            const angleX = -Math.PI / 6; // 绕X轴旋转角度 (-30度)
+            const angleZ = Math.PI / 4;  // 绕Z轴旋转角度 (45度)
+            
+            // 3D到2D投影函数
+            function project3D(x, y, z) {
+                const cosX = Math.cos(angleX);
+                const sinX = Math.sin(angleX);
+                const cosZ = Math.cos(angleZ);
+                const sinZ = Math.sin(angleZ);
+                
+                // 旋转变换
+                const x1 = x * cosZ - y * sinZ;
+                const y1 = x * sinZ + y * cosZ;
+                const z1 = z;
+                
+                const x2 = x1;
+                const y2 = y1 * cosX - z1 * sinX;
+                const z2 = y1 * sinX + z1 * cosX;
+                
+                return [
+                    centerX + x2 * scale,
+                    centerY - y2 * scale
+                ];
+            }
+            
+            // 创建渐变定义
+            const defs = svg.append('defs');
+            
+            // 球面渐变
+            const sphereGradient = defs.append('radialGradient')
+                .attr('id', 'sphereGradient')
+                .attr('cx', '30%').attr('cy', '30%').attr('r', '80%');
+            sphereGradient.append('stop')
+                .attr('offset', '0%')
+                .attr('style', 'stop-color:#e1bee7;stop-opacity:0.8');
+            sphereGradient.append('stop')
+                .attr('offset', '70%')
+                .attr('style', 'stop-color:#9c27b0;stop-opacity:0.4');
+            sphereGradient.append('stop')
+                .attr('offset', '100%')
+                .attr('style', 'stop-color:#4a148c;stop-opacity:0.6');
+            
+            // 经线渐变
+            const meridianGradient = defs.append('linearGradient')
+                .attr('id', 'meridianGradient')
+                .attr('x1', '0%').attr('y1', '0%')
+                .attr('x2', '0%').attr('y2', '100%');
+            meridianGradient.append('stop')
+                .attr('offset', '0%')
+                .attr('style', 'stop-color:#673ab7;stop-opacity:0.7');
+            meridianGradient.append('stop')
+                .attr('offset', '100%')
+                .attr('style', 'stop-color:#9c27b0;stop-opacity:0.3');
+            
+            // 绘制坐标轴
+            function drawAxis(from, to, color, width = 2) {
+                const fromProj = project3D(...from);
+                const toProj = project3D(...to);
+                
+                svg.append('line')
+                    .attr('x1', fromProj[0])
+                    .attr('y1', fromProj[1])
+                    .attr('x2', toProj[0])
+                    .attr('y2', toProj[1])
+                    .attr('stroke', color)
+                    .attr('stroke-width', width)
+                    .attr('marker-end', 'url(#arrowhead-' + color.replace('#', '') + ')');
+            }
+            
+            // 创建箭头标记
+            function createArrowhead(color) {
+                const colorId = color.replace('#', '');
+                defs.append('marker')
+                    .attr('id', 'arrowhead-' + colorId)
+                    .attr('viewBox', '0 -5 10 10')
+                    .attr('refX', 8)
+                    .attr('refY', 0)
+                    .attr('markerWidth', 6)
+                    .attr('markerHeight', 6)
+                    .attr('orient', 'auto')
+                    .append('path')
+                    .attr('d', 'M0,-5L10,0L0,5')
+                    .attr('fill', color);
+            }
+            
+            // 创建箭头
+            createArrowhead('#e74c3c'); // X轴
+            createArrowhead('#27ae60'); // Y轴  
+            createArrowhead('#3498db'); // Z轴
+            
+            // 绘制球面（半个球面用于显示）
+            const radius = 2;
+            const spherePoints = [];
+            
+            // 绘制经线（从北极到南极的弧线）
+            for (let lon = 0; lon < Math.PI; lon += Math.PI/8) {
+                const meridianPoints = [];
+                for (let lat = 0; lat <= Math.PI; lat += Math.PI/20) {
+                    const x = radius * Math.sin(lat) * Math.cos(lon);
+                    const y = radius * Math.sin(lat) * Math.sin(lon);
+                    const z = radius * Math.cos(lat);
+                    meridianPoints.push(project3D(x, y, z));
+                }
+                
+                svg.append('path')
+                    .attr('d', 'M' + meridianPoints.map(p => p.join(',')).join('L'))
+                    .attr('stroke', '#9c27b0')
+                    .attr('stroke-width', 1)
+                    .attr('fill', 'none')
+                    .attr('opacity', 0.4);
+            }
+            
+            // 绘制纬线（水平圆圈）
+            for (let lat = Math.PI/6; lat < Math.PI; lat += Math.PI/6) {
+                const latitudePoints = [];
+                for (let lon = 0; lon <= 2*Math.PI; lon += Math.PI/20) {
+                    const x = radius * Math.sin(lat) * Math.cos(lon);
+                    const y = radius * Math.sin(lat) * Math.sin(lon);
+                    const z = radius * Math.cos(lat);
+                    latitudePoints.push(project3D(x, y, z));
+                }
+                
+                svg.append('path')
+                    .attr('d', 'M' + latitudePoints.map(p => p.join(',')).join('L') + 'Z')
+                    .attr('stroke', '#673ab7')
+                    .attr('stroke-width', 1)
+                    .attr('fill', 'none')
+                    .attr('opacity', 0.3);
+            }
+            
+            // 绘制前半球面（用于立体效果）
+            const frontHemisphere = [];
+            for (let lat = 0; lat <= Math.PI; lat += Math.PI/15) {
+                for (let lon = -Math.PI/2; lon <= Math.PI/2; lon += Math.PI/15) {
+                    const x = radius * Math.sin(lat) * Math.cos(lon);
+                    const y = radius * Math.sin(lat) * Math.sin(lon);
+                    const z = radius * Math.cos(lat);
+                    if (y >= 0) { // 只绘制前半部分
+                        frontHemisphere.push(project3D(x, y, z));
+                    }
+                }
+            }
+            
+            // 绘制坐标轴
+            drawAxis([-2.8, 0, 0], [2.8, 0, 0], '#e74c3c'); // X轴
+            drawAxis([0, -2.8, 0], [0, 2.8, 0], '#27ae60'); // Y轴
+            drawAxis([0, 0, -2.5], [0, 0, 2.8], '#3498db'); // Z轴
+            
+            // 绘制示例点和其球面坐标
+            const pointR = 2.2;
+            const pointPhi = Math.PI / 3;      // 极角（与z轴夹角，60度）
+            const pointTheta = 3 * Math.PI / 2; // 方位角（270度，y轴负方向）
+            
+            const pointX = pointR * Math.sin(pointPhi) * Math.cos(pointTheta);
+            const pointY = pointR * Math.sin(pointPhi) * Math.sin(pointTheta);
+            const pointZ = pointR * Math.cos(pointPhi);
+            
+            const pointProj = project3D(pointX, pointY, pointZ);
+            
+            // 示例点
+            svg.append('circle')
+                .attr('cx', pointProj[0])
+                .attr('cy', pointProj[1])
+                .attr('r', 5)
+                .attr('fill', '#ff4081')
+                .attr('stroke', '#c2185b')
+                .attr('stroke-width', 2);
+            
+            // r距离线（从原点到点）
+            const origin = project3D(0, 0, 0);
+            svg.append('line')
+                .attr('x1', origin[0])
+                .attr('y1', origin[1])
+                .attr('x2', pointProj[0])
+                .attr('y2', pointProj[1])
+                .attr('stroke', '#e74c3c')
+                .attr('stroke-width', 3)
+                .attr('stroke-dasharray', '5,3');
+            
+            // 点在xy平面的投影
+            const projToXY = project3D(pointX, pointY, 0);
+            svg.append('line')
+                .attr('x1', pointProj[0])
+                .attr('y1', pointProj[1])
+                .attr('x2', projToXY[0])
+                .attr('y2', projToXY[1])
+                .attr('stroke', '#ff4081')
+                .attr('stroke-width', 1.5)
+                .attr('stroke-dasharray', '3,2');
+            
+            svg.append('circle')
+                .attr('cx', projToXY[0])
+                .attr('cy', projToXY[1])
+                .attr('r', 3)
+                .attr('fill', '#ff80ab')
+                .attr('stroke', '#c2185b')
+                .attr('stroke-width', 1);
+            
+            // 从原点到xy平面投影的线
+            svg.append('line')
+                .attr('x1', origin[0])
+                .attr('y1', origin[1])
+                .attr('x2', projToXY[0])
+                .attr('y2', projToXY[1])
+                .attr('stroke', '#4caf50')
+                .attr('stroke-width', 2);
+            
+            // θ角度弧线（在xy平面）
+            const thetaArcRadius = 0.6;
+            const thetaArcPoints = [];
+            for (let angle = 0; angle <= pointTheta; angle += pointTheta/12) {
+                const x = thetaArcRadius * Math.cos(angle);
+                const y = thetaArcRadius * Math.sin(angle);
+                thetaArcPoints.push(project3D(x, y, 0));
+            }
+            
+            svg.append('path')
+                .attr('d', 'M' + thetaArcPoints.map(p => p.join(',')).join('L'))
+                .attr('stroke', '#2196f3')
+                .attr('stroke-width', 3)
+                .attr('fill', 'none');
+            
+            // φ角度弧线（在包含z轴和点的平面内）
+            const phiArcRadius = 0.8;
+            const phiArcPoints = [];
+            for (let angle = 0; angle <= pointPhi; angle += pointPhi/12) {
+                const rProj = phiArcRadius * Math.sin(angle);
+                const zCoord = phiArcRadius * Math.cos(angle);
+                const x = rProj * Math.cos(pointTheta);
+                const y = rProj * Math.sin(pointTheta);
+                phiArcPoints.push(project3D(x, y, zCoord));
+            }
+            
+            svg.append('path')
+                .attr('d', 'M' + phiArcPoints.map(p => p.join(',')).join('L'))
+                .attr('stroke', '#ff9800')
+                .attr('stroke-width', 3)
+                .attr('fill', 'none');
+            
+            // 添加坐标轴标签
+            svg.append('text')
+                .attr('x', project3D(3, 0, 0)[0])
+                .attr('y', project3D(3, 0, 0)[1] + 5)
+                .attr('text-anchor', 'middle')
+                .attr('font-size', '14')
+                .attr('font-weight', 'bold')
+                .attr('fill', '#e74c3c')
+                .text('x');
+            
+            svg.append('text')
+                .attr('x', project3D(0, 3, 0)[0] + 5)
+                .attr('y', project3D(0, 3, 0)[1] + 5)
+                .attr('text-anchor', 'middle')
+                .attr('font-size', '14')
+                .attr('font-weight', 'bold')
+                .attr('fill', '#27ae60')
+                .text('y');
+            
+            svg.append('text')
+                .attr('x', project3D(0, 0, 3)[0] + 5)
+                .attr('y', project3D(0, 0, 3)[1])
+                .attr('text-anchor', 'middle')
+                .attr('font-size', '14')
+                .attr('font-weight', 'bold')
+                .attr('fill', '#3498db')
+                .text('z');
+            
+            // 添加参数标签
+            svg.append('text')
+                .attr('x', (origin[0] + pointProj[0]) / 2 + 15)
+                .attr('y', (origin[1] + pointProj[1]) / 2 - 5)
+                .attr('text-anchor', 'middle')
+                .attr('font-size', '12')
+                .attr('font-weight', 'bold')
+                .attr('fill', '#e74c3c')
+                .text('r');
+            
+            svg.append('text')
+                .attr('x', project3D(0.8, 0.3, 0)[0])
+                .attr('y', project3D(0.8, 0.3, 0)[1] + 5)
+                .attr('text-anchor', 'middle')
+                .attr('font-size', '12')
+                .attr('font-weight', 'bold')
+                .attr('fill', '#2196f3')
+                .text('θ');
+            
+            svg.append('text')
+                .attr('x', project3D(0.4, 0.4, 0.6)[0] + 10)
+                .attr('y', project3D(0.4, 0.4, 0.6)[1])
+                .attr('text-anchor', 'middle')
+                .attr('font-size', '12')
+                .attr('font-weight', 'bold')
+                .attr('fill', '#ff9800')
+                .text('φ');
+            
+            // 添加点的坐标标签
+            svg.append('text')
+                .attr('x', pointProj[0] + 15)
+                .attr('y', pointProj[1] - 10)
+                .attr('text-anchor', 'start')
+                .attr('font-size', '11')
+                .attr('font-weight', 'bold')
+                .attr('fill', '#c2185b')
+                .text('P(r,φ,θ)');
+        }
+        
+        // 页面加载动画
+        function initializeAnimations() {
+            const contentSections = document.querySelectorAll('.content-section');
+            if (contentSections.length > 0 && typeof gsap !== 'undefined') {
+                gsap.from('.content-section', {
+                    duration: 0.8,
+                    y: 30,
+                    opacity: 0,
+                    stagger: 0.2,
+                    ease: "power2.out"
+                });
+            }
+            
+            const coordinateCards = document.querySelectorAll('.coordinate-card');
+            if (coordinateCards.length > 0 && typeof gsap !== 'undefined') {
+                gsap.from('.coordinate-card', {
+                    duration: 0.6,
+                    scale: 0.8,
+                    opacity: 0,
+                    stagger: 0.1,
+                    delay: 1,
+                    ease: "back.out(1.7)"
+                });
+            }
+            
+            const volumeElements = document.querySelectorAll('.volume-element');
+            if (volumeElements.length > 0 && typeof gsap !== 'undefined') {
+                gsap.from('.volume-element', {
+                    duration: 0.5,
+                    x: -20,
+                    opacity: 0,
+                    stagger: 0.1,
+                    delay: 1.5,
+                    ease: "power2.out"
+                });
+            }
+        }
+        
+        // 滚动触发动画
+        function setupScrollAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && typeof gsap !== 'undefined') {
+                        gsap.from(entry.target.querySelectorAll('.definition, .theorem, .example'), {
+                            duration: 0.6,
+                            y: 20,
+                            opacity: 0,
+                            stagger: 0.1,
+                            ease: "power2.out"
+                        });
+                    }
+                });
+            }, { threshold: 0.2 });
+            
+            document.querySelectorAll('.content-section').forEach(section => {
+                observer.observe(section);
+            });
+        }
+        
+        // 页面加载时初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 延迟执行以确保DOM完全加载
+            setTimeout(() => {
+                createCylindricalCoordinateDemo();
+                createSphericalCoordinateDemo();
+                initializeAnimations();
+                setupScrollAnimations();
+            }, 500);
+            
+            // MathJax 加载完成后的回调
+            if (typeof MathJax !== 'undefined') {
+                MathJax.startup.promise.then(() => {
+                    console.log('MathJax loaded successfully');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

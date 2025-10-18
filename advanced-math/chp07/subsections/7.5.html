@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="alternate icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTUiIGZpbGw9IiMzNDk4ZGIiIHN0cm9rZT0iIzJjM2U1MCIgc3Ryb2tlLXdpZHRoPSIyIi8+PGcgZmlsbD0id2hpdGUiIGZvbnQtZmFtaWx5PSJUaW1lcyxzZXJpZiIgZm9udC13ZWlnaHQ9ImJvbGQiPjx0ZXh0IHg9IjE2IiB5PSIxMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxMiI+ZDwvdGV4dD48bGluZSB4MT0iOCIgeTE9IjE2IiB4Mj0iMjQiIHkyPSIxNiIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjUiLz48dGV4dCB4PSIxNiIgeT0iMjUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTAiPmR4PC90ZXh0PjwvZz48L3N2Zz4=">
+    <title>7.5 可降阶的高阶微分方程 - 高等数学复习</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']]
+            },
+            chtml: {
+                fontURL: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2'
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.26.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 50%, #9b59b6 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 20px;
+            color: #8e44ad;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 15px;
+            border-radius: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .back-link:hover {
+            color: #9b59b6;
+            transform: translateX(-5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+        
+        .back-link::before {
+            content: '←';
+            margin-right: 8px;
+            font-size: 1.2em;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            margin: 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            font-weight: 300;
+        }
+        
+        .subtitle {
+            font-size: 1.1em;
+            margin-top: 10px;
+            opacity: 0.9;
+        }
+        
+        .content-section {
+            background: white;
+            margin: 25px 0;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .content-section:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .section-header {
+            padding: 20px 30px;
+            background: linear-gradient(45deg, #8e44ad, #9b59b6);
+            color: white;
+        }
+        
+        .section-header h2 {
+            margin: 0;
+            font-size: 1.6em;
+            font-weight: 400;
+        }
+        
+        .section-content {
+            padding: 30px;
+        }
+        
+        .definition {
+            background: linear-gradient(135deg, #f4f0f8, #ece2f0);
+            border-left: 5px solid #8e44ad;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(142, 68, 173, 0.1);
+        }
+        
+        .definition h4 {
+            margin: 0 0 15px 0;
+            color: #8e44ad;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .theorem {
+            background: linear-gradient(135deg, #fef9e7, #fcf4dd);
+            border-left: 5px solid #f39c12;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(243, 156, 18, 0.1);
+        }
+        
+        .theorem h4 {
+            margin: 0 0 15px 0;
+            color: #f39c12;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .example {
+            background: linear-gradient(135deg, #ebf3fd, #d6e9f8);
+            border-left: 5px solid #3498db;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(52, 152, 219, 0.1);
+        }
+        
+        .example h4 {
+            margin: 0 0 15px 0;
+            color: #3498db;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .practice-problem {
+            background: linear-gradient(135deg, #fdf2e9, #fbeee0);
+            border-left: 5px solid #e67e22;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(230, 126, 34, 0.1);
+        }
+        
+        .practice-problem h4 {
+            margin: 0 0 15px 0;
+            color: #e67e22;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .difficulty {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: 500;
+            margin-left: 10px;
+        }
+        
+        .difficulty.medium {
+            background: #f39c12;
+            color: white;
+        }
+        
+        .difficulty.hard {
+            background: #e74c3c;
+            color: white;
+        }
+        
+        .difficulty.very-hard {
+            background: #8e44ad;
+            color: white;
+        }
+        
+        .solution {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px dashed #bdc3c7;
+        }
+        
+        .solution-header {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+        
+        .viz-container {
+            width: 100%;
+            height: 400px;
+            margin: 25px 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 40px;
+            padding: 20px 0;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 25px;
+            background: linear-gradient(45deg, #8e44ad, #9b59b6);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 15px rgba(142, 68, 173, 0.3);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(142, 68, 173, 0.4);
+        }
+        
+        .btn.prev::before {
+            content: '←';
+            margin-right: 8px;
+            font-size: 1.1em;
+        }
+        
+        .btn.next::after {
+            content: '→';
+            margin-left: 8px;
+            font-size: 1.1em;
+        }
+        
+        footer {
+            text-align: center;
+            color: white;
+            padding: 30px 0;
+            opacity: 0.9;
+            margin-top: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        footer p {
+            text-align: center;
+            margin: 0;
+        }
+        
+        .math-expression {
+            text-align: center;
+            margin: 15px 0;
+            font-size: 1.1em;
+        }
+        
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        .highlight {
+            background: linear-gradient(135deg, #fff3cd, #fce4a0);
+            padding: 15px;
+            border-left: 4px solid #ffc107;
+            border-radius: 0 8px 8px 0;
+            margin: 15px 0;
+        }
+        
+        .steps {
+            background: linear-gradient(135deg, #e8f4fd, #d1ecf1);
+            border-left: 4px solid #17a2b8;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+        }
+        
+        .steps h5 {
+            color: #17a2b8;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        
+        .step-item {
+            margin: 10px 0;
+            padding: 10px 15px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 8px;
+            border-left: 3px solid #17a2b8;
+        }
+        
+        .step-number {
+            font-weight: bold;
+            color: #17a2b8;
+            margin-right: 10px;
+        }
+        
+        .memory-tip {
+            background: linear-gradient(135deg, #fff0f6, #ffe6f3);
+            border: 1px solid #f8d7da;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        .memory-tip::before {
+            content: '💡';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            background: white;
+            padding: 0 10px;
+            font-size: 1.2em;
+        }
+        
+        .memory-tip h4 {
+            color: #8e44ad;
+            margin-bottom: 15px;
+            margin-top: 10px;
+        }
+        
+        .formula-box {
+            background: linear-gradient(135deg, #e8f5e8, #d4edda);
+            border: 2px solid #28a745;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .formula-box h4 {
+            color: #155724;
+            margin-bottom: 15px;
+        }
+        
+        .type-box {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border: 2px solid #6c757d;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .type-box h4 {
+            color: #495057;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .type-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .type-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #6c757d;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .type-item h5 {
+            color: #495057;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        /* AI提示方块样式 */
+        .ai-warning {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            border: 2px solid #e0e0e0;
+        }
+        
+        .ai-warning:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            border-color: #ff4444;
+        }
+        
+        .ai-warning::before {
+            content: '!';
+            color: #e74c3c;
+            font-size: 20px;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+        }
+        
+        .ai-warning-tooltip {
+            position: absolute;
+            top: 50px;
+            left: 0;
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 16px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            line-height: 1.5;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1001;
+            width: 250px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .ai-warning-tooltip::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: 20px;
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid rgba(0, 0, 0, 0.9);
+        }
+        
+        .ai-warning:hover .ai-warning-tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .section-content {
+                padding: 20px;
+            }
+            
+            .definition, .theorem, .example, .practice-problem {
+                padding: 20px;
+            }
+            
+            .nav-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .type-list {
+                grid-template-columns: 1fr;
+            }
+
+            .ai-warning {
+                width: 35px;
+                height: 35px;
+                top: 15px;
+                left: 15px;
+            }
+            
+            .ai-warning::before {
+                font-size: 18px;
+            }
+            
+            .ai-warning-tooltip {
+                width: 280px;
+                font-size: 13px;
+                padding: 14px 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- AI内容提示 -->
+    <div class="ai-warning">
+        <div class="ai-warning-tooltip">
+            页面内容由AI生成，请谨慎对待。<br>如发现错误，<a href="https://github.com/learn-advanced-math/learn-advanced-math.github.io/issues" target="_blank" style="color: #ff0000">欢迎反馈</a>。
+        </div>
+    </div>
+    
+    <div class="container">
+        <a href="../index.html" class="back-link">返回章节概览</a>
+        
+        <header>
+            <h1>7.5 可降阶的高阶微分方程</h1>
+            <div class="subtitle">Reducible Higher-Order Differential Equations</div>
+        </header>
+        
+        <!-- 可降阶高阶微分方程的概念 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>7.5.1 可降阶高阶微分方程的概念</h2>
+            </div>
+            <div class="section-content">
+                <div class="definition">
+                    <h4>可降阶的高阶微分方程</h4>
+                    <p>某些高阶微分方程虽然不是线性的，但可以通过适当的变量替换将其<strong>阶数降低</strong>，转化为低阶微分方程求解，这类方程称为<strong>可降阶的高阶微分方程</strong>。</p>
+                </div>
+                
+                <div class="highlight">
+                    <p><strong>核心思想：</strong>通过变量替换，将 $n$ 阶微分方程化为 $n-1$ 阶或更低阶的微分方程，从而简化求解过程。</p>
+                </div>
+                
+                <div class="type-box">
+                    <h4>常见的可降阶高阶微分方程类型</h4>
+                    <div class="type-list">
+                        <div class="type-item">
+                            <h5>类型一：$y^{(n)} = f(x)$</h5>
+                            <p>右端仅含 $x$ 的函数</p>
+                        </div>
+                        <div class="type-item">
+                            <h5>类型二：$F(x, y^{(k)}, y^{(k+1)}, \ldots, y^{(n)}) = 0$</h5>
+                            <p>不显含 $y, y', \ldots, y^{(k-1)}$</p>
+                        </div>
+                        <div class="type-item">
+                            <h5>类型三：$F(y, y', y'') = 0$</h5>
+                            <p>不显含自变量 $x$</p>
+                        </div>
+                        <div class="type-item">
+                            <h5>类型四：$F(x, y', y'') = 0$</h5>
+                            <p>不显含未知函数 $y$</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 类型一：y^(n) = f(x) -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>7.5.2 类型一：$y^{(n)} = f(x)$ 型方程</h2>
+            </div>
+            <div class="section-content">
+                <div class="theorem">
+                    <h4>求解方法</h4>
+                    <p>对于形如 $y^{(n)} = f(x)$ 的方程，可以通过<strong>连续积分</strong> $n$ 次来求解：</p>
+                    $$y^{(n-1)} = \int f(x)dx + C_1$$
+                    $$y^{(n-2)} = \int \left[\int f(x)dx + C_1\right]dx + C_2$$
+                    $$\vdots$$
+                    $$y = \int \cdots \int f(x)(dx)^n + C_1x^{n-1} + C_2x^{n-2} + \cdots + C_n$$
+                </div>
+                
+                <div class="steps">
+                    <h5>求解步骤</h5>
+                    <div class="step-item">
+                        <span class="step-number">步骤1：</span>对方程 $y^{(n)} = f(x)$ 进行第一次积分
+                    </div>
+                    <div class="step-item">
+                        <span class="step-number">步骤2：</span>继续积分，每次积分增加一个任意常数
+                    </div>
+                    <div class="step-item">
+                        <span class="step-number">步骤3：</span>重复积分 $n$ 次，得到通解
+                    </div>
+                    <div class="step-item">
+                        <span class="step-number">步骤4：</span>如有初始条件，确定任意常数
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <h4>例题1：简单的 $n$ 阶导数型</h4>
+                    <p>求解微分方程：$y''' = 6x$</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解题过程：</div>
+                        <p><strong>步骤1：</strong>第一次积分</p>
+                        $$y'' = \int 6x dx = 3x^2 + C_1$$
+                        
+                        <p><strong>步骤2：</strong>第二次积分</p>
+                        $$y' = \int (3x^2 + C_1) dx = x^3 + C_1x + C_2$$
+                        
+                        <p><strong>步骤3：</strong>第三次积分</p>
+                        $$y = \int (x^3 + C_1x + C_2) dx = \frac{x^4}{4} + \frac{C_1x^2}{2} + C_2x + C_3$$
+                        
+                        <p><strong>通解：</strong>$y = \frac{x^4}{4} + \frac{C_1x^2}{2} + C_2x + C_3$</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 类型二：缺某些低阶导数 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>7.5.3 类型二：不显含低阶导数的方程</h2>
+            </div>
+            <div class="section-content">
+                <div class="theorem">
+                    <h4>变量替换法</h4>
+                    <p>对于形如 $F(x, y^{(k)}, y^{(k+1)}, \ldots, y^{(n)}) = 0$ 的方程（不显含 $y, y', \ldots, y^{(k-1)}$），</p>
+                    <p>令 $z = y^{(k)}$，则原方程化为关于 $z$ 的 $(n-k)$ 阶方程：</p>
+                    $$F(x, z, z', z'', \ldots, z^{(n-k)}) = 0$$
+                </div>
+                
+                <div class="example">
+                    <h4>例题2：不显含 $y$ 和 $y'$ 的二阶方程</h4>
+                    <p>求解微分方程：$xy'' + y' = x$</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解题过程：</div>
+                        <p><strong>步骤1：</strong>变量替换</p>
+                        <p>令 $p = y'$，则 $y'' = p' = \frac{dp}{dx}$</p>
+                        <p>原方程化为：$x\frac{dp}{dx} + p = x$</p>
+                        
+                        <p><strong>步骤2：</strong>求解关于 $p$ 的一阶线性方程</p>
+                        $$\frac{dp}{dx} + \frac{p}{x} = 1$$
+                        <p>这是一阶线性方程，$P(x) = \frac{1}{x}$，$Q(x) = 1$</p>
+                        
+                        <p><strong>步骤3：</strong>应用一阶线性方程通解公式</p>
+                        <p>积分因子：$\mu(x) = e^{\int \frac{1}{x}dx} = e^{\ln x} = x$</p>
+                        $$p = \frac{1}{x}\left[\int 1 \cdot x dx + C_1\right] = \frac{1}{x}\left[\frac{x^2}{2} + C_1\right] = \frac{x}{2} + \frac{C_1}{x}$$
+                        
+                        <p><strong>步骤4：</strong>求 $y$</p>
+                        $$y = \int p dx = \int \left(\frac{x}{2} + \frac{C_1}{x}\right) dx = \frac{x^2}{4} + C_1\ln|x| + C_2$$
+                        
+                        <p><strong>通解：</strong>$y = \frac{x^2}{4} + C_1\ln|x| + C_2$</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 类型三：不显含x的方程 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>7.5.4 类型三：$F(y, y', y'') = 0$ 型方程</h2>
+            </div>
+            <div class="section-content">
+                <div class="theorem">
+                    <h4>以 $y$ 为自变量的变换</h4>
+                    <p>对于不显含自变量 $x$ 的二阶方程 $F(y, y', y'') = 0$，</p>
+                    <p>令 $p = y'$，利用 $y'' = \frac{dp}{dx} = \frac{dp}{dy} \cdot \frac{dy}{dx} = p\frac{dp}{dy}$，</p>
+                    <p>原方程化为关于 $y$ 和 $p$ 的一阶方程：</p>
+                    $$F\left(y, p, p\frac{dp}{dy}\right) = 0$$
+                </div>
+                
+                <div class="steps">
+                    <h5>求解步骤</h5>
+                    <div class="step-item">
+                        <span class="step-number">步骤1：</span>设 $p = y'$，用链式法则得 $y'' = p\frac{dp}{dy}$
+                    </div>
+                    <div class="step-item">
+                        <span class="step-number">步骤2：</span>将原方程化为 $F(y, p, p\frac{dp}{dy}) = 0$
+                    </div>
+                    <div class="step-item">
+                        <span class="step-number">步骤3：</span>求解关于 $p$ 和 $y$ 的一阶方程，得 $p = \phi(y, C_1)$
+                    </div>
+                    <div class="step-item">
+                        <span class="step-number">步骤4：</span>由 $\frac{dy}{dx} = p = \phi(y, C_1)$ 分离变量求出 $y(x)$
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <h4>例题3：不显含 $x$ 的二阶方程</h4>
+                    <p>求解微分方程：$yy'' = (y')^2$</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解题过程：</div>
+                        <p><strong>步骤1：</strong>变量替换</p>
+                        <p>设 $p = y'$，则 $y'' = p\frac{dp}{dy}$</p>
+                        <p>原方程化为：$y \cdot p\frac{dp}{dy} = p^2$</p>
+                        
+                        <p><strong>步骤2：</strong>分离变量</p>
+                        <p>当 $p \neq 0$ 时，两边除以 $p$：</p>
+                        $$y\frac{dp}{dy} = p$$
+                        $$\frac{dp}{p} = \frac{dy}{y}$$
+                        
+                        <p><strong>步骤3：</strong>积分</p>
+                        $$\int \frac{dp}{p} = \int \frac{dy}{y}$$
+                        $$\ln|p| = \ln|y| + \ln|C_1|$$
+                        $$p = C_1y$$
+                        
+                        <p><strong>步骤4：</strong>求 $y(x)$</p>
+                        <p>由 $\frac{dy}{dx} = C_1y$，分离变量：</p>
+                        $$\frac{dy}{y} = C_1dx$$
+                        $$\ln|y| = C_1x + C_2$$
+                        $$y = C_3e^{C_1x}$$
+                        
+                        <p><strong>步骤5：</strong>检验特殊解</p>
+                        <p>当 $p = 0$ 时，$y' = 0$，即 $y = \text{常数}$</p>
+                        <p>代入原方程：$y \cdot 0 = 0^2$ ✓，所以 $y = C$ 也是解</p>
+                        
+                        <p><strong>通解：</strong>$y = Ce^{C_1x}$ 或 $y = C$（常数）</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 类型四：不显含y的方程 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>7.5.5 类型四：$F(x, y', y'') = 0$ 型方程</h2>
+            </div>
+            <div class="section-content">
+                <div class="theorem">
+                    <h4>直接变量替换</h4>
+                    <p>对于不显含未知函数 $y$ 的二阶方程 $F(x, y', y'') = 0$，</p>
+                    <p>令 $p = y'$，则 $y'' = \frac{dp}{dx}$，</p>
+                    <p>原方程化为关于 $p$ 和 $x$ 的一阶方程：</p>
+                    $$F\left(x, p, \frac{dp}{dx}\right) = 0$$
+                </div>
+                
+                <div class="example">
+                    <h4>例题4：不显含 $y$ 的二阶方程</h4>
+                    <p>求解微分方程：$x^2y'' + xy' = 1$</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解题过程：</div>
+                        <p><strong>步骤1：</strong>变量替换</p>
+                        <p>设 $p = y'$，则 $y'' = \frac{dp}{dx}$</p>
+                        <p>原方程化为：$x^2\frac{dp}{dx} + xp = 1$</p>
+                        
+                        <p><strong>步骤2：</strong>化为标准一阶线性方程</p>
+                        $$\frac{dp}{dx} + \frac{p}{x} = \frac{1}{x^2}$$
+                        <p>$P(x) = \frac{1}{x}$，$Q(x) = \frac{1}{x^2}$</p>
+                        
+                        <p><strong>步骤3：</strong>求解一阶线性方程</p>
+                        <p>积分因子：$\mu(x) = e^{\int \frac{1}{x}dx} = x$</p>
+                        $$p = \frac{1}{x}\left[\int \frac{1}{x^2} \cdot x dx + C_1\right] = \frac{1}{x}\left[\int \frac{1}{x} dx + C_1\right]$$
+                        $$= \frac{1}{x}[\ln|x| + C_1] = \frac{\ln|x|}{x} + \frac{C_1}{x}$$
+                        
+                        <p><strong>步骤4：</strong>求 $y$</p>
+                        $$y = \int p dx = \int \left(\frac{\ln|x|}{x} + \frac{C_1}{x}\right) dx$$
+                        
+                        <p>计算第一个积分：</p>
+                        <p>设 $u = \ln|x|$，$du = \frac{1}{x}dx$</p>
+                        $$\int \frac{\ln|x|}{x} dx = \int u du = \frac{u^2}{2} = \frac{(\ln|x|)^2}{2}$$
+                        
+                        <p>所以：</p>
+                        $$y = \frac{(\ln|x|)^2}{2} + C_1\ln|x| + C_2$$
+                        
+                        <p><strong>通解：</strong>$y = \frac{(\ln|x|)^2}{2} + C_1\ln|x| + C_2$</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 可视化演示 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>7.5.6 降阶过程的可视化演示</h2>
+            </div>
+            <div class="section-content">
+                <p>下图展示了方程 $yy'' = (y')^2$ 的解曲线族 $y = Ce^{C_1x}$：</p>
+                <div class="viz-container" id="reducibleEquationPlot"></div>
+                
+                <div class="memory-tip">
+                    <h4>降阶法记忆技巧</h4>
+                    <ul>
+                        <li><strong>识别口诀：</strong>"缺谁换谁，降一阶"</li>
+                        <li><strong>类型一：</strong>只有最高阶导数 → 连续积分</li>
+                        <li><strong>类型二：</strong>缺低阶导数 → 设 $z = y^{(k)}$</li>
+                        <li><strong>类型三：</strong>不含 $x$ → 设 $p = y'$，$y'' = p\frac{dp}{dy}$</li>
+                        <li><strong>类型四：</strong>不含 $y$ → 设 $p = y'$，$y'' = \frac{dp}{dx}$</li>
+                        <li><strong>关键：</strong>正确识别方程类型，选择合适的变量替换</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 练习题 -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>7.5.7 练习题</h2>
+            </div>
+            <div class="section-content">
+                <div class="practice-problem">
+                    <h4>习题1 <span class="difficulty medium">中等难度</span></h4>
+                    <p>求解微分方程：$y'' = 2e^x$</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解题步骤：</div>
+                        <p><strong>类型：</strong>$y^{(n)} = f(x)$ 型，连续积分求解</p>
+                        
+                        <p><strong>步骤1：</strong>第一次积分</p>
+                        $$y' = \int 2e^x dx = 2e^x + C_1$$
+                        
+                        <p><strong>步骤2：</strong>第二次积分</p>
+                        $$y = \int (2e^x + C_1) dx = 2e^x + C_1x + C_2$$
+                        
+                        <p><strong>答案：</strong>$y = 2e^x + C_1x + C_2$</p>
+                    </div>
+                </div>
+                
+                <div class="practice-problem">
+                    <h4>习题2 <span class="difficulty hard">较难</span></h4>
+                    <p>求解微分方程：$(y')^2 = 2yy''$</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解题步骤：</div>
+                        <p><strong>类型：</strong>$F(y, y', y'') = 0$ 型，不显含 $x$</p>
+                        
+                        <p><strong>步骤1：</strong>变量替换</p>
+                        <p>设 $p = y'$，则 $y'' = p\frac{dp}{dy}$</p>
+                        <p>原方程：$p^2 = 2y \cdot p\frac{dp}{dy}$</p>
+                        
+                        <p><strong>步骤2：</strong>分离变量</p>
+                        <p>当 $p \neq 0$ 时：$p = 2y\frac{dp}{dy}$</p>
+                        $$\frac{dp}{p} = \frac{dy}{2y}$$
+                        
+                        <p><strong>步骤3：</strong>积分</p>
+                        $$\ln|p| = \frac{1}{2}\ln|y| + C_1$$
+                        $$p = C_1\sqrt{y}$$
+                        
+                        <p><strong>步骤4：</strong>求 $y(x)$</p>
+                        $$\frac{dy}{dx} = C_1\sqrt{y}$$
+                        $$\frac{dy}{\sqrt{y}} = C_1dx$$
+                        $$2\sqrt{y} = C_1x + C_2$$
+                        $$y = \frac{(C_1x + C_2)^2}{4}$$
+                        
+                        <p><strong>答案：</strong>$y = \frac{(C_1x + C_2)^2}{4}$ 及 $y = C$</p>
+                    </div>
+                </div>
+                
+                <div class="practice-problem">
+                    <h4>习题3 <span class="difficulty very-hard">很难</span></h4>
+                    <p>求解微分方程：$2xy'' - y' = x$</p>
+                    
+                    <div class="solution">
+                        <div class="solution-header">解题步骤：</div>
+                        <p><strong>类型：</strong>$F(x, y', y'') = 0$ 型，不显含 $y$</p>
+                        
+                        <p><strong>步骤1：</strong>变量替换</p>
+                        <p>设 $p = y'$，则 $y'' = \frac{dp}{dx}$</p>
+                        <p>原方程：$2x\frac{dp}{dx} - p = x$</p>
+                        
+                        <p><strong>步骤2：</strong>化为标准一阶线性方程</p>
+                        $$\frac{dp}{dx} - \frac{p}{2x} = \frac{1}{2}$$
+                        <p>$P(x) = -\frac{1}{2x}$，$Q(x) = \frac{1}{2}$</p>
+                        
+                        <p><strong>步骤3：</strong>求解一阶线性方程</p>
+                        <p>积分因子：$\mu(x) = e^{-\int \frac{1}{2x}dx} = e^{-\frac{1}{2}\ln|x|} = \frac{1}{\sqrt{x}}$</p>
+                        
+                        $$p = \sqrt{x}\left[\int \frac{1}{2} \cdot \frac{1}{\sqrt{x}} dx + C_1\right]$$
+                        $$= \sqrt{x}\left[\int \frac{1}{2\sqrt{x}} dx + C_1\right]$$
+                        $$= \sqrt{x}\left[\sqrt{x} + C_1\right] = x + C_1\sqrt{x}$$
+                        
+                        <p><strong>步骤4：</strong>求 $y$</p>
+                        $$y = \int (x + C_1\sqrt{x}) dx = \frac{x^2}{2} + C_1 \cdot \frac{2x^{3/2}}{3} + C_2$$
+                        $$= \frac{x^2}{2} + \frac{2C_1x^{3/2}}{3} + C_2$$
+                        
+                        <p><strong>答案：</strong>$y = \frac{x^2}{2} + C_1 x^{3/2} + C_2$</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="nav-buttons">
+            <a href="7.4.html" class="btn prev">上一节：7.4 一阶线性微分方程</a>
+            <a href="7.6.html" class="btn next">下一节：7.6 高阶线性微分方程</a>
+        </div>
+        
+        <footer>
+            <p>&copy; 2024 高等数学复习系统 - 可降阶的高阶微分方程</p>
+        </footer>
+    </div>
+
+    <script>
+        // 可降阶微分方程解的可视化
+        function plotReducibleEquationSolution() {
+            const x = [];
+            const traces = [];
+            
+            // 生成x轴数据点
+            for (let i = -2; i <= 2; i += 0.05) {
+                x.push(i);
+            }
+            
+            // 方程 yy'' = (y')^2 的解：y = Ce^(C1*x)
+            // 为了可视化，我们展示几种不同参数的解
+            const solutions = [
+                {c: 1, c1: 1, name: 'y = e^x', color: '#e74c3c'},
+                {c: 1, c1: -1, name: 'y = e^(-x)', color: '#f39c12'},
+                {c: 2, c1: 0.5, name: 'y = 2e^(0.5x)', color: '#2ecc71'},
+                {c: 0.5, c1: -0.5, name: 'y = 0.5e^(-0.5x)', color: '#3498db'},
+                {c: 1, c1: 2, name: 'y = e^(2x)', color: '#9b59b6'},
+                {c: 1, c1: -2, name: 'y = e^(-2x)', color: '#e67e22'}
+            ];
+            
+            solutions.forEach((sol, index) => {
+                const y = x.map(xi => {
+                    const val = sol.c * Math.exp(sol.c1 * xi);
+                    return (Math.abs(val) < 10 && val > 0) ? val : null; // 限制显示范围，只显示正值
+                });
+                
+                traces.push({
+                    x: x,
+                    y: y,
+                    type: 'scatter',
+                    mode: 'lines',
+                    name: sol.name,
+                    line: {
+                        color: sol.color,
+                        width: 2
+                    }
+                });
+            });
+            
+            // 添加常数解 y = C
+            const constantSolutions = [1, 2, 3, 4];
+            constantSolutions.forEach((c, index) => {
+                const y = x.map(xi => c);
+                traces.push({
+                    x: x,
+                    y: y,
+                    type: 'scatter',
+                    mode: 'lines',
+                    name: `y = ${c} (常数解)`,
+                    line: {
+                        color: '#34495e',
+                        width: 2,
+                        dash: 'dash'
+                    }
+                });
+            });
+            
+            const layout = {
+                title: {
+                    text: '微分方程 yy\'\' = (y\')² 的解曲线族',
+                    font: { size: 16, color: '#2c3e50' }
+                },
+                xaxis: {
+                    title: 'x',
+                    range: [-2, 2],
+                    gridcolor: '#ecf0f1',
+                    zerolinecolor: '#bdc3c7'
+                },
+                yaxis: {
+                    title: 'y',
+                    range: [0, 10],
+                    gridcolor: '#ecf0f1',
+                    zerolinecolor: '#bdc3c7'
+                },
+                plot_bgcolor: '#fafafa',
+                paper_bgcolor: 'white',
+                font: { family: 'Microsoft YaHei, Arial' },
+                legend: {
+                    orientation: 'v',
+                    x: 1.02,
+                    y: 1
+                },
+                margin: { t: 50, r: 150, b: 50, l: 50 },
+                annotations: [
+                    {
+                        x: 0,
+                        y: 5,
+                        text: '指数型解曲线',
+                        showarrow: true,
+                        arrowhead: 2,
+                        arrowsize: 1,
+                        arrowwidth: 2,
+                        arrowcolor: '#2c3e50',
+                        font: { color: '#2c3e50', size: 12 }
+                    },
+                    {
+                        x: 1,
+                        y: 2,
+                        text: '常数解',
+                        showarrow: true,
+                        arrowhead: 2,
+                        arrowsize: 1,
+                        arrowwidth: 2,
+                        arrowcolor: '#34495e',
+                        font: { color: '#34495e', size: 12 }
+                    }
+                ]
+            };
+            
+            Plotly.newPlot('reducibleEquationPlot', traces, layout, {responsive: true});
+        }
+        
+        // 页面加载完成后执行可视化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 等待MathJax渲染完成
+            if (window.MathJax) {
+                MathJax.startup.promise.then(() => {
+                    plotReducibleEquationSolution();
+                });
+            } else {
+                plotReducibleEquationSolution();
+            }
+            
+            // 添加页面元素动画
+            gsap.from('.content-section', {
+                duration: 0.8,
+                y: 50,
+                opacity: 0,
+                stagger: 0.2,
+                ease: 'power2.out'
+            });
+        });
+    </script>
+</body>
+</html>
