@@ -70,5 +70,89 @@ window.KNOWLEDGE_DATA = [
   {
     "keyword": "矩阵方程",
     "content": "把线性方程组压缩写成矩阵方程 $A\\mathbf{x} = \\mathbf{b}$ 的形式，借助矩阵运算研究解的存在性和表示。"
+  },
+  {
+    "keyword": "二阶行列式",
+    "content": "$2\\times 2$ 矩阵 $\\begin{bmatrix}a & b\\\\c & d\\end{bmatrix}$ 的行列式定义为 $\\det\\begin{bmatrix}a & b\\\\c & d\\end{bmatrix} = ad - bc$，交换两行或两列会改变符号。"
+  },
+  {
+    "keyword": "三阶行列式",
+    "content": "$3\\times 3$ 行列式可按行或列展开，也可用对角线法则：$\\det\\begin{bmatrix}a & b & c\\\\d & e & f\\\\g & h & i\\end{bmatrix} = aei + bfg + cdh - ceg - bdi - afh$。"
+  },
+  {
+    "keyword": "对角线法则",
+    "content": "对 $3\\times 3$ 行列式复制前两列后取主对角线乘积和减去副对角线乘积和，便于快速求值，俗称 Sarrus 法则。"
+  },
+  {
+    "keyword": "余子式",
+    "content": "矩阵 $A$ 中去掉第 $i$ 行第 $j$ 列后得到子矩阵的行列式叫作元素 $a_{ij}$ 的余子式，记为 $M_{ij}$。"
+  },
+  {
+    "keyword": "代数余子式",
+    "content": "元素 $a_{ij}$ 的代数余子式定义为 $C_{ij} = (-1)^{i+j} M_{ij}$，用以构造行列式展开与伴随矩阵。"
+  },
+  {
+    "keyword": "伴随矩阵",
+    "content": "$n\\times n$ 矩阵 $A$ 的伴随矩阵 $\\operatorname{adj} A$ 是代数余子式矩阵的转置，用于表示逆矩阵与高阶行列式展开。"
+  },
+  {
+    "keyword": "伴随矩阵的行列式",
+    "content": "若 $A$ 为 $n\\times n$ 矩阵，则 $\\det(\\operatorname{adj} A) = (\\det A)^{n-1}$，当 $\\det A = 0$ 时伴随矩阵的行列式也为 $0$。"
+  },
+  {
+    "keyword": "行列式展开",
+    "content": "行列式可沿任意一行或一列按代数余子式展开，称为 Laplace 展开，常用于递归计算高阶行列式。"
+  },
+  {
+    "keyword": "特殊矩阵的行列式",
+    "content": "对角矩阵与三角矩阵的行列式等于对角元素之积；置换矩阵的行列式为置换符号 $\\pm 1$，可快速得到结果。"
+  },
+  {
+    "keyword": "逆矩阵的行列式",
+    "content": "若 $A$ 可逆，则 $\\det(A^{-1}) = 1/\\det(A)$，说明行列式衡量逆矩阵的放缩程度。"
+  },
+  {
+    "keyword": "范德蒙德行列式",
+    "content": "范德蒙德矩阵 $V = [x_j^{i-1}]$ 的行列式为 $\\det(V) = \\prod_{1 \\le i < j \\le n}(x_j - x_i)$，体现了节点互异性的重要性。"
+  },
+  {
+    "keyword": "行列式的几何意义",
+    "content": "实矩阵的行列式绝对值给出线性变换对单位体积的放缩因子，符号表示空间取向是否保持。"
+  },
+  {
+    "keyword": "行列式与线性变换",
+    "content": "线性变换 $T_A$ 的行列式 $\\det(A)$ 描述体积缩放与取向变化，$\\det(A)=0$ 表示变换将空间压缩到低维。"
+  },
+  {
+    "keyword": "行列式与向量组的线性相关性",
+    "content": "列向量组成方阵时，行列式为零当且仅当列向量线性相关，因此行列式可检测向量组的独立性。"
+  },
+  {
+    "keyword": "行列式与矩阵的逆",
+    "content": "方阵 $A$ 可逆的充要条件是 $\\det(A) \\neq 0$，因此行列式为零意味着逆矩阵不存在。"
+  },
+  {
+    "keyword": "初等变换与行列式",
+    "content": "对调两行使行列式变号，某行乘以常数 $c$ 将行列式乘以 $c$，行倍加操作不改变值，这是行列式计算的基础。"
+  },
+  {
+    "keyword": "矩阵乘积的行列式",
+    "content": "对同阶方阵有 $\\det(AB) = \\det(A)\\det(B)$，揭示行列式在矩阵乘法下的乘法性。"
+  },
+  {
+    "keyword": "转置矩阵的行列式",
+    "content": "任意方阵 $A$ 满足 $\\det(A^{\\mathsf{T}}) = \\det(A)$，反映行列式与行列交换的对称性。"
+  },
+  {
+    "keyword": "矩阵数乘的行列式",
+    "content": "对 $n$ 阶方阵 $A$ 和标量 $c$，有 $\\det(cA) = c^n\\det(A)$，显示每行乘 $c$ 累积 $n$ 次。"
+  },
+  {
+    "keyword": "逆矩阵与伴随矩阵",
+    "content": "若 $\\det(A) \\neq 0$，则 $A^{-1} = \\frac{1}{\\det(A)}\\operatorname{adj} A$，伴随矩阵为求逆提供显式公式。"
+  },
+  {
+    "keyword": "克拉默法则",
+    "content": "对系数矩阵可逆的线性方程组 $A\\mathbf{x} = \\mathbf{b}$，变量 $x_i = \\dfrac{\\det(A_i)}{\\det(A)}$，其中 $A_i$ 用常数列替换第 $i$ 列获得，称为克拉默法则。"
   }
 ];

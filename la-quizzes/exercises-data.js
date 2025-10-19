@@ -376,5 +376,446 @@ window.EXERCISES_DATA = [
     "solution": "行化简得到增广矩阵 $\\begin{bmatrix}1 & 2 & -1 & \\mid & 1\\\\0 & 1 & 3 & \\mid & 4\\\\0 & 0 & 0 & \\mid & \\kappa\\end{bmatrix}$。第三行要求 $0 = \\kappa$，故只有当 $\\kappa = 0$ 时方程相容。令 $x_3 = t$，自第二行得 $x_2 = 4 - 3t$，代入第一行得 $x_1 = -7 + 7t$。通解为 $\\{(-7 + 7t, 4 - 3t, t) \\mid t \\in \\mathbb{R}\\}$。",
     "keywords": ["矩阵方程", "方程组的解集", "自由变量"],
     "level": "很难"
+  },
+  {
+    "catalog": "行列式",
+    "question": "计算二阶行列式 $\\det\\begin{bmatrix}2 & 3\\\\1 & 4\\end{bmatrix}$。",
+    "solution": "应用公式 $ad - bc$，得到 $2\\cdot 4 - 3\\cdot 1 = 5$。",
+    "keywords": ["二阶行列式"],
+    "level": "简单"
+  },
+  {
+    "catalog": "行列式",
+    "question": "设 $A = \\begin{bmatrix}1 & k\\\\-2 & 3\\end{bmatrix}$，求使 $\\det(A) = 0$ 的实数 $k$。",
+    "solution": "二阶行列式为 $1\\cdot 3 - k(-2) = 3 + 2k$，令其为零得 $k = -\\tfrac{3}{2}$。",
+    "keywords": ["二阶行列式"],
+    "level": "中等"
+  },
+  {
+    "catalog": "行列式",
+    "question": "平面向量 $\\mathbf{u} = (1, 2)$ 与 $\\mathbf{v} = (k, 3)$ 张成的平行四边形面积为 $7$，求 $k$。",
+    "solution": "面积等于行列式绝对值 $|\\det\\begin{bmatrix}1 & 2\\\\k & 3\\end{bmatrix}| = |3 - 2k|$，令其为 $7$ 得 $3 - 2k = \\pm 7$，解得 $k = -2$ 或 $k = 5$。",
+    "keywords": ["二阶行列式", "行列式的几何意义"],
+    "level": "很难"
+  },
+  {
+    "catalog": "行列式",
+    "question": "计算行列式 $\\det\\begin{bmatrix}1 & 0 & 2\\\\-1 & 3 & 1\\\\0 & 2 & 1\\end{bmatrix}$。",
+    "solution": "沿第一列展开得到 $1\\cdot(3\\cdot 1 - 1\\cdot 2) + (-1)\\cdot(-1)^{2+1}\\det\\begin{bmatrix}0 & 2\\\\2 & 1\\end{bmatrix} = 1 + (-4) = -3$。",
+    "keywords": ["三阶行列式"],
+    "level": "简单"
+  },
+  {
+    "catalog": "行列式",
+    "question": "设 $B = \\begin{bmatrix}1 & 2 & 0\\\\0 & t & 3\\\\1 & -1 & 2\\end{bmatrix}$，求 $\\det(B)$。",
+    "solution": "沿第三列展开：$\\det(B) = 3(-1)^{2+3}\\det\\begin{bmatrix}1 & 2\\\\1 & -1\\end{bmatrix} + 2(-1)^{3+3}\\det\\begin{bmatrix}1 & 2\\\\0 & t\\end{bmatrix} = 3(-1)(-3) + 2(t) = 9 + 2t$。",
+    "keywords": ["三阶行列式"],
+    "level": "中等"
+  },
+  {
+    "catalog": "行列式",
+    "question": "设 $C = \\begin{bmatrix}1 & 1 & 1\\\\1 & 2 & t\\\\1 & t & 2\\end{bmatrix}$，确定实数 $t$ 使得 $\\det(C) > 0$。",
+    "solution": "沿第一行展开得 $\\det(C) = (4 - t^2) + (t - 2) + (t - 2) = -t(t - 2)$，因此 $\\det(C) > 0$ 当且仅当 $t(t - 2) < 0$，即 $0 < t < 2$。",
+    "keywords": ["三阶行列式"],
+    "level": "很难"
+  },
+  {
+    "catalog": "行列式",
+    "question": "使用对角线法则计算 $\\det\\begin{bmatrix}1 & 2 & 0\\\\0 & 3 & 1\\\\2 & 1 & 4\\end{bmatrix}$。",
+    "solution": "复制前两列后按对角线法则求得 $(1\\cdot 3\\cdot 4 + 2\\cdot 1\\cdot 2 + 0) - (0 + 1\\cdot 1\\cdot 1 + 2\\cdot 0\\cdot 4) = 15$。",
+    "keywords": ["对角线法则", "三阶行列式"],
+    "level": "简单"
+  },
+  {
+    "catalog": "行列式",
+    "question": "利用对角线法则计算 $\\det\\begin{bmatrix}a & 1 & 0\\\\0 & 2 & 3\\\\1 & 0 & 1\\end{bmatrix}$，并化简结果。",
+    "solution": "套用对角线法则得 $(a\\cdot 2\\cdot 1 + 1\\cdot 3\\cdot 1 + 0) - (0 + a\\cdot 3\\cdot 1 + 1\\cdot 0\\cdot 1) = 2a + 3 - 3a = 3 - a$。",
+    "keywords": ["对角线法则", "三阶行列式"],
+    "level": "中等"
+  },
+  {
+    "catalog": "行列式",
+    "question": "设 $A = \\begin{bmatrix}1 & t & 1\\\\0 & 1 & 2\\\\t & 0 & 1\\end{bmatrix}$，用对角线法则计算其行列式并求使结果为 $5$ 的 $t$。",
+    "solution": "对角线法则给出 $\\det(A) = 1 + 2t^2 - 2t$。令其等于 $5$ 得 $2t^2 - 2t - 4 = 0$，化简为 $t^2 - t - 2 = 0$，解得 $t = 2$ 或 $t = -1$。",
+    "keywords": ["对角线法则", "三阶行列式"],
+    "level": "很难"
+  },
+  {
+    "catalog": "行列式",
+    "question": "给定矩阵 $A = \\begin{bmatrix}1 & 2 & 0\\\\3 & 4 & 5\\\\0 & -1 & 2\\end{bmatrix}$，计算元素 $a_{23}$ 的余子式 $M_{23}$。",
+    "solution": "删除第二行第三列得到子矩阵 $\\begin{bmatrix}1 & 2\\\\0 & -1\\end{bmatrix}$，其行列式为 $1\\cdot(-1) - 2\\cdot 0 = -1$，因此 $M_{23} = -1$。",
+    "keywords": ["余子式"],
+    "level": "简单"
+  },
+  {
+    "catalog": "行列式",
+    "question": "矩阵 $A = \\begin{bmatrix}1 & 0 & 2 & 1\\\\3 & -1 & 4 & 0\\\\0 & 2 & 1 & 1\\\\5 & 0 & 0 & 2\\end{bmatrix}$ 中，求元素 $a_{22}$ 的余子式。",
+    "solution": "删除第二行第二列得到 $\\begin{bmatrix}1 & 2 & 1\\\\0 & 1 & 1\\\\5 & 0 & 2\\end{bmatrix}$，其行列式为 $1\\cdot(1\\cdot 2 - 1\\cdot 0) - 2\\cdot(0\\cdot 2 - 1\\cdot 5) + 1\\cdot(0\\cdot 0 - 1\\cdot 5) = 2 + 10 - 5 = 7$，故余子式为 $7$。",
+    "keywords": ["余子式"],
+    "level": "中等"
+  },
+  {
+    "catalog": "行列式",
+    "question": "设矩阵 $B = \\begin{bmatrix}1 & 2 & 0 & 1\\\\0 & 1 & 3 & 2\\\\2 & -1 & 1 & 0\\\\1 & 0 & t & 1\\end{bmatrix}$，求元素 $b_{24}$ 的余子式，进而确定何时该余子式为零。",
+    "solution": "余子式 $M_{24}$ 为删除第二行第四列后的行列式 $\\det\\begin{bmatrix}1 & 2 & 0\\\\2 & -1 & 1\\\\1 & 0 & t\\end{bmatrix}$，计算得 $-t - 4t + 2 = -5t + 2$。令其为零得到 $t = \\tfrac{2}{5}$。",
+    "keywords": ["余子式"],
+    "level": "很难"
+  },
+  {
+    "catalog": "行列式",
+    "question": "矩阵 $A = \\begin{bmatrix}1 & 2 & 0\\\\3 & 4 & 5\\\\0 & -1 & 2\\end{bmatrix}$ 中，求元素 $a_{23}$ 的代数余子式 $C_{23}$。",
+    "solution": "已知 $M_{23} = -1$，代数余子式 $C_{23} = (-1)^{2+3}M_{23} = -(-1) = 1$。",
+    "keywords": ["代数余子式", "余子式"],
+    "level": "简单"
+  },
+  {
+    "catalog": "行列式",
+    "question": "对矩阵 $B = \\begin{bmatrix}1 & 0 & 2\\\\2 & 1 & -1\\\\3 & 4 & 0\\end{bmatrix}$，计算元素 $b_{12}$ 的代数余子式。",
+    "solution": "删除第一行第二列得到子矩阵 $\\begin{bmatrix}2 & -1\\\\3 & 0\\end{bmatrix}$，余子式为 $2\\cdot 0 - (-1)\\cdot 3 = 3$，因 $(-1)^{1+2} = -1$，故代数余子式为 $-3$。",
+    "keywords": ["代数余子式"],
+    "level": "中等"
+  },
+  {
+    "catalog": "行列式",
+    "question": "设 $D = \\begin{bmatrix}1 & t & 2\\\\0 & 1 & 3\\\\2 & -1 & 1\\end{bmatrix}$，求元素 $d_{23}$ 的代数余子式并找出使其为零的 $t$。",
+    "solution": "余子式 $M_{23} = \\det\\begin{bmatrix}1 & t\\\\2 & -1\\end{bmatrix} = -1 - 2t$，故 $C_{23} = (-1)^{2+3}M_{23} = 1 + 2t$，令其为零得 $t = -\\tfrac{1}{2}$。",
+    "keywords": ["代数余子式", "余子式"],
+    "level": "很难"
+  },
+  {
+    "catalog": "行列式",
+    "question": "计算矩阵 $A = \\begin{bmatrix}1 & 2\\\\3 & 4\\end{bmatrix}$ 的伴随矩阵。",
+    "solution": "对二阶矩阵有 $\\operatorname{adj} A = \\begin{bmatrix}4 & -2\\\\-3 & 1\\end{bmatrix}$，来自交换对角线元素并改变副对角线符号。",
+    "keywords": ["伴随矩阵", "代数余子式"],
+    "level": "简单"
+  },
+  {
+    "catalog": "行列式",
+    "question": "设 $U = \\begin{bmatrix}1 & 2 & 0\\\\0 & 1 & 1\\\\0 & 0 & 1\\end{bmatrix}$，求其伴随矩阵。",
+    "solution": "由于 $U$ 为上三角矩阵且 $\\det(U) = 1$，故 $\\operatorname{adj} U = U^{-1}$。对 $U$ 做回代可得 $U^{-1} = \\begin{bmatrix}1 & -2 & 2\\\\0 & 1 & -1\\\\0 & 0 & 1\\end{bmatrix}$，因此伴随矩阵即此。",
+    "keywords": ["伴随矩阵", "逆矩阵与伴随矩阵"],
+    "level": "中等"
+  },
+  {
+    "catalog": "行列式",
+    "question": "计算矩阵 $C = \\begin{bmatrix}1 & 1 & 0\\\\0 & 2 & 1\\\\2 & 1 & 1\\end{bmatrix}$ 的伴随矩阵。",
+    "solution": "先求代数余子式矩阵 $\\begin{bmatrix}1 & 2 & -4\\\\-1 & 1 & 1\\\\1 & -1 & 2\\end{bmatrix}$，转置后得到 $\\operatorname{adj} C = \\begin{bmatrix}1 & -1 & 1\\\\2 & 1 & -1\\\\-4 & 1 & 2\\end{bmatrix}$。",
+    "keywords": ["伴随矩阵", "代数余子式"],
+    "level": "很难"
+  },
+  {
+    "catalog": "行列式",
+    "question": "设 $A = \\begin{bmatrix}1 & 2\\\\3 & 5\\end{bmatrix}$，求 $\\det(\\operatorname{adj} A)$。",
+    "solution": "$\\det(A) = -1$，二阶情形下 $\\det(\\operatorname{adj} A) = (\\det A)^{2-1} = -1$。直接计算 $\\operatorname{adj} A = \\begin{bmatrix}5 & -2\\\\-3 & 1\\end{bmatrix}$ 也得到行列式 $-1$。",
+    "keywords": ["伴随矩阵的行列式", "伴随矩阵"],
+    "level": "简单"
+  },
+  {
+    "catalog": "行列式",
+    "question": "矩阵 $B = \\begin{bmatrix}1 & 0 & 2\\\\0 & 1 & 1\\\\1 & 2 & 0\\end{bmatrix}$ 满足 $\\det(B) = -4$，求 $\\det(\\operatorname{adj} B)$。",
+    "solution": "对 $3\\times 3$ 矩阵有 $\\det(\\operatorname{adj} B) = (\\det B)^{3-1} = (-4)^2 = 16$。",
+    "keywords": ["伴随矩阵的行列式"],
+    "level": "中等"
+  },
+  {
+    "catalog": "行列式",
+    "question": "矩阵 $C = \\begin{bmatrix}1 & 2 & 3\\\\2 & 4 & 6\\\\0 & 1 & 1\\end{bmatrix}$ 行列式为零，求 $\\det(\\operatorname{adj} C)$ 并说明理由。",
+    "solution": "由于 $\\det(C) = 0$，根据公式 $\\det(\\operatorname{adj} C) = (\\det C)^{n-1}$，可知结果也为 $0$，表明伴随矩阵不可逆。",
+    "keywords": ["伴随矩阵的行列式", "行列式与矩阵的逆"],
+    "level": "很难"
+  },
+  {
+    "catalog": "行列式",
+    "question": "沿第一行展开计算 $\\det\\begin{bmatrix}0 & 1 & 2\\\\2 & 3 & 0\\\\1 & 0 & 4\\end{bmatrix}$。",
+    "solution": "拉普拉斯沿第一行展开得 $(-1)^{1+2} \\cdot 1 \\cdot \\det\\begin{bmatrix}2 & 0\\\\1 & 4\\end{bmatrix} + (-1)^{1+3} \\cdot 2 \\cdot \\det\\begin{bmatrix}2 & 3\\\\1 & 0\\end{bmatrix} = -8 - 6 = -14$。",
+    "keywords": ["行列式展开", "三阶行列式"],
+    "level": "简单"
+  },
+  {
+    "catalog": "行列式",
+    "question": "利用行列式展开沿第二列计算 $\\det\\begin{bmatrix}2 & 0 & 0 & 1\\\\0 & 3 & 0 & 0\\\\1 & 0 & 4 & 0\\\\0 & 0 & 0 & 5\\end{bmatrix}$。",
+    "solution": "第二列仅有非零元素 $3$ 位于 $(2,2)$，其余为零，因此行列式为 $3 \\cdot (-1)^{2+2} \\det\\begin{bmatrix}2 & 0 & 1\\\\1 & 4 & 0\\\\0 & 0 & 5\\end{bmatrix}$。继续沿第三行展开可得 $3 \\cdot 5 \\cdot \\det\\begin{bmatrix}2 & 0\\\\1 & 4\\end{bmatrix} = 3 \\cdot 5 \\cdot 8 = 120$。",
+    "keywords": ["行列式展开", "特殊矩阵的行列式"],
+    "level": "中等"
+  },
+  {
+    "catalog": "行列式",
+    "question": "设 $C = \\begin{bmatrix}t & 1 & 0 & 0\\\\1 & 0 & 2 & 0\\\\0 & 3 & 1 & 1\\\\0 & 0 & 0 & 1\\end{bmatrix}$，沿最后一行展开行列式并求使其为零的 $t$。",
+    "solution": "最后一行仅含元素 $1$，故 $\\det(C) = (-1)^{1+4} \\det\\begin{bmatrix}t & 1 & 0\\\\1 & 0 & 2\\\\0 & 3 & 1\\end{bmatrix}$。再次沿第一行展开得到 $t\\cdot\\det\\begin{bmatrix}0 & 2\\\\3 & 1\\end{bmatrix} - 1\\cdot\\det\\begin{bmatrix}1 & 2\\\\0 & 1\\end{bmatrix} = -6t - 1$。令其为零得 $t = -\\tfrac{1}{6}$。",
+    "keywords": ["行列式展开", "三阶行列式"],
+    "level": "很难"
+  },
+  {
+    "catalog": "行列式",
+    "question": "计算对角矩阵 $\\operatorname{diag}(2,3,4)$ 的行列式。",
+    "solution": "对角矩阵的行列式等于对角线元素乘积，因此 $\\det = 2\\cdot 3\\cdot 4 = 24$。",
+    "keywords": ["特殊矩阵的行列式"],
+    "level": "简单"
+  },
+  {
+    "catalog": "行列式",
+    "question": "设上三角矩阵 $T = \\begin{bmatrix}a & 1 & 0\\\\0 & b & 2\\\\0 & 0 & c\\end{bmatrix}$，求 $\\det(T)$。",
+    "solution": "三角矩阵的行列式为对角线乘积，故 $\\det(T) = abc$，与上三角非对角元无关。",
+    "keywords": ["特殊矩阵的行列式"],
+    "level": "中等"
+  },
+  {
+    "catalog": "行列式",
+    "question": "计算循环置换矩阵 $P = \\begin{bmatrix}0 & 1 & 0\\\\0 & 0 & 1\\\\1 & 0 & 0\\end{bmatrix}$ 的行列式，并说明理由。",
+    "solution": "矩阵 $P$ 表示置换 $(1\\ 2\\ 3)$，可写成两次换位的组合，故符号为 $+1$，因此 $\\det(P) = 1$。直接展开也能得到同样结果。",
+    "keywords": ["特殊矩阵的行列式"],
+    "level": "很难"
+  },
+  {
+    "catalog": "行列式",
+    "question": "矩阵 $A = \\begin{bmatrix}2 & 1\\\\0 & 3\\end{bmatrix}$ 的逆矩阵存在，求 $\\det(A^{-1})$。",
+    "solution": "$\\det(A) = 6$，因此 $\\det(A^{-1}) = 1/\\det(A) = \\tfrac{1}{6}$。",
+    "keywords": ["逆矩阵的行列式", "二阶行列式"],
+    "level": "简单"
+  },
+  {
+    "catalog": "行列式",
+    "question": "已知可逆矩阵 $A, B$ 满足 $\\det(A) = -3$，$\\det(B) = 4$，求 $\\det((AB)^{-1})$。",
+    "solution": "利用 $\\det(AB) = \\det(A)\\det(B)$ 得 $\\det(AB) = -12$，故 $\\det((AB)^{-1}) = -\\tfrac{1}{12}$。",
+    "keywords": ["逆矩阵的行列式", "矩阵乘积的行列式"],
+    "level": "中等"
+  },
+  {
+    "catalog": "行列式",
+    "question": "设 $C = \\begin{bmatrix}1 & 1 & 0\\\\0 & 2 & 1\\\\0 & 0 & t\\end{bmatrix}$ 可逆，若 $\\det(C^{-1}) = \\tfrac{1}{6}$，求 $t$。",
+    "solution": "$C$ 为上三角矩阵，$\\det(C) = 2t$，故 $\\det(C^{-1}) = 1/(2t) = \\tfrac{1}{6}$，解得 $t = 3$。",
+    "keywords": ["逆矩阵的行列式", "特殊矩阵的行列式"],
+    "level": "很难"
+  },
+  {
+    "catalog": "行列式",
+    "question": "求节点 $0,1,2$ 构成的 $3\\times 3$ 范德蒙德行列式的值。",
+    "solution": "公式给出 $\\prod_{1\\le i < j \\le 3}(x_j - x_i) = (1-0)(2-0)(2-1) = 2$。",
+    "keywords": ["范德蒙德行列式"],
+    "level": "简单"
+  },
+  {
+    "catalog": "行列式",
+    "question": "对节点 $x_1 = 1$, $x_2 = 2$, $x_3 = t$ 写出范德蒙德行列式并化简结果。",
+    "solution": "行列式等于 $(2-1)(t-1)(t-2) = (t-1)(t-2)$，当 $t$ 与 $1,2$ 取相同值时将退化为零。",
+    "keywords": ["范德蒙德行列式"],
+    "level": "中等"
+  },
+  {
+    "catalog": "行列式",
+    "question": "计算节点 $-1, 0, 1, 2$ 生成的 $4\\times 4$ 范德蒙德行列式。",
+    "solution": "乘积公式给出 $\\prod_{1 \\le i < j \\le 4}(x_j - x_i) = (0+1)(1+1)(2+1)(1-0)(2-0)(2-1) = 12$。",
+    "keywords": ["范德蒙德行列式"],
+    "level": "很难"
+  },
+  {
+    "catalog": "行列式",
+    "question": "平面向量 $\\mathbf{u} = (1, 0)$ 与 $\\mathbf{v} = (0, 2)$ 张成的平行四边形面积是多少？",
+    "solution": "面积等于行列式绝对值 $|\\det\\begin{bmatrix}1 & 0\\\\0 & 2\\end{bmatrix}| = 2$。",
+    "keywords": ["行列式的几何意义", "二阶行列式"],
+    "level": "简单"
+  },
+  {
+    "catalog": "行列式",
+    "question": "向量 $\\mathbf{u} = (1,0,0)$、$\\mathbf{v} = (0,2,0)$、$\\mathbf{w} = (1,1,3)$ 张成的平行六面体体积是多少？",
+    "solution": "体积为行列式绝对值 $|\\det\\begin{bmatrix}1 & 0 & 1\\\\0 & 2 & 1\\\\0 & 0 & 3\\end{bmatrix}| = 6$。",
+    "keywords": ["行列式的几何意义", "三阶行列式"],
+    "level": "中等"
+  },
+  {
+    "catalog": "行列式",
+    "question": "线性变换 $T(\\mathbf{x}) = A\\mathbf{x}$ 由矩阵 $A = \\begin{bmatrix}1 & 2\\\\3 & 4\\end{bmatrix}$ 给出。说明它对单位正方形面积与取向的影响。",
+    "solution": "行列式 $\\det(A) = -2$，绝对值 $2$ 表明面积放大两倍，负号表示取向反转，因此单位正方形被映射为面积为 $2$ 的平行四边形并翻转方向。",
+    "keywords": ["行列式的几何意义", "行列式与线性变换"],
+    "level": "很难"
+  },
+  {
+    "catalog": "行列式",
+    "question": "矩阵 $A = \\begin{bmatrix}2 & 0\\\\0 & 3\\end{bmatrix}$ 对平面区域的面积放缩多少倍？",
+    "solution": "$\\det(A) = 6$，表示任意面积被放大 $6$ 倍且取向保持。",
+    "keywords": ["行列式与线性变换", "特殊矩阵的行列式"],
+    "level": "简单"
+  },
+  {
+    "catalog": "行列式",
+    "question": "线性变换 $T(\\mathbf{x}) = A\\mathbf{x}$，其中 $A = \\begin{bmatrix}1 & 1 & 0\\\\0 & 2 & 1\\\\1 & 0 & 1\\end{bmatrix}$。求 $T$ 对任意体积的放缩因子并判断是否保持取向。",
+    "solution": "计算 $\\det(A) = 3$，因此体积被放大三倍且取向保持。",
+    "keywords": ["行列式与线性变换", "三阶行列式"],
+    "level": "中等"
+  },
+  {
+    "catalog": "行列式",
+    "question": "若 $A = \\begin{bmatrix}1 & 1\\\\2 & 2\\end{bmatrix}$，解释行列式揭示的线性变换特性。",
+    "solution": "$\\det(A) = 0$，说明变换将整个平面压缩到一条直线，因而不可逆。",
+    "keywords": ["行列式与线性变换", "行列式与向量组的线性相关性"],
+    "level": "很难"
+  },
+  {
+    "catalog": "行列式",
+    "question": "利用行列式判断向量 $(1,0)$ 与 $(0,1)$ 是否线性无关。",
+    "solution": "行列式 $\\det\\begin{bmatrix}1 & 0\\\\0 & 1\\end{bmatrix} = 1 \\neq 0$，故两向量线性无关。",
+    "keywords": ["行列式与向量组的线性相关性", "二阶行列式"],
+    "level": "简单"
+  },
+  {
+    "catalog": "行列式",
+    "question": "判断向量 $(1,2,3)$、$(0,1,4)$、$(2,0,1)$ 是否线性无关，并说明理由。",
+    "solution": "将向量作为列组成矩阵，行列式为 $\\det\\begin{bmatrix}1 & 0 & 2\\\\2 & 1 & 0\\\\3 & 4 & 1\\end{bmatrix} = 11 \\neq 0$，因此该向量组线性无关。",
+    "keywords": ["行列式与向量组的线性相关性", "三阶行列式"],
+    "level": "中等"
+  },
+  {
+    "catalog": "行列式",
+    "question": "设向量 $\\mathbf{v}_1 = (1,0,1)$、$\\mathbf{v}_2 = (2,1,t)$、$\\mathbf{v}_3 = (0,1,1)$。求使这三个向量线性相关的 $t$。",
+    "solution": "行列式 $\\det\\begin{bmatrix}1 & 2 & 0\\\\0 & 1 & 1\\\\1 & t & 1\\end{bmatrix} = 3 - t$。令其为零得到 $t = 3$，此时向量组线性相关。",
+    "keywords": ["行列式与向量组的线性相关性", "三阶行列式"],
+    "level": "很难"
+  },
+  {
+    "catalog": "行列式",
+    "question": "判断矩阵 $A = \\begin{bmatrix}1 & 2\\\\3 & 5\\end{bmatrix}$ 是否可逆并说明依据。",
+  "solution": "$\\det(A) = 1\\cdot 5 - 2\\cdot 3 = -1 \\neq 0$，因此 $A$ 可逆。",
+    "keywords": ["行列式与矩阵的逆", "二阶行列式"],
+    "level": "简单"
+  },
+  {
+    "catalog": "行列式",
+    "question": "设矩阵 $A(t) = \\begin{bmatrix}1 & t & 0\\\\0 & 1 & 2\\\\1 & 0 & 1\\end{bmatrix}$，求哪些 $t$ 使得 $A(t)$ 可逆。",
+    "solution": "行列式为 $\\det(A(t)) = 1 + 2t$，因此当 $t \\neq -\\tfrac{1}{2}$ 时矩阵可逆。",
+    "keywords": ["行列式与矩阵的逆", "三阶行列式"],
+    "level": "中等"
+  },
+  {
+    "catalog": "行列式",
+    "question": "矩阵 $B(t) = \\begin{bmatrix}1 & 0 & 1\\\\2 & 1 & 1\\\\1 & 1 & t\\end{bmatrix}$ 何时不可逆？",
+    "solution": "行列式展开得 $\\det(B(t)) = t$，当且仅当 $t = 0$ 时为零，矩阵不可逆。",
+    "keywords": ["行列式与矩阵的逆", "三阶行列式"],
+    "level": "很难"
+  },
+  {
+    "catalog": "行列式",
+    "question": "矩阵行列式在交换两行后如何变化？举例说明。",
+    "solution": "交换两行会使行列式变号。例如 $\\det\\begin{bmatrix}1 & 2\\\\3 & 4\\end{bmatrix} = -2$，交换两行得 $\\det\\begin{bmatrix}3 & 4\\\\1 & 2\\end{bmatrix} = 2$。",
+    "keywords": ["初等变换与行列式", "二阶行列式"],
+    "level": "简单"
+  },
+  {
+    "catalog": "行列式",
+    "question": "对矩阵 $A = \\begin{bmatrix}1 & 0 & 2\\\\0 & 1 & 1\\\\1 & 0 & 1\\end{bmatrix}$ 的第二行乘以 $5$，新行列式与原行列式的关系是什么？",
+    "solution": "原行列式 $\\det(A) = -1$。将第二行乘以 $5$ 会使行列式乘以 $5$，因此新行列式为 $-5$。",
+    "keywords": ["初等变换与行列式", "行列式展开"],
+    "level": "中等"
+  },
+  {
+    "catalog": "行列式",
+    "question": "矩阵 $B = \\begin{bmatrix}1 & 0 & 0\\\\2 & 1 & 0\\\\3 & 4 & 1\\end{bmatrix}$ 施加行变换 $R_3 \\leftarrow R_3 - 3R_1$ 后行列式是否改变？请验证。",
+    "solution": "该行变换属于行倍加，不改变行列式。原矩阵与变换后矩阵均为下三角，主对角线乘积为 $1$，行列式保持为 $1$。",
+    "keywords": ["初等变换与行列式", "特殊矩阵的行列式"],
+    "level": "很难"
+  },
+  {
+    "catalog": "行列式",
+    "question": "若 $A = \\begin{bmatrix}1 & 2\\\\0 & 1\\end{bmatrix}$，$B = \\begin{bmatrix}2 & 0\\\\3 & 1\\end{bmatrix}$，计算 $\\det(AB)$。",
+    "solution": "$\\det(A) = 1$，$\\det(B) = 2$，因此 $\\det(AB) = 2$。直接相乘得 $AB = \\begin{bmatrix}8 & 2\\\\3 & 1\\end{bmatrix}$，行列式同样为 $2$。",
+    "keywords": ["矩阵乘积的行列式", "二阶行列式"],
+    "level": "简单"
+  },
+  {
+    "catalog": "行列式",
+    "question": "设可逆矩阵 $A,B$ 满足 $\\det(A) = 2$，$\\det(B) = -4$，求 $\\det(A^2 B^{-1})$。",
+    "solution": "利用乘法性与逆的性质得 $\\det(A^2 B^{-1}) = (\\det A)^2 (\\det B)^{-1} = 4 \times (-\\tfrac{1}{4}) = -1$。",
+    "keywords": ["矩阵乘积的行列式", "逆矩阵的行列式"],
+    "level": "中等"
+  },
+  {
+    "catalog": "行列式",
+    "question": "令 $A = \\begin{bmatrix}1 & 1 & 0\\\\0 & 2 & 1\\\\1 & 0 & 1\\end{bmatrix}$，$B = \\begin{bmatrix}2 & 0 & 1\\\\0 & 1 & 0\\\\1 & 2 & 1\\end{bmatrix}$。验证 $\\det(AB) = \\det(A)\\det(B)$。",
+    "solution": "计算得 $\\det(A) = 3$，$\\det(B) = 1$。两矩阵相乘得到 $AB = \\begin{bmatrix}2 & 1 & 1\\\\1 & 4 & 1\\\\3 & 2 & 2\\end{bmatrix}$，其行列式为 $3$，与 $\\det(A)\\det(B)$ 一致。",
+    "keywords": ["矩阵乘积的行列式", "三阶行列式"],
+    "level": "很难"
+  },
+  {
+    "catalog": "行列式",
+    "question": "求矩阵 $A = \\begin{bmatrix}1 & 2\\\\3 & 4\\end{bmatrix}$ 的转置行列式并与 $\\det(A)$ 比较。",
+    "solution": "$\\det(A) = -2$，$A^{\\mathsf{T}} = \\begin{bmatrix}1 & 3\\\\2 & 4\\end{bmatrix}$，其行列式也为 $-2$。",
+    "keywords": ["转置矩阵的行列式", "二阶行列式"],
+    "level": "简单"
+  },
+  {
+    "catalog": "行列式",
+    "question": "设 $A = \\begin{bmatrix}1 & 0 & t\\\\2 & 1 & 0\\\\0 & 3 & 1\\end{bmatrix}$，计算 $\\det(A)$ 与 $\\det(A^{\\mathsf{T}})$。",
+    "solution": "$\\det(A) = 1 + 6t$，而 $A^{\\mathsf{T}} = \\begin{bmatrix}1 & 2 & 0\\\\0 & 1 & 3\\\\t & 0 & 1\\end{bmatrix}$ 的行列式也等于 $1 + 6t$。",
+    "keywords": ["转置矩阵的行列式", "三阶行列式"],
+    "level": "中等"
+  },
+  {
+    "catalog": "行列式",
+    "question": "若 $\\det(A) = 0$，说明为什么 $A^{\\mathsf{T}}$ 同样不可逆。",
+    "solution": "因为 $\\det(A^{\\mathsf{T}}) = \\det(A)$，当 $\\det(A) = 0$ 时转置行列式也为零，故 $A^{\\mathsf{T}}$ 不可逆。",
+    "keywords": ["转置矩阵的行列式", "行列式与矩阵的逆"],
+    "level": "很难"
+  },
+  {
+    "catalog": "行列式",
+    "question": "若 $A = \\begin{bmatrix}1 & 2\\\\3 & 4\\end{bmatrix}$，求 $\\det(3A)$。",
+    "solution": "对 $2\\times 2$ 矩阵有 $\\det(3A) = 3^2 \\det(A) = 9 \\times (-2) = -18$。",
+    "keywords": ["矩阵数乘的行列式", "二阶行列式"],
+    "level": "简单"
+  },
+  {
+    "catalog": "行列式",
+    "question": "设 $\\det(A) = 5$ 且 $A$ 为 $3\\times 3$ 矩阵，求 $\\det(-2A)$。",
+    "solution": "标量倍乘性质给出 $\\det(-2A) = (-2)^3 \\det(A) = -40$。",
+    "keywords": ["矩阵数乘的行列式"],
+    "level": "中等"
+  },
+  {
+    "catalog": "行列式",
+    "question": "已知 $\\det(A) = 4$ 且 $A$ 为 $3\\times 3$ 矩阵，求正实数 $c$ 使 $\\det(cA) = 1$。",
+    "solution": "需满足 $c^3 \\cdot 4 = 1$，因此 $c = \\sqrt[3]{\\tfrac{1}{4}}$。",
+    "keywords": ["矩阵数乘的行列式"],
+    "level": "很难"
+  },
+  {
+    "catalog": "行列式",
+    "question": "利用伴随矩阵公式求 $A = \\begin{bmatrix}1 & 2\\\\3 & 5\\end{bmatrix}$ 的逆矩阵。",
+  "solution": "$\\det(A) = -1$，$\\operatorname{adj} A = \\begin{bmatrix}5 & -2\\\\-3 & 1\\end{bmatrix}$，故 $A^{-1} = -\\operatorname{adj} A = \\begin{bmatrix}-5 & 2\\\\3 & -1\\end{bmatrix}$。",
+    "keywords": ["逆矩阵与伴随矩阵", "伴随矩阵"],
+    "level": "简单"
+  },
+  {
+    "catalog": "行列式",
+    "question": "矩阵 $C = \\begin{bmatrix}1 & 1 & 0\\\\0 & 2 & 1\\\\2 & 1 & 1\\end{bmatrix}$ 满足 $\\det(C) = 3$，已知 $\\operatorname{adj} C = \\begin{bmatrix}1 & -1 & 1\\\\2 & 1 & -1\\\\-4 & 1 & 2\\end{bmatrix}$。求 $C^{-1}$。",
+    "solution": "由 $C^{-1} = \\frac{1}{\\det(C)} \\operatorname{adj} C$ 得 $C^{-1} = \\tfrac{1}{3}\\begin{bmatrix}1 & -1 & 1\\\\2 & 1 & -1\\\\-4 & 1 & 2\\end{bmatrix}$。",
+    "keywords": ["逆矩阵与伴随矩阵", "伴随矩阵"],
+    "level": "中等"
+  },
+  {
+    "catalog": "行列式",
+    "question": "对于 $D = \\begin{bmatrix}2 & 0 & 1\\\\1 & 1 & 0\\\\0 & 1 & 1\\end{bmatrix}$，使用伴随矩阵给出 $D^{-1}$。",
+    "solution": "计算得 $\\det(D) = 3$，$\\operatorname{adj} D = \\begin{bmatrix}1 & 1 & -1\\\\-1 & 2 & 1\\\\1 & -2 & 2\\end{bmatrix}$，因此 $D^{-1} = \\tfrac{1}{3}\\begin{bmatrix}1 & 1 & -1\\\\-1 & 2 & 1\\\\1 & -2 & 2\\end{bmatrix}$。",
+    "keywords": ["逆矩阵与伴随矩阵", "伴随矩阵"],
+    "level": "很难"
+  },
+  {
+    "catalog": "行列式",
+    "question": "利用克拉默法则求解方程组 $2x + y = 5$, $x - y = 1$。",
+    "solution": "系数矩阵行列式为 $-3$。$x$ 的分子行列式为 $-6$，得 $x = 2$；$y$ 的分子行列式为 $-3$，得 $y = 1$。",
+    "keywords": ["克拉默法则", "二阶行列式"],
+    "level": "简单"
+  },
+  {
+    "catalog": "行列式",
+    "question": "使用克拉默法则求解方程组 $\\begin{cases} x + y + z = 3,\\\\ 2x + 3y + z = 8,\\\\ x + 2y + 3z = 7.\\end{cases}$",
+    "solution": "系数矩阵行列式为 $3$。常数列替换第一、二、三列所得行列式分别为 $-1$、$8$、$2$，故解为 $x = -\\tfrac{1}{3}$，$y = \\tfrac{8}{3}$，$z = \\tfrac{2}{3}$。",
+    "keywords": ["克拉默法则", "三阶行列式"],
+    "level": "中等"
+  },
+  {
+    "catalog": "行列式",
+    "question": "对方程组 $\\begin{cases} x + y + z = 1,\\\\ 2x + ay + z = 3,\\\\ x + 2y + az = 2 \\end{cases}$，用克拉默法则求 $x, y, z$ 的表达式。",
+    "solution": "系数矩阵行列式为 $a^2 - 3a + 3$，其判别式为 $-3 < 0$，对所有实数 $a$ 非零。三个位列行列式分别为 $a^2 - 5a + 6$、$a$、$a - 3$，因此 $x = \\dfrac{a^2 - 5a + 6}{a^2 - 3a + 3}$，$y = \\dfrac{a}{a^2 - 3a + 3}$，$z = \\dfrac{a - 3}{a^2 - 3a + 3}$。",
+    "keywords": ["克拉默法则", "行列式与矩阵的逆"],
+    "level": "很难"
   }
 ];
