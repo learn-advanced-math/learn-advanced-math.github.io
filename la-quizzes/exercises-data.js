@@ -374,7 +374,7 @@ window.EXERCISES_DATA = [
     "catalog": "线性方程组",
     "question": "考虑矩阵方程 $\\begin{bmatrix}1 & 2 & -1\\\\0 & 1 & 3\\\\0 & 0 & 0\\end{bmatrix}\\begin{bmatrix}x_1\\\\x_2\\\\x_3\\end{bmatrix} = \\begin{bmatrix}1\\\\4\\\\\\kappa\\end{bmatrix}$。判断在什么条件下方程相容，并给出相容时的通解。",
     "solution": "行化简得到增广矩阵 $\\begin{bmatrix}1 & 2 & -1 & \\mid & 1\\\\0 & 1 & 3 & \\mid & 4\\\\0 & 0 & 0 & \\mid & \\kappa\\end{bmatrix}$。第三行要求 $0 = \\kappa$，故只有当 $\\kappa = 0$ 时方程相容。令 $x_3 = t$，自第二行得 $x_2 = 4 - 3t$，代入第一行得 $x_1 = -7 + 7t$。通解为 $\\{(-7 + 7t, 4 - 3t, t) \\mid t \\in \\mathbb{R}\\}$。",
-    "keywords": ["矩阵方程", "方程组的解集", "自由变量"],
+    "keywords": ["矩阵方程", "相容", "方程组的解集", "自由变量"],
     "level": "很难"
   },
   {
@@ -816,6 +816,552 @@ window.EXERCISES_DATA = [
     "question": "对方程组 $\\begin{cases} x + y + z = 1,\\\\ 2x + ay + z = 3,\\\\ x + 2y + az = 2 \\end{cases}$，用克拉默法则求 $x, y, z$ 的表达式。",
     "solution": "系数矩阵行列式为 $a^2 - 3a + 3$，其判别式为 $-3 < 0$，对所有实数 $a$ 非零。三个位列行列式分别为 $a^2 - 5a + 6$、$a$、$a - 3$，因此 $x = \\dfrac{a^2 - 5a + 6}{a^2 - 3a + 3}$，$y = \\dfrac{a}{a^2 - 3a + 3}$，$z = \\dfrac{a - 3}{a^2 - 3a + 3}$。",
     "keywords": ["克拉默法则", "行列式与矩阵的逆"],
+    "level": "很难"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "计算向量 $\\mathbf{v} = (3,-1,2)^{\\mathsf{T}}$ 的模长 $\\|\\mathbf{v}\\|$。",
+    "solution": "$\\|\\mathbf{v}\\| = \\sqrt{3^2 + (-1)^2 + 2^2} = \\sqrt{14}$。",
+    "keywords": ["向量"],
+    "level": "简单"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "平面上点 $P(1,-2)$ 到 $Q(4,3)$ 的位移向量为何？请给出其列向量表示。",
+    "solution": "位移向量为 $\\overrightarrow{PQ} = (4-1, 3-(-2))^{\\mathsf{T}} = (3, 5)^{\\mathsf{T}}$。",
+    "keywords": ["向量"],
+    "level": "中等"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "求满足 $\\| (k,2,-1)^{\\mathsf{T}} \\| = 6$ 的实数 $k$。",
+    "solution": "方程 $k^2 + 2^2 + (-1)^2 = 36$，即 $k^2 + 5 = 36$，得 $k = \\pm\\sqrt{31}$。",
+    "keywords": ["向量"],
+    "level": "很难"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "计算 $\\mathbf{u} = (1,2,0)^{\\mathsf{T}}$ 与 $\\mathbf{v} = (-3,1,4)^{\\mathsf{T}}$ 的和。",
+    "solution": "$\\mathbf{u} + \\mathbf{v} = (1-3, 2+1, 0+4)^{\\mathsf{T}} = (-2, 3, 4)^{\\mathsf{T}}$。",
+    "keywords": ["向量的加法"],
+    "level": "简单"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "已知 $\\mathbf{a} = (2,-1,0)^{\\mathsf{T}}$、$\\mathbf{b} = (0,3,1)^{\\mathsf{T}}$，求 $\\mathbf{a} + 2\\mathbf{b}$。",
+    "solution": "$\\mathbf{a} + 2\\mathbf{b} = (2,-1,0)^{\\mathsf{T}} + (0,6,2)^{\\mathsf{T}} = (2,5,2)^{\\mathsf{T}}$。",
+    "keywords": ["向量的加法", "向量的标量乘法"],
+    "level": "中等"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "设 $\\mathbf{u} = (t,1,-2)^{\\mathsf{T}}$，$\\mathbf{v} = (3,-1,4)^{\\mathsf{T}}$，若 $\\mathbf{u} + 2\\mathbf{v} = (7,-1,6)^{\\mathsf{T}}$，求实数 $t$。",
+    "solution": "$\\mathbf{u} + 2\\mathbf{v} = (t+6, -1, 6)^{\\mathsf{T}}$。与目标向量比较得 $t+6 = 7$，故 $t = 1$。",
+    "keywords": ["向量的加法", "向量的标量乘法"],
+    "level": "很难"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "计算 $-2(1,-3,4)^{\\mathsf{T}}$。",
+    "solution": "-2(1,-3,4)^{\\mathsf{T}} = (-2,6,-8)^{\\mathsf{T}}$。",
+    "keywords": ["向量的标量乘法"],
+    "level": "简单"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "在 $\\mathbb{R}^2$ 中，求标量 $c$ 使 $c(2,1)^{\\mathsf{T}}$ 的模长为 $5$。",
+    "solution": "需满足 $\\|c(2,1)^{\\mathsf{T}}\\| = |c|\\sqrt{5} = 5$，故 $|c| = \\sqrt{5}$，即 $c = \\pm\\sqrt{5}$。",
+    "keywords": ["向量的标量乘法", "向量"],
+    "level": "中等"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "若 $c(1,2,1)^{\\mathsf{T}} + (0,-1,2)^{\\mathsf{T}} = (3,5,5)^{\\mathsf{T}}$，求标量 $c$。",
+    "solution": "比较第一分量得 $c = 3$；第二分量 $2c - 1 = 5$，第三分量 $c + 2 = 5$ 均满足。",
+    "keywords": ["向量的标量乘法", "向量的加法"],
+    "level": "很难"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "计算 $\\mathbf{u} = (1,2,3)^{\\mathsf{T}}$ 与 $\\mathbf{v} = (0,-1,4)^{\\mathsf{T}}$ 的点积。",
+    "solution": "$\\mathbf{u}\\cdot\\mathbf{v} = 1\\cdot 0 + 2\\cdot (-1) + 3\\cdot 4 = 10$。",
+    "keywords": ["向量的点积"],
+    "level": "简单"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "向量 $\\mathbf{u} = (1,0,1)^{\\mathsf{T}}$ 与 $\\mathbf{v} = (1,1,0)^{\\mathsf{T}}$ 的夹角满足 $\\cos\\theta = ?$",
+    "solution": "$\\mathbf{u}\\cdot\\mathbf{v} = 1$，模长均为 $\\sqrt{2}$，故 $\\cos\\theta = \\dfrac{1}{2}$。",
+    "keywords": ["向量的点积", "向量"],
+    "level": "中等"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "求实数 $t$ 使得 $(2,t,1)^{\\mathsf{T}}$ 与 $(1,-3,4)^{\\mathsf{T}}$ 正交。",
+    "solution": "点积 $2\\cdot1 + t\\cdot(-3) + 1\\cdot4 = 6 - 3t$，令其为零得 $t = 2$。",
+    "keywords": ["向量的点积"],
+    "level": "很难"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "计算标准基向量的叉积 $\\mathbf{e}_1 \\times \\mathbf{e}_2$。",
+    "solution": "$\\mathbf{e}_1 \\times \\mathbf{e}_2 = (1,0,0)^{\\mathsf{T}} \\times (0,1,0)^{\\mathsf{T}} = (0,0,1)^{\\mathsf{T}}$。",
+    "keywords": ["向量的叉积"],
+    "level": "简单"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "利用叉积求向量 $\\mathbf{u} = (2,1,0)^{\\mathsf{T}}$ 与 $\\mathbf{v} = (1,3,0)^{\\mathsf{T}}$ 张成的平行四边形面积。",
+    "solution": "$\\mathbf{u} \\times \\mathbf{v} = (0,0,5)^{\\mathsf{T}}$，面积为模长 $\\|\\mathbf{u} \\times \\mathbf{v}\\| = 5$。",
+    "keywords": ["向量的叉积"],
+    "level": "中等"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "设 $\\mathbf{u} = (1,2,-1)^{\\mathsf{T}}$，$\\mathbf{v} = (t,1,1)^{\\mathsf{T}}$，求 $t$ 使得 $\\mathbf{u} \\times \\mathbf{v}$ 的第三个分量等于 $4$。",
+    "solution": "叉积 $\\mathbf{u} \\times \\mathbf{v} = (3, -(1 + t), 1 - 2t)^{\\mathsf{T}}$，令第三分量 $1 - 2t = 4$ 得 $t = -\\tfrac{3}{2}$。",
+    "keywords": ["向量的叉积"],
+    "level": "很难"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "计算 $A\\mathbf{x}$，其中 $A = \\begin{bmatrix}1 & 2\\\\-1 & 3\\\\0 & 4\\end{bmatrix}$，$\\mathbf{x} = (2,-1)^{\\mathsf{T}}$。",
+    "solution": "$A\\mathbf{x} = (0, -5, -4)^{\\mathsf{T}}$。",
+    "keywords": ["矩阵与向量的乘法"],
+    "level": "简单"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "已知 $A = \\begin{bmatrix}0 & -1\\\\1 & 0\\end{bmatrix}$ 表示平面旋转 $90^{\\circ}$，求 $A^2 (1,0)^{\\mathsf{T}}$。",
+    "solution": "$A(1,0)^{\\mathsf{T}} = (0,1)^{\\mathsf{T}}$，再次作用得 $A^2 (1,0)^{\\mathsf{T}} = (-1,0)^{\\mathsf{T}}$。",
+    "keywords": ["矩阵与向量的乘法", "向量"],
+    "level": "中等"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "设 $A = \\begin{bmatrix}1 & t & 0\\\\0 & 2 & 1\\\\1 & 0 & 1\\end{bmatrix}$，$\\mathbf{x} = (1,-1,2)^{\\mathsf{T}}$。若 $A\\mathbf{x} = (0,0,3)^{\\mathsf{T}}$，求 $t$。",
+    "solution": "第一分量为 $1 - t$，令其等于 $0$ 得 $t = 1$，此时其余分量分别为 $-2 + 2 = 0$ 与 $1 + 2 = 3$，与目标一致。",
+    "keywords": ["矩阵与向量的乘法"],
+    "level": "很难"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "写出向量 $(5,7)^{\\mathsf{T}}$ 作为 $\\mathbf{e}_1 = (1,0)^{\\mathsf{T}}$ 与 $\\mathbf{e}_2 = (0,1)^{\\mathsf{T}}$ 的线性组合。",
+    "solution": "$(5,7)^{\\mathsf{T}} = 5\\mathbf{e}_1 + 7\\mathbf{e}_2$。",
+    "keywords": ["线性组合"],
+    "level": "简单"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "求系数 $a,b$ 使 $(1,2,3)^{\\mathsf{T}} = a(1,0,1)^{\\mathsf{T}} + b(0,1,1)^{\\mathsf{T}}$。",
+    "solution": "比较得到 $a = 1$，$b = 2$，第三分量检验 $1 + 2 = 3$ 成立。",
+    "keywords": ["线性组合"],
+    "level": "中等"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "设 $\\mathbf{v} = (2,1,4)^{\\mathsf{T}}$，判断是否存在系数 $c_1,c_2,c_3$ 使 $\\mathbf{v} = c_1(1,0,1)^{\\mathsf{T}} + c_2(0,1,1)^{\\mathsf{T}} + c_3(1,1,0)^{\\mathsf{T}}$，并求出一组解。",
+    "solution": "解方程组 $c_1 + c_3 = 2$，$c_2 + c_3 = 1$，$c_1 + c_2 = 4$，得 $c_3 = -\\tfrac{1}{2}$，$c_1 = \\tfrac{5}{2}$，$c_2 = \\tfrac{3}{2}$。",
+    "keywords": ["线性组合", "向量方程"],
+    "level": "很难"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "判断向量 $(1,2)^{\\mathsf{T}}$ 与 $(2,4)^{\\mathsf{T}}$ 是否线性相关。",
+    "solution": "第二个向量等于 $2$ 倍第一个，存在非零系数使组合为零，因此线性相关。",
+    "keywords": ["线性相关"],
+    "level": "简单"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "验证向量 $(1,0,1)^{\\mathsf{T}}$、$(0,1,1)^{\\mathsf{T}}$、$(1,1,2)^{\\mathsf{T}}$ 是否线性相关。",
+    "solution": "有 $(1,1,2)^{\\mathsf{T}} = (1,0,1)^{\\mathsf{T}} + (0,1,1)^{\\mathsf{T}}$，故三向量线性相关。",
+    "keywords": ["线性相关", "线性组合"],
+    "level": "中等"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "求 $t$ 使向量 $(1,2,3)^{\\mathsf{T}}$、$(2,1,0)^{\\mathsf{T}}$、$(t,3,3)^{\\mathsf{T}}$ 线性相关。",
+    "solution": "对应行列式 $9 - 3t = 0$，得 $t = 3$。",
+    "keywords": ["线性相关", "行列式与向量组的线性相关性"],
+    "level": "很难"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "判断向量 $(1,0)^{\\mathsf{T}}$ 与 $(0,1)^{\\mathsf{T}}$ 是否线性无关。",
+    "solution": "只有零组合 $c_1(1,0)^{\\mathsf{T}} + c_2(0,1)^{\\mathsf{T}} = (0,0)^{\\mathsf{T}}$ 时 $c_1=c_2=0$，故线性无关。",
+    "keywords": ["线性无关"],
+    "level": "简单"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "判断向量 $(1,0,1)^{\\mathsf{T}}$、$(0,1,1)^{\\mathsf{T}}$、$(1,1,0)^{\\mathsf{T}}$ 是否线性无关。",
+    "solution": "对应矩阵行列式为 $-2 \\neq 0$，故三向量线性无关。",
+    "keywords": ["线性无关", "行列式与向量组的线性相关性"],
+    "level": "中等"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "求 $t$ 使得向量 $(1,0,0)^{\\mathsf{T}}$、$(0,1,0)^{\\mathsf{T}}$、$(1,1,t)^{\\mathsf{T}}$ 线性无关。",
+    "solution": "行列式为 $t$，当且仅当 $t \\neq 0$ 时线性无关。",
+    "keywords": ["线性无关", "行列式与向量组的线性相关性"],
+    "level": "很难"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "把方程组 $\\left\\{\\begin{array}{l}x + 2y = 3 \\\\ 4x -7y = 1 \\end{array}\\right.$ 写成向量方程。",
+    "solution": "向量方程为 $x(1,4)^{\\mathsf{T}} + y(2,-7)^{\\mathsf{T}} = (3,1)^{\\mathsf{T}}$。",
+    "keywords": ["向量方程", "线性组合"],
+    "level": "简单"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "判断 $\\mathbf{b} = (2,3,5)^{\\mathsf{T}}$ 是否满足向量方程 $x(1,0,2)^{\\mathsf{T}} + y(0,1,1)^{\\mathsf{T}} = \\mathbf{b}$。",
+    "solution": "解方程组得 $x = 2$, $y = 3$，第三分量检验 $2\\cdot2 + 3 = 7 \\neq 5$，故无解，$\\mathbf{b}$ 不在生成空间中。",
+    "keywords": ["向量方程", "线性无关"],
+    "level": "中等"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "求 $t$ 使向量方程 $x(1,1,0)^{\\mathsf{T}} + y(0,1,1)^{\\mathsf{T}} = (2,t,3)^{\\mathsf{T}}$ 有解，并给出一组解。",
+    "solution": "从第一分量得 $x = 2$，第三分量给出 $y = 3$，第二分量要求 $x + y = t$，故 $t = 5$，解为 $(x,y) = (2,3)$。",
+    "keywords": ["向量方程", "线性组合"],
+    "level": "很难"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "判断集合 $V = \\mathbb{R}^2$ 在常规加法与标量乘法下是否构成向量空间，并说明理由。",
+    "solution": "$V$ 对加法与数乘封闭且满足八条向量空间公理，因此是向量空间。",
+    "keywords": ["向量空间", "向量空间的性质"],
+    "level": "简单"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "集合 $W = \\{(x,y)^{\\mathsf{T}} \\mid x + y = 0\\}$ 在 $\\mathbb{R}^2$ 的标准运算下是否为向量空间？",
+    "solution": "集合 $W$ 在加法与标量乘法下封闭且包含零向量 $(0,0)^{\\mathsf{T}}$，满足公理，因此构成向量空间。",
+    "keywords": ["向量空间", "子空间"],
+    "level": "中等"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "定义集合 $U = \\mathbb{R}^2$，加法保持不变，但标量乘法改为 $c \\odot (x,y) = (cx, y)$。问 $(U,+,\\odot)$ 是否是向量空间？",
+    "solution": "取任意 $(x,y)$，$0 \\odot (x,y) = (0,y)$，若 $y \\neq 0$ 则不等于零向量，违背标量乘以零的公理，因此不是向量空间。",
+    "keywords": ["向量空间", "向量空间的性质"],
+    "level": "很难"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "求向量 $(3,3)^{\\mathsf{T}}$ 是否属于 $\\operatorname{span}\\{(1,0)^{\\mathsf{T}}, (1,1)^{\\mathsf{T}}\\}$。",
+    "solution": "解 $a(1,0)^{\\mathsf{T}} + b(1,1)^{\\mathsf{T}} = (3,3)^{\\mathsf{T}}$ 得 $b = 3$，$a = 0$，故属于该生成空间。",
+    "keywords": ["生成空间", "线性组合"],
+    "level": "简单"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "设 $S = \\{(1,2,0)^{\\mathsf{T}}, (0,1,1)^{\\mathsf{T}}, (1,3,1)^{\\mathsf{T}}\\}$，求 $\\operatorname{span}(S)$ 的维数。",
+    "solution": "对应矩阵秩为 $2$，故生成空间维数为 $2$。",
+    "keywords": ["生成空间", "维数"],
+    "level": "中等"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "向量组 $\\{(1,0,1)^{\\mathsf{T}}, (0,1,1)^{\\mathsf{T}}, (t,1,2)^{\\mathsf{T}}\\}$ 的生成空间等于 $\\mathbb{R}^3$ 需满足什么条件？",
+    "solution": "行列式 $1 - t$ 非零才能生成全部空间，故 $t \\neq 1$。",
+    "keywords": ["生成空间", "线性无关"],
+    "level": "很难"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "集合 $U = \\{k(1,2,3)^{\\mathsf{T}} \\mid k \\in \\mathbb{R}\\}$ 是否为 $\\mathbb{R}^3$ 的子空间？",
+    "solution": "对加法和标量乘法封闭并包含零向量，故是子空间。",
+    "keywords": ["子空间"],
+    "level": "简单"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "证明集合 $W = \\{(x,y,z)^{\\mathsf{T}} \\mid x + y + z = 0\\}$ 是 $\\mathbb{R}^3$ 的子空间。",
+    "solution": "满足齐次线性方程，闭合于加法和标量乘法且含零向量，故为子空间。",
+    "keywords": ["子空间", "向量空间的性质"],
+    "level": "中等"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "设 $S_t = \\{(x,y,z)^{\\mathsf{T}} \\mid x + ty = z\\}$。对哪些 $t$，集合 $S_t$ 构成子空间？",
+    "solution": "该条件等价于齐次线性方程，对任意 $t$ 都满足子空间要求。",
+    "keywords": ["子空间", "生成空间"],
+    "level": "很难"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "写出 $\\mathbb{R}^4$ 的零子空间，并说明其维数。",
+    "solution": "零子空间为 $\\{(0,0,0,0)^{\\mathsf{T}}\\}$，维数为 $0$。",
+    "keywords": ["零子空间"],
+    "level": "简单"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "若线性变换 $T: \\mathbb{R}^3 \\to \\mathbb{R}^3$ 可逆，求其零子空间。",
+    "solution": "可逆变换的核只有零向量，因此零子空间即 $\\{\\mathbf{0}\\}$。",
+    "keywords": ["零子空间", "线性无关"],
+    "level": "中等"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "证明对任意向量空间 $V$，零子空间是唯一维数为 $0$ 的子空间。",
+    "solution": "若 $U$ 的维数为 $0$，其基为空集，只能包含零向量；反之零子空间显然维数 $0$，故唯一。",
+    "keywords": ["零子空间", "维数"],
+    "level": "很难"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "求矩阵 $A = \\begin{bmatrix}1 & 2\\\\2 & 4\\end{bmatrix}$ 的零空间。",
+    "solution": "行化简得方程 $x_1 + 2x_2 = 0$，令 $x_2 = t$，零空间为 $t(-2,1)^{\\mathsf{T}}$。",
+    "keywords": ["零空间", "自由变量"],
+    "level": "简单"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "求矩阵 $B = \\begin{bmatrix}1 & 1 & 0\\\\0 & 1 & 1\\\\0 & 0 & 0\\end{bmatrix}$ 的零空间基。",
+    "solution": "解得 $x_3 = s$，$x_2 = -s$，$x_1 = s$，基为 $\\{(1,-1,1)^{\\mathsf{T}}\\}$。",
+    "keywords": ["零空间", "线性组合"],
+    "level": "中等"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "设 $A_t = \\begin{bmatrix}1 & 0 & t\\\\0 & 1 & 1\\\\0 & 0 & 0\\end{bmatrix}$。求 $t$ 使零空间维数至少为 $2$。",
+    "solution": "矩阵秩恒为 $2$，零空间维数为 $1$，因此不存在满足条件的 $t$。",
+    "keywords": ["零空间", "维数"],
+    "level": "很难"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "判断 $\\mathbf{b} = (1,3,4)^{\\mathsf{T}}$ 是否在矩阵 $A = \\begin{bmatrix}1 & 0\\\\2 & 1\\\\0 & 1\\end{bmatrix}$ 的列空间中。",
+    "solution": "求解 $A\\mathbf{x} = \\mathbf{b}$，第三行得 $x_2 = 4$，第一行得 $x_1 = 1$，第二行给出 $2\\cdot1 + 4 = 6 \\neq 3$，故 $\\mathbf{b}$ 不在列空间。",
+    "keywords": ["列空间", "矩阵与向量的乘法"],
+    "level": "简单"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "给出矩阵 $C = \\begin{bmatrix}1 & 2 & 3\\\\0 & 1 & 1\\\\1 & 3 & 4\\end{bmatrix}$ 的列空间一组基。",
+    "solution": "行化简表明第 $1$、第 $2$ 列为主元列，基可取 $\\{(1,0,1)^{\\mathsf{T}}, (2,1,3)^{\\mathsf{T}}\\}$。",
+    "keywords": ["列空间", "主元列"],
+    "level": "中等"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "设 $A_t = \\begin{bmatrix}1 & t & 0\\\\0 & 1 & 1\\\\1 & 1 & 1\\end{bmatrix}$。求使列空间维数为 $2$ 的 $t$。",
+    "solution": "对 $A_t$ 进行行化简，$A_t = \\begin{bmatrix}1 & t & 0\\\\0 & 1 & 1\\\\1 & 1 & 1\\end{bmatrix}$ $\\rightarrow$ $\\begin{bmatrix}1 & 0 & 0\\\\0 & 1 & 1\\\\0 & t & 0\\end{bmatrix}$。当 $t = 0$ 时，有两个主元列，列空间的维数为 $2$。",
+    "keywords": ["列空间", "维数", "主元"],
+    "level": "很难"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "求矩阵 $A = \\begin{bmatrix}1 & 2 & 3\\\\2 & 4 & 6\\end{bmatrix}$ 的行空间基。",
+    "solution": "行化简得到 $\\begin{bmatrix}1 & 2 & 3\\\\0 & 0 & 0\\end{bmatrix}$，基向量为 $(1,2,3)$。",
+    "keywords": ["行空间", "阶梯形"],
+    "level": "简单"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "矩阵 $B = \\begin{bmatrix}1 & 0 & 1 & 0\\\\0 & 1 & 1 & 1\\\\1 & 1 & 2 & 1\\end{bmatrix}$ 的行空间维数是多少？",
+    "solution": "行化简后存在两行主元，故维数为 $2$。",
+    "keywords": ["行空间", "维数"],
+    "level": "中等"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "对矩阵 $A_t = \\begin{bmatrix}1 & 2 & t\\\\0 & 1 & 1\\\\1 & 2 & t+1\\end{bmatrix}$，求行空间维数并说明是否依赖于 $t$。",
+    "solution": "行列式恒为 $1$，秩为 $3$，行空间维数固定为 $3$。",
+    "keywords": ["行空间", "维数"],
+    "level": "很难"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "验证在 $\\mathbb{R}^3$ 中，向量加法满足交换律：给出 $(1,2,0)^{\\mathsf{T}} + (3,-1,4)^{\\mathsf{T}}$ 与反向相加的结果。",
+    "solution": "两次相加均得 $(4,1,4)^{\\mathsf{T}}$，说明交换律成立。",
+    "keywords": ["向量空间的性质", "向量的加法"],
+    "level": "简单"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "在 $\\mathbb{R}^2$ 中验证加法逆元性质：求向量 $(2,-5)^{\\mathsf{T}}$ 的相反向量并检验其和。",
+    "solution": "相反向量为 $(-2,5)^{\\mathsf{T}}$，两者相加得零向量 $(0,0)^{\\mathsf{T}}$。",
+    "keywords": ["向量空间的性质", "向量"],
+    "level": "中等"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "给定运算 $(x,y) \\oplus (u,v) = (x+u, y+v)$，$c \\odot (x,y) = (cx, cy + 1)$。说明哪些向量空间公理被破坏。",
+    "solution": "取任意 $(x,y)$，$0 \\odot (x,y) = (0,1)$，不等于零向量；同时分配律 $c \\odot ((x,y) \\oplus (u,v))$ 与 $(c \\odot (x,y)) \\oplus (c \\odot (u,v))$ 的第二分量不同，故违反向量空间公理。",
+    "keywords": ["向量空间的性质"],
+    "level": "很难"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "判断集合 $\\{(1,0,0)^{\\mathsf{T}}, (0,1,0)^{\\mathsf{T}}, (0,0,1)^{\\mathsf{T}}\\}$ 是否为线性无关集。",
+    "solution": "该集合为标准基，线性无关。",
+    "keywords": ["线性无关集"],
+    "level": "简单"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "在平面 $\\mathbb{R}^2$ 中，线性无关集最多包含多少个向量？请说明原因。",
+    "solution": "最多 $2$ 个，因为维数为 $2$，任意 $3$ 个向量必线性相关。",
+    "keywords": ["线性无关集", "维数"],
+    "level": "中等"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "给定集合 $S = \\{(1,1,0)^{\\mathsf{T}}, (0,1,1)^{\\mathsf{T}}, (1,2,1)^{\\mathsf{T}}, (2,3,1)^{\\mathsf{T}}\\}$。构造一个包含最多向量的线性无关子集。",
+    "solution": "行化简可得前三个向量线性无关，第四个向量 $= (1,1,0)^{\\mathsf{T}} + (1,2,1)^{\\mathsf{T}}$，故可取子集 $\\{(1,1,0)^{\\mathsf{T}}, (0,1,1)^{\\mathsf{T}}, (1,2,1)^{\\mathsf{T}}\\}$。",
+    "keywords": ["线性无关集", "主元列"],
+    "level": "很难"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "判断向量 $\\{(1,0)^{\\mathsf{T}}, (1,1)^{\\mathsf{T}}\\}$ 是否构成 $\\mathbb{R}^2$ 的一组基。",
+    "solution": "二者线性无关且数量为 $2$，等于维数，故构成基。",
+    "keywords": ["基", "线性无关"],
+    "level": "简单"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "求子空间 $U = \\{(x,y,z)^{\\mathsf{T}} \\mid x + y + z = 0\\}$ 的一组基。",
+    "solution": "令 $y = s$, $z = t$，则 $x = -s - t$，基可取 $\\{(-1,1,0)^{\\mathsf{T}}, (-1,0,1)^{\\mathsf{T}}\\}$。",
+    "keywords": ["基", "子空间"],
+    "level": "中等"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "已知向量组 $\\{(1,0,1)^{\\mathsf{T}}, (0,1,1)^{\\mathsf{T}}\\}$ 张成一个子空间。添加哪个向量可扩展为 $\\mathbb{R}^3$ 的基？",
+    "solution": "加入与前两向量线性独立的 $(0,0,1)^{\\mathsf{T}}$ 即可组成基。",
+    "keywords": ["基", "线性无关集"],
+    "level": "很难"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "在基 $B = \\{(1,0)^{\\mathsf{T}}, (1,1)^{\\mathsf{T}}\\}$ 下求向量 $(3,5)^{\\mathsf{T}}$ 的坐标。",
+    "solution": "解得 $[ (3,5)^{\\mathsf{T}} ]_B = (-2,5)^{\\mathsf{T}}$。",
+    "keywords": ["坐标系", "坐标向量"],
+    "level": "简单"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "基 $B = \\{(1,0,0)^{\\mathsf{T}}, (1,1,0)^{\\mathsf{T}}, (1,1,1)^{\\mathsf{T}}\\}$，求向量 $(2,3,1)^{\\mathsf{T}}$ 的坐标。",
+    "solution": "由第三分量得 $c_3 = 1$，第二分量得 $c_2 = 2$，第一分量得 $c_1 = -1$，故坐标为 $(-1,2,1)^{\\mathsf{T}}$。",
+    "keywords": ["坐标系", "基"],
+    "level": "中等"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "在基 $B = \\{(1,1,0)^{\\mathsf{T}}, (0,1,1)^{\\mathsf{T}}, (1,0,1)^{\\mathsf{T}}\\}$ 中找出与标准基坐标 $(2,0,1)^{\\mathsf{T}}$ 对应的坐标向量。",
+    "solution": "解得 $c_1 = \\tfrac{1}{2}$，$c_2 = -\\tfrac{1}{2}$，$c_3 = \\tfrac{3}{2}$，故坐标向量为 $(\\tfrac{1}{2}, -\\tfrac{1}{2}, \\tfrac{3}{2})^{\\mathsf{T}}$。",
+    "keywords": ["坐标系", "坐标向量"],
+    "level": "很难"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "在基 $B = \\{(1,0)^{\\mathsf{T}}, (0,1)^{\\mathsf{T}}\\}$ 下，向量 $(4,-3)^{\\mathsf{T}}$ 的坐标向量是多少？",
+    "solution": "直接为 $(4,-3)^{\\mathsf{T}}$。",
+    "keywords": ["坐标向量", "坐标系"],
+    "level": "简单"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "已知 $[\\mathbf{v}]_B = (2,-1)^{\\mathsf{T}}$，其中 $B = \\{(1,1)^{\\mathsf{T}}, (1,-1)^{\\mathsf{T}}\\}$，求 $\\mathbf{v}$。",
+    "solution": "$\\mathbf{v} = 2(1,1)^{\\mathsf{T}} - (1,-1)^{\\mathsf{T}} = (1,3)^{\\mathsf{T}}$。",
+    "keywords": ["坐标向量", "线性组合"],
+    "level": "中等"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "在基 $B = \\{(1,0,1)^{\\mathsf{T}}, (0,1,1)^{\\mathsf{T}}, (1,1,0)^{\\mathsf{T}}\\}$ 下向量 $\\mathbf{v}$ 的坐标为 $(1,2,0)^{\\mathsf{T}}$。求 $\\mathbf{v}$ 在标准基下的表示。",
+    "solution": "$\\mathbf{v} = (1,0,1)^{\\mathsf{T}} + 2(0,1,1)^{\\mathsf{T}} = (1,2,3)^{\\mathsf{T}}$。",
+    "keywords": ["坐标向量", "线性组合"],
+    "level": "很难"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "求向量空间 $\\mathbb{R}^5$ 的维数。",
+    "solution": "标准基有 $5$ 个向量，故维数为 $5$。",
+    "keywords": ["维数"],
+    "level": "简单"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "矩阵 $A = \\begin{bmatrix}1 & 1 & 0 & 0\\\\0 & 1 & 1 & 0\\\\0 & 0 & 1 & 1\\end{bmatrix}$ 的零空间维数是多少？",
+    "solution": "秩为 $3$，未知量 $4$ 个，零空间维数为 $1$。",
+    "keywords": ["维数", "零空间"],
+    "level": "中等"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "设 $V_t = \\{(x,y,z)^{\\mathsf{T}} \\mid x + y + z = 0,\\ x + ty = 0\\}$。求 $t$ 与 $V_t$ 维数的关系。",
+    "solution": "$V_t$ 实际上是齐次方程 $A \\mathbf{x} = \\mathbf{0}$ 中系数矩阵 $A$ 的零空间。对 $A$ 进行行化简，可以看出，不论 $t$ 取何值，$A$ 的秩都为 $2$，因此 $V_t$ 的维数为 $1$。",
+    "keywords": ["维数", "子空间", "零空间"],
+    "level": "很难"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "将向量组 $\\{(1,2)^{\\mathsf{T}}, (3,4)^{\\mathsf{T}}\\}$ 组合成矩阵并写出其与系数向量 $(a,b)^{\\mathsf{T}}$ 的乘积。",
+    "solution": "矩阵 $A = \\begin{bmatrix}1 & 3\\\\2 & 4\\end{bmatrix}$，乘积为 $(a + 3b, 2a + 4b)^{\\mathsf{T}}$。",
+    "keywords": ["矩阵与向量组", "矩阵与向量的乘法"],
+    "level": "简单"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "设 $V = \\{(1,0,1)^{\\mathsf{T}}, (0,1,1)^{\\mathsf{T}}, (1,1,0)^{\\mathsf{T}}\\}$，写出矩阵 $A$ 的列为该向量组并计算 $A(2,-1,1)^{\\mathsf{T}}$。",
+    "solution": "矩阵 $A = \\begin{bmatrix}1 & 0 & 1\\\\0 & 1 & 1\\\\1 & 1 & 0\\end{bmatrix}$，乘积结果为 $(3,0,1)^{\\mathsf{T}}$。",
+    "keywords": ["矩阵与向量组", "线性组合"],
+    "level": "中等"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "若矩阵 $A$ 的列为 $\\mathbf{v}_1, \\mathbf{v}_2, \\mathbf{v}_3$，且 $A\\mathbf{x} = (2,3,1)^{\\mathsf{T}}$ 在 $\\mathbf{x} = (1,1,0)^{\\mathsf{T}}$ 时成立。说明 $(2,3,1)^{\\mathsf{T}}$ 与向量组的关系。",
+    "solution": "该向量等于 $\\mathbf{v}_1 + \\mathbf{v}_2$，因此属于列向量的生成空间。",
+    "keywords": ["矩阵与向量组", "线性组合"],
+    "level": "很难"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "在 $\\mathbb{R}^2$ 中，基 $B = \\{(1,0)^{\\mathsf{T}}, (1,1)^{\\mathsf{T}}\\}$ 与标准基 $E$ 之间的坐标变换矩阵 $P_{E\\leftarrow B}$ 是多少？",
+    "solution": "$P_{E\\leftarrow B} = \\begin{bmatrix}1 & 1\\\\0 & 1\\end{bmatrix}$。",
+    "keywords": ["坐标变换矩阵", "坐标系"],
+    "level": "简单"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "已知 $P_{E\\leftarrow B} = \\begin{bmatrix}2 & 1\\\\1 & 1\\end{bmatrix}$，求基 $B$ 下坐标 $(3,-1)^{\\mathsf{T}}$ 所代表的标准坐标。",
+    "solution": "标准坐标为 $P_{E\\leftarrow B}(3,-1)^{\\mathsf{T}} = (5,2)^{\\mathsf{T}}$。",
+    "keywords": ["坐标变换矩阵", "坐标向量"],
+    "level": "中等"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "基 $B = \\{(1,0,1)^{\\mathsf{T}}, (0,1,1)^{\\mathsf{T}}, (1,1,0)^{\\mathsf{T}}\\}$ 与 $C = \\{(1,1,1)^{\\mathsf{T}}, (1,0,0)^{\\mathsf{T}}, (0,1,0)^{\\mathsf{T}}\\}$。求坐标变换矩阵 $P_{C\\leftarrow B}$。",
+    "solution": "由 $[\\mathbf{x}]_C = P_{C\\leftarrow B} [\\mathbf{x}]_B$ 和 $C [\\mathbf{x}]_C = B [\\mathbf{x}]_B$，得 $P_{C\\leftarrow B} = C^{-1}B$。<br>行化简 $[C \\quad B] \\rightarrow [I \\quad C^{-1}B]$，<br>得 $P_{C\\leftarrow B} = \\begin{bmatrix}1 & 1 & 0\\\\0 & -1 & 1\\\\-1 & 0 & 1\\end{bmatrix}$。",
+    "keywords": ["坐标变换矩阵"],
+    "level": "很难"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "基 $B = \\{(1,0,1)^{\\mathsf{T}}, (0,1,1)^{\\mathsf{T}}, (1,1,0)^{\\mathsf{T}}\\}$ 与 $C = \\{(1,1,1)^{\\mathsf{T}}, (1,0,0)^{\\mathsf{T}}, (0,1,0)^{\\mathsf{T}}\\}$。求由 $B$ 到 $C$ 的过渡矩阵。",
+    "solution": "由 $C = B P$，得 $P = B^{-1}C = \\begin{bmatrix}1/2 & 1/2 & -1/2\\\\1/2 & -1/2 & 1/2\\\\1/2 & 1/2 & 1/2\\end{bmatrix}$",
+    "keywords": ["过渡矩阵"],
+    "level": "简单"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "已知 $P_{B\\leftarrow E} = \\begin{bmatrix}1 & 1 & 0\\\\0 & 1 & 1\\\\0 & 0 & 1\\end{bmatrix}$，$P_{C\\leftarrow B} = \\begin{bmatrix}1 & 0 & 1\\\\0 & 1 & -1\\\\1 & 0 & 0\\end{bmatrix}$。求 $P_{C\\leftarrow E}$。",
+    "solution": "两矩阵相乘得 $P_{C\\leftarrow E} = P_{C\\leftarrow B}P_{B\\leftarrow E} \\begin{bmatrix}1 & 1 & 1\\\\0 & 1 & 0\\\\1 & 1 & 0\\end{bmatrix}$。",
+    "keywords": ["过渡矩阵"],
+    "level": "中等"
+  },
+  {
+    "catalog": "向量与向量空间",
+    "question": "求过渡矩阵与坐标变换矩阵之间的关系。",
+    "solution": "设 $B$ 和 $C$ 分别为一个向量空间中的两个不同的基对于的矩阵。由过渡矩阵与基之间的关系 $C = B P$，以及坐标变换矩阵与坐标向量之间的关系 $[\\mathbf{x}]_C = P_{C\\leftarrow B} [\\mathbf{x}]_B$，又由于 $\\mathbf{x} = C[\\mathbf{x}]_C = B[\\mathbf{x}]_B$，可得 $P = B^{-1}C$，$P_{C\\leftarrow B} = C^{-1}B$，因此 $P_{C\\leftarrow B}$和 $P$ 之间是互逆的关系。",
+    "keywords": ["过渡矩阵", "坐标变换矩阵"],
     "level": "很难"
   }
 ];
