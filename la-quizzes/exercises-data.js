@@ -1360,8 +1360,442 @@ window.EXERCISES_DATA = [
   {
     "catalog": "向量与向量空间",
     "question": "求过渡矩阵与坐标变换矩阵之间的关系。",
-    "solution": "设 $B$ 和 $C$ 分别为一个向量空间中的两个不同的基对于的矩阵。由过渡矩阵与基之间的关系 $C = B P$，以及坐标变换矩阵与坐标向量之间的关系 $[\\mathbf{x}]_C = P_{C\\leftarrow B} [\\mathbf{x}]_B$，又由于 $\\mathbf{x} = C[\\mathbf{x}]_C = B[\\mathbf{x}]_B$，可得 $P = B^{-1}C$，$P_{C\\leftarrow B} = C^{-1}B$，因此 $P_{C\\leftarrow B}$和 $P$ 之间是互逆的关系。",
+    "solution": "设 $B$ 和 $C$ 分别为一个向量空间中的两个不同的基对应的矩阵。由过渡矩阵与基之间的关系 $C = B P$，以及坐标变换矩阵与坐标向量之间的关系 $[\\mathbf{x}]_C = P_{C\\leftarrow B} [\\mathbf{x}]_B$，又由于 $\\mathbf{x} = C[\\mathbf{x}]_C = B[\\mathbf{x}]_B$，可得 $P = B^{-1}C$，$P_{C\\leftarrow B} = C^{-1}B$，因此 $P_{C\\leftarrow B}$和 $P$ 之间是互逆的关系。",
     "keywords": ["过渡矩阵", "坐标变换矩阵"],
+    "level": "很难"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "已知 $A=\\begin{bmatrix}1&-2\\\\0&3\\\\2&1\\end{bmatrix}$，$B=\\begin{bmatrix}2&0\\\\-1&4\\\\3&1\\end{bmatrix}$。计算 $A+B$ 与 $2A-3B$。",
+    "solution": "$A+B=\\begin{bmatrix}3&-2\\\\-1&7\\\\5&2\\end{bmatrix}$；$2A-3B=\\begin{bmatrix}2&-4\\\\0&6\\\\4&2\\end{bmatrix}-\\begin{bmatrix}6&0\\\\-3&12\\\\9&3\\end{bmatrix}=\\begin{bmatrix}-4&-4\\\\3&-6\\\\-5&-1\\end{bmatrix}$。",
+    "keywords": ["矩阵加法与标量乘法"],
+    "level": "简单"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "设 $A=\\begin{bmatrix}1&2\\\\3&-1\\end{bmatrix}$，$B=\\begin{bmatrix}0&1\\\\-2&4\\end{bmatrix}$。求标量 $c$ 使 $cA+B=\\begin{bmatrix}2&5\\\\4&2\\end{bmatrix}$。",
+    "solution": "比较对应元素得 $c+0=2\\Rightarrow c=2$；检验：$2A+B=\\begin{bmatrix}2&4\\\\6&-2\\end{bmatrix}+\\begin{bmatrix}0&1\\\\-2&4\\end{bmatrix}=\\begin{bmatrix}2&5\\\\4&2\\end{bmatrix}$。",
+    "keywords": ["矩阵加法与标量乘法"],
+    "level": "中等"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "给定 $A,B,C$ 为同型矩阵。证明 $(A+B)+C=A+(B+C)$ 且存在唯一矩阵 $-A$ 使 $A+(-A)=0$。",
+    "solution": "逐项定义下 $((A+B)+C)_{ij}=(a_{ij}+b_{ij})+c_{ij}=a_{ij}+(b_{ij}+c_{ij})=(A+(B+C))_{ij}$，故结合律成立。取 $-A=[-a_{ij}]$，则 $(A+(-A))_{ij}=a_{ij}+(-a_{ij})=0$，唯一性来自逐项相等。",
+    "keywords": ["矩阵加法与标量乘法"],
+    "level": "很难"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "设 $A=\\begin{bmatrix}1&2&0\\\\-1&3&1\\end{bmatrix}$，$B=\\begin{bmatrix}2&1\\\\0&-1\\\\3&2\\end{bmatrix}$。计算 $AB$。",
+    "solution": "$AB=\\begin{bmatrix}1&2&0\\\\-1&3&1\\end{bmatrix}\\begin{bmatrix}2&1\\\\0&-1\\\\3&2\\end{bmatrix}=\\begin{bmatrix}2&-1\\\\-2&1\\end{bmatrix}+\\begin{bmatrix}0&-2\\\\0&-3\\end{bmatrix}+\\begin{bmatrix}0&0\\\\3&2\\end{bmatrix}=\\begin{bmatrix}2&-3\\\\1&0\\end{bmatrix}$。",
+    "keywords": ["矩阵乘法"],
+    "level": "简单"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "举出 $2\\times2$ 矩阵 $A,B$ 使 $AB\\ne BA$，并计算二者。",
+    "solution": "取 $A=\\begin{bmatrix}0&1\\\\0&0\\end{bmatrix}$，$B=\\begin{bmatrix}0&0\\\\1&0\\end{bmatrix}$。则 $AB=\\begin{bmatrix}1&0\\\\0&0\\end{bmatrix}$，$BA=\\begin{bmatrix}0&0\\\\0&1\\end{bmatrix}$，显然 $AB\\ne BA$。",
+    "keywords": ["矩阵乘法"],
+    "level": "中等"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "设 $A=\\begin{bmatrix}1&1\\\\0&1\\end{bmatrix}$，$X$ 满足 $AX=\\begin{bmatrix}2&0\\\\3&1\\end{bmatrix}$。求 $X$。",
+    "solution": "由列视角 $AX=[A\\mathbf{x}_1\\ A\\mathbf{x}_2]$，解 $A\\mathbf{x}_1=(2,3)^{\\mathsf{T}}$ 与 $A\\mathbf{x}_2=(0,1)^{\\mathsf{T}}$。高斯消元得 $\\mathbf{x}_1=( -1,3)^{\\mathsf{T}}$，$\\mathbf{x}_2=( -1,1)^{\\mathsf{T}}$，故 $X=\\begin{bmatrix}-1&-1\\\\3&1\\end{bmatrix}$。",
+    "keywords": ["矩阵乘法", "矩阵的逆"],
+    "level": "很难"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "计算 $A^{\\mathsf{T}}$，其中 $A=\\begin{bmatrix}1&-2&0\\\\3&1&4\\end{bmatrix}$。",
+    "solution": "$A^{\\mathsf{T}}=\\begin{bmatrix}1&3\\\\-2&1\\\\0&4\\end{bmatrix}$。",
+    "keywords": ["矩阵转置"],
+    "level": "简单"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "验证 $(AB)^{\\mathsf{T}}=B^{\\mathsf{T}}A^{\\mathsf{T}}$，取 $A=\\begin{bmatrix}1&2\\\\0&1\\end{bmatrix}$，$B=\\begin{bmatrix}2&-1\\\\3&0\\end{bmatrix}$。",
+    "solution": "$AB=\\begin{bmatrix}8&-1\\\\3&0\\end{bmatrix}$，$(AB)^{\\mathsf{T}}=\\begin{bmatrix}8&3\\\\-1&0\\end{bmatrix}$；$B^{\\mathsf{T}}A^{\\mathsf{T}}=\\begin{bmatrix}2&3\\\\-1&0\\end{bmatrix}\\begin{bmatrix}1&0\\\\2&1\\end{bmatrix}=\\begin{bmatrix}8&3\\\\-1&0\\end{bmatrix}$，相等。",
+    "keywords": ["矩阵转置", "矩阵乘法"],
+    "level": "中等"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "设 $A$ 可逆，证明 $(A^{-1})^{\\mathsf{T}}=(A^{\\mathsf{T}})^{-1}$。",
+    "solution": "由 $AA^{-1}=I$ 两边转置得 $(A^{-1})^{\\mathsf{T}}A^{\\mathsf{T}}=I$，同理 $A^{\\mathsf{T}}(A^{-1})^{\\mathsf{T}}=I$，故 $(A^{-1})^{\\mathsf{T}}=(A^{\\mathsf{T}})^{-1}$。",
+    "keywords": ["矩阵转置", "矩阵的逆"],
+    "level": "很难"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "写出 $I_3$ 并计算 $AI_3$ 与 $I_3A$，其中 $A=\\begin{bmatrix}1&2&3\\\\0&1&4\\\\2&0&1\\end{bmatrix}$。",
+    "solution": "$I_3=\\begin{bmatrix}1&0&0\\\\0&1&0\\\\0&0&1\\end{bmatrix}$，按定义 $AI_3=I_3A=A$。",
+    "keywords": ["单位矩阵", "矩阵乘法"],
+    "level": "简单"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "若 $AX=A$ 对所有 $A$ 都成立，求矩阵 $X$。",
+    "solution": "取 $A=I$ 得 $XI=I$，取 $A$ 的任意列基向量 $e_i$，由 $AX=A$ 推出 $Xe_i=e_i$，故 $X=I$。",
+    "keywords": ["单位矩阵"],
+    "level": "中等"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "设 $X$ 满足 $XAX=A$ 对所有 $A$，证明并确定 $X$。",
+    "solution": "取 $A=I$ 得 $X=I$；再代回对任意 $A$ 有 $IAI=A$ 成立，故 $X=I$ 是唯一解。",
+    "keywords": ["单位矩阵"],
+    "level": "很难"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "设 $A=\\begin{bmatrix}1&-2\\\\3&0\\end{bmatrix}$，与零矩阵 $0$ 的和与积分别为何？",
+    "solution": "$A+0=A$；若尺寸适配，$A\\cdot 0=0$ 且 $0\\cdot A=0$。",
+    "keywords": ["零矩阵"],
+    "level": "简单"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "证明对任意标量 $c$，有 $c\\cdot 0=0$；并说明若 $A\\mathbf{x}=\\mathbf{0}$，则 $A$ 的零空间非空。",
+    "solution": "按分配律 $c\\cdot 0=c(0+0)=c0+c0$ 推出 $c0=0$。齐次方程组总有平凡解 $\\mathbf{x}=\\mathbf{0}$，零空间至少含零向量。",
+    "keywords": ["零矩阵", "线性变换"],
+    "level": "中等"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "设 $A$ 为非零矩阵且 $AX=0$，给出一组非零 $X$ 的构造思路。",
+    "solution": "若 $A$ 的列数 $n>\\operatorname{rank}(A)$，则零空间维数 $n-\\operatorname{rank}(A)>0$，可通过行化简取自由变量得到非零解向量 $X$。",
+    "keywords": ["零矩阵", "矩阵的秩"],
+    "level": "很难"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "令 $D=\\operatorname{diag}(2, -1, 3)$。计算 $D\\mathbf{x}$，其中 $\\mathbf{x}=(1,2,-1)^{\\mathsf{T}}$。",
+    "solution": "$D\\mathbf{x}=(2\\cdot1, -1\\cdot2, 3\\cdot(-1))^{\\mathsf{T}}=(2,-2,-3)^{\\mathsf{T}}$。",
+    "keywords": ["对角矩阵", "线性变换"],
+    "level": "简单"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "对 $D=\\operatorname{diag}(a,b,c)$，在 $abc\\ne0$ 时求 $D^{-1}$ 与 $\\det D$。",
+    "solution": "$D^{-1}=\\operatorname{diag}(1/a,1/b,1/c)$；$\\det D=abc$。",
+    "keywords": ["对角矩阵", "矩阵的逆"],
+    "level": "中等"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "计算 $D^k$，其中 $D=\\operatorname{diag}(2,3,4)$，$k\\in\\mathbb{N}$。",
+    "solution": "$D^k=\\operatorname{diag}(2^k,3^k,4^k)$，来自对角矩阵乘法按分量进行。",
+    "keywords": ["对角矩阵", "矩阵乘法"],
+    "level": "很难"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "判断并说明 $U=\\begin{bmatrix}1&2&-1\\\\0&3&4\\\\0&0&5\\end{bmatrix}$ 是否为上三角矩阵；求 $\\det U$。",
+    "solution": "主对角线下方元素全为 $0$，是上三角矩阵；$\\det U=1\\cdot3\\cdot5=15$。",
+    "keywords": ["三角矩阵", "特殊矩阵的行列式"],
+    "level": "简单"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "设 $L=\\begin{bmatrix}2&0&0\\\\-1&1&0\\\\3&4&-2\\end{bmatrix}$。判断其类型并给出可逆条件。",
+    "solution": "$L$ 为下三角矩阵；当且仅当对角元均非零（此处 $2,1,-2$）时可逆。",
+    "keywords": ["三角矩阵", "矩阵的逆"],
+    "level": "中等"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "求上三角矩阵 $U=\\begin{bmatrix}1&2&1\\\\0&2&-1\\\\0&0&3\\end{bmatrix}$ 的逆矩阵。",
+    "solution": "逐列求解 $U\\mathbf{x}_i=e_i$ 得 $U^{-1}=\\begin{bmatrix}1&-1&-\\tfrac{1}{3}\\\\0&\\tfrac{1}{2}&\\tfrac{1}{6}\\\\0&0&\\tfrac{1}{3}\\end{bmatrix}$。",
+    "keywords": ["三角矩阵", "矩阵的逆"],
+    "level": "很难"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "判断 $A=\\begin{bmatrix}2&-1&0\\\\-1&3&1\\\\0&1&4\\end{bmatrix}$ 是否对称；给出 $A^{\\mathsf{T}}$。",
+    "solution": "$A^{\\mathsf{T}}=\\begin{bmatrix}2&-1&0\\\\-1&3&1\\\\0&1&4\\end{bmatrix}=A$，因此为对称矩阵。",
+    "keywords": ["对称矩阵", "矩阵转置"],
+    "level": "简单"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "证明对任意矩阵 $B$，$B^{\\mathsf{T}}B$ 为对称矩阵；并说明其半正定性。",
+    "solution": "$(B^{\\mathsf{T}}B)^{\\mathsf{T}}=B^{\\mathsf{T}}(B^{\\mathsf{T}})^{\\mathsf{T}}=B^{\\mathsf{T}}B$，故对称；且对任意 $\\mathbf{x}$ 有 $\\mathbf{x}^{\\mathsf{T}}B^{\\mathsf{T}}B\\mathbf{x}=\\|B\\mathbf{x}\\|^2\\ge0$，半正定。",
+    "keywords": ["对称矩阵", "矩阵转置"],
+    "level": "中等"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "对称矩阵 $A=\\begin{bmatrix}2&1\\\\1&2\\end{bmatrix}$，求其特征值并写出正交对角化。",
+    "solution": "特征多项式 $|A-\\lambda I|=(2-\\lambda)^2-1=\\lambda^2-4\\lambda+3$，根为 $1,3$。取单位特征向量 $\\tfrac{1}{\\sqrt2}(1,-1)^{\\mathsf{T}}$ 与 $\\tfrac{1}{\\sqrt2}(1,1)^{\\mathsf{T}}$，得 $A=Q\\operatorname{diag}(1,3)Q^{\\mathsf{T}}$。",
+    "keywords": ["对称矩阵", "线性变换"],
+    "level": "很难"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "求 $A=\\begin{bmatrix}1&2\\\\3&5\\end{bmatrix}$ 的逆矩阵。",
+    "solution": "$A^{-1}=\\dfrac{1}{1\\cdot5-2\\cdot3}\\begin{bmatrix}5&-2\\\\-3&1\\end{bmatrix}=\\begin{bmatrix}-5&2\\\\3&-1\\end{bmatrix}$。",
+    "keywords": ["矩阵的逆", "二阶行列式"],
+    "level": "简单"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "已知可逆矩阵 $A,B$，验证 $(AB)^{-1}=B^{-1}A^{-1}$。",
+    "solution": "$(AB)(B^{-1}A^{-1})=A(BB^{-1})A^{-1}=AA^{-1}=I$，右乘同理，结论成立。",
+    "keywords": ["矩阵的逆", "矩阵乘法"],
+    "level": "中等"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "若 $A$ 可逆且 $AX=I$，证明 $X=A^{-1}$；并说明解的唯一性。",
+    "solution": "左乘 $A^{-1}$ 得 $X=A^{-1}$。若还有 $Y$ 满足 $AY=I$，则 $Y=A^{-1}$，故唯一。",
+    "keywords": ["矩阵的逆"],
+    "level": "很难"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "求矩阵 $A=\\begin{bmatrix}1&2&3\\\\2&4&6\\\\0&1&1\\end{bmatrix}$ 的秩。",
+    "solution": "行化简：$R_2\\leftarrow R_2-2R_1$ 得 $\\begin{bmatrix}1&2&3\\\\0&0&0\\\\0&1&1\\end{bmatrix}$，再 $R_1\\leftarrow R_1-2R_3$ 得 $\\begin{bmatrix}1&0&1\\\\0&0&0\\\\0&1&1\\end{bmatrix}$，有两个主元，秩为 $2$。",
+    "keywords": ["矩阵的秩", "初等行变换"],
+    "level": "简单"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "设 $A$ 可逆，证明 $\\operatorname{rank}(AB)=\\operatorname{rank}(B)$。",
+    "solution": "左乘可逆矩阵不改变列空间维数：$\\mathcal{Col}(AB)=\\{A\\mathbf{y}:\\mathbf{y}\\in\\mathcal{Col}(B)\\}$ 与 $A$ 为双射，故维数保持，$\\operatorname{rank}(AB)=\\operatorname{rank}(B)$。",
+    "keywords": ["矩阵的秩", "矩阵乘法"],
+    "level": "中等"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "对 $A_t=\\begin{bmatrix}1&t&1\\\\0&1&1\\\\1&1&1\\end{bmatrix}$，求使秩降为 $2$ 的 $t$。",
+    "solution": "计算行列式 $\\det(A_t)=1+t-1-(t-1)=2-t$。当且仅当 $t=2$ 时行列式为 $0$，秩降至 $2$。",
+    "keywords": ["矩阵的秩", "三阶行列式"],
+    "level": "很难"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "写出实现行变换 $R_2\\leftarrow R_2-3R_1$ 的初等矩阵 $E$ 并计算 $EA$，其中 $A=\\begin{bmatrix}1&2\\\\3&4\\end{bmatrix}$。",
+    "solution": "$E=\\begin{bmatrix}1&0\\\\-3&1\\end{bmatrix}$，$EA=\\begin{bmatrix}1&2\\\\0&-2\\end{bmatrix}$。",
+    "keywords": ["初等矩阵", "初等行变换"],
+    "level": "简单"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "分别给出对应于三类初等行变换的初等矩阵示例。",
+    "solution": "(1) 交换 $R_1\\leftrightarrow R_2$: $\\begin{bmatrix}0&1\\\\1&0\\end{bmatrix}$；(2) 倍乘 $R_2\\leftarrow 5R_2$: $\\begin{bmatrix}1&0\\\\0&5\\end{bmatrix}$；(3) 倍加 $R_2\\leftarrow R_2+2R_1$: $\\begin{bmatrix}1&0\\\\2&1\\end{bmatrix}$。",
+    "keywords": ["初等矩阵"],
+    "level": "中等"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "证明任一初等矩阵可逆且其逆为同类初等矩阵。",
+    "solution": "三类变换的逆分别是自身或同类：交换行的逆仍为交换，倍乘 $c$ 的逆为倍乘 $1/c$，倍加 $R_i\\leftarrow R_i+cR_j$ 的逆为 $R_i\\leftarrow R_i-cR_j$。因此初等矩阵均可逆。",
+    "keywords": ["初等矩阵", "矩阵的逆"],
+    "level": "很难"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "使用高斯—若尔当法求 $A=\\begin{bmatrix}1&2\\\\3&5\\end{bmatrix}$ 的逆。",
+    "solution": "对 $[A\\mid I]$ 行变换：$\\begin{bmatrix}1&2\\mid1&0\\\\3&5\\mid0&1\\end{bmatrix}\\xrightarrow{R_2-3R_1}\\begin{bmatrix}1&2\\mid1&0\\\\0&-1\\mid-3&1\\end{bmatrix}\\xrightarrow{R_2\\leftarrow- R_2}\\begin{bmatrix}1&2\\mid1&0\\\\0&1\\mid3&-1\\end{bmatrix}\\xrightarrow{R_1-2R_2}\\begin{bmatrix}1&0\\mid-5&2\\\\0&1\\mid3&-1\\end{bmatrix}$，右块即 $A^{-1}$。",
+    "keywords": ["逆矩阵的求法", "初等行变换"],
+    "level": "简单"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "用伴随矩阵公式求 $A=\\begin{bmatrix}2&1&0\\\\0&1&1\\\\1&0&1\\end{bmatrix}$ 的逆。",
+    "solution": "计算 $\\det A=2$，$\\operatorname{adj}A=\\begin{bmatrix}1&-1&1\\\\-1&2&-2\\\\-1&1&2\\end{bmatrix}$，故 $A^{-1}=\\tfrac{1}{2}\\operatorname{adj}A$。",
+    "keywords": ["逆矩阵的求法", "伴随矩阵"],
+    "level": "中等"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "设分块矩阵 $M=\\begin{bmatrix}A&B\\\\0&D\\end{bmatrix}$，其中 $A,D$ 可逆。求 $M^{-1}$。",
+    "solution": "块三角逆为 $M^{-1}=\\begin{bmatrix}A^{-1}&-A^{-1}BD^{-1}\\\\0&D^{-1}\\end{bmatrix}$，直接验证 $MM^{-1}=I$。",
+    "keywords": ["逆矩阵的求法", "分块矩阵"],
+    "level": "很难"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "设 $A=\\begin{bmatrix}1&2\\\\3&4\\end{bmatrix},\\ B=\\begin{bmatrix}0&1\\\\1&0\\end{bmatrix}$。计算分块积 $\\begin{bmatrix}A&0\\\\0&B\\end{bmatrix}\\begin{bmatrix}I&X\\\\0&I\\end{bmatrix}$。",
+    "solution": "块乘法得 $\\begin{bmatrix}A&AX\\\\0&B\\end{bmatrix}$。",
+    "keywords": ["分块矩阵", "矩阵乘法"],
+    "level": "简单"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "已知 $A$ 可逆，证明 $\\det\\begin{bmatrix}A&B\\\\0&D\\end{bmatrix}=\\det(A)\\det(D)$。",
+    "solution": "块上三角行列式等于对角块行列式之积，可通过展开或行变换严格证明。",
+    "keywords": ["分块矩阵", "特殊矩阵的行列式"],
+    "level": "中等"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "对 $A=\\begin{bmatrix}2&4&2\\\\1&3&1\\\\1&1&1\\end{bmatrix}$，做不选主元的 $LU$ 分解。",
+    "solution": "消元得 $L=\\begin{bmatrix}1&0&0\\\\1/2&1&0\\\\1/2&-1&1\\end{bmatrix}$，$U=\\begin{bmatrix}2&4&2\\\\0&1&0\\\\0&0&1\\end{bmatrix}$，满足 $A=LU$。",
+    "keywords": ["LU分解"],
+    "level": "简单"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "用 $LU$ 分解快速求解 $A\\mathbf{x}=\\mathbf{b}$，其中 $A=\\begin{bmatrix}2&1\\\\4&3\\end{bmatrix}$，$\\mathbf{b}=(1,2)^{\\mathsf{T}}$。",
+    "solution": "$A=LU$，$L=\\begin{bmatrix}1&0\\\\2&1\\end{bmatrix}$，$U=\\begin{bmatrix}2&1\\\\0&1\\end{bmatrix}$。先解 $L\\mathbf{y}=\\mathbf{b}$ 得 $\\mathbf{y}=(1,0)^{\\mathsf{T}}$；后解 $U\\mathbf{x}=\\mathbf{y}$ 得 $x_2=0,x_1=1$。",
+    "keywords": ["LU分解", "矩阵方程"],
+    "level": "中等"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "对 $A=\\begin{bmatrix}0&2\\\\1&1\\end{bmatrix}$ 做带行交换的分解 $PA=LU$，并写出 $P,L,U$。",
+    "solution": "交换行以获得非零主元：$P=\\begin{bmatrix}0&1\\\\1&0\\end{bmatrix}$，则 $PA=\\begin{bmatrix}1&1\\\\0&2\\end{bmatrix}=LU$，其中 $L=\\begin{bmatrix}1&0\\\\0&1\\end{bmatrix}$，$U=\\begin{bmatrix}1&1\\\\0&2\\end{bmatrix}$。",
+    "keywords": ["LU分解", "初等矩阵"],
+    "level": "很难"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "判断映射 $T:\\mathbb{R}^2\\to\\mathbb{R}^2$，$T(x,y)=(2x-y,\\ x+3y)$ 是否线性，并给出其矩阵。",
+    "solution": "满足加法与数乘的线性性，矩阵为 $A=\\begin{bmatrix}2&-1\\\\1&3\\end{bmatrix}$，有 $T(\\mathbf{x})=A\\mathbf{x}$。",
+    "keywords": ["线性变换", "线性映射"],
+    "level": "简单"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "设 $T:\\mathbb{R}^3\\to\\mathbb{R}^2$ 满足 $T(x,y,z)=(x+2z,\\ 3y-z)$。求 $T$ 的核与像的维数。",
+    "solution": "矩阵 $A=\\begin{bmatrix}1&0&2\\\\0&3&-1\\end{bmatrix}$，秩为 $2$，故像的维数为 $2$；核的维数 $=3-2=1$，解 $A\\mathbf{x}=0$ 得 $\\mathcal{N}(A)=\\operatorname{span}\\{(-2,1,1)^{\\mathsf{T}}\\}$。",
+    "keywords": ["线性变换", "矩阵的秩"],
+    "level": "中等"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "令 $T:\\mathbb{R}^2\\to\\mathbb{R}^2$，$T(x,y)=(x,0)$。判断其是否可逆，并解释。",
+    "solution": "$T$ 将所有向量投影到 $x$ 轴，核非零（包含 $(0,1)$），非单射，故不可逆。",
+    "keywords": ["线性变换", "单射与满射"],
+    "level": "很难"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "给出二维到 $x$ 轴的投影矩阵 $P$ 并验证 $P^2=P$。",
+    "solution": "$P=\\begin{bmatrix}1&0\\\\0&0\\end{bmatrix}$，$P^2=\\begin{bmatrix}1&0\\\\0&0\\end{bmatrix}=P$。",
+    "keywords": ["投影变换"],
+    "level": "简单"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "设 $A=\\begin{bmatrix}1&1\\\\1&2\\end{bmatrix}$ 满列秩。写出到 $\\mathcal{Col}(A)$ 的正交投影矩阵。",
+    "solution": "$A$ 为满列秩（秩为 2），且 $A$ 本身可逆。此时 $\\mathcal{Col}(A)=\\mathbb{R}^2$，正交投影到整个空间就是恒等映射，故 $P=\\begin{bmatrix}1&0\\\\0&1\\end{bmatrix}$。",
+    "keywords": ["投影变换", "矩阵乘法"],
+    "level": "中等"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "证明：若 $P$ 为正交投影，则 $P$ 对称且 $\\|\\mathbf{b}-P\\mathbf{b}\\|$ 最小（最小二乘）。",
+    "solution": "正交投影满足 $P^2=P$ 且 $P=P^{\\mathsf{T}}$；对任意 $\\mathbf{b}$，将其分解为 $\\mathcal{R}(P)$ 与 $\\mathcal{N}(P)$ 的直和，误差向量位于正交补，故范数最小。",
+    "keywords": ["投影变换", "线性变换"],
+    "level": "很难"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "二维水平剪切 $S_k=\\begin{bmatrix}1&k\\\\0&1\\end{bmatrix}$。计算 $S_k(1,2)^{\\mathsf{T}}$ 并给出 $\\det S_k$。",
+    "solution": "$S_k(1,2)^{\\mathsf{T}}=(1+2k,2)^{\\mathsf{T}}$，$\\det S_k=1$。",
+    "keywords": ["剪切变换"],
+    "level": "简单"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "证明任意二维剪切的行列式为 $1$，并说明其几何意义。",
+    "solution": "$S_k$ 或其竖直类似均为上/下三角且对角线为 $(1,1)$，故行列式 $1$；几何上保持面积与取向，改变形状。",
+    "keywords": ["剪切变换", "行列式的几何意义"],
+    "level": "中等"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "将两次剪切复合：$S_aS_b$。证明存在 $c$ 使 $S_aS_b=S_c$ 并求 $c$。",
+    "solution": "$S_aS_b=\\begin{bmatrix}1&a\\\\0&1\\end{bmatrix}\\begin{bmatrix}1&b\\\\0&1\\end{bmatrix}=\\begin{bmatrix}1&a+b\\\\0&1\\end{bmatrix}=S_{a+b}$，故 $c=a+b$。",
+    "keywords": ["剪切变换", "矩阵乘法"],
+    "level": "很难"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "写出平面旋转 $90^{\\circ}$ 的矩阵并计算其作用：$R_{90}(1,0)^{\\mathsf{T}}$。",
+    "solution": "$R_{90}=\\begin{bmatrix}0&-1\\\\1&0\\end{bmatrix}$，$R_{90}(1,0)^{\\mathsf{T}}=(0,1)^{\\mathsf{T}}$。",
+    "keywords": ["旋转变换"],
+    "level": "简单"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "验证 $R(\\alpha)R(\\beta)=R(\\alpha+\\beta)$，取 $\\alpha=30^{\\circ},\\beta=45^{\\circ}$。",
+    "solution": "直接乘法可得等式成立；矩阵为 $\\begin{bmatrix}\\cos\\alpha&-\\sin\\alpha\\\\\\sin\\alpha&\\cos\\alpha\\end{bmatrix}$，利用三角恒等式化简即得。",
+    "keywords": ["旋转变换", "矩阵乘法"],
+    "level": "中等"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "讨论平面旋转矩阵 $R(\\theta)$ 的特征值。",
+    "solution": "复域上特征值为 $e^{\\pm i\\theta}$；当 $\\theta=0$ 时为 $1$ 的二重根；当 $\\theta=\\pi$ 时为 $-1$ 的二重根；实域上除这两种情况外无实特征值。",
+    "keywords": ["旋转变换", "线性变换"],
+    "level": "很难"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "设伸缩矩阵 $D=\\operatorname{diag}(2,3)$。计算 $D(1,-1)^{\\mathsf{T}}$ 并给出面积放缩因子。",
+    "solution": "$D(1,-1)^{\\mathsf{T}}=(2,-3)^{\\mathsf{T}}$；面积放缩因子为 $|\\det D|=6$。",
+    "keywords": ["伸缩变换", "行列式的几何意义"],
+    "level": "简单"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "给定 $D=\\operatorname{diag}(s_1,s_2,s_3)$。体积放缩因子为何？在何条件下 $D$ 不可逆？",
+    "solution": "体积因子为 $|s_1s_2s_3|$；若某 $s_i=0$，则压缩到低维且矩阵不可逆。",
+    "keywords": ["伸缩变换", "矩阵的逆"],
+    "level": "中等"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "对 $D=\\operatorname{diag}(1,1,0)$，说明其核与像并判断是否双射。",
+    "solution": "核为 $\\operatorname{span}\\{(0,0,1)^{\\mathsf{T}}\\}$ 非平凡；像为 $xy$ 平面；非单射亦非满射（到 $\\mathbb{R}^3$）。",
+    "keywords": ["伸缩变换", "单射与满射"],
+    "level": "很难"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "判断 $T:\\mathbb{R}^2\\to\\mathbb{R}^2$，$T(x,y)=(x+y,\\ 2x-y)$ 是否线性并写出矩阵表示。",
+    "solution": "线性；矩阵 $A=\\begin{bmatrix}1&1\\\\2&-1\\end{bmatrix}$。",
+    "keywords": ["线性映射", "线性变换"],
+    "level": "简单"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "考虑 $T:\\mathbb{R}^3\\to\\mathbb{R}^3$，$T(x,y,z)=(x+z,\\ y,\\ x-y)$。求 $[T]$（标准基）。",
+    "solution": "$[T]=\\begin{bmatrix}1&0&1\\\\0&1&0\\\\1&-1&0\\end{bmatrix}$。",
+    "keywords": ["线性映射", "矩阵与向量的乘法"],
+    "level": "中等"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "设 $T$ 在基 $B$ 下的矩阵为 $[T]_B$，过渡矩阵 $P_{E\\leftarrow B}$ 已知。写出 $[T]_E$。",
+    "solution": "$[T]_E=[T]_BP_{E\\leftarrow B}$。",
+    "keywords": ["过渡矩阵"],
+    "level": "简单"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "设 $A=\\begin{bmatrix}1&0&0\\\\0&1&0\\\\0&0&0\\end{bmatrix}$ 表示线性映射 $T:\\mathbb{R}^3\\to\\mathbb{R}^3$。判断 $T$ 是否单射与满射。",
+    "solution": "秩为 $2$。核非零，故非单射；像为 $xy$ 平面，非满射到 $\\mathbb{R}^3$。",
+    "keywords": ["单射与满射", "矩阵的秩"],
+    "level": "简单"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "给定 $A\\in\\mathbb{R}^{m\\times n}$。说明充要条件使 $T_A(\\mathbf{x})=A\\mathbf{x}$ 为单射或满射。",
+    "solution": "单射 $\\Leftrightarrow \\mathcal{N}(A)=\\{0\\} \\Leftrightarrow \\operatorname{rank}(A)=n$（需 $n\\le m$）；满射 $\\Leftrightarrow \\mathcal{R}(A)=\\mathbb{R}^m \\Leftrightarrow \\operatorname{rank}(A)=m$（需 $n\\ge m$）。",
+    "keywords": ["单射与满射", "线性映射"],
+    "level": "中等"
+  },
+  {
+    "catalog": "矩阵与线性变换",
+    "question": "考虑 $A_t=\\begin{bmatrix}1&t\\\\0&1\\end{bmatrix}$。对于 $T_t(\\mathbf{x})=A_t\\mathbf{x}$，讨论随 $t$ 变化其单射与满射性。",
+    "solution": "$\\det(A_t)=1\\ne0$，对任意 $t$ 可逆，故同时单射与满射（双射）。",
+    "keywords": ["单射与满射"],
     "level": "很难"
   }
 ];

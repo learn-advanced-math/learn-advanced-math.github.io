@@ -258,5 +258,89 @@ window.KNOWLEDGE_DATA = [
   {
     "keyword": "过渡矩阵",
     "content": "过渡矩阵是用于表示从一个基变换到另一个基的转换关系的矩阵。设有两个基 \\( B = \\{\\mathbf{b}_1, \\mathbf{b}_2, \\dots, \\mathbf{b}_n\\} \\) 和 \\( C = \\{\\mathbf{c}_1, \\mathbf{c}_2, \\dots, \\mathbf{c}_n\\} \\)，那么从基 \\( B \\) 到基 \\( C \\) 的过渡矩阵 \\( P \\) 满足：$C = B P$。"
+  },
+  {
+    "keyword": "矩阵加法与标量乘法",
+    "content": "若 $A, B$ 为同型 $m\\times n$ 矩阵与 $c\\in\\mathbb{R}$，定义 $(A+B)_{ij}=a_{ij}+b_{ij}$、$(cA)_{ij}=c\\,a_{ij}$。满足交换律与结合律以及分配律：$A+B=B+A$、$(A+B)+C=A+(B+C)$、$c(A+B)=cA+cB$、$(c+d)A=cA+dA$。零矩阵 $0$ 是加法单位元，$A+0=A$，$-A$ 为加法逆元使 $A+(-A)=0$。"
+  },
+  {
+    "keyword": "矩阵乘法",
+    "content": "若 $A\\in\\mathbb{R}^{m\\times n}$、$B\\in\\mathbb{R}^{n\\times p}$，则 $AB\\in\\mathbb{R}^{m\\times p}$，且 $(AB)_{ij}=\\sum_{k=1}^n a_{ik}b_{kj}$。性质：结合律 $(AB)C=A(BC)$；对加法分配 $(A+B)C=AC+BC$, $A(B+C)=AB+AC$；一般不交换 $AB\\ne BA$；与单位矩阵相容 $AI_m=A$, $I_nA=A$。矩阵乘法对应线性变换的复合。"
+  },
+  {
+    "keyword": "矩阵转置",
+    "content": "对 $A=[a_{ij}]$ 定义 $A^{\\mathsf{T}}=[a_{ji}]$。基本性质：$(A^{\\mathsf{T}})^{\\mathsf{T}}=A$，$(A+B)^{\\mathsf{T}}=A^{\\mathsf{T}}+B^{\\mathsf{T}}$，$(cA)^{\\mathsf{T}}=cA^{\\mathsf{T}}$，$(AB)^{\\mathsf{T}}=B^{\\mathsf{T}}A^{\\mathsf{T}}$。若 $A$ 为方阵，则 $\\det(A^{\\mathsf{T}})=\\det(A)$，$\\operatorname{rank}(A^{\\mathsf{T}})=\\operatorname{rank}(A)$。"
+  },
+  {
+    "keyword": "单位矩阵",
+    "content": "$I_n$ 为 $n\\times n$ 单位矩阵，主对角线为 $1$，其余为 $0$。对任意适型矩阵 $A$ 有 $AI=IA=A$。线性代数中 $I$ 扮演线性变换恒等映射的矩阵，且 $I^{-1}=I$、$I^{\\mathsf{T}}=I$。"
+  },
+  {
+    "keyword": "零矩阵",
+    "content": "全零元素的矩阵记为 $0$。性质：$A+0=A$；$0\\cdot A=A\\cdot 0=0$（当乘法适型时）；标量乘法 $c\\cdot 0=0$。零矩阵对应零线性变换 $T(\\mathbf{x})=\\mathbf{0}$。"
+  },
+  {
+    "keyword": "对角矩阵",
+    "content": "形如 $\\operatorname{diag}(d_1,\\dots,d_n)$ 的方阵，非对角线元素为 $0$。乘法与求幂按标量进行：$\\operatorname{diag}(d_i)\\operatorname{diag}(e_i)=\\operatorname{diag}(d_ie_i)$；可逆当且仅当所有 $d_i\\ne 0$，此时 $\\operatorname{diag}(d_i)^{-1}=\\operatorname{diag}(1/d_i)$；$\\det=\\prod_i d_i$。"
+  },
+  {
+    "keyword": "三角矩阵",
+    "content": "上（下）三角矩阵满足主对角线下（上）方元素全为 $0$。性质：三角矩阵相乘仍为三角矩阵；行列式等于对角线元素之积；可逆当且仅当所有对角元非零；其逆若存在同型仍为三角矩阵。"
+  },
+  {
+    "keyword": "对称矩阵",
+    "content": "实矩阵 $A$ 若满足 $A=A^{\\mathsf{T}}$ 称为对称矩阵。性质：特征值均为实数，存在正交矩阵 $Q$ 使 $A=Q\\Lambda Q^{\\mathsf{T}}$（谱定理）；二次型 $\\mathbf{x}^{\\mathsf{T}}A\\mathbf{x}$ 的几何性质与 $A$ 的正定性相关。"
+  },
+  {
+    "keyword": "矩阵的逆",
+    "content": "方阵 $A$ 可逆是指存在矩阵 $A^{-1}$ 满足 $AA^{-1}=A^{-1}A=I$。等价条件：$\\det(A)\\ne 0$；$\\operatorname{rank}(A)=n$；零空间仅含零向量；线性方程 $A\\mathbf{x}=\\mathbf{b}$ 对每个 $\\mathbf{b}$ 唯一可解。"
+  },
+  {
+    "keyword": "矩阵的秩",
+    "content": "矩阵秩定义为行空间（或列空间）的维数，等于主元个数。基本性质：$\\operatorname{rank}(A)=\\operatorname{rank}(A^{\\mathsf{T}})$；$\\operatorname{rank}(AB)\\le\\min\\{\\operatorname{rank}(A),\\operatorname{rank}(B)\\}$；对 $m\\times n$ 矩阵有 $\\dim\\mathcal{Nul}(A)=n-\\operatorname{rank}(A)$（秩-零空间定理）。"
+  },
+  {
+    "keyword": "初等矩阵",
+    "content": "对单位矩阵 $I$ 施一次初等行变换得到的矩阵称为初等矩阵 $E$。左乘 $E$ 相当于对应的行变换：$EA$。初等矩阵可逆，且其逆仍为初等矩阵（对应逆变换）。多次行变换可写成 $E_k\\cdots E_1A$。"
+  },
+  {
+    "keyword": "逆矩阵的求法",
+    "content": "常用方法：1）增广矩阵高斯-若尔当：对 $[A\\mid I]$ 做行变换化为 $[I\\mid A^{-1}]$；2）伴随矩阵公式：$A^{-1}=\\dfrac{1}{\\det A}\\operatorname{adj}A$（数值上不稳定，仅理论用途）；3）分块与 Schur 补：在块可逆时用分块求逆公式。"
+  },
+  {
+    "keyword": "分块矩阵",
+    "content": "将矩阵按行列划分为若干子块进行运算。块乘法规则与普通乘法一致（尺寸相容）。常用公式：若 $A$ 可逆，则 $\\begin{bmatrix}A&B\\\\0&D\\end{bmatrix}^{-1}=\\begin{bmatrix}A^{-1}&-A^{-1}BD^{-1}\\\\0&D^{-1}\\end{bmatrix}$；若 $A$ 与 Schur 补 $S=D-CA^{-1}B$ 可逆，则 $\\begin{bmatrix}A&B\\\\C&D\\end{bmatrix}^{-1}=\\begin{bmatrix}A^{-1}+A^{-1}BS^{-1}CA^{-1}&-A^{-1}BS^{-1}\\\\-S^{-1}CA^{-1}&S^{-1}\\end{bmatrix}$。"
+  },
+  {
+    "keyword": "LU分解",
+    "content": "把方阵写成 $A=LU$，其中 $L$ 为单位下三角、$U$ 为上三角。适用于解线性方程组与求逆/行列式。对一般矩阵常需列主元部分选主元（$PA=LU$）。解 $A\\mathbf{x}=\\mathbf{b}$ 时先解 $L\\mathbf{y}=P\\mathbf{b}$ 再解 $U\\mathbf{x}=\\mathbf{y}$。"
+  },
+  {
+    "keyword": "线性变换",
+    "content": "映射 $T:V\\to W$ 线性若 $T(\\mathbf{u}+\\mathbf{v})=T(\\mathbf{u})+T(\\mathbf{v})$ 且 $T(c\\mathbf{x})=cT(\\mathbf{x})$。选定基后，存在唯一矩阵 $A$ 使 $T(\\mathbf{x})=A\\mathbf{x}$（坐标表示）。复合对应矩阵乘法，逆变换存在当且仅当矩阵可逆。核（零空间）与像（值域）满足秩-零空间定理。"
+  },
+  {
+    "keyword": "投影变换",
+    "content": "投影到子空间的线性变换 $P$ 满足幂等性 $P^2=P$。沿 $\\mathcal{N}(P)$ 投影到 $\\mathcal{R}(P)$。对正交投影到列空间 $\\mathcal{Col}(A)$，有 $P=A(A^{\\mathsf{T}}A)^{-1}A^{\\mathsf{T}}$（$A$ 满列秩），且 $P$ 对称、$\\|\\\mathbf{b}-P\\mathbf{b}\\\|$ 最小。"
+  },
+  {
+    "keyword": "剪切变换",
+    "content": "剪切（Shear）在某方向保持不变而沿另一方向平移：二维水平剪切矩阵 $\\begin{bmatrix}1&k\\\\0&1\\end{bmatrix}$、竖直剪切 $\\begin{bmatrix}1&0\\\\k&1\\end{bmatrix}$；体积（面积）不变但形状改变，$\\det=1$。剪切是线性变换，满足向量和标量乘法的线性性。"
+  },
+  {
+    "keyword": "旋转变换",
+    "content": "平面旋转角 $\\theta$ 的矩阵为 $R(\\theta)=\\begin{bmatrix}\\cos\\theta&-\\sin\\theta\\\\ \\sin\\theta&\\cos\\theta\\end{bmatrix}$，满足 $R(\\theta_1)R(\\theta_2)=R(\\theta_1+\\theta_2)$、$R(\\theta)^{\\mathsf{T}}=R(-\\theta)$、$\\det R=1$。三维旋转由正交矩阵且 $\\det=1$ 描述，可用绕坐标轴的基本旋转或 Rodrigues 公式表示。"
+  },
+  {
+    "keyword": "伸缩变换",
+    "content": "各坐标轴按比例伸缩的线性变换，矩阵通常为对角矩阵 $D=\\operatorname{diag}(s_1,\\dots,s_n)$。各方向缩放因子为 $s_i$；体积缩放因子为 $|\\det D|=\\prod_i |s_i|$；当某 $s_i=0$ 时变换不可逆并压缩到低维。"
+  },
+  {
+    "keyword": "线性映射",
+    "content": "与线性变换同义，强调从一个向量空间到另一个向量空间的线性函数。其核 $\\mathcal{N}(T)=\\{\\mathbf{x}\\mid T(\\mathbf{x})=\\mathbf{0}\\}$ 与像 $\\mathcal{R}(T)=\\{T(\\mathbf{x})\\}$ 决定了解的结构；在有限维情形下有 $\\dim\\mathcal{N}(T)+\\dim\\mathcal{R}(T)=\\dim V$。"
+  },
+  {
+    "keyword": "单射与满射",
+    "content": "线性映射 $T:\\mathbb{R}^n\\to\\mathbb{R}^m$ 单射当且仅当 $\\mathcal{N}(T)=\\{\\mathbf{0}\\}$（矩阵秩 $=n$，需 $n\\le m$）；满射当且仅当 $\\mathcal{R}(T)=\\mathbb{R}^m$（矩阵秩 $=m$，需 $n\\ge m$）。若同时单射且满射则为双射，对应矩阵可逆（方阵）。"
   }
 ];
