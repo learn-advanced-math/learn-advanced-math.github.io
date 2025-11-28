@@ -4,7 +4,7 @@ window.KNOWLEDGE_DATA = [
     "content": "所有常数项均为 $0$ 的线性方程组，任意未知量取 $0$ 总是其解，解集构成一个向量空间。"
   },
   {
-    "keyword": "非齐次方程组",
+      "keyword": "非齐次方程组",
     "content": "至少存在一个非零常数项的线性方程组，其解集若非空通常表示为 $\\mathbf{x} = \\mathbf{x}_p + \\mathbf{x}_h$。"
   },
   {
@@ -309,7 +309,7 @@ window.KNOWLEDGE_DATA = [
   },
   {
     "keyword": "分块矩阵",
-    "content": "将矩阵按行列划分为若干子块进行运算。块乘法规则与普通乘法一致（尺寸相容）。常用公式：若 $A$ 可逆，则 $\\begin{bmatrix}A&B\\\\0&D\\end{bmatrix}^{-1}=\\begin{bmatrix}A^{-1}&-A^{-1}BD^{-1}\\\\0&D^{-1}\\end{bmatrix}$；若 $A$ 与 Schur 补 $S=D-CA^{-1}B$ 可逆，则 $\\begin{bmatrix}A&B\\\\C&D\\end{bmatrix}^{-1}=\\begin{bmatrix}A^{-1}+A^{-1}BS^{-1}CA^{-1}&-A^{-1}BS^{-1}\\\\-S^{-1}CA^{-1}&S^{-1}\\end{bmatrix}$。"
+    "content": "将矩阵按行列划分为若干子块进行运算。块乘法规则与普通乘法一致（尺寸相容）。常用公式：<br>若 $A$ 可逆，则 $\\begin{bmatrix}A&B\\\\0&D\\end{bmatrix}^{-1}=\\begin{bmatrix}A^{-1}&-A^{-1}BD^{-1}\\\\0&D^{-1}\\end{bmatrix}$；<br>若 $A$ 与 Schur 补 $S=D-CA^{-1}B$ 可逆，则 $\\begin{bmatrix}A&B\\\\C&D\\end{bmatrix}^{-1}=\\begin{bmatrix}A^{-1}+A^{-1}BS^{-1}CA^{-1}&-A^{-1}BS^{-1}\\\\-S^{-1}CA^{-1}&S^{-1}\\end{bmatrix}$。"
   },
   {
     "keyword": "LU分解",
@@ -342,5 +342,97 @@ window.KNOWLEDGE_DATA = [
   {
     "keyword": "单射与满射",
     "content": "线性映射 $T:\\mathbb{R}^n\\to\\mathbb{R}^m$ 单射当且仅当 $\\mathcal{N}(T)=\\{\\mathbf{0}\\}$（矩阵秩 $=n$，需 $n\\le m$）；满射当且仅当 $\\mathcal{R}(T)=\\mathbb{R}^m$（矩阵秩 $=m$，需 $n\\ge m$）。若同时单射且满射则为双射，对应矩阵可逆（方阵）。"
+  },
+  {
+    "keyword": "特征值",
+    "content": "方阵 $A$ 的特征值是满足 $A\\mathbf{v} = \\lambda\\mathbf{v}$ 的标量 $\\lambda$，等价于 $\\det(A - \\lambda I) = 0$ 的根，用来描述线性变换在某些方向上的伸缩因子。"
+  },
+  {
+    "keyword": "特征向量",
+    "content": "特征向量是非零向量 $\\mathbf{v}$，使得 $A\\mathbf{v} = \\lambda\\mathbf{v}$，表示线性变换在该方向上仅做伸缩不改变方向。"
+  },
+  {
+    "keyword": "特征空间",
+    "content": "与特征值 $\\lambda$ 对应的全部特征向量及零向量构成的集合称为特征空间 $E_{\\lambda}$，它是 $\\mathbb{F}^n$ 的子空间并与代数重数的大小相关。"
+  },
+  {
+    "keyword": "特征方程",
+    "content": "特征方程是通过 $\\det(A - \\lambda I) = 0$ 得到的代数方程，其根给出矩阵的特征值并确定特征多项式的零点。"
+  },
+  {
+    "keyword": "特征多项式",
+    "content": "特征多项式定义为 $p_A(\\lambda) = \\det(A - \\lambda I)$，是次数为 $n$ 的首一多项式，编码了矩阵的特征值及其代数重数。"
+  },
+  {
+    "keyword": "相似矩阵",
+    "content": "若存在可逆矩阵 $P$ 使 $B = P^{-1}AP$，则称 $A$ 与 $B$ 相似，它们具有相同的特征多项式、特征值与秩等不变量。但具有相同特征值的两个矩阵不一定相似。"
+  },
+  {
+    "keyword": "对角化",
+    "content": "若存在可逆矩阵 $P$ 使 $P^{-1}AP = \\operatorname{diag}(\\lambda_1,\\dots,\\lambda_n)$，则称 $A$ 可对角化，意味着存在一组基将线性变换表示为纯伸缩。"
+  },
+  {
+    "keyword": "向量之间的余弦相似性",
+    "content": "余弦相似性使用 $\\cos\\theta = \\dfrac{\\mathbf{u}\\cdot\\mathbf{v}}{\\|\\mathbf{u}\\|\\,\\|\\mathbf{v}\\|}$ 衡量两个非零向量夹角的相似程度，取值范围在 $[-1,1]$。"
+  },
+  {
+    "keyword": "正交",
+    "content": "两个向量的内积为零即称它们正交，推广到向量组或子空间时表示在内积意义下相互垂直。"
+  },
+  {
+    "keyword": "正交投影",
+    "content": "正交投影把向量映射到子空间中与原向量距离最短的点，投影算子 $P$ 满足 $P^2 = P$ 且 $P = P^{\\mathsf{T}}$，$P=UU^{\\mathsf{T}}$，其中 $U$ 为这个子空间的单位正交基构成的矩阵。"
+  },
+  {
+    "keyword": "正交矩阵",
+    "content": "实矩阵 $Q$ 若满足 $Q^{\\mathsf{T}}Q = I$，其列向量由相互正交的单位向量构成，则 $Q$ 为正交矩阵，表示保持长度与角度的刚性变换。"
+  },
+  {
+    "keyword": "正交分解",
+    "content": "任意向量都可唯一分解为 $\\mathbf{v} = Proj_{W}\\mathbf{v} + \\mathbf{v}_{\\perp}$，其中一部分（$Proj_{W}\\mathbf{v}$）位于子空间内，另一部分（$\\mathbf{v}_{\\perp}$）位于其正交补，这称为正交分解。"
+  },
+  {
+    "keyword": "格拉姆-施密特方法",
+    "content": "格拉姆-施密特过程通过逐步正交化并归一化给定的线性无关向量，构造出一个正交或正交归一基。"
+  },
+  {
+    "keyword": "QR分解",
+    "content": "QR 分解将满秩矩阵表示为 $A = QR$，其中 $Q$ 为由 $A$ 的列向量构造成的正交矩阵，$R=Q^TA$ 为上三角矩阵，常用于最小二乘问题与迭代算法。"
+  },
+  {
+    "keyword": "最小二乘法",
+    "content": "最小二乘法通过最小化残差范数 $\\|A\\mathbf{x} - \\mathbf{b}\\|$ 求近似解，等价于求解正规方程（法方程） $A^{\\mathsf{T}}A\\mathbf{x} = A^{\\mathsf{T}}\\mathbf{b}$。"
+  },
+  {
+    "keyword": "谱分解",
+    "content": "实对称矩阵可以写成 $A = Q\\Lambda Q^{\\mathsf{T}}$ 的形式，称为谱分解，其中 $Q$ 的列为正交特征向量，$\\Lambda$ 为特征值对角矩阵。"
+  },
+  {
+    "keyword": "二次型",
+    "content": "二次型是形如 $q(\\mathbf{x}) = \\mathbf{x}^{\\mathsf{T}}A\\mathbf{x}$ 的函数，描述变量的二次组合，矩阵 $A$ 通常取对称形式。"
+  },
+  {
+    "keyword": "二次型矩阵",
+    "content": "与二次型 $q(\\mathbf{x})$ 关联的对称矩阵 $A$ 称为二次型矩阵，它的元素决定了各平方项与交叉项的系数。"
+  },
+  {
+    "keyword": "二次型的标准型",
+    "content": "通过合同变换 $P^{\\mathsf{T}}AP$、配方法、正交对角化可将二次型化为对角形或其他规范形式，称为标准型，有助于判断其符号性质。"
+  },
+  {
+    "keyword": "主轴定理",
+    "content": "主轴定理指出实对称矩阵对应的二次型可通过正交变换化为无交叉项的形式，即 $q(\\mathbf{x}) = \\sum_i \\lambda_i y_i^2$。"
+  },
+  {
+    "keyword": "二次型的分类",
+    "content": "依据标准型中正负惯性指数的数量，可将二次型划分为正定、负定、半正定、半负定或不定等类型。正惯性指数为标准二次型中正系数的个数，负惯性指数为标准二次型中负系数的个数。"
+  },
+  {
+    "keyword": "正定矩阵",
+    "content": "对称矩阵 $A$ 若对任意非零 $\\mathbf{x}$ 都有 $\\mathbf{x}^{\\mathsf{T}}A\\mathbf{x} > 0$，则为正定矩阵，其特征值全部为正。"
+  },
+  {
+    "keyword": "奇异值分解",
+    "content": "任意矩阵都可以分解为 $A = U\\Sigma V^{\\mathsf{T}}$，其中 $U,V$ 为正交矩阵，$\\Sigma$ 为按非负奇异值排列的对角矩阵，揭示线性变换的主方向与缩放尺度。<br>$\\Sigma$ 中的元素为 $A^{\\mathsf{T}}A$ 的特征值的平方根，即奇异值；<br>$V$ 的列 $\\mathbf{v}_i$ （又称右奇异值向量） 由 $A^{\\mathsf{T}}A$ 的单位正交基构成；<br>$U$ 的列由 $A\\mathbf{v}_i$ 单位化后得到（又称左奇异值向量），列的个数等于非零奇异值的个数。"
   }
 ];

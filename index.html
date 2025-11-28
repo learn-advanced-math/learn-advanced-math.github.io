@@ -87,6 +87,18 @@
             mix-blend-mode: multiply;
             pointer-events: none;
         }
+        .card-review::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(135deg, rgba(26, 167, 209, 0.12), rgba(230, 243, 251, 0.06)),
+                url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 300%22 fill=%22none%22%3E%3Cg opacity=%220.32%22%3E%3Ccircle cx=%2240%22 cy=%2260%22 r=%226%22 stroke=%22%231aa7d1%22 stroke-width=%221.2%22/%3E%3Ccircle cx=%22160%22 cy=%2280%22 r=%228%22 stroke=%22%230f5f9a%22 stroke-width=%221%22/%3E%3Ccircle cx=%22100%22 cy=%22140%22 r=%229%22 stroke=%22%231aa7d1%22 stroke-width=%221.2%22/%3E%3Ccircle cx=%2250%22 cy=%22200%22 r=%225%22 stroke=%22%230f5f9a%22 stroke-width=%221%22/%3E%3Ccircle cx=%22170%22 cy=%22220%22 r=%226%22 stroke=%22%231aa7d1%22 stroke-width=%221.2%22/%3E%3Cpath d=%22M40 66l120 160%22 stroke=%22%2314516f%22 stroke-width=%220.8%22 stroke-dasharray=%223 5%22 opacity=%220.4%22/%3E%3Cpath d=%22M30 140h140%22 stroke=%22%2314516f%22 stroke-width=%220.7%22 stroke-dasharray=%224 6%22 opacity=%220.3%22/%3E%3Cpath d=%22M20 240 Q100 150 180 240%22 stroke=%22%231aa7d1%22 stroke-width=%221.5%22 stroke-dasharray=%228 12%22/%3E%3Cpath d=%22M60 50 Q100 100 140 70%22 stroke=%22%230f5f9a%22 stroke-width=%221.2%22 stroke-dasharray=%225 8%22/%3E%3C/g%3E%3C/svg%3E");
+            background-size: cover;
+            background-position: center;
+            mix-blend-mode: multiply;
+            pointer-events: none;
+        }
         .card:hover {
             transform: translateY(-8px);
             box-shadow: 0 22px 32px rgba(13, 58, 88, 0.28);
@@ -130,6 +142,10 @@
         <a class="card card-linear" href="la-quizzes/index.html">
             <div class="title">线性代数<br>习题集</div>
             <div class="footer">开始做题 →</div>
+        </a>
+        <a class="card card-review" href="la-review/linear-equations.html">
+            <div class="title">线性代数<br>总复习</div>
+            <div class="footer">开始复习 →</div>
         </a>
     </div>
     <script>

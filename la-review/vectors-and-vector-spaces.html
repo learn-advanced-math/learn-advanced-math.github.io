@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect x='5' y='5' width='28' height='28' fill='%232563eb'/><rect x='36' y='5' width='28' height='28' fill='%233b82f6'/><rect x='67' y='5' width='28' height='28' fill='%2360a5fa'/><rect x='5' y='36' width='28' height='28' fill='%236366f1'/><rect x='36' y='36' width='28' height='28' fill='%234f46e5'/><rect x='67' y='36' width='28' height='28' fill='%237c3aed'/><rect x='5' y='67' width='28' height='28' fill='%231e40af'/><rect x='36' y='67' width='28' height='28' fill='%232563eb'/><rect x='67' y='67' width='28' height='28' fill='%239333ea'/></svg>">
+  <title>向量与向量空间 - 复习总结</title>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+  <style>
+    :root {
+      --bg: #f5f7fa;
+      --card-bg: #ffffff;
+      --border: #d5d9e2;
+      --accent: #2563eb;
+      --accent-hover: #1d4ed8;
+      --accent-light: rgba(37, 99, 235, 0.1);
+      --text: #1f2937;
+      --muted: #4b5563;
+      --sidebar-width: 300px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* 顶部导航 */
+    .top-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background: var(--card-bg);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 2rem;
+      z-index: 1000;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .top-nav h1 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .top-nav .nav-links {
+      margin-left: auto;
+      display: flex;
+      gap: 1rem;
+    }
+
+    .top-nav .back-link {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+
+    .top-nav .back-link:hover {
+      color: var(--accent);
+    }
+
+    /* 侧边栏 */
+    .sidebar {
+      position: fixed;
+      top: 60px;
+      left: 0;
+      width: var(--sidebar-width);
+      height: calc(100vh - 60px);
+      background: var(--card-bg);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      padding: 1.5rem 0;
+      z-index: 100;
+    }
+
+    .sidebar-title {
+      padding: 0 1.5rem 1rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .sidebar-nav {
+      list-style: none;
+    }
+
+    .sidebar-nav li a {
+      display: block;
+      padding: 0.6rem 1.5rem;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.95rem;
+      border-left: 3px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .sidebar-nav li a:hover {
+      background: var(--accent-light);
+      color: var(--accent);
+      border-left-color: var(--accent);
+    }
+
+    .sidebar-nav li a.active {
+      background: var(--accent-light);
+      color: var(--accent);
+      border-left-color: var(--accent);
+      font-weight: 600;
+    }
+
+    /* 主内容区 */
+    .main-content {
+      margin-left: var(--sidebar-width);
+      padding: 80px 2rem 3rem;
+      max-width: 900px;
+      margin-right: auto;
+      margin-left: calc(var(--sidebar-width) + (100% - var(--sidebar-width) - 900px) / 2);
+    }
+
+    @media (max-width: 1300px) {
+      .main-content {
+        margin-left: var(--sidebar-width);
+        margin-right: 2rem;
+      }
+    }
+
+    .page-header {
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .page-header h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+
+    .page-header p {
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    /* 知识点区块 */
+    .knowledge-section {
+      margin-bottom: 2rem;
+      scroll-margin-top: 80px;
+    }
+
+    .knowledge-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+
+    .knowledge-card:hover {
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .knowledge-card h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .knowledge-card h3::before {
+      content: "📌";
+      font-size: 1rem;
+    }
+
+    .definition {
+      background: var(--accent-light);
+      border-left: 4px solid var(--accent);
+      padding: 1rem;
+      border-radius: 0 0.5rem 0.5rem 0;
+      margin-bottom: 1rem;
+    }
+
+    .definition-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+
+    .definition p {
+      color: var(--text);
+      font-size: 1rem;
+      line-height: 1.75;
+    }
+
+    .formula {
+      background: #fefce8;
+      border: 1px solid #fde047;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin: 1rem 0;
+      text-align: center;
+      overflow-x: auto;
+    }
+
+    .example {
+      background: #f0fdf4;
+      border: 1px solid #86efac;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .example-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #16a34a;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+
+    .note {
+      background: #fff7ed;
+      border: 1px solid #fdba74;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .note-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #ea580c;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+
+    /* 移动端适配 */
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--text);
+      margin-right: 1rem;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .main-content {
+        margin-left: 0;
+        padding: 80px 1rem 2rem;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
+      .page-header h2 {
+        font-size: 1.5rem;
+      }
+    }
+
+    /* 滚动条美化 */
+    .sidebar::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .sidebar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .sidebar::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 3px;
+    }
+
+    .sidebar::-webkit-scrollbar-thumb:hover {
+      background: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <!-- 顶部导航 -->
+  <nav class="top-nav">
+    <button class="menu-toggle" id="menu-toggle" aria-label="打开目录">☰</button>
+    <h1>线性代数总复习</h1>
+    <div class="nav-links">
+      <a href="./determinants.html" class="back-link">← 行列式</a>
+      <a href="../index.html" class="back-link">↑ 首页</a>
+      <a href="../la-quizzes/index.html" class="back-link">↓ 习题集</a>
+      <a href="./matrices-and-linear-transformations.html" class="back-link">矩阵与线性变换 →</a>
+    </div>
+  </nav>
+
+  <!-- 侧边栏目录 -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-title">目录导航</div>
+    <ul class="sidebar-nav" id="sidebar-nav">
+      <li><a href="#vector">向量</a></li>
+      <li><a href="#vector-addition">向量的加法</a></li>
+      <li><a href="#scalar-multiplication">向量的标量乘法</a></li>
+      <li><a href="#dot-product">向量的点积</a></li>
+      <li><a href="#cross-product">向量的叉积</a></li>
+      <li><a href="#matrix-vector-product">矩阵与向量的乘法</a></li>
+      <li><a href="#linear-combination">线性组合</a></li>
+      <li><a href="#linear-dependence">线性相关</a></li>
+      <li><a href="#linear-independence">线性无关</a></li>
+      <li><a href="#vector-equation">向量方程</a></li>
+      <li><a href="#vector-space">向量空间</a></li>
+      <li><a href="#span">生成空间</a></li>
+      <li><a href="#subspace">子空间</a></li>
+      <li><a href="#zero-subspace">零子空间</a></li>
+      <li><a href="#null-space">零空间</a></li>
+      <li><a href="#column-space">列空间</a></li>
+      <li><a href="#row-space">行空间</a></li>
+      <li><a href="#vector-space-properties">向量空间的性质</a></li>
+      <li><a href="#basis">基</a></li>
+      <li><a href="#dimension">维数</a></li>
+      <li><a href="#coordinates">坐标与坐标向量</a></li>
+      <li><a href="#basis-transformation-matrix">过渡矩阵</a></li>
+      <li><a href="#coordinate-transformation-matrix">坐标变换矩阵</a></li>
+    </ul>
+  </aside>
+
+  <!-- 主内容区 -->
+  <main class="main-content">
+    <header class="page-header">
+      <h2>向量与向量空间</h2>
+      <p>本章涵盖向量的基本运算、线性相关性、向量空间的概念以及基和维数等核心知识点。</p>
+    </header>
+
+    <!-- 向量 -->
+    <section class="knowledge-section" id="vector">
+      <div class="knowledge-card">
+        <h3>向量</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p><strong>向量</strong>是一个有序的数组，通常用列向量表示。$n$ 维向量是 $n$ 个数组成的序列。</p>
+        </div>
+        <div class="formula">
+          $$\mathbf{v} = \begin{bmatrix} v_1 \\ v_2 \\ \vdots \\ v_n \end{bmatrix} \in \mathbb{R}^n$$
+        </div>
+        <div class="note">
+          <div class="note-label">表示方法</div>
+          <p>向量可以表示为列向量 $\mathbf{v}$、行向量 $\mathbf{v}^T$，或在平面中用有向线段表示。</p>
+        </div>
+        <div class="example">
+          <div class="example-label">例题</div>
+          <p>$\mathbf{v} = \begin{bmatrix} 2 \\ 3 \\ 1 \end{bmatrix}$ 是一个三维向量。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 向量的加法 -->
+    <section class="knowledge-section" id="vector-addition">
+      <div class="knowledge-card">
+        <h3>向量的加法</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>两个相同维数的向量 $\mathbf{u}$ 和 $\mathbf{v}$ 的<strong>和</strong>定义为对应分量的和：</p>
+        </div>
+        <div class="formula">
+          $$\mathbf{u} + \mathbf{v} = \begin{bmatrix} u_1 + v_1 \\ u_2 + v_2 \\ \vdots \\ u_n + v_n \end{bmatrix}$$
+        </div>
+        <div class="note">
+          <div class="note-label">性质</div>
+          <p>交换律：$\mathbf{u} + \mathbf{v} = \mathbf{v} + \mathbf{u}$<br>
+          结合律：$(\mathbf{u} + \mathbf{v}) + \mathbf{w} = \mathbf{u} + (\mathbf{v} + \mathbf{w})$<br>
+          单位元：$\mathbf{v} + \mathbf{0} = \mathbf{v}$</p>
+        </div>
+        <div class="example">
+          <div class="example-label">例题</div>
+          <p>$\begin{bmatrix} 1 \\ 2 \end{bmatrix} + \begin{bmatrix} 3 \\ 1 \end{bmatrix} = \begin{bmatrix} 4 \\ 3 \end{bmatrix}$</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 向量的标量乘法 -->
+    <section class="knowledge-section" id="scalar-multiplication">
+      <div class="knowledge-card">
+        <h3>向量的标量乘法</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>向量 $\mathbf{v}$ 与标量 $c$ 的<strong>乘积</strong>是将向量的每个分量都乘以该标量：</p>
+        </div>
+        <div class="formula">
+          $$c\mathbf{v} = \begin{bmatrix} cv_1 \\ cv_2 \\ \vdots \\ cv_n \end{bmatrix}$$
+        </div>
+        <div class="note">
+          <div class="note-label">性质</div>
+          <p>分配律：$c(\mathbf{u} + \mathbf{v}) = c\mathbf{u} + c\mathbf{v}$<br>
+          结合律：$(cd)\mathbf{v} = c(d\mathbf{v})$<br>
+          单位元：$1 \cdot \mathbf{v} = \mathbf{v}$</p>
+        </div>
+        <div class="example">
+          <div class="example-label">例题</div>
+          <p>$2\begin{bmatrix} 1 \\ 2 \\ 3 \end{bmatrix} = \begin{bmatrix} 2 \\ 4 \\ 6 \end{bmatrix}$</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 向量的点积 -->
+    <section class="knowledge-section" id="dot-product">
+      <div class="knowledge-card">
+        <h3>向量的点积</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>两个 $n$ 维向量 $\mathbf{u}$ 和 $\mathbf{v}$ 的<strong>点积</strong>（内积）定义为：</p>
+        </div>
+        <div class="formula">
+          $$\mathbf{u} \cdot \mathbf{v} = \mathbf{u}^T \mathbf{v} = \mathbf{v}^T \mathbf{u} = u_1v_1 + u_2v_2 + \cdots + u_nv_n$$
+        </div>
+        <div class="note">
+          <div class="note-label">几何意义</div>
+          <p>$\mathbf{u} \cdot \mathbf{v} = \left \| \mathbf{u} \right \| \left \| \mathbf{v} \right \| \cos\theta$，其中 $\theta$ 是两向量的夹角。<br>
+          • $\mathbf{u} \cdot \mathbf{v} = 0$ ⟺ 两向量正交<br>
+          • $\left \| \mathbf{v} \right \| = \sqrt{\mathbf{v} \cdot \mathbf{v}}$ 是向量的长度</p>
+        </div>
+        <div class="example">
+          <div class="example-label">例题</div>
+          <p>$\begin{bmatrix} 1 \\ 2 \end{bmatrix} \cdot \begin{bmatrix} 3 \\ 4 \end{bmatrix} = 1 \times 3 + 2 \times 4 = 11$</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 向量的叉积 -->
+    <section class="knowledge-section" id="cross-product">
+      <div class="knowledge-card">
+        <h3>向量的叉积</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p><strong>叉积</strong>仅定义在三维向量中，$\mathbf{u} \times \mathbf{v}$ 是与 $\mathbf{u}$ 和 $\mathbf{v}$ 都正交的向量：</p>
+        </div>
+        <div class="formula">
+          $$\mathbf{u} \times \mathbf{v} = \begin{vmatrix} \mathbf{i} & \mathbf{j} & \mathbf{k} \\ u_1 & u_2 & u_3 \\ v_1 & v_2 & v_3 \end{vmatrix} = \begin{bmatrix} u_2v_3 - u_3v_2 \\ u_3v_1 - u_1v_3 \\ u_1v_2 - u_2v_1 \end{bmatrix}$$
+        </div>
+        <div class="note">
+          <div class="note-label">几何意义</div>
+          <p>$\left \| \mathbf{u} \times \mathbf{v} \right \| = \left \| \mathbf{u} \right \| \left \| \mathbf{v} \right \| \sin\theta$ 等于以 $\mathbf{u}$ 和 $\mathbf{v}$ 为邻边的平行四边形面积。</p>
+        </div>
+        <div class="example">
+          <div class="example-label">例题</div>
+          <p>$\begin{bmatrix} 1 \\ 0 \\ 0 \end{bmatrix} \times \begin{bmatrix} 0 \\ 1 \\ 0 \end{bmatrix} = \begin{bmatrix} 0 \\ 0 \\ 1 \end{bmatrix}$</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 矩阵与向量的乘法 -->
+    <section class="knowledge-section" id="matrix-vector-product">
+      <div class="knowledge-card">
+        <h3>矩阵与向量的乘法</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>$m \times n$ 矩阵 $A$ 与 $n$ 维列向量 $\mathbf{v}$ 的乘积是 $m$ 维列向量：</p>
+        </div>
+        <div class="formula">
+          $$A\mathbf{v} = \begin{bmatrix} a_{11}v_1 + a_{12}v_2 + \cdots + a_{1n}v_n \\ a_{21}v_1 + a_{22}v_2 + \cdots + a_{2n}v_n \\ \vdots \\ a_{m1}v_1 + a_{m2}v_2 + \cdots + a_{mn}v_n \end{bmatrix}$$
+        </div>
+        <div class="note">
+          <div class="note-label">列向量形式</div>
+          <p>$A\mathbf{v} = v_1\mathbf{a}_1 + v_2\mathbf{a}_2 + \cdots + v_n\mathbf{a}_n$，其中 $\mathbf{a}_i$ 是 $A$ 的第 $i$ 列。</p>
+        </div>
+        <div class="example">
+          <div class="example-label">例题</div>
+          <p>$\begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} \begin{bmatrix} 2 \\ 1 \end{bmatrix} = \begin{bmatrix} 1 \times 2 + 2 \times 1 \\ 3 \times 2 + 4 \times 1 \end{bmatrix} = \begin{bmatrix} 4 \\ 10 \end{bmatrix}$</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 线性组合 -->
+    <section class="knowledge-section" id="linear-combination">
+      <div class="knowledge-card">
+        <h3>线性组合</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>向量 $\mathbf{v}$ 是向量组 $\{\mathbf{v}_1, \mathbf{v}_2, \ldots, \mathbf{v}_k\}$ 的<strong>线性组合</strong>，如果存在标量 $c_1, c_2, \ldots, c_k$ 使得：</p>
+        </div>
+        <div class="formula">
+          $$\mathbf{v} = c_1\mathbf{v}_1 + c_2\mathbf{v}_2 + \cdots + c_k\mathbf{v}_k$$
+        </div>
+        <div class="example">
+          <div class="example-label">例题</div>
+          <p>判断 $\mathbf{v} = \begin{bmatrix} 5 \\ 7 \end{bmatrix}$ 是否是 $\mathbf{v}_1 = \begin{bmatrix} 1 \\ 2 \end{bmatrix}$ 和 $\mathbf{v}_2 = \begin{bmatrix} 2 \\ 1 \end{bmatrix}$ 的线性组合。</p>
+          <p><strong>解：</strong>求 $c_1, c_2$ 使得 $c_1\begin{bmatrix} 1 \\ 2 \end{bmatrix} + c_2\begin{bmatrix} 2 \\ 1 \end{bmatrix} = \begin{bmatrix} 5 \\ 7 \end{bmatrix}$<br>
+          方程组：$c_1 + 2c_2 = 5$，$2c_1 + c_2 = 7$<br>
+          解得 $c_1 = 3, c_2 = 1$。因此 $\mathbf{v}$ 是线性组合。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 线性相关 -->
+    <section class="knowledge-section" id="linear-dependence">
+      <div class="knowledge-card">
+        <h3>线性相关</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>向量组 $\{\mathbf{v}_1, \mathbf{v}_2, \ldots, \mathbf{v}_k\}$ <strong>线性相关</strong>，如果存在<strong>不全为零</strong>的标量 $c_1, c_2, \ldots, c_k$ 使得：</p>
+        </div>
+        <div class="formula">
+          $$c_1\mathbf{v}_1 + c_2\mathbf{v}_2 + \cdots + c_k\mathbf{v}_k = \mathbf{0}$$
+        </div>
+        <div class="note">
+          <div class="note-label">等价表述</div>
+          <p>向量组线性相关 ⟺ 至少有一个向量可以表示为其他向量的线性组合。</p>
+        </div>
+        <div class="example">
+          <div class="example-label">例题</div>
+          <p>$\mathbf{v}_1 = \begin{bmatrix} 1 \\ 2 \end{bmatrix}$，$\mathbf{v}_2 = \begin{bmatrix} 2 \\ 4 \end{bmatrix}$，$\mathbf{v}_3 = \begin{bmatrix} 1 \\ 1 \end{bmatrix}$ 线性相关，因为 $\mathbf{v}_2 = 2\mathbf{v}_1$。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 线性无关 -->
+    <section class="knowledge-section" id="linear-independence">
+      <div class="knowledge-card">
+        <h3>线性无关</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>向量组 $\{\mathbf{v}_1, \mathbf{v}_2, \ldots, \mathbf{v}_k\}$ <strong>线性无关</strong>，如果仅当<strong>所有 $c_i = 0$</strong> 时，才有：</p>
+        </div>
+        <div class="formula">
+          $$c_1\mathbf{v}_1 + c_2\mathbf{v}_2 + \cdots + c_k\mathbf{v}_k = \mathbf{0}$$
+        </div>
+        <div class="note">
+          <div class="note-label">判断方法</div>
+          <p>将向量作为矩阵的列，若秩等于向量个数，则线性无关。<br>
+          或者，若这些向量对应的齐次线性方程组仅有零解，则线性无关。</p>
+        </div>
+        <div class="example">
+          <div class="example-label">例题</div>
+          <p>$\mathbf{v}_1 = \begin{bmatrix} 1 \\ 0 \end{bmatrix}$，$\mathbf{v}_2 = \begin{bmatrix} 0 \\ 1 \end{bmatrix}$ 线性无关，因为仅当 $c_1 = c_2 = 0$ 时才能使 $c_1\mathbf{v}_1 + c_2\mathbf{v}_2 = \mathbf{0}$。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 向量方程 -->
+    <section class="knowledge-section" id="vector-equation">
+      <div class="knowledge-card">
+        <h3>向量方程</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p><strong>向量方程</strong>形式为 $x_1\mathbf{v}_1 + x_2\mathbf{v}_2 + \cdots + x_n\mathbf{v}_n = \mathbf{b}$，求解这个方程等价于求解相应的线性方程组。</p>
+        </div>
+        <div class="formula">
+          $$x_1\mathbf{v}_1 + x_2\mathbf{v}_2 + \cdots + x_n\mathbf{v}_n = \mathbf{b} \Leftrightarrow [\mathbf{v}_1 \, \mathbf{v}_2 \, \cdots \, \mathbf{v}_n]\begin{bmatrix} x_1 \\ x_2 \\ \vdots \\ x_n \end{bmatrix} = \mathbf{b}$$
+        </div>
+        <div class="example">
+          <div class="example-label">例题</div>
+          <p>解向量方程 $x_1\begin{bmatrix} 1 \\ 2 \end{bmatrix} + x_2\begin{bmatrix} 2 \\ 1 \end{bmatrix} = \begin{bmatrix} 5 \\ 7 \end{bmatrix}$</p>
+          <p><strong>解：</strong>$\begin{bmatrix} 1 & 2 \\ 2 & 1 \end{bmatrix}\begin{bmatrix} x_1 \\ x_2 \end{bmatrix} = \begin{bmatrix} 5 \\ 7 \end{bmatrix}$，解得 $x_1 = 3, x_2 = 1$。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 向量空间 -->
+    <section class="knowledge-section" id="vector-space">
+      <div class="knowledge-card">
+        <h3>向量空间</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>集合 $V$ 是一个<strong>向量空间</strong>，如果它<strong>对向量加法和标量乘法封闭</strong>，且满足以下公理：</p>
+        </div>
+        <div class="definition">
+          <div class="definition-label">公理</div>
+          <p>① 加法结合律、交换律<br>
+          ② 存在零向量 $\mathbf{0}$<br>
+          ③ 每个向量 $\mathbf{v}$ 都有加法逆元 $-\mathbf{v}$<br>
+          ④ 标量乘法的结合律和分配律<br>
+          ⑤ 存在单位元 1 使 $1\mathbf{v} = \mathbf{v}$</p>
+        </div>
+        <div class="example">
+          <div class="example-label">常见向量空间</div>
+          <p>• $\mathbb{R}^n$：所有 $n$ 维实向量<br>
+          • $\mathbb{R}^{m \times n}$：所有 $m \times n$ 实矩阵<br>
+          • $P_n$：次数不超过 $n$ 的多项式集合</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 生成空间 -->
+    <section class="knowledge-section" id="span">
+      <div class="knowledge-card">
+        <h3>生成空间</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>向量组 $\{\mathbf{v}_1, \mathbf{v}_2, \ldots, \mathbf{v}_k\}$ 的<strong>生成空间</strong>或<strong>张成</strong>是这些向量所有线性组合的集合：</p>
+        </div>
+        <div class="formula">
+          $$\text{Span}\{\mathbf{v}_1, \mathbf{v}_2, \ldots, \mathbf{v}_k\} = \{c_1\mathbf{v}_1 + c_2\mathbf{v}_2 + \cdots + c_k\mathbf{v}_k \mid c_i \in \mathbb{R}\}$$
+        </div>
+        <div class="note">
+          <div class="note-label">性质</div>
+          <p>$\text{Span}\{\mathbf{v}_1, \ldots, \mathbf{v}_k\}$ 本身是一个向量空间。</p>
+        </div>
+        <div class="example">
+          <div class="example-label">例题</div>
+          <p>$\text{Span} \left \{ \begin{bmatrix} 1 \\ 0 \end{bmatrix}, \begin{bmatrix} 0 \\ 1 \end{bmatrix} \right \} = \mathbb{R}^2$</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 子空间 -->
+    <section class="knowledge-section" id="subspace">
+      <div class="knowledge-card">
+        <h3>子空间</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>向量空间 $V$ 的非空子集 $H$ 是 $V$ 的<strong>子空间</strong>，如果 $H$ 对向量加法和标量乘法封闭：<br>
+          ① 若 $\mathbf{u}, \mathbf{v} \in H$，则 $\mathbf{u} + \mathbf{v} \in H$<br>
+          ② 若 $\mathbf{v} \in H$，$c \in \mathbb{R}$，则 $c\mathbf{v} \in H$</p>
+        </div>
+        <div class="note">
+          <div class="note-label">等价条件</div>
+          <p>$H$ 是子空间 ⟺ $H$ 包含零向量且对向量加法和标量乘法封闭。</p>
+        </div>
+        <div class="example">
+          <div class="example-label">例题</div>
+          <p>$H = \{(x, y, 0) \mid x, y \in \mathbb{R}\}$ 是 $\mathbb{R}^3$ 的子空间（$xy$ 平面）。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 零子空间 -->
+    <section class="knowledge-section" id="zero-subspace">
+      <div class="knowledge-card">
+        <h3>零子空间</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p><strong>零子空间</strong>是只包含零向量的子空间 $\{\mathbf{0}\}$。</p>
+        </div>
+        <div class="note">
+          <div class="note-label">性质</div>
+          <p>零子空间是任何向量空间的最小子空间。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 零空间 -->
+    <section class="knowledge-section" id="null-space">
+      <div class="knowledge-card">
+        <h3>零空间</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>矩阵 $A$ 的<strong>零空间</strong>是齐次方程 $A\mathbf{x} = \mathbf{0}$ 所有解的集合，记作 $\text{Nul}(A)$：</p>
+        </div>
+        <div class="formula">
+          $$\text{Nul}(A) = \{\mathbf{x} \mid A\mathbf{x} = \mathbf{0}\}$$
+        </div>
+        <div class="note">
+          <div class="note-label">性质</div>
+          <p>零空间是 $\mathbb{R}^n$ 的子空间。维数等于自由变量的个数。</p>
+        </div>
+        <div class="example">
+          <div class="example-label">例题</div>
+          <p>求矩阵 $A = \begin{bmatrix} 1 & 2 \\ 0 & 0 \end{bmatrix}$ 的零空间。</p>
+          <p><strong>解：</strong>$A\mathbf{x} = \mathbf{0}$ ⟹ $x_1 + 2x_2 = 0$ ⟹ $x_1 = -2x_2$<br>
+          $\text{Nul}(A) = \left \{ \begin{bmatrix} -2t \\ t \end{bmatrix} \mid t \in \mathbb{R} \right \} = \text{Span} \left \{ \begin{bmatrix} -2 \\ 1 \end{bmatrix} \right \}$</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 列空间 -->
+    <section class="knowledge-section" id="column-space">
+      <div class="knowledge-card">
+        <h3>列空间</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>矩阵 $A$ 的<strong>列空间</strong>是 $A$ 的所有列向量张成的空间，记作 $\text{Col}(A)$：</p>
+        </div>
+        <div class="formula">
+          $$\text{Col}(A) = \text{Span}\{\mathbf{a}_1, \mathbf{a}_2, \ldots, \mathbf{a}_n\}$$
+        </div>
+        <p style="margin-top: 1rem;">其中 $\mathbf{a}_i$ 是 $A$ 的第 $i$ 列。</p>
+        <div class="note">
+          <div class="note-label">性质</div>
+          <p>$\mathbf{b} \in \text{Col}(A)$ ⟺ 方程 $A\mathbf{x} = \mathbf{b}$ 有解。<br>
+          列空间的维数等于矩阵的秩。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 行空间 -->
+    <section class="knowledge-section" id="row-space">
+      <div class="knowledge-card">
+        <h3>行空间</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>矩阵 $A$ 的<strong>行空间</strong>是 $A$ 的所有行向量张成的空间，记作 $\text{Row}(A)$。</p>
+        </div>
+        <div class="formula">
+          $$\text{Row}(A) = \text{Col}(A^T)$$
+        </div>
+        <div class="note">
+          <div class="note-label">性质</div>
+          <p>行空间的维数等于列空间的维数（都等于矩阵的秩）。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 向量空间的性质 -->
+    <section class="knowledge-section" id="vector-space-properties">
+      <div class="knowledge-card">
+        <h3>向量空间的性质</h3>
+        <div class="definition">
+          <div class="definition-label">秩-零化度定理</div>
+          <p>对于 $m \times n$ 矩阵 $A$：</p>
+        </div>
+        <div class="formula">
+          $$\text{rank}(A) + \text{nullity}(A) = n$$
+        </div>
+        <p style="margin-top: 1rem;">其中 $\text{nullity}(A) = \dim(\text{Nul}(A))$ 是零空间的维数。</p>
+        <div class="note">
+          <div class="note-label">关键结论</div>
+          <p>① $\dim(\text{Col}(A)) + \dim(\text{Nul}(A)) = \text{列数}$<br>
+          ② $\text{rank}(A) = \text{rank}(A^T)$<br>
+          ③ $\text{rank}(A) = \dim(\text{Row}(A)) = \dim(\text{Col}(A))$</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 基 -->
+    <section class="knowledge-section" id="basis">
+      <div class="knowledge-card">
+        <h3>基</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>向量空间 $V$ 的<strong>基</strong>是 $V$ 的一个线性无关的生成集。即向量组 $\{\mathbf{v}_1, \ldots, \mathbf{v}_k\}$ 是 $V$ 的基，如果：<br>
+          ① 它们线性无关<br>
+          ② 它们张成 $V$</p>
+        </div>
+        <div class="note">
+          <div class="note-label">性质</div>
+          <p>• 每个向量空间都有基<br>
+          • 基中向量个数相同（等于向量空间的维数）<br>
+          • $\mathbb{R}^n$ 的标准基：$\{\mathbf{e}_1, \ldots, \mathbf{e}_n\}$，其中 $\mathbf{e}_i$ 第 $i$ 个分量为 1，其余为 0</p>
+        </div>
+        <div class="example">
+          <div class="example-label">例题</div>
+          <p>$\mathbb{R}^2$ 的一个基是 $\left \{ \begin{bmatrix} 1 \\ 0 \end{bmatrix}, \begin{bmatrix} 0 \\ 1 \end{bmatrix} \right \}$（标准基）。<br>
+          $\left \{ \begin{bmatrix} 1 \\ 1 \end{bmatrix}, \begin{bmatrix} 1 \\ 2 \end{bmatrix} \right \}$ 也是 $\mathbb{R}^2$ 的一个基。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 维数 -->
+    <section class="knowledge-section" id="dimension">
+      <div class="knowledge-card">
+        <h3>维数</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>向量空间 $V$ 的<strong>维数</strong>是其任意一个基中向量的个数，记作 $\dim(V)$。</p>
+        </div>
+        <div class="note">
+          <div class="note-label">常见维数</div>
+          <p>• $\dim(\mathbb{R}^n) = n$<br>
+          • $\dim(\mathbb{R}^{m \times n}) = mn$（所有 $m \times n$ 矩阵）<br>
+          • $\dim(P_n) = n+1$（次数不超过 $n$ 的多项式）<br>
+          • $\dim(\{\mathbf{0}\}) = 0$（零子空间）</p>
+        </div>
+        <div class="example">
+          <div class="example-label">例题</div>
+          <p>若 $A$ 是 $5 \times 8$ 矩阵，$\text{rank}(A) = 3$，则 $\dim(\text{Nul}(A)) = 8 - 3 = 5$。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 坐标与坐标向量 -->
+    <section class="knowledge-section" id="coordinates">
+      <div class="knowledge-card">
+        <h3>坐标与坐标向量</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>设 $\mathcal{B} = \{\mathbf{b}_1, \ldots, \mathbf{b}_n\}$ 是向量空间 $V$ 的基，向量 $\mathbf{v} \in V$ 可唯一表示为：</p>
+        </div>
+        <div class="formula">
+          $$\mathbf{v} = c_1\mathbf{b}_1 + \cdots + c_n\mathbf{b}_n = P_{\mathcal{B}} [\mathbf{v}]_{\mathcal{B}}$$
+        </div>
+        <p style="margin-top: 1rem;">其中 $P_{\mathcal{B}} = \begin{bmatrix} \mathbf{b}_1 & \mathbf{b}_2 & \cdots & \mathbf{b}_n \end{bmatrix}$，向量 $[\mathbf{v}]_{\mathcal{B}} = \begin{bmatrix} c_1 \\ \vdots \\ c_n \end{bmatrix}$ 称为 $\mathbf{v}$ 在基 $\mathcal{B}$ 下的<strong>坐标向量</strong>。</p>
+        <div class="example">
+          <div class="example-label">例题</div>
+          <p>在基 $\mathcal{B} = \left \{ \begin{bmatrix} 1 \\ 1 \end{bmatrix}, \begin{bmatrix} 1 \\ 2 \end{bmatrix} \right \}$ 下，求 $\mathbf{v} = \begin{bmatrix} 3 \\ 5 \end{bmatrix}$ 的坐标向量。</p>
+          <p><strong>解：</strong>$\begin{bmatrix} 3 \\ 5 \end{bmatrix} = c_1\begin{bmatrix} 1 \\ 1 \end{bmatrix} + c_2\begin{bmatrix} 1 \\ 2 \end{bmatrix}$<br>
+          解方程组得 $c_1 = 1, c_2 = 2$，所以 $[\mathbf{v}]_{\mathcal{B}} = \begin{bmatrix} 1 \\ 2 \end{bmatrix}$。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 过渡矩阵 -->
+    <section class="knowledge-section" id="basis-transformation-matrix">
+      <div class="knowledge-card">
+        <h3>过渡矩阵</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>设 $\mathcal{B} = \{\mathbf{b}_1, \ldots, \mathbf{b}_n\}$ 和 $\mathcal{C} = \{\mathbf{c}_1, \ldots, \mathbf{c}_n\}$ 是向量空间的两个基，从基 $\mathcal{B}$ 到基 $\mathcal{C}$ 的<strong>过渡矩阵</strong> $P$ 满足：</p>
+        </div>
+        <div class="formula">
+          $$P_{\mathcal{C}} = P_{\mathcal{B}} P$$
+        </div>
+        <p style="margin-top: 1rem;">其中 $P_{\mathcal{B}} = \begin{bmatrix} \mathbf{b}_1 & \mathbf{b}_2 & \cdots & \mathbf{b}_n \end{bmatrix}$，$P_{\mathcal{C}} = \begin{bmatrix} \mathbf{c}_1 & \mathbf{c}_2 & \cdots & \mathbf{c}_n \end{bmatrix}$。</p>
+        <div class="note">
+          <div class="note-label">性质</div>
+          <p>过渡矩阵 $P$ 是可逆矩阵，$P^{-1}$ 是从基 $\mathcal{C}$ 到基 $\mathcal{B}$ 的过渡矩阵。</p>
+        </div>
+        <div class="example">
+          <div class="example-label">例题</div>
+          <p>已知 $\mathbb{R}^2$ 的两个基：$\mathcal{B} = \left\{\begin{bmatrix} 1 \\ 0 \end{bmatrix}, \begin{bmatrix} 0 \\ 1 \end{bmatrix}\right\}$（标准基）和 $\mathcal{C} = \left\{\begin{bmatrix} 1 \\ 1 \end{bmatrix}, \begin{bmatrix} 1 \\ 2 \end{bmatrix}\right\}$。求从基 $\mathcal{B}$ 到基 $\mathcal{C}$ 的过渡矩阵。</p>
+          <p><strong>解：</strong>$P_{\mathcal{B}} = \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix}$，$P_{\mathcal{C}} = \begin{bmatrix} 1 & 1 \\ 1 & 2 \end{bmatrix}$<br>
+          由 $P_{\mathcal{C}} = P_{\mathcal{B}} P$ 得 $P = P_{\mathcal{B}}^{-1} P_{\mathcal{C}} = \begin{bmatrix} 1 & 1 \\ 1 & 2 \end{bmatrix}$<br>
+          因此，从基 $\mathcal{B}$ 到基 $\mathcal{C}$ 的过渡矩阵为 $P = \begin{bmatrix} 1 & 1 \\ 1 & 2 \end{bmatrix}$。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 坐标变换矩阵 -->
+    <section class="knowledge-section" id="coordinate-transformation-matrix">
+      <div class="knowledge-card">
+        <h3>坐标变换矩阵</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>设 $\mathcal{B} = \{\mathbf{b}_1, \ldots, \mathbf{b}_n\}$ 和 $\mathcal{C} = \{\mathbf{c}_1, \ldots, \mathbf{c}_n\}$ 是向量空间的两个基，$[\mathbf{v}]_{\mathcal{B}}$ 和 $[\mathbf{v}]_{\mathcal{C}}$ 分别是向量 $\mathbf{v}$ 在基 $\mathcal{B}$ 和 $\mathcal{C}$ 下的坐标向量，从基 $\mathcal{B}$ 到基 $\mathcal{C}$ 的<strong>坐标变换矩阵</strong> $P_{\mathcal{C} \leftarrow \mathcal{B}}$ 满足：</p>
+        </div>
+        <div class="formula">
+          $$[\mathbf{v}]_{\mathcal{C}} = P_{\mathcal{C} \leftarrow \mathcal{B}} [\mathbf{v}]_{\mathcal{B}}$$
+        </div>
+        <div class="note">
+          <div class="note-label">性质</div>
+          <p>$P_{\mathcal{C} \leftarrow \mathcal{B}} = P_{\mathcal{C}}^{-1} P_{\mathcal{B}} = P^{-1}$，即从 $\mathcal{B}$ 到 $\mathcal{C}$ 的坐标变换矩阵是从 $\mathcal{C}$ 到 $\mathcal{B}$ 的过渡矩阵。</p>
+        </div>
+        <div class="example">
+          <div class="example-label">例题</div>
+          <p>已知向量 $\mathbf{v} = \begin{bmatrix} 5 \\ 7 \end{bmatrix}$ 在基 $\mathcal{B} = \left\{\begin{bmatrix} 1 \\ 0 \end{bmatrix}, \begin{bmatrix} 0 \\ 1 \end{bmatrix}\right\}$ 下的坐标向量为 $[\mathbf{v}]_{\mathcal{B}} = \begin{bmatrix} 5 \\ 7 \end{bmatrix}$。求 $\mathbf{v}$ 在基 $\mathcal{C} = \left\{\begin{bmatrix} 1 \\ 1 \end{bmatrix}, \begin{bmatrix} 1 \\ 2 \end{bmatrix}\right\}$ 下的坐标向量。</p>
+          <p><strong>解：</strong>首先求从 $\mathcal{B}$ 到 $\mathcal{C}$ 的坐标变换矩阵。<br>
+          由 $\mathcal{B}$ 到 $\mathcal{C}$ 的过渡矩阵 $P = \begin{bmatrix} 1 & 1 \\ 1 & 2 \end{bmatrix}$，故 $P^{-1} = \frac{1}{2-1}\begin{bmatrix} 2 & -1 \\ -1 & 1 \end{bmatrix} = \begin{bmatrix} 2 & -1 \\ -1 & 1 \end{bmatrix}$<br>
+          所以，由 $\mathcal{B}$ 到 $\mathcal{C}$ 的坐标变换矩阵 $P_{\mathcal{C} \leftarrow \mathcal{B}} = P^{-1} = \begin{bmatrix} 2 & -1 \\ -1 & 1 \end{bmatrix}$<br>
+          因此 $[\mathbf{v}]_{\mathcal{C}} = \begin{bmatrix} 2 & -1 \\ -1 & 1 \end{bmatrix}\begin{bmatrix} 5 \\ 7 \end{bmatrix} = \begin{bmatrix} 10 - 7 \\ -5 + 7 \end{bmatrix} = \begin{bmatrix} 3 \\ 2 \end{bmatrix}$</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    // 移动端菜单切换
+    const menuToggle = document.getElementById('menu-toggle');
+    const sidebar = document.getElementById('sidebar');
+
+    menuToggle.addEventListener('click', () => {
+      sidebar.classList.toggle('open');
+    });
+
+    // 点击侧边栏链接后关闭菜单（移动端）
+    const sidebarLinks = document.querySelectorAll('.sidebar-nav a');
+    sidebarLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth <= 768) {
+          sidebar.classList.remove('open');
+        }
+      });
+    });
+
+    // 滚动时高亮当前目录项
+    const sections = document.querySelectorAll('.knowledge-section');
+    const navLinks = document.querySelectorAll('.sidebar-nav a');
+
+    function updateActiveLink() {
+      let currentSection = '';
+      
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop - 100;
+        if (window.scrollY >= sectionTop) {
+          currentSection = section.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${currentSection}`) {
+          link.classList.add('active');
+        }
+      });
+    }
+
+    window.addEventListener('scroll', updateActiveLink);
+    window.addEventListener('load', updateActiveLink);
+  </script>
+</body>
+</html>

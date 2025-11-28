@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect x='5' y='5' width='28' height='28' fill='%232563eb'/><rect x='36' y='5' width='28' height='28' fill='%233b82f6'/><rect x='67' y='5' width='28' height='28' fill='%2360a5fa'/><rect x='5' y='36' width='28' height='28' fill='%236366f1'/><rect x='36' y='36' width='28' height='28' fill='%234f46e5'/><rect x='67' y='36' width='28' height='28' fill='%237c3aed'/><rect x='5' y='67' width='28' height='28' fill='%231e40af'/><rect x='36' y='67' width='28' height='28' fill='%232563eb'/><rect x='67' y='67' width='28' height='28' fill='%239333ea'/></svg>">
+  <title>矩阵理论 - 复习总结</title>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+  <style>
+    :root {
+      --bg: #f5f7fa;
+      --card-bg: #ffffff;
+      --border: #d5d9e2;
+      --accent: #2563eb;
+      --accent-hover: #1d4ed8;
+      --accent-light: rgba(37, 99, 235, 0.1);
+      --text: #1f2937;
+      --muted: #4b5563;
+      --sidebar-width: 300px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* 顶部导航 */
+    .top-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background: var(--card-bg);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 2rem;
+      z-index: 1000;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .top-nav h1 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .top-nav .nav-links {
+      margin-left: auto;
+      display: flex;
+      gap: 1rem;
+    }
+
+    .top-nav .back-link {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+
+    .top-nav .back-link:hover {
+      color: var(--accent);
+    }
+
+    /* 侧边栏 */
+    .sidebar {
+      position: fixed;
+      top: 60px;
+      left: 0;
+      width: var(--sidebar-width);
+      height: calc(100vh - 60px);
+      background: var(--card-bg);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      padding: 1.5rem 0;
+      z-index: 100;
+    }
+
+    .sidebar-title {
+      padding: 0 1.5rem 1rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .sidebar-nav {
+      list-style: none;
+    }
+
+    .sidebar-nav li a {
+      display: block;
+      padding: 0.6rem 1.5rem;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.95rem;
+      border-left: 3px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .sidebar-nav li a:hover {
+      background: var(--accent-light);
+      color: var(--accent);
+      border-left-color: var(--accent);
+    }
+
+    .sidebar-nav li a.active {
+      background: var(--accent-light);
+      color: var(--accent);
+      border-left-color: var(--accent);
+      font-weight: 600;
+    }
+
+    /* 主内容区 */
+    .main-content {
+      margin-left: var(--sidebar-width);
+      padding: 80px 2rem 3rem;
+      max-width: 900px;
+      margin-right: auto;
+      margin-left: calc(var(--sidebar-width) + (100% - var(--sidebar-width) - 900px) / 2);
+    }
+
+    @media (max-width: 1300px) {
+      .main-content {
+        margin-left: var(--sidebar-width);
+        margin-right: 2rem;
+      }
+    }
+
+    .page-header {
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .page-header h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+
+    .page-header p {
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    /* 知识点区块 */
+    .knowledge-section {
+      margin-bottom: 2rem;
+      scroll-margin-top: 80px;
+    }
+
+    .knowledge-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+
+    .knowledge-card:hover {
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .knowledge-card h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .knowledge-card h3::before {
+      content: "📌";
+      font-size: 1rem;
+    }
+
+    .definition {
+      background: var(--accent-light);
+      border-left: 4px solid var(--accent);
+      padding: 1rem;
+      border-radius: 0 0.5rem 0.5rem 0;
+      margin-bottom: 1rem;
+    }
+
+    .definition-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+
+    .definition p {
+      color: var(--text);
+      font-size: 1rem;
+      line-height: 1.75;
+    }
+
+    .formula {
+      background: #fefce8;
+      border: 1px solid #fde047;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin: 1rem 0;
+      text-align: center;
+      overflow-x: auto;
+    }
+
+    .example {
+      background: #f0fdf4;
+      border: 1px solid #86efac;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .example-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #16a34a;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+
+    .note {
+      background: #fff7ed;
+      border: 1px solid #fdba74;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .note-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #ea580c;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+
+    /* 移动端适配 */
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--text);
+      margin-right: 1rem;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .main-content {
+        margin-left: 0;
+        padding: 80px 1rem 2rem;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
+      .page-header h2 {
+        font-size: 1.5rem;
+      }
+    }
+
+    /* 滚动条美化 */
+    .sidebar::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .sidebar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .sidebar::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 3px;
+    }
+
+    .sidebar::-webkit-scrollbar-thumb:hover {
+      background: var(--muted);
+    }
+
+    /* 表格样式 */
+    .property-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+      background: #ffffff;
+    }
+
+    .property-table th {
+      background: var(--accent-light);
+      color: var(--accent);
+      padding: 0.8rem;
+      text-align: left;
+      font-weight: 700;
+      border: 1px solid var(--border);
+    }
+
+    .property-table td {
+      padding: 0.8rem;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    .property-table tr:nth-child(even) {
+      background: #fafbfc;
+    }
+
+    .property-table tr:hover {
+      background: var(--accent-light);
+    }
+  </style>
+</head>
+<body>
+  <!-- 顶部导航 -->
+  <nav class="top-nav">
+    <button class="menu-toggle" id="menu-toggle" aria-label="打开目录">☰</button>
+    <h1>线性代数总复习</h1>
+    <div class="nav-links">
+      <a href="./matrices-and-linear-transformations.html" class="back-link">← 矩阵与线性变换</a>
+      <a href="../index.html" class="back-link">↑ 首页</a>
+      <a href="../la-quizzes/index.html" class="back-link">↓ 习题集</a>
+    </div>
+  </nav>
+
+  <!-- 侧边栏目录 -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-title">目录导航</div>
+    <ul class="sidebar-nav" id="sidebar-nav">
+      <li><a href="#eigenvalue">特征值</a></li>
+      <li><a href="#eigenvector">特征向量</a></li>
+      <li><a href="#eigenspace">特征空间</a></li>
+      <li><a href="#characteristic-equation">特征方程</a></li>
+      <li><a href="#characteristic-polynomial">特征多项式</a></li>
+      <li><a href="#similar-matrix">相似矩阵</a></li>
+      <li><a href="#diagonalization">对角化</a></li>
+      <li><a href="#cosine-similarity">向量间余弦相似性</a></li>
+      <li><a href="#orthogonal">正交</a></li>
+      <li><a href="#orthogonal-projection">正交投影</a></li>
+      <li><a href="#orthogonal-matrix">正交矩阵</a></li>
+      <li><a href="#orthogonal-decomposition">正交分解</a></li>
+      <li><a href="#gram-schmidt">格拉姆-施密特方法</a></li>
+      <li><a href="#qr-decomposition">QR分解</a></li>
+      <li><a href="#least-squares">最小二乘法</a></li>
+      <li><a href="#spectral-decomposition">谱分解</a></li>
+      <li><a href="#quadratic-form">二次型</a></li>
+      <li><a href="#quadratic-form-matrix">二次型矩阵</a></li>
+      <li><a href="#standard-form">二次型的标准型</a></li>
+      <li><a href="#principal-axis">主轴定理</a></li>
+      <li><a href="#inertia-index">惯性指数</a></li>
+      <li><a href="#quadratic-form-classification">二次型的分类</a></li>
+      <li><a href="#positive-definite">正定矩阵</a></li>
+      <li><a href="#svd">奇异值分解</a></li>
+    </ul>
+  </aside>
+
+  <!-- 主内容区 -->
+  <main class="main-content">
+    <header class="page-header">
+      <h2>矩阵理论</h2>
+      <p>本章涵盖特征值与特征向量、矩阵对角化、正交分解、二次型以及奇异值分解等高级矩阵理论知识点。</p>
+    </header>
+
+    <!-- 特征值 -->
+    <section class="knowledge-section" id="eigenvalue">
+      <div class="knowledge-card">
+        <h3>特征值</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>设 $A$ 是 $n \times n$ 矩阵，如果存在标量 $\lambda$ 和非零向量 $\mathbf{v}$ 使得：</p>
+        </div>
+        <div class="formula">
+          $$A\mathbf{v} = \lambda\mathbf{v}$$
+        </div>
+        <p style="margin-top: 1rem;">则称 $\lambda$ 为矩阵 $A$ 的<strong>特征值</strong>，$\mathbf{v}$ 为对应的<strong>特征向量</strong>。</p>
+        <div class="note">
+          <div class="note-label">几何意义</div>
+          <p>特征向量在矩阵变换下只改变大小（缩放倍数为特征值），不改变方向。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 特征向量 -->
+    <section class="knowledge-section" id="eigenvector">
+      <div class="knowledge-card">
+        <h3>特征向量</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>对于矩阵 $A$ 的特征值 $\lambda$，满足 $A\mathbf{v} = \lambda\mathbf{v}$ 的非零向量 $\mathbf{v}$ 称为对应于特征值 $\lambda$ 的<strong>特征向量</strong>。</p>
+        </div>
+        <div class="note">
+          <div class="note-label">计算方法</div>
+          <p>求解齐次方程组 $(A - \lambda I)\mathbf{v} = \mathbf{0}$ 的非零解。</p>
+        </div>
+        <div class="example">
+          <div class="example-label">例题</div>
+          <p>若 $A = \begin{bmatrix} 2 & 1 \\ 0 & 1 \end{bmatrix}$，$\lambda = 2$ 是其特征值，求对应的特征向量。</p>
+          <p><strong>解：</strong>$(A - 2I)\mathbf{v} = \mathbf{0}$ ⟹ $\begin{bmatrix} 0 & 1 \\ 0 & -1 \end{bmatrix}\mathbf{v} = \mathbf{0}$ ⟹ $\mathbf{v} = \begin{bmatrix} 1 \\ 0 \end{bmatrix}$ 及其非零倍数。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 特征空间 -->
+    <section class="knowledge-section" id="eigenspace">
+      <div class="knowledge-card">
+        <h3>特征空间</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>对于特征值 $\lambda$，对应的全部特征向量（包括零向量）构成的集合称为<strong>特征空间</strong>，记作 $E_\lambda$：</p>
+        </div>
+        <div class="formula">
+          $$E_\lambda = \{\mathbf{v} : A\mathbf{v} = \lambda\mathbf{v}\} = \ker(A - \lambda I)$$
+        </div>
+        <div class="note">
+          <div class="note-label">性质</div>
+          <p>特征空间 $E_\lambda$ 是矩阵 $A - \lambda I$ 的零空间，是 $\mathbb{R}^n$ 的子空间。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 特征方程 -->
+    <section class="knowledge-section" id="characteristic-equation">
+      <div class="knowledge-card">
+        <h3>特征方程</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>方程 $\det(A - \lambda I) = 0$ 称为矩阵 $A$ 的<strong>特征方程</strong>。</p>
+        </div>
+        <div class="note">
+          <div class="note-label">求解特征值</div>
+          <p>矩阵 $A$ 的特征值就是其特征方程的解。</p>
+        </div>
+        <div class="example">
+          <div class="example-label">例题</div>
+          <p>求矩阵 $A = \begin{bmatrix} 2 & 1 \\ 0 & 1 \end{bmatrix}$ 的特征值。</p>
+          <p><strong>解：</strong>$\det(A - \lambda I) = \det\begin{bmatrix} 2-\lambda & 1 \\ 0 & 1-\lambda \end{bmatrix} = (2-\lambda)(1-\lambda) = 0$<br>
+          特征值为 $\lambda_1 = 2, \lambda_2 = 1$。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 特征多项式 -->
+    <section class="knowledge-section" id="characteristic-polynomial">
+      <div class="knowledge-card">
+        <h3>特征多项式</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>$P(\lambda) = \det(A - \lambda I)$ 是关于 $\lambda$ 的多项式，称为矩阵 $A$ 的<strong>特征多项式</strong>。</p>
+        </div>
+        <div class="note">
+          <div class="note-label">性质</div>
+          <p>对于 $n \times n$ 矩阵，特征多项式是 $n$ 次多项式，最高次项为 $(-1)^n\lambda^n$。</p>
+        </div>
+        <div class="note">
+          <div class="note-label">重要公式</div>
+          <p>① 所有特征值之和 = $\text{tr}(A)$（矩阵的迹）<br>
+          ② 所有特征值之积 = $\det(A)$（矩阵的行列式）</p>
+        </div>
+        <div class="note" style="margin-top: 1.5rem;">
+          <div class="note-label">特征值的变换关系</div>
+          <p>如果矩阵 $A$ 的一个特征值是 $\lambda$，那么：</p>
+          <table class="property-table">
+            <thead>
+              <tr>
+                <th>矩阵变换</th>
+                <th>变换后的特征值</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>标量倍数 $aA$</td>
+                <td>$a\lambda$</td>
+              </tr>
+              <tr>
+                <td>幂次 $A^m$</td>
+                <td>$\lambda^m$</td>
+              </tr>
+              <tr>
+                <td>逆矩阵 $A^{-1}$</td>
+                <td>$\dfrac{1}{\lambda}$</td>
+              </tr>
+              <tr>
+                <td>移位 $A - cI$</td>
+                <td>$\lambda - c$</td>
+              </tr>
+              <tr>
+                <td>矩阵多项式 $p(A)=a_mA^m + a_{m-1}A^{m-1}+\cdots+a_1A+a_0I$</td>
+                <td>$p(\lambda)=a_m\lambda^m +a_{m-1}\lambda^{m-1}+\cdots+a_1\lambda+a_0$</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="example">
+          <div class="example-label">例题</div>
+          <p>已知矩阵 $A$ 的特征值为 $\lambda_1 = 2$ 和 $\lambda_2 = -1$，求矩阵多项式 $p(A) = 2A^2 + 3A - 5I$ 的特征值。</p>
+          <p><strong>解：</strong>若 $\lambda$ 是矩阵 $A$ 的特征值，则 $p(A)$ 的特征值是 $p(\lambda)=2\lambda^2 + 3\lambda -5$。<br>
+          对于 $\lambda_1 = 2$：<br>
+          $p(2) = 2 \cdot 2^2 + 3 \cdot 2 - 5 = 2 \cdot 4 + 6 - 5 = 8 + 6 - 5 = 9$<br><br>
+          对于 $\lambda_2 = -1$：<br>
+          $p(-1) = 2 \cdot (-1)^2 + 3 \cdot (-1) - 5 = 2 \cdot 1 - 3 - 5 = 2 - 3 - 5 = -6$<br><br>
+          因此，$p(A)$ 的特征值为 $9$ 和 $-6$。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 相似矩阵 -->
+    <section class="knowledge-section" id="similar-matrix">
+      <div class="knowledge-card">
+        <h3>相似矩阵</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>如果存在可逆矩阵 $P$ 使得 $B = P^{-1}AP$，则称矩阵 $A$ 和 $B$ <strong>相似</strong>，记作 $A \sim B$。</p>
+        </div>
+        <div class="note">
+          <div class="note-label">性质</div>
+          <p>① 相似矩阵有相同的特征值<br>
+          ② 相似矩阵有相同的行列式、迹、秩<br>
+          ③ 相似关系是等价关系</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 对角化 -->
+    <section class="knowledge-section" id="diagonalization">
+      <div class="knowledge-card">
+        <h3>对角化</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>如果矩阵 $A$ 相似于对角矩阵 $D$，即存在可逆矩阵 $P$ 使得 $D = P^{-1}AP$，则称 $A$ 可<strong>对角化</strong>。</p>
+        </div>
+        <div class="formula">
+          $$A = PDP^{-1}$$
+        </div>
+        <div class="note">
+          <div class="note-label">对角化条件</div>
+          <p>$n \times n$ 矩阵 $A$ 可对角化当且仅当它有 $n$ 个线性无关的特征向量。</p>
+        </div>
+        <div class="note">
+          <div class="note-label">充分条件</div>
+          <p>如果 $A$ 有 $n$ 个不同的特征值，则 $A$ 可对角化。</p>
+        </div>
+        <div class="example">
+          <div class="example-label">例题</div>
+          <p>对矩阵 $A = \begin{bmatrix} 2 & 0 & 0 & 0 \\ 0 & 1 & 1 & 0 \\ 0 & 1 & 1 & 0 \\ 0 & 0 & 0 & 3 \end{bmatrix}$ 进行对角化。</p>
+          <p><strong>解：</strong></p>
+          <p>第一步：求特征值。<br>
+          $\det(A - \lambda I) = \det\begin{bmatrix} 2-\lambda & 0 & 0 & 0 \\ 0 & 1-\lambda & 1 & 0 \\ 0 & 1 & 1-\lambda & 0 \\ 0 & 0 & 0 & 3-\lambda \end{bmatrix}$<br>
+          $= (2-\lambda)(3-\lambda)\det\begin{bmatrix} 1-\lambda & 1 \\ 1 & 1-\lambda \end{bmatrix}$<br>
+          $= (2-\lambda)(3-\lambda)[(1-\lambda)^2 - 1]$<br>
+          $= (2-\lambda)(3-\lambda)(\lambda)(\lambda - 2)$<br>
+          特征值为：$\lambda_1 = 0, \lambda_2 = 2$ （重数 $2$）, $\lambda_3 = 3$</p>
+          <p><br>第二步：求特征向量。<br>
+          对 $\lambda_1 = 0$：求解 $A\mathbf{x} = \mathbf{0}$，得 $\mathbf{v}_1 = \begin{bmatrix} 0 \\ 1 \\ -1 \\ 0 \end{bmatrix}$<br>
+          对 $\lambda_2 = 2$：求解 $(A - 2I)\mathbf{x} = \mathbf{0}$，得 $\mathbf{v}_2 = \begin{bmatrix} 1 \\ 0 \\ 0 \\ 0 \end{bmatrix}$ 和 $\mathbf{v}_3 = \begin{bmatrix} 0 \\ 0 \\ 0 \\ 1 \end{bmatrix}$<br>
+          对 $\lambda_3 = 3$：求解 $(A - 3I)\mathbf{x} = \mathbf{0}$，得 $\mathbf{v}_4 = \begin{bmatrix} 0 \\ 1 \\ 1 \\ 0 \end{bmatrix}$</p>
+          <p><br>第三步：构造矩阵 $P$ 和 $D$。<br>
+          $P = \begin{bmatrix} 0 & 1 & 0 & 0 \\ 1 & 0 & 0 & 1 \\ -1 & 0 & 0 & 1 \\ 0 & 0 & 1 & 0 \end{bmatrix}$（特征向量为列）<br>
+          $D = \begin{bmatrix} 0 & 0 & 0 & 0 \\ 0 & 2 & 0 & 0 \\ 0 & 0 & 2 & 0 \\ 0 & 0 & 0 & 3 \end{bmatrix}$（对角线上是特征值）</p>
+          <p><br>第四步：验证 $D = P^{-1}AP$。<br>
+          则 $A = PDP^{-1}$，矩阵 $A$ 可对角化。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 向量间余弦相似性 -->
+    <section class="knowledge-section" id="cosine-similarity">
+      <div class="knowledge-card">
+        <h3>向量间余弦相似性</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>两个非零向量 $\mathbf{u}$ 和 $\mathbf{v}$ 的<strong>余弦相似度</strong>定义为：</p>
+        </div>
+        <div class="formula">
+          $$\cos\theta = \frac{\mathbf{u} \cdot \mathbf{v}}{\left \|\mathbf{u} \right \| \left \| \mathbf{v} \right \|}$$
+        </div>
+        <div class="note">
+          <div class="note-label">性质</div>
+          <p>余弦相似度的值域为 $[-1, 1]$。<br>
+          • 余弦相似度 = 1：两向量同向<br>
+          • 余弦相似度 = 0：两向量正交<br>
+          • 余弦相似度 = -1：两向量反向</p>
+        </div>
+        <div class="example">
+          <div class="example-label">例题</div>
+          <p>求向量 $\mathbf{u} = \begin{bmatrix} 1 \\ 0 \end{bmatrix}$ 和 $\mathbf{v} = \begin{bmatrix} 1 \\ 1 \end{bmatrix}$ 的余弦相似度。</p>
+          <p><strong>解：</strong>$\cos\theta = \frac{1 \cdot 1 + 0 \cdot 1}{\sqrt{1}\sqrt{2}} = \frac{1}{\sqrt{2}} = \frac{\sqrt{2}}{2}$</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 正交 -->
+    <section class="knowledge-section" id="orthogonal">
+      <div class="knowledge-card">
+        <h3>正交</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>如果两个向量的点积为 0，即 $\mathbf{u} \cdot \mathbf{v} = 0$，则称它们<strong>正交</strong>。<br>
+          如果向量集合中任意两个不同的向量都正交，称该集合为<strong>正交集</strong>。<br>
+          如果正交集中每个向量的长度都为 1，称之为<strong>标准正交集（或单位正交集）</strong>。</p>
+        </div>
+        <div class="note">
+          <div class="note-label">性质</div>
+          <p>正交向量集必然线性无关。<br>
+          如果 $\{\mathbf{v}_1, \ldots, \mathbf{v}_k\}$ 是正交向量集，任何向量 $\mathbf{v}$ 可表示为：<br>
+          $$\mathbf{v} = c_1\mathbf{v}_1 + \cdots + c_k\mathbf{v}_k, \quad c_i = \frac{\mathbf{v} \cdot \mathbf{v}_i}{\mathbf{v}_i \cdot \mathbf{v}_i}$$</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 正交投影 -->
+    <section class="knowledge-section" id="orthogonal-projection">
+      <div class="knowledge-card">
+        <h3>正交投影</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>向量 $\mathbf{y}$ 在向量 $\mathbf{u}$ 上的<strong>正交投影</strong>定义为：</p>
+        </div>
+        <div class="formula">
+          $$\text{proj}_{\mathbf{u}}\mathbf{y} = \frac{\mathbf{y} \cdot \mathbf{u}}{\mathbf{u} \cdot \mathbf{u}}\mathbf{u}$$
+        </div>
+        <div class="definition">
+          <div class="definition-label">到子空间的投影</div>
+          <p>若 $W$ 是由正交向量组 $\{\mathbf{u}_1, \ldots, \mathbf{u}_p\}$ 张成的子空间，则 $\mathbf{y}$ 在 $W$ 上的投影为：</p>
+        </div>
+        <div class="formula">
+          $$\text{proj}_{W}\mathbf{y} = \frac{\mathbf{y} \cdot \mathbf{u}_1}{\mathbf{u}_1 \cdot \mathbf{u}_1}\mathbf{u}_1 + \cdots + \frac{\mathbf{y} \cdot \mathbf{u}_p}{\mathbf{u}_p \cdot \mathbf{u}_p}\mathbf{u}_p$$
+        </div>
+        <div class="example">
+          <div class="example-label">例题</div>
+          <p>将 $\mathbb{R}^3$ 中的向量 $\mathbf{y} = \begin{bmatrix} 1 \\ 2 \\ 3 \end{bmatrix}$ 投影到由 $\mathbf{u}_1 = \begin{bmatrix} 1 \\ 0 \\ 0 \end{bmatrix}$ 和 $\mathbf{u}_2 = \begin{bmatrix} 0 \\ 1 \\ 0 \end{bmatrix}$ 张成的子空间 $W$ 上。</p>
+          <p><strong>解：</strong>注意 $\mathbf{u}_1$ 和 $\mathbf{u}_2$ 已经是正交向量组（且为标准正交），子空间 $W$ 是 $xy$ 平面。如果给定的 $W$ 的基不是正交基，可以先把它们化为正交基或标准正交基，再进行正交投影的计算。</p>
+          <p>计算投影：<br>
+          $\mathbf{y} \cdot \mathbf{u}_1 = 1 \cdot 1 + 2 \cdot 0 + 3 \cdot 0 = 1$<br>
+          $\mathbf{u}_1 \cdot \mathbf{u}_1 = 1$<br>
+          $\mathbf{y} \cdot \mathbf{u}_2 = 1 \cdot 0 + 2 \cdot 1 + 3 \cdot 0 = 2$<br>
+          $\mathbf{u}_2 \cdot \mathbf{u}_2 = 1$</p>
+          <p>因此，<br>
+          $\text{proj}_{W}\mathbf{y} = \frac{1}{1}\begin{bmatrix} 1 \\ 0 \\ 0 \end{bmatrix} + \frac{2}{1}\begin{bmatrix} 0 \\ 1 \\ 0 \end{bmatrix} = \begin{bmatrix} 1 \\ 2 \\ 0 \end{bmatrix}$</p>
+          <p>正交分量为：<br>
+          $\mathbf{z} = \mathbf{y} - \text{proj}_{W}\mathbf{y} = \begin{bmatrix} 1 \\ 2 \\ 3 \end{bmatrix} - \begin{bmatrix} 1 \\ 2 \\ 0 \end{bmatrix} = \begin{bmatrix} 0 \\ 0 \\ 3 \end{bmatrix}$</p>
+          <p><strong>几何意义：</strong>向量 $\mathbf{y}$ 在 $xy$ 平面上的投影是 $(1, 2, 0)$（去掉 $z$ 分量），垂直于平面的分量是 $(0, 0, 3)$。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 正交矩阵 -->
+    <section class="knowledge-section" id="orthogonal-matrix">
+      <div class="knowledge-card">
+        <h3>正交矩阵</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>如果 $n \times n$ 矩阵 $Q$ 满足 $Q^T Q = I$（即 $Q^T = Q^{-1}$），则称 $Q$ 为<strong>正交矩阵</strong>。</p>
+        </div>
+        <div class="note">
+          <div class="note-label">性质</div>
+          <p>① $Q$ 的列向量构成 $\mathbb{R}^n$ 的标准正交基<br>
+          ② $Q$ 的行向量也构成 $\mathbb{R}^n$ 的标准正交基<br>
+          ③ $\det(Q) = \pm 1$<br>
+          ④ 正交矩阵保持向量长度不变：$\left \| Q\mathbf{x} \right \| = \left \| \mathbf{x} \right \|$<br>
+          ⑤ 正交矩阵保持向量点积（即方向不变）：$(Q\mathbf{u}) \cdot (Q\mathbf{v}) = \mathbf{u} \cdot \mathbf{v}$</p>
+        </div>
+        <div class="example">
+          <div class="example-label">例题</div>
+          <p>判断 $Q = \begin{bmatrix} 0 & -1 \\ 1 & 0 \end{bmatrix}$ 是否为正交矩阵。</p>
+          <p><strong>解：</strong>$Q^T Q = \begin{bmatrix} 0 & 1 \\ -1 & 0 \end{bmatrix}\begin{bmatrix} 0 & -1 \\ 1 & 0 \end{bmatrix} = \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix} = I$ ✓，是正交矩阵。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 正交分解 -->
+    <section class="knowledge-section" id="orthogonal-decomposition">
+      <div class="knowledge-card">
+        <h3>正交分解</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>对于向量 $\mathbf{y}$ 和由正交向量组张成的子空间 $W$，可将 $\mathbf{y}$ 分解为：</p>
+        </div>
+        <div class="formula">
+          $$\mathbf{y} = \text{proj}_{W}\mathbf{y} + \mathbf{z}$$
+        </div>
+        <p style="margin-top: 1rem;">其中 $\text{proj}_{W}\mathbf{y} \in W$ 称为 $\mathbf{y}$ 在 $W$ 上的正交投影，$\mathbf{z} \perp W$ 称为相应的正交分量。</p>
+        <div class="note">
+          <div class="note-label">几何意义</div>
+          <p>任何向量都可分解为子空间内的投影和垂直于该子空间的分量之和。</p>
+        </div>
+        <div class="example">
+          <div class="example-label">例题</div>
+          <p>将 $\mathbb{R}^4$ 中的向量 $\mathbf{y} = \begin{bmatrix} 2 \\ 4 \\ 1 \\ 2 \end{bmatrix}$ 投影到由 $\mathbf{u} = \begin{bmatrix} 1 \\ 1 \\ 0 \\ 0 \end{bmatrix}$ 张成的一维子空间 $W$ 上，并求正交分量。</p>
+          <p><strong>解：</strong></p>
+          <p>第一步：计算投影。<br>
+          先计算向量内积：<br>
+          $\mathbf{y} \cdot \mathbf{u} = 2 \cdot 1 + 4 \cdot 1 + 1 \cdot 0 + 2 \cdot 0 = 6$<br>
+          $\mathbf{u} \cdot \mathbf{u} = 1^2 + 1^2 + 0^2 + 0^2 = 2$</p>
+          <p>投影向量：<br>
+          $\text{proj}_{W}\mathbf{y} = \frac{\mathbf{y} \cdot \mathbf{u}}{\mathbf{u} \cdot \mathbf{u}}\mathbf{u} = \frac{6}{2}\begin{bmatrix} 1 \\ 1 \\ 0 \\ 0 \end{bmatrix} = 3\begin{bmatrix} 1 \\ 1 \\ 0 \\ 0 \end{bmatrix} = \begin{bmatrix} 3 \\ 3 \\ 0 \\ 0 \end{bmatrix}$</p>
+          <p>第二步：计算正交分量。<br>
+          $\mathbf{z} = \mathbf{y} - \text{proj}_{W}\mathbf{y} = \begin{bmatrix} 2 \\ 4 \\ 1 \\ 2 \end{bmatrix} - \begin{bmatrix} 3 \\ 3 \\ 0 \\ 0 \end{bmatrix} = \begin{bmatrix} -1 \\ 1 \\ 1 \\ 2 \end{bmatrix}$</p>
+          <p>第三步：验证正交性。<br>
+          $\mathbf{z} \cdot \mathbf{u} = (-1) \cdot 1 + 1 \cdot 1 + 1 \cdot 0 + 2 \cdot 0 = 0$ ✓</p>
+          <p><strong>结论：</strong><br>
+          $\mathbf{y} = \begin{bmatrix} 3 \\ 3 \\ 0 \\ 0 \end{bmatrix} + \begin{bmatrix} -1 \\ 1 \\ 1 \\ 2 \end{bmatrix}$<br>
+          其中 $\begin{bmatrix} 3 \\ 3 \\ 0 \\ 0 \end{bmatrix}$ 是 $\mathbf{y}$ 在 $W$ 上的投影，$\begin{bmatrix} -1 \\ 1 \\ 1 \\ 2 \end{bmatrix}$ 是垂直于 $W$ 的分量。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 格拉姆-施密特方法 -->
+    <section class="knowledge-section" id="gram-schmidt">
+      <div class="knowledge-card">
+        <h3>格拉姆-施密特方法</h3>
+        <div class="definition">
+          <div class="definition-label">目标</div>
+          <p>将线性无关向量组 $\{\mathbf{x}_1, \mathbf{x}_2, \ldots, \mathbf{x}_p\}$ 转化为<strong>标准正交向量组</strong> $\{\mathbf{u}_1, \mathbf{u}_2, \ldots, \mathbf{u}_p\}$。</p>
+        </div>
+        <div class="definition">
+          <div class="definition-label">步骤</div>
+          <p>① $\mathbf{v}_1 = \mathbf{x}_1$，$\mathbf{u}_1 = \frac{\mathbf{v}_1}{\left \|\mathbf{v}_1 \right \|}$<br>
+          ② 对 $k = 2, 3, \ldots, p$：<br>
+          $\quad$ $\mathbf{v}_k = \mathbf{x}_k - \sum_{j=1}^{k-1}(\mathbf{x}_k \cdot \mathbf{u}_j)\mathbf{u}_j$<br>
+          $\quad$ $\mathbf{u}_k = \frac{\mathbf{v}_k}{\left \| \mathbf{v}_k \right \|}$</p>
+        </div>
+        <div class="example">
+          <div class="example-label">例题</div>
+          <p>用格拉姆-施密特方法对以下向量进行标准正交化：<br>
+          $\mathbf{x}_1 = \begin{bmatrix} 1 \\ 0 \\ 0 \\ 0 \end{bmatrix}$，$\mathbf{x}_2 = \begin{bmatrix} 1 \\ 1 \\ 0 \\ 0 \end{bmatrix}$，$\mathbf{x}_3 = \begin{bmatrix} 1 \\ 1 \\ 1 \\ 0 \end{bmatrix}$，$\mathbf{x}_4 = \begin{bmatrix} 1 \\ 1 \\ 1 \\ 1 \end{bmatrix}$</p>
+          <p><strong>解：</strong></p>
+          <p>第一步：$\mathbf{v}_1 = \mathbf{x}_1 = \begin{bmatrix} 1 \\ 0 \\ 0 \\ 0 \end{bmatrix}$，$\left \|\mathbf{v}_1\right \| = 1$，单位化 $\mathbf{v}_1$ 得，
+          $\mathbf{u}_1 = \begin{bmatrix} 1 \\ 0 \\ 0 \\ 0 \end{bmatrix}$</p>
+          <p>第二步：$\mathbf{v}_2 = \mathbf{x}_2 - (\mathbf{x}_2 \cdot \mathbf{u}_1)\mathbf{u}_1$<br>
+          $\mathbf{x}_2 \cdot \mathbf{u}_1 = 1$<br>
+          $\mathbf{v}_2 = \begin{bmatrix} 1 \\ 1 \\ 0 \\ 0 \end{bmatrix} - 1 \cdot \begin{bmatrix} 1 \\ 0 \\ 0 \\ 0 \end{bmatrix} = \begin{bmatrix} 0 \\ 1 \\ 0 \\ 0 \end{bmatrix}$<br>
+          $\left \|\mathbf{v}_2 \right \| = 1$，$\mathbf{u}_2 = \begin{bmatrix} 0 \\ 1 \\ 0 \\ 0 \end{bmatrix}$</p>
+          <p>第三步：$\mathbf{v}_3 = \mathbf{x}_3 - (\mathbf{x}_3 \cdot \mathbf{u}_1)\mathbf{u}_1 - (\mathbf{x}_3 \cdot \mathbf{u}_2)\mathbf{u}_2$<br>
+          $\mathbf{x}_3 \cdot \mathbf{u}_1 = 1$，$\mathbf{x}_3 \cdot \mathbf{u}_2 = 1$<br>
+          $\mathbf{v}_3 = \begin{bmatrix} 1 \\ 1 \\ 1 \\ 0 \end{bmatrix} - 1 \cdot \begin{bmatrix} 1 \\ 0 \\ 0 \\ 0 \end{bmatrix} - 1 \cdot \begin{bmatrix} 0 \\ 1 \\ 0 \\ 0 \end{bmatrix} = \begin{bmatrix} 0 \\ 0 \\ 1 \\ 0 \end{bmatrix}$<br>
+          $\left \|\mathbf{v}_3 \right \| = 1$，$\mathbf{u}_3 = \begin{bmatrix} 0 \\ 0 \\ 1 \\ 0 \end{bmatrix}$</p>
+          <p>第四步：$\mathbf{v}_4 = \mathbf{x}_4 - (\mathbf{x}_4 \cdot \mathbf{u}_1)\mathbf{u}_1 - (\mathbf{x}_4 \cdot \mathbf{u}_2)\mathbf{u}_2 - (\mathbf{x}_4 \cdot \mathbf{u}_3)\mathbf{u}_3$<br>
+          $\mathbf{x}_4 \cdot \mathbf{u}_1 = 1$，$\mathbf{x}_4 \cdot \mathbf{u}_2 = 1$，$\mathbf{x}_4 \cdot \mathbf{u}_3 = 1$<br>
+          $\mathbf{v}_4 = \begin{bmatrix} 1 \\ 1 \\ 1 \\ 1 \end{bmatrix} - 1 \cdot \begin{bmatrix} 1 \\ 0 \\ 0 \\ 0 \end{bmatrix} - 1 \cdot \begin{bmatrix} 0 \\ 1 \\ 0 \\ 0 \end{bmatrix} - 1 \cdot \begin{bmatrix} 0 \\ 0 \\ 1 \\ 0 \end{bmatrix} = \begin{bmatrix} 0 \\ 0 \\ 0 \\ 1 \end{bmatrix}$<br>
+          $\left \|\mathbf{v}_4 \right \| = 1$，$\mathbf{u}_4 = \begin{bmatrix} 0 \\ 0 \\ 0 \\ 1 \end{bmatrix}$</p>
+          <p><strong>结论：</strong>标准正交向量组为 $\left\{\begin{bmatrix} 1 \\ 0 \\ 0 \\ 0 \end{bmatrix}, \begin{bmatrix} 0 \\ 1 \\ 0 \\ 0 \end{bmatrix}, \begin{bmatrix} 0 \\ 0 \\ 1 \\ 0 \end{bmatrix}, \begin{bmatrix} 0 \\ 0 \\ 0 \\ 1 \end{bmatrix}\right\}$</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- QR分解 -->
+    <section class="knowledge-section" id="qr-decomposition">
+      <div class="knowledge-card">
+        <h3>QR分解</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>对于 $m \times n$ 矩阵 $A$（$m \geq n$，列向量线性无关），存在 $m \times n$ 正交矩阵 $Q$ 和 $n \times n$ 上三角矩阵 $R$ 使得：</p>
+        </div>
+        <div class="formula">
+          $$A = QR$$
+        </div>
+        <div class="note">
+          <div class="note-label">计算方法</div>
+          <p>使用格拉姆-施密特方法对 $A$ 的列向量进行正交化和标准化。<br>
+          $Q$ 的列是标准化后的列向量。<br>
+          $R$ 的第 $(i,j)$ 个元素为 $\mathbf{a}_j \cdot \mathbf{q}_i$（当 $i \leq j$）；或者，$R=Q^TA$。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 最小二乘法 -->
+    <section class="knowledge-section" id="least-squares">
+      <div class="knowledge-card">
+        <h3>最小二乘法</h3>
+        <div class="definition">
+          <div class="definition-label">问题</div>
+          <p>对于超定方程组 $A\mathbf{x} = \mathbf{b}$（无解的情况），求最小化 $\left \| A\mathbf{x} - \mathbf{b}\right \|^2$ 的向量 $\mathbf{x}$。</p>
+        </div>
+        <div class="definition">
+          <div class="definition-label">解法</div>
+          <p>最小二乘解满足<strong>正规方程（或法方程）</strong>：</p>
+        </div>
+        <div class="formula">
+          $$A^T A\mathbf{x} = A^T\mathbf{b}$$
+        </div>
+        <p style="margin-top: 1rem;">最小二乘解为 $\mathbf{x} = (A^T A)^{-1}A^T\mathbf{b}$。</p>
+        <div class="note">
+          <div class="note-label">应用</div>
+          <p>常用于数据拟合、回归分析等领域。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 谱分解 -->
+    <section class="knowledge-section" id="spectral-decomposition">
+      <div class="knowledge-card">
+        <h3>谱分解</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>对于对称矩阵 $A$，存在正交矩阵 $P$ 使得 $A = PDP^T$，其中 $D$ 是对角矩阵。<br>
+          这种分解称为<strong>谱分解</strong>。</p>
+        </div>
+        <div class="formula">
+          $$A = \lambda_1\mathbf{u}_1\mathbf{u}_1^T + \lambda_2\mathbf{u}_2\mathbf{u}_2^T + \cdots + \lambda_n\mathbf{u}_n\mathbf{u}_n^T$$
+        </div>
+        <p style="margin-top: 1rem;">其中 $\lambda_i$ 是特征值，$\mathbf{u}_i$ 是单位化的特征向量。</p>
+      </div>
+    </section>
+
+    <!-- 二次型 -->
+    <section class="knowledge-section" id="quadratic-form">
+      <div class="knowledge-card">
+        <h3>二次型</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>关于变量 $x_1, x_2, \ldots, x_n$ 的<strong>二次型</strong>是形如：</p>
+        </div>
+        <div class="formula">
+          $$f(\mathbf{x}) = \sum_{i=1}^{n}\sum_{j=1}^{n}a_{ij}x_ix_j$$
+        </div>
+        <p style="margin-top: 1rem;">的二次齐次多项式。可简写为 $f(\mathbf{x}) = \mathbf{x}^T A\mathbf{x}$，其中 $A$ 是对称矩阵。</p>
+        <div class="example">
+          <div class="example-label">例题</div>
+          <p>将二次型 $f(x_1,x_2) = x_1^2 + 4x_1x_2 + 3x_2^2$ 用矩阵表示。</p>
+          <p><strong>解：</strong>$\mathbf{x}=\begin{bmatrix} x_1 \\ x_2 \end{bmatrix}, A = \begin{bmatrix} 1 & 2 \\ 2 & 3 \end{bmatrix}$，$f(\mathbf{x}) = \mathbf{x}^T A\mathbf{x}$</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 二次型矩阵 -->
+    <section class="knowledge-section" id="quadratic-form-matrix">
+      <div class="knowledge-card">
+        <h3>二次型矩阵</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>表示二次型 $f(\mathbf{x}) = \mathbf{x}^T A\mathbf{x}$ 的对称矩阵 $A$ 称为该二次型的<strong>矩阵</strong>。</p>
+        </div>
+        <div class="note">
+          <div class="note-label">对应规则</div>
+          <p>对于 $x_i^2$ 的系数 $a_{ii}$ 直接为对角线元素。<br>
+          对于 $x_ix_j$（$i \neq j$）的系数 $a_{ij}$，分成两半：$\frac{a_{ij}}{2}$ 放在第 $(i,j)$ 和 $(j,i)$ 位置。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 二次型的标准型 -->
+    <section class="knowledge-section" id="standard-form">
+      <div class="knowledge-card">
+        <h3>二次型的标准型</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>形如 $f = \lambda_1y_1^2 + \lambda_2y_2^2 + \cdots + \lambda_ny_n^2$ 的二次型称为<strong>标准型</strong>。</p>
+        </div>
+        <div class="note">
+          <div class="note-label">化为标准型的方法</div>
+          <p>① 使用正交变换 $\mathbf{x} = P\mathbf{y}$，其中 $P$ 是由二次型矩阵的特征向量组成的正交矩阵<br>
+          ② 使用配方法<br>
+          ③ 使用合同变换法（对二次型矩阵进行一系列的初等行变换和相应的列变换）</p>
+        </div>
+        <div class="example">
+          <div class="example-label">例题</div>
+          <p>用配方法化简二次型 $f(x_1, x_2, x_3) = x_1^2 + 4x_2^2 + 4x_3^2 + 4x_1x_2 - 8x_2x_3$ 为标准型。</p>
+          <p><strong>解：</strong></p>
+          <p>第一步：对 $x_1$ 配方。<br>
+          $f = x_1^2 + 4x_1x_2 + 4x_2^2 + 4x_3^2 - 8x_2x_3$<br>
+          $= (x_1 + 2x_2)^2 - 4x_2^2 + 4x_2^2 + 4x_3^2 - 8x_2x_3$<br>
+          $= (x_1 + 2x_2)^2 + 4x_3^2 - 8x_2x_3$</p>
+          <p><br>第二步：对 $x_2, x_3$ 配方。<br>
+          $f = (x_1 + 2x_2)^2 + 4x_3^2 - 8x_2x_3$<br>
+          $= (x_1 + 2x_2)^2 + 4(x_3^2 - 2x_2x_3)$<br>
+          $= (x_1 + 2x_2)^2 + 4[(x_3 - x_2)^2 - x_2^2]$<br>
+          $= (x_1 + 2x_2)^2 + 4(x_3 - x_2)^2 - 4x_2^2$<br>
+          $= (x_1 + 2x_2)^2 - 4x_2^2 + 4(x_3 - x_2)^2$</p>
+          <p><br>第三步：令 $y_1 = x_1 + 2x_2$，$y_2 = x_2$，$y_3 = x_3 - x_2$，</p>
+          <p>则得标准型：$f = y_1^2 - 4y_2^2 + 4y_3^2$</p>
+          <p><br><strong>说明：</strong>① 通过配方法得到的标准型中的系数并不是原二次型矩阵的特征值。<br>② 把一个二次型转化为标准型可以是不唯一的。</p>
+
+          <p><br>补充：本例中的二次型矩阵的特征值手动不容易进行求解。实际应用中可以使用一些线性代数库进行求解。例如：
+            <pre>
+                <code>
+>>> import numpy as np
+>>> A = np.array([[1,2,0],[2,4,-4],[0,-4,4]])
+>>> eigenvalues, eigenvectors = np.linalg.eig(A)
+>>> eigenvalues
+array([-1.07712638,  1.79313866,  8.28398772])
+>>> eigenvectors
+array([[-0.60322975, -0.77291405, -0.19676823],
+       [ 0.62649221, -0.30651401, -0.71662868],
+       [ 0.49358016, -0.5555655 ,  0.669123  ]])
+                </code>
+            </pre>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 主轴定理 -->
+    <section class="knowledge-section" id="principal-axis">
+      <div class="knowledge-card">
+        <h3>主轴定理</h3>
+        <div class="definition">
+          <div class="definition-label">定理</div>
+          <p>对于任何二次型 $f(\mathbf{x}) = \mathbf{x}^T A\mathbf{x}$（$A$ 为对称矩阵），存在正交变换 $\mathbf{x} = P\mathbf{y}$ 使得二次型化为标准型：</p>
+        </div>
+        <div class="formula">
+          $$f = \lambda_1y_1^2 + \lambda_2y_2^2 + \cdots + \lambda_ny_n^2$$
+        </div>
+        <p style="margin-top: 1rem;">其中 $\lambda_i$ 是 $A$ 的特征值，$P$ 的列是单位化的特征向量。</p>
+        <div class="example">
+          <div class="example-label">例题</div>
+          <p>用正交变换法化简二次型 $f(x_1, x_2, x_3) = x_1^2 + 4x_2^2 + 4x_3^2 - 4x_1x_2 + 4x_1x_3 - 8x_2x_3$ 为标准型。</p>
+          <p><strong>解：</strong></p>
+          <p>第一步：写出二次型矩阵。<br>
+          $A = \begin{bmatrix} 1 & -2 & 2 \\ -2 & 4 & -4 \\ 2 & -4 & 4 \end{bmatrix}$</p>
+          <p><br>第二步：求矩阵 $A$ 的特征值。<br>
+          $\det(A - \lambda I) = \det\begin{bmatrix} 1-\lambda & -2 & 2 \\ -2 & 4-\lambda & -4 \\ 2 & -4 & 4-\lambda \end{bmatrix} = \lambda^2(\lambda-9) = 0$<br>
+          计算得特征值为：$\lambda_1 = 0, \lambda_2 = 0, \lambda_3 = 9$</p>
+          <p><br>第三步：求特征向量并标准化。<br>
+          对 $\lambda_{1,2} = 0$：由 $(A-0I)\mathbf{x}=0$ 的解集可得特征向量 $\mathbf{u}_1 = \begin{bmatrix} 2 \\ 1 \\ 0 \end{bmatrix}, \mathbf{u}_2 = \begin{bmatrix} -2 \\ 0 \\ 1 \end{bmatrix}$，<br>
+          对其正交化得 $\mathbf{v}_1 = \mathbf{u}_1 = \begin{bmatrix} 2 \\ 1 \\ 0 \end{bmatrix}, \mathbf{v}_2 = \mathbf{u}_2 - \frac{\mathbf{u}_2 \cdot \mathbf{v}_1}{\mathbf{v}_1 \cdot \mathbf{v}_1}\mathbf{v}_1 = \begin{bmatrix} -2/5 \\ 4/5 \\ 1 \end{bmatrix}$<br>
+          对其单位化得 $\mathbf{\eta}_1 = \begin{bmatrix} 2/\sqrt{5} \\ 1/\sqrt{5} \\ 0 \end{bmatrix}, \mathbf{\eta}_2 = \begin{bmatrix} -2/3\sqrt{5} \\ 4/3\sqrt{5} \\ 5/\sqrt{5} \end{bmatrix}$，<br>
+          对 $\lambda_3 = 9$：由 $(A-9I)\mathbf{x}=0$ 的解集可得特征向量 $\mathbf{u}_3 = \begin{bmatrix} 1 \\ -2 \\ 2 \end{bmatrix}$，<br>
+          对其单位化得 $\mathbf{\eta}_3 = \begin{bmatrix} 1/3 \\ -2/3 \\ 2/3 \end{bmatrix}$<br>
+          <p><br>第四步：构造正交矩阵 $P$。<br>
+          $P = \begin{bmatrix} \mathbf{\eta}_1 & \mathbf{\eta}_2 & \mathbf{\eta}_3 \end{bmatrix} = \begin{bmatrix} 2/\sqrt{5} & -2/3\sqrt{5} & 1/3 \\ 1/\sqrt{5} & 4/3\sqrt{5} & -2/3 \\ 0 & 5/3\sqrt{5} & 2/3 \end{bmatrix}$</p>
+          <p><br>第五步：进行正交变换 $\mathbf{x} = P\mathbf{y}$，化二次型为标准型。<br>
+          $f = \lambda_1y_1^2 + \lambda_2y_2^2 + \lambda_3y_3^2 = 9y_3^2$</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 惯性指数 -->
+    <section class="knowledge-section" id="inertia-index">
+      <div class="knowledge-card">
+        <h3>惯性指数</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>对于二次型 $f(\mathbf{x}) = \mathbf{x}^T A\mathbf{x}$ 的标准型 $f = \lambda_1y_1^2 + \lambda_2y_2^2 + \cdots + \lambda_ny_n^2$，定义：<br>
+          • <strong>正惯性指数</strong> $p$：标准型中正特征值的个数<br>
+          • <strong>负惯性指数</strong> $q$：标准型中负特征值的个数<br>
+          • <strong>符号差</strong>：$p - q$</p>
+        </div>
+        <div class="note">
+          <div class="note-label">性质</div>
+          <p>① 惯性指数与选择的正交变换无关，是二次型的本质性质<br>
+          ② $p + q \leq n$（$n$ 是矩阵的阶数）<br>
+          ③ $p + q = n$ 当且仅当矩阵 $A$ 是满秩的<br>
+          ④ 若两个二次型有相同的正惯性指数和负惯性指数，则它们相等</p>
+        </div>
+        <div class="example">
+          <div class="example-label">例题</div>
+          <p>二次型 $f = y_1^2 + 2y_2^2 - 3y_3^2 + 4y_4^2$ 的惯性指数为多少？</p>
+          <p><strong>解：</strong>标准型中有 3 个正特征值（$1, 2, 4$）和 1 个负特征值（$-3$）。<br>
+          正惯性指数 $p = 3$，负惯性指数 $q = 1$，符号差 $p - q = 3 - 1 = 2$。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 二次型的分类 -->
+    <section class="knowledge-section" id="quadratic-form-classification">
+      <div class="knowledge-card">
+        <h3>二次型的分类</h3>
+        <div class="definition">
+          <div class="definition-label">分类方法</div>
+          <p>根据标准型中的符号分类：<br>
+          • <strong>正定</strong>：所有系数 $\lambda_i > 0$<br>
+          • <strong>负定</strong>：所有系数 $\lambda_i < 0$<br>
+          • <strong>半正定</strong>：所有系数 $\lambda_i \geq 0$<br>
+          • <strong>半负定</strong>：所有系数 $\lambda_i \leq 0$<br>
+          • <strong>不定</strong>：系数既有正也有负</p>
+        </div>
+        <div class="note">
+          <div class="note-label">判断准则</div>
+          <p>等同于判断矩阵 $A$ 的特征值的符号。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 正定矩阵 -->
+    <section class="knowledge-section" id="positive-definite">
+      <div class="knowledge-card">
+        <h3>正定矩阵</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>对称矩阵 $A$ 是<strong>正定矩阵</strong>，如果对所有非零向量 $\mathbf{x}$，都有 $\mathbf{x}^T A\mathbf{x} > 0$。</p>
+        </div>
+        <div class="note">
+          <div class="note-label">判断准则</div>
+          <p>① 所有特征值都为正<br>
+          ② 所有主子式都为正<br>
+          ③ 存在可逆矩阵 $B$ 使得 $A = B^T B$</p>
+        </div>
+        <div class="example">
+          <div class="example-label">例题</div>
+          <p>判断 $A = \begin{bmatrix} 2 & 1 \\ 1 & 2 \end{bmatrix}$ 是否正定。</p>
+          <p><strong>解：</strong>特征方程 $\det(A - \lambda I) = (2-\lambda)^2 - 1 = 0$，得 $\lambda = 1, 3$。<br>
+          因为两个特征值都为正，所以 $A$ 正定。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 奇异值分解 -->
+    <section class="knowledge-section" id="svd">
+      <div class="knowledge-card">
+        <h3>奇异值分解</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>对于任何 $m \times n$ 矩阵 $A$，存在 $m \times m$ 正交矩阵 $U$、$n \times n$ 正交矩阵 $V$ 和 $m \times n$ 对角矩阵 $\Sigma$ 使得：</p>
+        </div>
+        <div class="formula">
+          $$A = U\Sigma V^T$$
+        </div>
+        <p style="margin-top: 1rem;">其中 $\Sigma$ 的对角线元素 $\sigma_1 \geq \sigma_2 \geq \cdots \geq 0$ 称为 $A$ 的<strong>奇异值</strong>。</p>
+        <div class="note">
+          <div class="note-label">计算方法</div>
+          <p>• $A^TA$ 的特征值是 $\sigma_1^2, \sigma_2^2, \ldots$，即奇异值是 $A^TA$ 的特征值的开方<br>
+          • $V$ 的列是 $A^TA$ 的单位化特征向量<br>
+          • $U$ 的列是 $AA^T$ 的单位化特征向量</p>
+        </div>
+        <div class="note">
+          <div class="note-label">应用</div>
+          <p>用于数据压缩、图像处理、推荐系统等。</p>
+        </div>
+        <div class="example">
+          <div class="example-label">例题</div>
+          <p>求矩阵 $A = \begin{bmatrix} 1 & 1 \\ 1 & 1 \\ 0 & 0 \end{bmatrix}$ 的奇异值分解。</p>
+          <p><strong>解：</strong></p>
+          <p>第一步：计算 $A^T A = \begin{bmatrix} 1 & 1 & 0 \\ 1 & 1 & 0 \end{bmatrix}\begin{bmatrix} 1 & 1 \\ 1 & 1 \\ 0 & 0 \end{bmatrix} = \begin{bmatrix} 2 & 2 \\ 2 & 2 \end{bmatrix}$</p>
+          <p><br>第二步：求 $A^T A$ 的特征值和特征向量。<br>
+          特征方程：$\det\begin{bmatrix} 2-\lambda & 2 \\ 2 & 2-\lambda \end{bmatrix} = (2-\lambda)^2 - 4 = 0$<br>
+          得 $\lambda_1 = 4$（重数为 2）, $\lambda_2 = 0$</p>
+          <p><br>第三步：计算奇异值。<br>
+          $\sigma_1 = \sqrt{4} = 2, \sigma_2 = \sqrt{0} = 0$</p>
+          <p><br>第四步：求标准化特征向量作为 $V$ 的列。<br>
+          对 $\lambda_1 = 4$：特征向量 $\begin{bmatrix} 1 \\ 1 \end{bmatrix}$，标准化得 $\mathbf{v}_1 = \begin{bmatrix} 1/\sqrt{2} \\ 1/\sqrt{2} \end{bmatrix}$<br>
+          对 $\lambda_2 = 0$：特征向量 $\begin{bmatrix} 1 \\ -1 \end{bmatrix}$，标准化得 $\mathbf{v}_2 = \begin{bmatrix} 1/\sqrt{2} \\ -1/\sqrt{2} \end{bmatrix}$<br>
+          所以 $V = \begin{bmatrix} 1/\sqrt{2} & 1/\sqrt{2} \\ 1/\sqrt{2} & -1/\sqrt{2} \end{bmatrix}$</p>
+          <p><br>第五步：计算 $AA^T$ 的特征值和特征向量。<br>
+          $AA^T = \begin{bmatrix} 1 & 1 \\ 1 & 1 \\ 0 & 0 \end{bmatrix}\begin{bmatrix} 1 & 1 & 0 \\ 1 & 1 & 0 \end{bmatrix} = \begin{bmatrix} 2 & 2 & 0 \\ 2 & 2 & 0 \\ 0 & 0 & 0 \end{bmatrix}$<br>
+          特征值为 $\lambda_1 = 4, \lambda_2 = 0$（重数为 2）</p>
+          <p><br>第六步：求 $U$ 的列（$AA^T$ 的标准化特征向量）。<br>
+          对 $\lambda_1 = 4$：求解 $(AA^T - 4I)\mathbf{x} = \mathbf{0}$，得特征向量 $\begin{bmatrix} 1 \\ 1 \\ 0 \end{bmatrix}$，标准化得 $\mathbf{u}_1 = \begin{bmatrix} 1/\sqrt{2} \\ 1/\sqrt{2} \\ 0 \end{bmatrix}$<br>
+          对 $\lambda_2 = 0$（选择两个正交的特征向量）：<br>
+          $\mathbf{u}_2 = \begin{bmatrix} -1/\sqrt{2} \\ 1/\sqrt{2} \\ 0 \end{bmatrix}$（与 $\mathbf{u}_1$ 正交）<br>
+          $\mathbf{u}_3 = \begin{bmatrix} 0 \\ 0 \\ 1 \end{bmatrix}$（与前两者正交）<br>
+          所以 $U = \begin{bmatrix} 1/\sqrt{2} & -1/\sqrt{2} & 0 \\ 1/\sqrt{2} & 1/\sqrt{2} & 0 \\ 0 & 0 & 1 \end{bmatrix}$</p>
+          <p><br>第七步：$\Sigma$ 是 $3 \times 2$ 的矩阵：$\Sigma = \begin{bmatrix} 2 & 0 \\ 0 & 0 \\ 0 & 0 \end{bmatrix}$</p>
+          <p><br>因此，$A = U\Sigma V^T$，其中 $U$ 是 $3 \times 3$ 正交矩阵，$\Sigma$ 是 $3 \times 2$ 对角矩阵，$V^T$ 是 $2 \times 2$ 正交矩阵。奇异值为 $\sigma_1 = 2, \sigma_2 = 0$。</p>
+
+          <p><br>补充：本题也可以使用 python 进行求解。
+          <pre>
+            <code>
+>>> import numpy as np
+>>> A = np.array([[1,1],[1,1],[0,0]])
+>>> A
+array([[1, 1],
+       [1, 1],
+       [0, 0]])
+>>> U, S, VT = np.linalg.svd(A)
+>>> U
+array([[-0.70710678, -0.70710678,  0.        ],
+       [-0.70710678,  0.70710678,  0.        ],
+       [ 0.        ,  0.        ,  1.        ]])
+>>> VT.T
+array([[-0.70710678, -0.70710678],
+       [-0.70710678,  0.70710678]])
+>>> S
+array([2., 0.])
+>>> Sigma = np.zeros(A.shape)
+>>> np.fill_diagonal(Sigma, S)
+>>> Sigma
+array([[2., 0.],
+       [0., 0.],
+       [0., 0.]])
+>>> np.dot(U, np.dot(Sigma, VT))
+array([[1., 1.],
+       [1., 1.],
+       [0., 0.]])
+            </code>
+          </pre>
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    // 移动端菜单切换
+    const menuToggle = document.getElementById('menu-toggle');
+    const sidebar = document.getElementById('sidebar');
+
+    menuToggle.addEventListener('click', () => {
+      sidebar.classList.toggle('open');
+    });
+
+    // 点击侧边栏链接后关闭菜单（移动端）
+    const sidebarLinks = document.querySelectorAll('.sidebar-nav a');
+    sidebarLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth <= 768) {
+          sidebar.classList.remove('open');
+        }
+      });
+    });
+
+    // 滚动时高亮当前目录项
+    const sections = document.querySelectorAll('.knowledge-section');
+    const navLinks = document.querySelectorAll('.sidebar-nav a');
+
+    function updateActiveLink() {
+      let currentSection = '';
+      
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop - 100;
+        if (window.scrollY >= sectionTop) {
+          currentSection = section.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${currentSection}`) {
+          link.classList.add('active');
+        }
+      });
+    }
+
+    window.addEventListener('scroll', updateActiveLink);
+    window.addEventListener('load', updateActiveLink);
+  </script>
+</body>
+</html>

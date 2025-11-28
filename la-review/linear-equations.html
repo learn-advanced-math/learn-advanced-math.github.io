@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect x='5' y='5' width='28' height='28' fill='%232563eb'/><rect x='36' y='5' width='28' height='28' fill='%233b82f6'/><rect x='67' y='5' width='28' height='28' fill='%2360a5fa'/><rect x='5' y='36' width='28' height='28' fill='%236366f1'/><rect x='36' y='36' width='28' height='28' fill='%234f46e5'/><rect x='67' y='36' width='28' height='28' fill='%237c3aed'/><rect x='5' y='67' width='28' height='28' fill='%231e40af'/><rect x='36' y='67' width='28' height='28' fill='%232563eb'/><rect x='67' y='67' width='28' height='28' fill='%239333ea'/></svg>">
+  <title>线性方程组 - 复习总结</title>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+  <style>
+    :root {
+      --bg: #f5f7fa;
+      --card-bg: #ffffff;
+      --border: #d5d9e2;
+      --accent: #2563eb;
+      --accent-hover: #1d4ed8;
+      --accent-light: rgba(37, 99, 235, 0.1);
+      --text: #1f2937;
+      --muted: #4b5563;
+      --sidebar-width: 300px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* 顶部导航 */
+    .top-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background: var(--card-bg);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 2rem;
+      z-index: 1000;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .top-nav h1 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .top-nav .nav-links {
+      margin-left: auto;
+      display: flex;
+      gap: 1rem;
+    }
+
+    .top-nav .back-link {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+
+    .top-nav .back-link:hover {
+      color: var(--accent);
+    }
+
+    /* 侧边栏 */
+    .sidebar {
+      position: fixed;
+      top: 60px;
+      left: 0;
+      width: var(--sidebar-width);
+      height: calc(100vh - 60px);
+      background: var(--card-bg);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      padding: 1.5rem 0;
+      z-index: 100;
+    }
+
+    .sidebar-title {
+      padding: 0 1.5rem 1rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .sidebar-nav {
+      list-style: none;
+    }
+
+    .sidebar-nav li a {
+      display: block;
+      padding: 0.6rem 1.5rem;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.95rem;
+      border-left: 3px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .sidebar-nav li a:hover {
+      background: var(--accent-light);
+      color: var(--accent);
+      border-left-color: var(--accent);
+    }
+
+    .sidebar-nav li a.active {
+      background: var(--accent-light);
+      color: var(--accent);
+      border-left-color: var(--accent);
+      font-weight: 600;
+    }
+
+    /* 主内容区 */
+    .main-content {
+      margin-left: var(--sidebar-width);
+      padding: 80px 2rem 3rem;
+      max-width: 900px;
+      margin-right: auto;
+      margin-left: calc(var(--sidebar-width) + (100% - var(--sidebar-width) - 900px) / 2);
+    }
+
+    @media (max-width: 1300px) {
+      .main-content {
+        margin-left: var(--sidebar-width);
+        margin-right: 2rem;
+      }
+    }
+
+    .page-header {
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .page-header h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+
+    .page-header p {
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    /* 知识点区块 */
+    .knowledge-section {
+      margin-bottom: 2rem;
+      scroll-margin-top: 80px;
+    }
+
+    .knowledge-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+
+    .knowledge-card:hover {
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .knowledge-card h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .knowledge-card h3::before {
+      content: "📌";
+      font-size: 1rem;
+    }
+
+    .definition {
+      background: var(--accent-light);
+      border-left: 4px solid var(--accent);
+      padding: 1rem;
+      border-radius: 0 0.5rem 0.5rem 0;
+      margin-bottom: 1rem;
+    }
+
+    .definition-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+
+    .definition p {
+      color: var(--text);
+      font-size: 1rem;
+      line-height: 1.75;
+    }
+
+    .formula {
+      background: #fefce8;
+      border: 1px solid #fde047;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin: 1rem 0;
+      text-align: center;
+      overflow-x: auto;
+    }
+
+    .example {
+      background: #f0fdf4;
+      border: 1px solid #86efac;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .example-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #16a34a;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+
+    .note {
+      background: #fff7ed;
+      border: 1px solid #fdba74;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .note-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #ea580c;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+
+    /* 移动端适配 */
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--text);
+      margin-right: 1rem;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .main-content {
+        margin-left: 0;
+        padding: 80px 1rem 2rem;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
+      .page-header h2 {
+        font-size: 1.5rem;
+      }
+    }
+
+    /* 滚动条美化 */
+    .sidebar::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .sidebar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .sidebar::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 3px;
+    }
+
+    .sidebar::-webkit-scrollbar-thumb:hover {
+      background: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <!-- 顶部导航 -->
+  <nav class="top-nav">
+    <button class="menu-toggle" id="menu-toggle" aria-label="打开目录">☰</button>
+    <h1>线性代数总复习</h1>
+    <div class="nav-links">
+      <a href="../index.html" class="back-link">↑ 首页</a>
+      <a href="../la-quizzes/index.html" class="back-link">↓ 习题集</a>
+      <a href="./determinants.html" class="back-link">行列式 →</a>
+    </div>
+  </nav>
+
+  <!-- 侧边栏目录 -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-title">目录导航</div>
+    <ul class="sidebar-nav" id="sidebar-nav">
+      <li><a href="#homogeneous">齐次方程组</a></li>
+      <li><a href="#non-homogeneous">非齐次方程组</a></li>
+      <li><a href="#trivial-solution">平凡解</a></li>
+      <li><a href="#consistent">相容</a></li>
+      <li><a href="#inconsistent">不相容</a></li>
+      <li><a href="#coefficient-matrix">系数矩阵</a></li>
+      <li><a href="#augmented-matrix">增广矩阵</a></li>
+      <li><a href="#solution-set">方程组的解集</a></li>
+      <li><a href="#row-operations">初等行变换</a></li>
+      <li><a href="#row-equivalent">行等价矩阵</a></li>
+      <li><a href="#echelon-form">阶梯形</a></li>
+      <li><a href="#reduced-echelon">简化阶梯形</a></li>
+      <li><a href="#pivot">主元</a></li>
+      <li><a href="#pivot-column">主元列</a></li>
+      <li><a href="#free-variable">自由变量</a></li>
+      <li><a href="#basic-variable">基本变量</a></li>
+      <li><a href="#vector-equation">向量方程</a></li>
+      <li><a href="#matrix-equation">矩阵方程</a></li>
+    </ul>
+  </aside>
+
+  <!-- 主内容区 -->
+  <main class="main-content">
+    <header class="page-header">
+      <h2>线性方程组</h2>
+      <p>本章涵盖线性方程组的基本概念、矩阵表示、初等行变换以及解的结构等核心知识点。</p>
+    </header>
+
+    <!-- 齐次方程组 -->
+    <section class="knowledge-section" id="homogeneous">
+      <div class="knowledge-card">
+        <h3>齐次方程组</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>如果线性方程组的常数项全为零，即方程组形如 $A\mathbf{x} = \mathbf{0}$，则称该方程组为<strong>齐次线性方程组</strong>。</p>
+        </div>
+        <div class="formula">
+          $$\begin{cases} a_{11}x_1 + a_{12}x_2 + \cdots + a_{1n}x_n = 0 \\ a_{21}x_1 + a_{22}x_2 + \cdots + a_{2n}x_n = 0 \\ \vdots \\ a_{m1}x_1 + a_{m2}x_2 + \cdots + a_{mn}x_n = 0 \end{cases}$$
+        </div>
+        <div class="note">
+          <div class="note-label">注意</div>
+          <p>齐次方程组一定有解（至少有零解 $\mathbf{x} = \mathbf{0}$），因此齐次方程组总是相容的。</p>
+        </div>
+        <div class="example">
+          <div class="example-label">例题</div>
+          <p>求齐次方程组的通解：
+          $$\begin{cases} x_1 + 2x_2 - x_3 = 0 \\ 2x_1 + 4x_2 - 2x_3 = 0 \end{cases}$$</p>
+          <p><strong>解：</strong>写出增广矩阵并化简：
+          $$\left[ \begin{array}{ccc|c} 1 & 2 & -1 & 0 \\ 2 & 4 & -2 & 0 \end{array}\right] \xrightarrow{R_2-2R_1} \left[ \begin{array}{ccc|c} 1 & 2 & -1 & 0 \\ 0 & 0 & 0 & 0 \end{array}\right]$$
+          $x_1$ 是基本变量，$x_2, x_3$ 是自由变量。令 $x_2 = s, x_3 = t$，则 $x_1 = -2s + t$。<br>
+          通解为：$\mathbf{x} = s\begin{bmatrix} -2 \\ 1 \\ 0 \end{bmatrix} + t\begin{bmatrix} 1 \\ 0 \\ 1 \end{bmatrix}$，其中 $s, t \in \mathbb{R}$。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 非齐次方程组 -->
+    <section class="knowledge-section" id="non-homogeneous">
+      <div class="knowledge-card">
+        <h3>非齐次方程组</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>如果线性方程组的常数项不全为零，即方程组形如 $A\mathbf{x} = \mathbf{b}$（其中 $\mathbf{b} \neq \mathbf{0}$），则称该方程组为<strong>非齐次线性方程组</strong>。</p>
+        </div>
+        <div class="formula">
+          $$\begin{cases} a_{11}x_1 + a_{12}x_2 + \cdots + a_{1n}x_n = b_1 \\ a_{21}x_1 + a_{22}x_2 + \cdots + a_{2n}x_n = b_2 \\ \vdots \\ a_{m1}x_1 + a_{m2}x_2 + \cdots + a_{mn}x_n = b_m \end{cases}$$
+        </div>
+        <div class="note">
+          <div class="note-label">注意</div>
+          <p>非齐次方程组的解集 = 对应齐次方程组的通解 + 非齐次方程组的一个特解。</p>
+        </div>
+        <div class="example">
+          <div class="example-label">例题</div>
+          <p>求非齐次方程组的通解：
+          $$\begin{cases} x_1 + x_2 + x_3 = 6 \\ x_1 - x_2 + 2x_3 = 5 \end{cases}$$</p>
+          <p><strong>解：</strong>增广矩阵化简：
+          $$\left[ \begin{array}{ccc|c} 1 & 1 & 1 & 6 \\ 1 & -1 & 2 & 5 \end{array}\right] \xrightarrow{R_2-R_1} \left[ \begin{array}{ccc|c} 1 & 1 & 1 & 6 \\ 0 & -2 & 1 & -1 \end{array}\right]$$
+          继续化简得：$x_1, x_2$ 为基本变量，$x_3$ 为自由变量。令 $x_3 = t$，则：
+          $$x_2 = \frac{1+t}{2}, \quad x_1 = 6 - x_2 - t = \frac{11 - 3t}{2}$$
+          通解为：$\mathbf{x} = \begin{bmatrix} 11/2 \\ 1/2 \\ 0 \end{bmatrix} + t\begin{bmatrix} -3/2 \\ 1/2 \\ 1 \end{bmatrix}$，其中 $t \in \mathbb{R}$。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 平凡解 -->
+    <section class="knowledge-section" id="trivial-solution">
+      <div class="knowledge-card">
+        <h3>平凡解</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>对于齐次方程组 $A\mathbf{x} = \mathbf{0}$，零向量 $\mathbf{x} = \mathbf{0}$ 总是它的一个解，称为<strong>平凡解</strong>（trivial solution）。</p>
+        </div>
+        <div class="note">
+          <div class="note-label">注意</div>
+          <p>如果齐次方程组除了零解之外还有其他解，则称这些解为<strong>非平凡解</strong>。齐次方程组有非平凡解的充要条件是系数矩阵的秩小于未知数的个数。</p>
+        </div>
+        <div class="example">
+          <div class="example-label">例题</div>
+          <p>判断齐次方程组 $A\mathbf{x} = \mathbf{0}$ 是否有非平凡解，其中：
+          $$A = \begin{bmatrix} 1 & 2 & 3 \\ 4 & 5 & 6 \\ 7 & 8 & 9 \end{bmatrix}$$</p>
+          <p><strong>解：</strong>将 $A$ 化为阶梯形：
+          $$A \sim \begin{bmatrix} 1 & 2 & 3 \\ 0 & -3 & -6 \\ 0 & 0 & 0 \end{bmatrix}$$
+          $\text{rank}(A) = 2 < 3$（未知数个数），所以方程组有<strong>非平凡解</strong>。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 相容 -->
+    <section class="knowledge-section" id="consistent">
+      <div class="knowledge-card">
+        <h3>相容</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>如果线性方程组至少有一个解，则称该方程组是<strong>相容的</strong>（consistent）。</p>
+        </div>
+        <div class="example">
+          <div class="example-label">判断条件</div>
+          <p>方程组 $A\mathbf{x} = \mathbf{b}$ 相容 $\Leftrightarrow$ $\text{rank}(A) = \text{rank}([A|\mathbf{b}])$，即系数矩阵的秩等于增广矩阵的秩。</p>
+        </div>
+        <div class="example">
+          <div class="example-label">例题</div>
+          <p>判断方程组是否相容：
+          $$\begin{cases} x + y = 3 \\ 2x + 2y = 6 \end{cases}$$</p>
+          <p><strong>解：</strong>增广矩阵：
+          $$[A|\mathbf{b}] = \left[ \begin{array}{cc|c} 1 & 1 & 3 \\ 2 & 2 & 6 \end{array}\right] \sim \left[ \begin{array}{cc|c} 1 & 1 & 3 \\ 0 & 0 & 0 \end{array}\right]$$
+          $\text{rank}(A) = \text{rank}([A|\mathbf{b}]) = 1$，方程组<strong>相容</strong>，且有无穷多解。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 不相容 -->
+    <section class="knowledge-section" id="inconsistent">
+      <div class="knowledge-card">
+        <h3>不相容</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>如果线性方程组无解，则称该方程组是<strong>不相容的</strong>（inconsistent）。</p>
+        </div>
+        <div class="example">
+          <div class="example-label">判断条件</div>
+          <p>方程组 $A\mathbf{x} = \mathbf{b}$ 不相容 $\Leftrightarrow$ $\text{rank}(A) < \text{rank}([A|\mathbf{b}])$，即增广矩阵的秩大于系数矩阵的秩。</p>
+        </div>
+        <div class="example">
+          <div class="example-label">例题</div>
+          <p>判断方程组是否相容：
+          $$\begin{cases} x + y = 1 \\ x + y = 2 \end{cases}$$</p>
+          <p><strong>解：</strong>增广矩阵：
+          $$[A|\mathbf{b}] = \left[ \begin{array}{cc|c} 1 & 1 & 1 \\ 1 & 1 & 2 \end{array}\right] \sim \left[ \begin{array}{cc|c} 1 & 1 & 1 \\ 0 & 0 & 1 \end{array}\right]$$
+          $\text{rank}(A) = 1$，$\text{rank}([A|\mathbf{b}]) = 2$，方程组<strong>不相容</strong>（无解）。<br>
+          几何意义：两条平行直线没有交点。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 系数矩阵 -->
+    <section class="knowledge-section" id="coefficient-matrix">
+      <div class="knowledge-card">
+        <h3>系数矩阵</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>线性方程组中所有未知数的系数按原来的排列顺序构成的矩阵，称为该方程组的<strong>系数矩阵</strong>。</p>
+        </div>
+        <div class="formula">
+          $$A = \begin{bmatrix} a_{11} & a_{12} & \cdots & a_{1n} \\ a_{21} & a_{22} & \cdots & a_{2n} \\ \vdots & \vdots & \ddots & \vdots \\ a_{m1} & a_{m2} & \cdots & a_{mn} \end{bmatrix}$$
+        </div>
+      </div>
+    </section>
+
+    <!-- 增广矩阵 -->
+    <section class="knowledge-section" id="augmented-matrix">
+      <div class="knowledge-card">
+        <h3>增广矩阵</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>将线性方程组的系数矩阵 $A$ 与常数项列向量 $\mathbf{b}$ 合并而成的矩阵，称为<strong>增广矩阵</strong>，记作 $[A|\mathbf{b}]$。</p>
+        </div>
+        <div class="formula">
+          $$[A|\mathbf{b}] = \left[ \begin{array}{cccc|c} a_{11} & a_{12} & \cdots & a_{1n} & b_1 \\ a_{21} & a_{22} & \cdots & a_{2n} & b_2 \\ \vdots & \vdots & \ddots & \vdots & \vdots \\ a_{m1} & a_{m2} & \cdots & a_{mn} & b_m \end{array}\right]$$
+        </div>
+      </div>
+    </section>
+
+    <!-- 方程组的解集 -->
+    <section class="knowledge-section" id="solution-set">
+      <div class="knowledge-card">
+        <h3>方程组的解集</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>线性方程组所有解构成的集合称为该方程组的<strong>解集</strong>。</p>
+        </div>
+        <div class="note">
+          <div class="note-label">解的情况</div>
+          <p>线性方程组的解集有三种可能：<br>
+          ① <strong>无解</strong>（不相容）<br>
+          ② <strong>唯一解</strong>（相容，且 $\text{rank}(A) = n$，$n$ 为未知数个数）<br>
+          ③ <strong>无穷多解</strong>（相容，且 $\text{rank}(A) < n$）</p>
+        </div>
+        <div class="example">
+          <div class="example-label">例题：三种情况</div>
+          <p><strong>唯一解：</strong>$\begin{cases} x + y = 3 \\ x - y = 1 \end{cases}$ → 解为 $x=2, y=1$<br><br>
+          <strong>无穷多解：</strong>$\begin{cases} x + y = 3 \\ 2x + 2y = 6 \end{cases}$ → 解为 $x = 3-t, y = t$<br><br>
+          <strong>无解：</strong>$\begin{cases} x + y = 3 \\ x + y = 5 \end{cases}$ → 矛盾，无解</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 初等行变换 -->
+    <section class="knowledge-section" id="row-operations">
+      <div class="knowledge-card">
+        <h3>初等行变换</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>对矩阵的行施行的以下三种变换称为<strong>初等行变换</strong>：</p>
+        </div>
+        <div class="example">
+          <div class="example-label">三种初等行变换</div>
+          <p>① <strong>行交换</strong>：交换矩阵的第 $i$ 行与第 $j$ 行，记作 $R_i \leftrightarrow R_j$<br>
+          ② <strong>数乘</strong>：用非零常数 $k$ 乘以第 $i$ 行，记作 $kR_i$<br>
+          ③ <strong>倍加</strong>：将第 $j$ 行的 $k$ 倍加到第 $i$ 行，记作 $R_i + kR_j$</p>
+        </div>
+        <div class="note">
+          <div class="note-label">重要性质</div>
+          <p>初等行变换不改变线性方程组的解集，即变换前后的方程组是同解的。</p>
+        </div>
+        <div class="example">
+          <div class="example-label">例题</div>
+          <p>用初等行变换求解方程组：
+          $$\begin{cases} 2x + 4y = 10 \\ 3x + y = 7 \end{cases}$$</p>
+          <p><strong>解：</strong>
+          $$\left[ \begin{array}{cc|c} 2 & 4 & 10 \\ 3 & 1 & 7 \end{array}\right] \xrightarrow{\frac{1}{2}R_1} \left[ \begin{array}{cc|c} 1 & 2 & 5 \\ 3 & 1 & 7 \end{array}\right] \xrightarrow{R_2-3R_1} \left[ \begin{array}{cc|c} 1 & 2 & 5 \\ 0 & -5 & -8 \end{array}\right]$$
+          $$\xrightarrow{-\frac{1}{5}R_2} \left[ \begin{array}{cc|c} 1 & 2 & 5 \\ 0 & 1 & 8/5 \end{array}\right] \xrightarrow{R_1-2R_2} \left[ \begin{array}{cc|c} 1 & 0 & 9/5 \\ 0 & 1 & 8/5 \end{array}\right]$$
+          解为：$x = \frac{9}{5}, y = \frac{8}{5}$。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 行等价矩阵 -->
+    <section class="knowledge-section" id="row-equivalent">
+      <div class="knowledge-card">
+        <h3>行等价矩阵</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>如果矩阵 $A$ 经过有限次初等行变换可以变成矩阵 $B$，则称 $A$ 与 $B$ <strong>行等价</strong>，记作 $A \sim B$。</p>
+        </div>
+        <div class="note">
+          <div class="note-label">性质</div>
+          <p>行等价关系满足：① 自反性：$A \sim A$；② 对称性：若 $A \sim B$，则 $B \sim A$；③ 传递性：若 $A \sim B$，$B \sim C$，则 $A \sim C$。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 阶梯形 -->
+    <section class="knowledge-section" id="echelon-form">
+      <div class="knowledge-card">
+        <h3>阶梯形</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>一个矩阵称为<strong>阶梯形矩阵</strong>（行阶梯形），如果它满足：<br>
+          ① 所有非零行都在零行的上面；<br>
+          ② 每个非零行的先导元素（最左边的非零元素）所在列的位置严格在上一行先导元素的右边。</p>
+        </div>
+        <div class="formula">
+          $$\begin{bmatrix} \boxed{2} & 3 & 1 & 5 \\ 0 & \boxed{1} & 4 & 2 \\ 0 & 0 & 0 & \boxed{3} \\ 0 & 0 & 0 & 0 \end{bmatrix}$$
+        </div>
+      </div>
+    </section>
+
+    <!-- 简化阶梯形 -->
+    <section class="knowledge-section" id="reduced-echelon">
+      <div class="knowledge-card">
+        <h3>简化阶梯形</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>一个矩阵称为<strong>简化阶梯形矩阵</strong>（行最简形），如果它满足：<br>
+          ① 是阶梯形矩阵；<br>
+          ② 每个非零行的先导元素为 1；<br>
+          ③ 先导元素所在列的其他元素全为 0。</p>
+        </div>
+        <div class="formula">
+          $$\begin{bmatrix} \boxed{1} & 0 & 2 & 0 \\ 0 & \boxed{1} & 3 & 0 \\ 0 & 0 & 0 & \boxed{1} \\ 0 & 0 & 0 & 0 \end{bmatrix}$$
+        </div>
+        <div class="note">
+          <div class="note-label">唯一性</div>
+          <p>每个矩阵的简化阶梯形是唯一的，但达到简化阶梯形的变换过程不唯一。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 主元 -->
+    <section class="knowledge-section" id="pivot">
+      <div class="knowledge-card">
+        <h3>主元</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>在阶梯形矩阵中，每个非零行的<strong>先导元素</strong>（最左边的非零元素）称为<strong>主元</strong>（pivot）。</p>
+        </div>
+        <div class="note">
+          <div class="note-label">注意</div>
+          <p>主元的个数等于矩阵的秩。在简化阶梯形中，主元都是 1。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 主元列 -->
+    <section class="knowledge-section" id="pivot-column">
+      <div class="knowledge-card">
+        <h3>主元列</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>在阶梯形矩阵中，包含主元的列称为<strong>主元列</strong>（pivot column）。</p>
+        </div>
+        <div class="example">
+          <div class="example-label">与基本变量的关系</div>
+          <p>主元列对应的未知数是<strong>基本变量</strong>，非主元列对应的未知数是<strong>自由变量</strong>。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 自由变量 -->
+    <section class="knowledge-section" id="free-variable">
+      <div class="knowledge-card">
+        <h3>自由变量</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>在线性方程组的阶梯形中，<strong>非主元列</strong>对应的未知数称为<strong>自由变量</strong>（free variable）。</p>
+        </div>
+        <div class="note">
+          <div class="note-label">作用</div>
+          <p>自由变量可以取任意值，基本变量的值由自由变量确定。自由变量的个数 = $n - r$，其中 $n$ 是未知数个数，$r$ 是系数矩阵的秩。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 基本变量 -->
+    <section class="knowledge-section" id="basic-variable">
+      <div class="knowledge-card">
+        <h3>基本变量</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>在线性方程组的阶梯形中，<strong>主元列</strong>对应的未知数称为<strong>基本变量</strong>（basic variable），也叫<strong>主变量</strong>。</p>
+        </div>
+        <div class="note">
+          <div class="note-label">说明</div>
+          <p>基本变量的值可以用自由变量来表示。基本变量的个数等于系数矩阵的秩。</p>
+        </div>
+        <div class="example">
+          <div class="example-label">例题：识别基本变量与自由变量</div>
+          <p>对于方程组的简化阶梯形：
+          $$\left[ \begin{array}{cccc|c} \boxed{1} & 3 & 0 & 2 & 5 \\ 0 & 0 & \boxed{1} & 4 & 3 \\ 0 & 0 & 0 & 0 & 0 \end{array}\right]$$</p>
+          <p><strong>分析：</strong><br>
+          • 主元位于第 1、3 列 → <strong>基本变量</strong>：$x_1, x_3$<br>
+          • 第 2、4 列无主元 → <strong>自由变量</strong>：$x_2, x_4$<br>
+          • 令 $x_2 = s, x_4 = t$，则：$x_1 = 5 - 3s - 2t$，$x_3 = 3 - 4t$<br>
+          • 通解：$\mathbf{x} = \begin{bmatrix} 5 \\ 0 \\ 3 \\ 0 \end{bmatrix} + s\begin{bmatrix} -3 \\ 1 \\ 0 \\ 0 \end{bmatrix} + t\begin{bmatrix} -2 \\ 0 \\ -4 \\ 1 \end{bmatrix}$</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 向量方程 -->
+    <section class="knowledge-section" id="vector-equation">
+      <div class="knowledge-card">
+        <h3>向量方程</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>将线性方程组写成列向量的线性组合形式，称为<strong>向量方程</strong>。</p>
+        </div>
+        <div class="formula">
+          $$x_1\mathbf{a}_1 + x_2\mathbf{a}_2 + \cdots + x_n\mathbf{a}_n = \mathbf{b}$$
+        </div>
+        <div class="example">
+          <div class="example-label">几何意义</div>
+          <p>向量方程 $x_1\mathbf{a}_1 + x_2\mathbf{a}_2 + \cdots + x_n\mathbf{a}_n = \mathbf{b}$ 有解，当且仅当 $\mathbf{b}$ 可以表示为 $\mathbf{a}_1, \mathbf{a}_2, \ldots, \mathbf{a}_n$ 的线性组合，即 $\mathbf{b} \in \text{Span}\{\mathbf{a}_1, \mathbf{a}_2, \ldots, \mathbf{a}_n\}$。</p>
+        </div>
+        <div class="example">
+          <div class="example-label">例题</div>
+          <p>判断 $\mathbf{b} = \begin{bmatrix} 7 \\ 4 \\ 5 \end{bmatrix}$ 是否可以表示为 $\mathbf{a}_1 = \begin{bmatrix} 1 \\ 2 \\ 3 \end{bmatrix}$，$\mathbf{a}_2 = \begin{bmatrix} 2 \\ 1 \\ 0 \end{bmatrix}$ 的线性组合。</p>
+          <p><strong>解：</strong>求解向量方程 $x_1\mathbf{a}_1 + x_2\mathbf{a}_2 = \mathbf{b}$：
+          $$\left[ \begin{array}{cc|c} 1 & 2 & 7 \\ 2 & 1 & 4 \\ 3 & 0 & 5 \end{array}\right] \sim \left[ \begin{array}{cc|c} 1 & 2 & 7 \\ 0 & -3 & -10 \\ 0 & -6 & -16 \end{array}\right] \sim \left[ \begin{array}{cc|c} 1 & 0 & 1/3 \\ 0 & 1 & 10/3 \\ 0 & 0 & -4 \end{array}\right]$$
+          最后一行表示 $0 = -4$，矛盾！因此 $\mathbf{b} \notin \text{Span}\{\mathbf{a}_1, \mathbf{a}_2\}$。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 矩阵方程 -->
+    <section class="knowledge-section" id="matrix-equation">
+      <div class="knowledge-card">
+        <h3>矩阵方程</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>将线性方程组写成矩阵与向量乘积的形式 $A\mathbf{x} = \mathbf{b}$，称为<strong>矩阵方程</strong>。</p>
+        </div>
+        <div class="formula">
+          $$\begin{bmatrix} a_{11} & a_{12} & \cdots & a_{1n} \\ a_{21} & a_{22} & \cdots & a_{2n} \\ \vdots & \vdots & \ddots & \vdots \\ a_{m1} & a_{m2} & \cdots & a_{mn} \end{bmatrix} \begin{bmatrix} x_1 \\ x_2 \\ \vdots \\ x_n \end{bmatrix} = \begin{bmatrix} b_1 \\ b_2 \\ \vdots \\ b_m \end{bmatrix}$$
+        </div>
+        <div class="note">
+          <div class="note-label">等价形式</div>
+          <p>线性方程组、向量方程、矩阵方程是同一问题的三种不同表示形式，它们具有相同的解集。</p>
+        </div>
+        <div class="example">
+          <div class="example-label">例题：三种表示形式的转换</div>
+          <p>将以下三种形式互相转换：</p>
+          <p><strong>线性方程组形式：</strong>
+          $$\begin{cases} x_1 + 2x_2 = 5 \\ 3x_1 + 4x_2 = 11 \end{cases}$$</p>
+          <p><strong>矩阵方程形式：</strong>
+          $$\begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} \begin{bmatrix} x_1 \\ x_2 \end{bmatrix} = \begin{bmatrix} 5 \\ 11 \end{bmatrix}$$</p>
+          <p><strong>向量方程形式：</strong>
+          $$x_1 \begin{bmatrix} 1 \\ 3 \end{bmatrix} + x_2 \begin{bmatrix} 2 \\ 4 \end{bmatrix} = \begin{bmatrix} 5 \\ 11 \end{bmatrix}$$</p>
+          <p><strong>解：</strong>三种形式等价，解为 $x_1 = 1, x_2 = 2$。</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    // 移动端菜单切换
+    const menuToggle = document.getElementById('menu-toggle');
+    const sidebar = document.getElementById('sidebar');
+
+    menuToggle.addEventListener('click', () => {
+      sidebar.classList.toggle('open');
+    });
+
+    // 点击侧边栏链接后关闭菜单（移动端）
+    const sidebarLinks = document.querySelectorAll('.sidebar-nav a');
+    sidebarLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth <= 768) {
+          sidebar.classList.remove('open');
+        }
+      });
+    });
+
+    // 滚动时高亮当前目录项
+    const sections = document.querySelectorAll('.knowledge-section');
+    const navLinks = document.querySelectorAll('.sidebar-nav a');
+
+    function updateActiveLink() {
+      let currentSection = '';
+      
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop - 100;
+        if (window.scrollY >= sectionTop) {
+          currentSection = section.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${currentSection}`) {
+          link.classList.add('active');
+        }
+      });
+    }
+
+    window.addEventListener('scroll', updateActiveLink);
+    window.addEventListener('load', updateActiveLink);
+  </script>
+</body>
+</html>

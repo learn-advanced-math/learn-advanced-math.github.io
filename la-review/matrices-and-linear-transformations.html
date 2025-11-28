@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect x='5' y='5' width='28' height='28' fill='%232563eb'/><rect x='36' y='5' width='28' height='28' fill='%233b82f6'/><rect x='67' y='5' width='28' height='28' fill='%2360a5fa'/><rect x='5' y='36' width='28' height='28' fill='%236366f1'/><rect x='36' y='36' width='28' height='28' fill='%234f46e5'/><rect x='67' y='36' width='28' height='28' fill='%237c3aed'/><rect x='5' y='67' width='28' height='28' fill='%231e40af'/><rect x='36' y='67' width='28' height='28' fill='%232563eb'/><rect x='67' y='67' width='28' height='28' fill='%239333ea'/></svg>">
+  <title>矩阵与线性变换 - 复习总结</title>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+  <style>
+    :root {
+      --bg: #f5f7fa;
+      --card-bg: #ffffff;
+      --border: #d5d9e2;
+      --accent: #2563eb;
+      --accent-hover: #1d4ed8;
+      --accent-light: rgba(37, 99, 235, 0.1);
+      --text: #1f2937;
+      --muted: #4b5563;
+      --sidebar-width: 300px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* 顶部导航 */
+    .top-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background: var(--card-bg);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 2rem;
+      z-index: 1000;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .top-nav h1 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .top-nav .nav-links {
+      margin-left: auto;
+      display: flex;
+      gap: 1rem;
+    }
+
+    .top-nav .back-link {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+
+    .top-nav .back-link:hover {
+      color: var(--accent);
+    }
+
+    /* 侧边栏 */
+    .sidebar {
+      position: fixed;
+      top: 60px;
+      left: 0;
+      width: var(--sidebar-width);
+      height: calc(100vh - 60px);
+      background: var(--card-bg);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      padding: 1.5rem 0;
+      z-index: 100;
+    }
+
+    .sidebar-title {
+      padding: 0 1.5rem 1rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .sidebar-nav {
+      list-style: none;
+    }
+
+    .sidebar-nav li a {
+      display: block;
+      padding: 0.6rem 1.5rem;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.95rem;
+      border-left: 3px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .sidebar-nav li a:hover {
+      background: var(--accent-light);
+      color: var(--accent);
+      border-left-color: var(--accent);
+    }
+
+    .sidebar-nav li a.active {
+      background: var(--accent-light);
+      color: var(--accent);
+      border-left-color: var(--accent);
+      font-weight: 600;
+    }
+
+    /* 主内容区 */
+    .main-content {
+      margin-left: var(--sidebar-width);
+      padding: 80px 2rem 3rem;
+      max-width: 900px;
+      margin-right: auto;
+      margin-left: calc(var(--sidebar-width) + (100% - var(--sidebar-width) - 900px) / 2);
+    }
+
+    @media (max-width: 1300px) {
+      .main-content {
+        margin-left: var(--sidebar-width);
+        margin-right: 2rem;
+      }
+    }
+
+    .page-header {
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .page-header h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+
+    .page-header p {
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    /* 知识点区块 */
+    .knowledge-section {
+      margin-bottom: 2rem;
+      scroll-margin-top: 80px;
+    }
+
+    .knowledge-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+
+    .knowledge-card:hover {
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .knowledge-card h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .knowledge-card h3::before {
+      content: "📌";
+      font-size: 1rem;
+    }
+
+    .definition {
+      background: var(--accent-light);
+      border-left: 4px solid var(--accent);
+      padding: 1rem;
+      border-radius: 0 0.5rem 0.5rem 0;
+      margin-bottom: 1rem;
+    }
+
+    .definition-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+
+    .definition p {
+      color: var(--text);
+      font-size: 1rem;
+      line-height: 1.75;
+    }
+
+    .formula {
+      background: #fefce8;
+      border: 1px solid #fde047;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin: 1rem 0;
+      text-align: center;
+      overflow-x: auto;
+    }
+
+    .example {
+      background: #f0fdf4;
+      border: 1px solid #86efac;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .example-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #16a34a;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+
+    .note {
+      background: #fff7ed;
+      border: 1px solid #fdba74;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .note-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #ea580c;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+
+    /* 移动端适配 */
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--text);
+      margin-right: 1rem;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .main-content {
+        margin-left: 0;
+        padding: 80px 1rem 2rem;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
+      .page-header h2 {
+        font-size: 1.5rem;
+      }
+    }
+
+    /* 滚动条美化 */
+    .sidebar::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .sidebar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .sidebar::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 3px;
+    }
+
+    .sidebar::-webkit-scrollbar-thumb:hover {
+      background: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <!-- 顶部导航 -->
+  <nav class="top-nav">
+    <button class="menu-toggle" id="menu-toggle" aria-label="打开目录">☰</button>
+    <h1>线性代数总复习</h1>
+    <div class="nav-links">
+      <a href="./vectors-and-vector-spaces.html" class="back-link">← 向量与向量空间</a>
+      <a href="../index.html" class="back-link">↑ 首页</a>
+      <a href="../la-quizzes/index.html" class="back-link">↓ 习题集</a>
+      <a href="./matrix-theory.html" class="back-link">矩阵理论 →</a>
+    </div>
+  </nav>
+
+  <!-- 侧边栏目录 -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-title">目录导航</div>
+    <ul class="sidebar-nav" id="sidebar-nav">
+      <li><a href="#matrix-operations">矩阵加法与标量乘法</a></li>
+      <li><a href="#matrix-multiplication">矩阵乘法</a></li>
+      <li><a href="#matrix-transpose">矩阵转置</a></li>
+      <li><a href="#identity-matrix">单位矩阵</a></li>
+      <li><a href="#zero-matrix">零矩阵</a></li>
+      <li><a href="#diagonal-matrix">对角矩阵</a></li>
+      <li><a href="#triangular-matrix">三角矩阵</a></li>
+      <li><a href="#symmetric-matrix">对称矩阵</a></li>
+      <li><a href="#matrix-inverse">矩阵的逆</a></li>
+      <li><a href="#matrix-rank">矩阵的秩</a></li>
+      <li><a href="#elementary-matrix">初等矩阵</a></li>
+      <li><a href="#finding-inverse">逆矩阵的求法</a></li>
+      <li><a href="#block-matrix">分块矩阵</a></li>
+      <li><a href="#lu-decomposition">LU分解</a></li>
+      <li><a href="#linear-transformation">线性变换</a></li>
+      <li><a href="#projection">投影变换</a></li>
+      <li><a href="#shear">剪切变换</a></li>
+      <li><a href="#rotation">旋转变换</a></li>
+      <li><a href="#scaling">伸缩变换</a></li>
+      <li><a href="#linear-map">线性映射</a></li>
+      <li><a href="#injective-surjective">单射与满射</a></li>
+    </ul>
+  </aside>
+
+  <!-- 主内容区 -->
+  <main class="main-content">
+    <header class="page-header">
+      <h2>矩阵与线性变换</h2>
+      <p>本章涵盖矩阵的基本运算、特殊矩阵、矩阵的逆与秩，以及线性变换等核心知识点。</p>
+    </header>
+
+    <!-- 矩阵加法与标量乘法 -->
+    <section class="knowledge-section" id="matrix-operations">
+      <div class="knowledge-card">
+        <h3>矩阵加法与标量乘法</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>两个相同大小的矩阵 $A$ 和 $B$ 的<strong>和</strong>定义为对应元素的和：</p>
+        </div>
+        <div class="formula">
+          $$A + B = \begin{bmatrix} a_{11}+b_{11} & a_{12}+b_{12} & \cdots \\ a_{21}+b_{21} & a_{22}+b_{22} & \cdots \\ \vdots & \vdots & \ddots \end{bmatrix}$$
+        </div>
+        <p style="margin-top: 1rem;">矩阵 $A$ 与标量 $c$ 的<strong>乘积</strong>定义为 $A$ 的每个元素都乘以 $c$：</p>
+        <div class="formula">
+          $$cA = \begin{bmatrix} ca_{11} & ca_{12} & \cdots \\ ca_{21} & ca_{22} & \cdots \\ \vdots & \vdots & \ddots \end{bmatrix}$$
+        </div>
+        <div class="note">
+          <div class="note-label">性质</div>
+          <p>① 交换律：$A + B = B + A$<br>
+          ② 结合律：$(A + B) + C = A + (B + C)$<br>
+          ③ 分配律：$c(A + B) = cA + cB$，$(c + d)A = cA + dA$</p>
+        </div>
+        <div class="example">
+          <div class="example-label">例题</div>
+          <p>计算 $\begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} + 2\begin{bmatrix} 2 & 1 \\ 1 & 2 \end{bmatrix}$</p>
+          <p><strong>解：</strong>$= \begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} + \begin{bmatrix} 4 & 2 \\ 2 & 4 \end{bmatrix} = \begin{bmatrix} 5 & 4 \\ 5 & 8 \end{bmatrix}$</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 矩阵乘法 -->
+    <section class="knowledge-section" id="matrix-multiplication">
+      <div class="knowledge-card">
+        <h3>矩阵乘法</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>若 $A$ 是 $m \times n$ 矩阵，$B$ 是 $n \times p$ 矩阵，则它们的<strong>乘积</strong> $AB$ 是 $m \times p$ 矩阵，其中第 $(i,j)$ 个元素为：</p>
+        </div>
+        <div class="formula">
+          $$(AB)_{ij} = \sum_{k=1}^{n} a_{ik}b_{kj}$$
+        </div>
+        <div class="note">
+          <div class="note-label">性质</div>
+          <p>① 结合律：$(AB)C = A(BC)$<br>
+          ② 分配律：$A(B + C) = AB + AC$，$(B + C)A = BA + CA$<br>
+          ③ <strong>不满足交换律</strong>：一般 $AB \neq BA$</p>
+        </div>
+        <div class="example">
+          <div class="example-label">例题</div>
+          <p>计算 $\begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix}\begin{bmatrix} 2 & 0 \\ 1 & 3 \end{bmatrix}$</p>
+          <p><strong>解：</strong>$(1)(2)+(2)(1) = 4$，$(1)(0)+(2)(3) = 6$，$(3)(2)+(4)(1) = 10$，$(3)(0)+(4)(3) = 12$<br>
+          结果为 $\begin{bmatrix} 4 & 6 \\ 10 & 12 \end{bmatrix}$</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 矩阵转置 -->
+    <section class="knowledge-section" id="matrix-transpose">
+      <div class="knowledge-card">
+        <h3>矩阵转置</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>矩阵 $A$ 的<strong>转置</strong> $A^T$ 是将 $A$ 的行变为列（或列变为行）得到的矩阵。若 $A$ 是 $m \times n$ 矩阵，则 $A^T$ 是 $n \times m$ 矩阵。</p>
+        </div>
+        <div class="formula">
+          $$(A^T)_{ij} = A_{ji}$$
+        </div>
+        <div class="note">
+          <div class="note-label">性质</div>
+          <p>① $(A^T)^T = A$<br>
+          ② $(A + B)^T = A^T + B^T$<br>
+          ③ $(cA)^T = cA^T$<br>
+          ④ $(AB)^T = B^T A^T$</p>
+        </div>
+        <div class="example">
+          <div class="example-label">例题</div>
+          <p>$A = \begin{bmatrix} 1 & 2 & 3 \\ 4 & 5 & 6 \end{bmatrix}$，求 $A^T$。</p>
+          <p><strong>解：</strong>$A^T = \begin{bmatrix} 1 & 4 \\ 2 & 5 \\ 3 & 6 \end{bmatrix}$</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 单位矩阵 -->
+    <section class="knowledge-section" id="identity-matrix">
+      <div class="knowledge-card">
+        <h3>单位矩阵</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p><strong>单位矩阵</strong> $I$ 或 $I_n$ 是对角线上全为 1，其余位置全为 0 的 $n \times n$ 矩阵：</p>
+        </div>
+        <div class="formula">
+          $$I_n = \begin{bmatrix} 1 & 0 & \cdots & 0 \\ 0 & 1 & \cdots & 0 \\ \vdots & \vdots & \ddots & \vdots \\ 0 & 0 & \cdots & 1 \end{bmatrix}$$
+        </div>
+        <div class="note">
+          <div class="note-label">性质</div>
+          <p>对任何 $m \times n$ 矩阵 $A$，有 $I_m A = A$ 且 $A I_n = A$。<br>
+          单位矩阵是矩阵乘法的单位元。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 零矩阵 -->
+    <section class="knowledge-section" id="zero-matrix">
+      <div class="knowledge-card">
+        <h3>零矩阵</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p><strong>零矩阵</strong> $O$ 或 $0$ 是所有元素都为 0 的矩阵。</p>
+        </div>
+        <div class="formula">
+          $$O = \begin{bmatrix} 0 & 0 & \cdots \\ 0 & 0 & \cdots \\ \vdots & \vdots & \ddots \end{bmatrix}$$
+        </div>
+        <div class="note">
+          <div class="note-label">性质</div>
+          <p>对任何矩阵 $A$，有 $A + O = A$，$AO = O$（大小适配时）。<br>
+          零矩阵是矩阵加法的单位元。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 对角矩阵 -->
+    <section class="knowledge-section" id="diagonal-matrix">
+      <div class="knowledge-card">
+        <h3>对角矩阵</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p><strong>对角矩阵</strong>是非对角线上的元素都为 0 的矩阵：</p>
+        </div>
+        <div class="formula">
+          $$D = \begin{bmatrix} d_1 & 0 & \cdots & 0 \\ 0 & d_2 & \cdots & 0 \\ \vdots & \vdots & \ddots & \vdots \\ 0 & 0 & \cdots & d_n \end{bmatrix}$$
+        </div>
+        <div class="note">
+          <div class="note-label">性质</div>
+          <p>对角矩阵的乘法计算简单。若 $D$ 和 $E$ 都是对角矩阵，则 $DE$ 也是对角矩阵，其对角元素为两矩阵对应对角元素的乘积。</p>
+        </div>
+        <div class="example">
+          <div class="example-label">例题</div>
+          <p>$D = \begin{bmatrix} 2 & 0 & 0 \\ 0 & 3 & 0 \\ 0 & 0 & 4 \end{bmatrix}$，$E = \begin{bmatrix} 1 & 0 & 0 \\ 0 & 2 & 0 \\ 0 & 0 & 3 \end{bmatrix}$，求 $DE$。</p>
+          <p><strong>解：</strong>$DE = \begin{bmatrix} 2 & 0 & 0 \\ 0 & 6 & 0 \\ 0 & 0 & 12 \end{bmatrix}$</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 三角矩阵 -->
+    <section class="knowledge-section" id="triangular-matrix">
+      <div class="knowledge-card">
+        <h3>三角矩阵</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p><strong>上三角矩阵</strong>是下三角部分都为 0 的矩阵；<strong>下三角矩阵</strong>是上三角部分都为 0 的矩阵。</p>
+        </div>
+        <div class="formula">
+          $$\text{上三角：} \begin{bmatrix} a_{11} & a_{12} & a_{13} \\ 0 & a_{22} & a_{23} \\ 0 & 0 & a_{33} \end{bmatrix} \quad \text{下三角：} \begin{bmatrix} a_{11} & 0 & 0 \\ a_{21} & a_{22} & 0 \\ a_{31} & a_{32} & a_{33} \end{bmatrix}$$
+        </div>
+        <div class="note">
+          <div class="note-label">性质</div>
+          <p>两个上（下）三角矩阵的乘积仍是上（下）三角矩阵。<br>
+          三角矩阵的行列式等于对角线元素的乘积。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 对称矩阵 -->
+    <section class="knowledge-section" id="symmetric-matrix">
+      <div class="knowledge-card">
+        <h3>对称矩阵</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>若矩阵 $A$ 满足 $A^T = A$，则称 $A$ 为<strong>对称矩阵</strong>。<br>
+          若矩阵 $A$ 满足 $A^T = -A$，则称 $A$ 为<strong>反对称矩阵</strong>。</p>
+        </div>
+        <div class="formula">
+          $$A = A^T \Rightarrow a_{ij} = a_{ji} \text{ 对所有 } i,j$$
+        </div>
+        <div class="example">
+          <div class="example-label">例题</div>
+          <p>$A = \begin{bmatrix} 1 & 2 & 3 \\ 2 & 4 & 5 \\ 3 & 5 & 6 \end{bmatrix}$ 是对称矩阵，因为 $A^T = A$。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 矩阵的逆 -->
+    <section class="knowledge-section" id="matrix-inverse">
+      <div class="knowledge-card">
+        <h3>矩阵的逆</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>对于 $n \times n$ 矩阵 $A$，如果存在矩阵 $B$ 使得 $AB = BA = I$，则称 $B$ 为 $A$ 的<strong>逆矩阵</strong>，记作 $A^{-1}$。</p>
+        </div>
+        <div class="note">
+          <div class="note-label">可逆条件</div>
+          <p>矩阵 $A$ 可逆当且仅当 $\det(A) \neq 0$（即 $A$ 是满秩矩阵）。</p>
+        </div>
+        <div class="formula">
+          $$AA^{-1} = A^{-1}A = I$$
+        </div>
+        <div class="example">
+          <div class="example-label">例题</div>
+          <p>验证 $B = -\frac{1}{2}\begin{bmatrix} 4 & -2 \\ -3 & 1 \end{bmatrix}$ 是 $A = \begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix}$ 的逆矩阵。</p>
+          <p><strong>解：</strong>计算 $AB = \begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} \cdot (-\frac{1}{2})\begin{bmatrix} 4 & -2 \\ -3 & 1 \end{bmatrix} = -\frac{1}{2}\begin{bmatrix} -2 & 0 \\ 0 & -2 \end{bmatrix} = I$</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 矩阵的秩 -->
+    <section class="knowledge-section" id="matrix-rank">
+      <div class="knowledge-card">
+        <h3>矩阵的秩</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>矩阵 $A$ 的<strong>秩</strong>（rank）定义为其行简化阶梯形中非零行的个数，记作 $\text{rank}(A)$ 或 $r(A)$。</p>
+        </div>
+        <div class="note">
+          <div class="note-label">性质</div>
+          <p>① 对 $m \times n$ 矩阵 $A$，$0 \leq \text{rank}(A) \leq \min(m,n)$<br>
+          ② $\text{rank}(A) = \text{rank}(A^T)$<br>
+          ③ $\text{rank}(AB) \leq \min(\text{rank}(A), \text{rank}(B))$<br>
+          ④ 矩阵 $A$ 满秩当且仅当 $\text{rank}(A) = \min(m,n)$</p>
+        </div>
+        <div class="example">
+          <div class="example-label">例题</div>
+          <p>求矩阵 $A = \begin{bmatrix} 1 & 2 & 3 \\ 2 & 4 & 6 \\ 1 & 1 & 1 \end{bmatrix}$ 的秩。</p>
+          <p><strong>解：</strong>化为行简化阶梯形，得到 2 个非零行，故 $\text{rank}(A) = 2$。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 初等矩阵 -->
+    <section class="knowledge-section" id="elementary-matrix">
+      <div class="knowledge-card">
+        <h3>初等矩阵</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p><strong>初等矩阵</strong>是由单位矩阵通过一次初等行变换得到的矩阵。有三种类型：</p>
+        </div>
+        <div class="definition">
+          <div class="definition-label">三种初等矩阵</div>
+          <p>① <strong>行交换</strong>：交换 $I$ 的两行<br>
+          ② <strong>行数乘</strong>：将 $I$ 的某一行乘以非零常数 $k$<br>
+          ③ <strong>行倍加</strong>：将 $I$ 的某一行加上另一行的 $k$ 倍</p>
+        </div>
+        <div class="note">
+          <div class="note-label">性质</div>
+          <p>用初等矩阵左乘矩阵 $A$，相当于对 $A$ 进行相应的初等行变换。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 逆矩阵的求法 -->
+    <section class="knowledge-section" id="finding-inverse">
+      <div class="knowledge-card">
+        <h3>逆矩阵的求法</h3>
+        <div class="definition">
+          <div class="definition-label">方法一：伴随矩阵法</div>
+          <p>当 $\det(A) \neq 0$ 时：</p>
+        </div>
+        <div class="formula">
+          $$A^{-1} = \frac{1}{\det(A)} A^*$$
+        </div>
+        <p style="margin-top: 1rem;">其中 $A^*$ 是 $A$ 的伴随矩阵。</p>
+        <div class="definition">
+          <div class="definition-label">方法二：初等行变换法</div>
+          <p>对增广矩阵 $[A|I]$ 进行初等行变换，化为 $[I|A^{-1}]$。</p>
+        </div>
+        <div class="example">
+          <div class="example-label">例题</div>
+          <p>用初等行变换求 $A = \begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix}$ 的逆矩阵。</p>
+          <p><strong>解：</strong>$\left[ \begin{array}{cc|cc} 1 & 2 & 1 & 0 \\ 3 & 4 & 0 & 1 \end{array}\right] \to \left[ \begin{array}{cc|cc} 1 & 0 & -2 & 1 \\ 0 & 1 & 3/2 & -1/2 \end{array} \right]$<br>
+          因此 $A^{-1} = \begin{bmatrix} -2 & 1 \\ 3/2 & -1/2 \end{bmatrix}$</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 分块矩阵 -->
+    <section class="knowledge-section" id="block-matrix">
+      <div class="knowledge-card">
+        <h3>分块矩阵</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p><strong>分块矩阵</strong>是将矩阵按行或列分成若干个子矩阵（块），然后将这些块看作矩阵的元素进行运算。</p>
+        </div>
+        <div class="formula">
+          $$A = \begin{bmatrix} A_{11} & A_{12} \\ A_{21} & A_{22} \end{bmatrix}, \quad B = \begin{bmatrix} B_{11} & B_{12} \\ B_{21} & B_{22} \end{bmatrix}$$
+        </div>
+        <div class="note">
+          <div class="note-label">运算规则</div>
+          <p>分块矩阵的加法、数乘、乘法等运算与普通矩阵运算规则相同，只需满足块的大小相容即可。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- LU分解 -->
+    <section class="knowledge-section" id="lu-decomposition">
+      <div class="knowledge-card">
+        <h3>LU分解</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>对于 $n \times n$ 矩阵 $A$，<strong>LU分解</strong>是将 $A$ 分解为一个下三角矩阵 $L$ 和一个上三角矩阵 $U$ 的乘积：</p>
+        </div>
+        <div class="formula">
+          $$A = LU$$
+        </div>
+        <p style="margin-top: 1rem;">其中 $L$ 是下三角矩阵（通常要求对角线元素为 1），$U$ 是上三角矩阵。</p>
+        <div class="note">
+          <div class="note-label">应用</div>
+          <p>LU分解可用于求解线性方程组 $A\mathbf{x} = \mathbf{b}$：<br>
+          ① 求 $L\mathbf{y} = \mathbf{b}$（前向替代）<br>
+          ② 求 $U\mathbf{x} = \mathbf{y}$（回向替代）</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 线性变换 -->
+    <section class="knowledge-section" id="linear-transformation">
+      <div class="knowledge-card">
+        <h3>线性变换</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>从向量空间 $V$ 到 $W$ 的函数 $T: V \to W$ 是<strong>线性变换</strong>，如果对所有 $\mathbf{u}, \mathbf{v} \in V$ 和标量 $c$，有：</p>
+        </div>
+        <div class="formula">
+          $$T(\mathbf{u} + \mathbf{v}) = T(\mathbf{u}) + T(\mathbf{v})$$
+          $$T(c\mathbf{v}) = cT(\mathbf{v})$$
+        </div>
+        <div class="note">
+          <div class="note-label">矩阵表示</div>
+          <p>从 $\mathbb{R}^n$ 到 $\mathbb{R}^m$ 的任何线性变换都可以用 $m \times n$ 矩阵表示：$T(\mathbf{x}) = A\mathbf{x}$。</p>
+        </div>
+        <div class="example">
+          <div class="example-label">例题</div>
+          <p>验证 $T(\mathbf{x}) = A\mathbf{x}$，其中 $A = \begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix}$ 是线性变换。</p>
+          <p><strong>解：</strong>对任意 $\mathbf{u}, \mathbf{v}$ 和标量 $c$：<br>
+          $T(\mathbf{u} + \mathbf{v}) = A(\mathbf{u} + \mathbf{v}) = A\mathbf{u} + A\mathbf{v} = T(\mathbf{u}) + T(\mathbf{v})$ ✓<br>
+          $T(c\mathbf{v}) = A(c\mathbf{v}) = c(A\mathbf{v}) = cT(\mathbf{v})$ ✓</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 投影变换 -->
+    <section class="knowledge-section" id="projection">
+      <div class="knowledge-card">
+        <h3>投影变换</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p>将向量投影到某个方向或平面的变换称为<strong>投影变换</strong>。</p>
+        </div>
+        <div class="definition">
+          <div class="definition-label">标量投影</div>
+          <p>向量 $\mathbf{v}$ 在向量 $\mathbf{u}$ 方向上的标量投影为 $\text{proj}_{\mathbf{u}} \mathbf{v} = \frac{\mathbf{u} \cdot \mathbf{v}}{\left \| \mathbf{u} \right \|^2}$</p>
+        </div>
+        <div class="definition">
+          <div class="definition-label">向量投影</div>
+          <p>向量 $\mathbf{v}$ 在向量 $\mathbf{u}$ 方向上的向量投影为 $\text{proj}_{\mathbf{u}} \mathbf{v} = \frac{\mathbf{u} \cdot \mathbf{v}}{\left \| \mathbf{u} \right \|^2}\mathbf{u}$</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 剪切变换 -->
+    <section class="knowledge-section" id="shear">
+      <div class="knowledge-card">
+        <h3>剪切变换</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p><strong>剪切变换</strong>是使平面图形沿某一方向平移，但不改变方向上的距离的变换。</p>
+        </div>
+        <div class="definition">
+          <div class="definition-label">例子</div>
+          <p>$x$ 方向的剪切变换矩阵：$S_x = \begin{bmatrix} 1 & k \\ 0 & 1 \end{bmatrix}$，将点 $(x, y)$ 变换为 $(x+ky, y)$。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 旋转变换 -->
+    <section class="knowledge-section" id="rotation">
+      <div class="knowledge-card">
+        <h3>旋转变换</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p><strong>旋转变换</strong>是绕原点旋转平面上的点或向量。</p>
+        </div>
+        <div class="definition">
+          <div class="definition-label">旋转矩阵</div>
+          <p>逆时针旋转角度 $\theta$ 的旋转矩阵为：</p>
+        </div>
+        <div class="formula">
+          $$R_\theta = \begin{bmatrix} \cos\theta & -\sin\theta \\ \sin\theta & \cos\theta \end{bmatrix}$$
+        </div>
+        <div class="note">
+          <div class="note-label">性质</div>
+          <p>旋转矩阵是正交矩阵，满足 $R^T R = I$，且 $\det(R) = 1$。</p>
+        </div>
+        <div class="example">
+          <div class="example-label">例题</div>
+          <p>将点 $(1, 0)$ 绕原点逆时针旋转 $90°$。</p>
+          <p><strong>解：</strong>$\begin{bmatrix} 0 & -1 \\ 1 & 0 \end{bmatrix}\begin{bmatrix} 1 \\ 0 \end{bmatrix} = \begin{bmatrix} 0 \\ 1 \end{bmatrix}$</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 伸缩变换 -->
+    <section class="knowledge-section" id="scaling">
+      <div class="knowledge-card">
+        <h3>伸缩变换</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p><strong>伸缩变换</strong>（缩放变换）是沿某些方向放大或缩小距离的变换。</p>
+        </div>
+        <div class="definition">
+          <div class="definition-label">伸缩矩阵</div>
+          <p>均匀伸缩（缩放因子为 $k$）的矩阵为 $S = \begin{bmatrix} k & 0 \\ 0 & k \end{bmatrix}$。</p>
+        </div>
+        <div class="definition">
+          <div class="definition-label">非均匀伸缩</div>
+          <p>$x$ 方向缩放因子为 $a$，$y$ 方向缩放因子为 $b$ 的矩阵为 $S = \begin{bmatrix} a & 0 \\ 0 & b \end{bmatrix}$。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 线性映射 -->
+    <section class="knowledge-section" id="linear-map">
+      <div class="knowledge-card">
+        <h3>线性映射</h3>
+        <div class="definition">
+          <div class="definition-label">定义</div>
+          <p><strong>线性映射</strong>是向量空间之间的函数，保持向量加法和标量乘法。这与线性变换的定义相同。</p>
+        </div>
+        <div class="note">
+          <div class="note-label">相关概念</div>
+          <p>• <strong>像</strong>（值域）：$\text{Im}(T) = \{T(\mathbf{v}) : \mathbf{v} \in V\}$<br>
+          • <strong>核</strong>（零空间）：$\ker(T) = \{\mathbf{v} : T(\mathbf{v}) = \mathbf{0}\}$<br>
+          • <strong>秩</strong>：$\text{rank}(T) = \dim(\text{Im}(T))$<br>
+          • <strong>零化度</strong>：$\text{nullity}(T) = \dim(\ker(T))$</p>
+        </div>
+        <div class="note">
+          <div class="note-label">秩-零化度定理</div>
+          <p>$$\text{rank}(T) + \text{nullity}(T) = \dim(V)$$</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 单射与满射 -->
+    <section class="knowledge-section" id="injective-surjective">
+      <div class="knowledge-card">
+        <h3>单射与满射</h3>
+        <div class="definition">
+          <div class="definition-label">单射</div>
+          <p>线性映射 $T: V \to W$ 是<strong>单射</strong>，如果不同的向量映射到不同的像。等价地，$\ker(T) = \{\mathbf{0}\}$。</p>
+        </div>
+        <div class="definition">
+          <div class="definition-label">满射</div>
+          <p>线性映射 $T: V \to W$ 是<strong>满射</strong>，如果 $\text{Im}(T) = W$。</p>
+        </div>
+        <div class="definition">
+          <div class="definition-label">双射</div>
+          <p>既是单射又是满射的映射称为<strong>双射</strong>（一一对应）。</p>
+        </div>
+        <div class="note">
+          <div class="note-label">判断准则</div>
+          <p>对 $m \times n$ 矩阵 $A$：<br>
+          • $\text{rank}(A) = n$ ⟺ $T_A$ 是单射<br>
+          • $\text{rank}(A) = m$ ⟺ $T_A$ 是满射<br>
+          • $\text{rank}(A) = m = n$ ⟺ $T_A$ 是双射</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    // 移动端菜单切换
+    const menuToggle = document.getElementById('menu-toggle');
+    const sidebar = document.getElementById('sidebar');
+
+    menuToggle.addEventListener('click', () => {
+      sidebar.classList.toggle('open');
+    });
+
+    // 点击侧边栏链接后关闭菜单（移动端）
+    const sidebarLinks = document.querySelectorAll('.sidebar-nav a');
+    sidebarLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth <= 768) {
+          sidebar.classList.remove('open');
+        }
+      });
+    });
+
+    // 滚动时高亮当前目录项
+    const sections = document.querySelectorAll('.knowledge-section');
+    const navLinks = document.querySelectorAll('.sidebar-nav a');
+
+    function updateActiveLink() {
+      let currentSection = '';
+      
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop - 100;
+        if (window.scrollY >= sectionTop) {
+          currentSection = section.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${currentSection}`) {
+          link.classList.add('active');
+        }
+      });
+    }
+
+    window.addEventListener('scroll', updateActiveLink);
+    window.addEventListener('load', updateActiveLink);
+  </script>
+</body>
+</html>

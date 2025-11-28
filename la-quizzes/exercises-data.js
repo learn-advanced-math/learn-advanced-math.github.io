@@ -233,7 +233,7 @@ window.EXERCISES_DATA = [
   {
     "catalog": "线性方程组",
     "question": "什么是矩阵的简化阶梯形（最简行阶梯形）？",
-    "solution": "在阶梯形基础上，每个主元为1且所在列其他元素均为0的矩阵称为简化阶梯形。",
+    "solution": "在阶梯形基础上，每个主元为 $1$ 且所在列其他元素均为 $0$ 的矩阵称为简化阶梯形。",
     "keywords": ["简化阶梯形", "主元"],
     "level": "简单"
   },
@@ -1723,7 +1723,7 @@ window.EXERCISES_DATA = [
   },
   {
     "catalog": "矩阵与线性变换",
-    "question": "验证 $R(\\alpha)R(\\beta)=R(\\alpha+\\beta)$，取 $\\alpha=30^{\\circ},\\beta=45^{\\circ}$。",
+    "question": "验证旋转矩阵 $R(\\alpha)R(\\beta)=R(\\alpha+\\beta)$，取 $\\alpha=30^{\\circ},\\beta=45^{\\circ}$。",
     "solution": "直接乘法可得等式成立；矩阵为 $\\begin{bmatrix}\\cos\\alpha&-\\sin\\alpha\\\\\\sin\\alpha&\\cos\\alpha\\end{bmatrix}$，利用三角恒等式化简即得。",
     "keywords": ["旋转变换", "矩阵乘法"],
     "level": "中等"
@@ -1797,5 +1797,397 @@ window.EXERCISES_DATA = [
     "solution": "$\\det(A_t)=1\\ne0$，对任意 $t$ 可逆，故同时单射与满射（双射）。",
     "keywords": ["单射与满射"],
     "level": "很难"
+  },
+  {
+    "catalog": "矩阵理论",
+    "question": "求矩阵 $A=\\begin{bmatrix}2&0\\\\0&3\\end{bmatrix}$ 的全部特征值。",
+    "solution": "由于 $A$ 已是对角矩阵，特征值即对角线元素，分别为 $\\lambda_1=2$ 与 $\\lambda_2=3$。",
+    "keywords": ["特征值"],
+    "level": "简单"
+  },
+  {
+    "catalog": "矩阵理论",
+    "question": "设 $A=\\begin{bmatrix}1&t\\\\0&2\\end{bmatrix}$。求其特征多项式并说明当 $t$ 取任意实数时的特征值。",
+    "solution": "特征多项式为 $p_A(\\lambda)=\\det(\\begin{bmatrix}1-\\lambda&t\\\\0&2-\\lambda\\end{bmatrix})=(1-\\lambda)(2-\\lambda)$，与 $t$ 无关，特征值恒为 $\\lambda=1,2$。",
+    "keywords": ["特征值", "特征多项式"],
+    "level": "中等"
+  },
+  {
+    "catalog": "矩阵理论",
+    "question": "求矩阵 $A=\\begin{bmatrix}1&1\\\\0&1\\end{bmatrix}$ 的一组特征向量。",
+    "solution": "特征值 $\\lambda=1$，解 $ (A-I)\\mathbf{v}=\\mathbf{0}$ 得 $\\mathbf{v}=s(1,0)^{\\mathsf{T}}$，故所有形如 $ (s,0)^{\\mathsf{T}}$ 的非零向量都是特征向量。",
+    "keywords": ["特征向量"],
+    "level": "简单"
+  },
+  {
+    "catalog": "矩阵理论",
+    "question": "设 $A=\\begin{bmatrix}2&1\\\\0&2\\end{bmatrix}$。写出与特征值 $2$ 对应的特征向量空间并给出其维数。",
+    "solution": "解 $(A-2I)\\mathbf{v}=\\begin{bmatrix}0&1\\\\0&0\\end{bmatrix}\\mathbf{v}=\\mathbf{0}$，得 $\\mathbf{v}=(s, 0)^{\\mathsf{T}}$，其中 $s\\neq0$ 。故特征空间为 $\\operatorname{span}\\{(1,0)^{\\mathsf{T}}\\}$，维数为 $1$。",
+    "keywords": ["特征向量", "特征空间"],
+    "level": "中等"
+  },
+  {
+    "catalog": "矩阵理论",
+    "question": "证明若 $A$ 为可对角化矩阵且存在一组线性无关特征向量构成基，则任意向量都能唯一表示为该基的线性组合。",
+    "solution": "设 $P=[\\mathbf{v}_1\\cdots\\mathbf{v}_n]$ 由特征向量组成且可逆，则任意 $\\mathbf{x}$ 满足 $\\mathbf{x}=Pc$，系数向量 $c=P^{-1}\\mathbf{x}$ 唯一，因而特征向量基给出唯一展开。",
+    "keywords": ["特征向量", "对角化"],
+    "level": "很难"
+  },
+  {
+    "catalog": "矩阵理论",
+    "question": "给出特征空间的定义并举例说明矩阵 $A=\\begin{bmatrix}3&0\\\\0&1\\end{bmatrix}$ 的 $\\lambda=3$ 的特征空间。",
+    "solution": "特征空间 $E_{\\lambda}$ 包含与特征值 $\\lambda$ 对应的全部特征向量及零向量。对该矩阵，$E_3=\\{(x,0)^{\\mathsf{T}}\\mid x\\in\\mathbb{R}\\}$。",
+    "keywords": ["特征空间"],
+    "level": "简单"
+  },
+  {
+    "catalog": "矩阵理论",
+    "question": "设 $A=\\begin{bmatrix}2&1\\\\0&2\\end{bmatrix}$，求特征值 $2$ 对应的特征空间 $E_2$ 的一组基，并判断其与 $A$ 的代数重数之间的关系。",
+    "solution": "$E_2=\\operatorname{span}\\{(1,0)^{\\mathsf{T}}\\}$，几何重数为 $1$，而特征值 $2$ 的代数重数为 $2$，说明矩阵不可对角化。",
+    "keywords": ["特征空间", "对角化"],
+    "level": "中等"
+  },
+  {
+    "catalog": "矩阵理论",
+    "question": "写出矩阵 $A=\\begin{bmatrix}0&1\\\\-2&-3\\end{bmatrix}$ 的特征方程。",
+    "solution": "特征方程来自 $\\det(A-\\lambda I)=\\det\\begin{bmatrix}-\\lambda&1\\\\-2&-3-\\lambda\\end{bmatrix}=\\lambda(\\lambda+3)-(-2)=\\lambda^2+3\\lambda+2=0$。",
+    "keywords": ["特征方程"],
+    "level": "简单"
+  },
+  {
+    "catalog": "矩阵理论",
+    "question": "设 $A=\\begin{bmatrix}1&2&0\\\\0&1&1\\\\0&0&3\\end{bmatrix}$。求其特征方程并给出根。",
+    "solution": "上三角矩阵的特征方程为 $(1-\\lambda)^2(3-\\lambda)=0$，根为 $\\lambda=1$（重数 2）与 $\\lambda=3$。",
+    "keywords": ["特征方程"],
+    "level": "中等"
+  },
+  {
+    "catalog": "矩阵理论",
+    "question": "求矩阵 $A=\\begin{bmatrix}0&-1\\\\1&0\\end{bmatrix}$ 的特征多项式。",
+    "solution": "计算 $p_A(\\lambda)=\\det\\begin{bmatrix}-\\lambda&-1\\\\1&-\\lambda\\end{bmatrix}=\\lambda^2+1$。",
+    "keywords": ["特征多项式"],
+    "level": "简单"
+  },
+  {
+    "catalog": "矩阵理论",
+    "question": "设 $A=\\begin{bmatrix}2&1\\\\1&2\\end{bmatrix}$，求特征多项式 $p_A(\\lambda)$ 并写出其因式分解。",
+    "solution": "$p_A(\\lambda)=\\det(\\begin{bmatrix}2-\\lambda&1\\\\1&2-\\lambda\\end{bmatrix})=(2-\\lambda)^2-1=\\lambda^2-4\\lambda+3=(\\lambda-1)(\\lambda-3)$。",
+    "keywords": ["特征多项式"],
+    "level": "中等"
+  },
+  {
+    "catalog": "矩阵理论",
+    "question": "说明为何相似矩阵具有相同的特征多项式。",
+    "solution": "若 $B=P^{-1}AP$，则 $p_B(\\lambda)=\\det(B-\\lambda I)=\\det(P^{-1}(A-\\lambda I)P)=\\det(P^{-1})\\det(A-\\lambda I)\\det(P)=p_A(\\lambda)$。",
+    "keywords": ["特征多项式", "相似矩阵"],
+    "level": "很难"
+  },
+  {
+    "catalog": "矩阵理论",
+    "question": "判断 $A=\\begin{bmatrix}1&0\\\\0&-1\\end{bmatrix}$ 与 $B=\\begin{bmatrix}-1&0\\\\0&1\\end{bmatrix}$ 是否相似。",
+    "solution": "两矩阵的特征值集合相同且有可逆矩阵 $P=\\begin{bmatrix}0&1\\\\1&0\\end{bmatrix}$ 满足 $P^{-1}AP=B$，故相似。",
+    "keywords": ["相似矩阵"],
+    "level": "简单"
+  },
+  {
+    "catalog": "矩阵理论",
+    "question": "设 $A=\\begin{bmatrix}2&1\\\\0&2\\end{bmatrix}$，证明其与 $\\begin{bmatrix}2&0\\\\0&2\\end{bmatrix}$ 不相似。",
+    "solution": "两者具有相同特征多项式 $(\\lambda-2)^2$，但前者特征空间维数为 $1$，后者为 $2$，几何重数不同，因此不相似。",
+    "keywords": ["相似矩阵", "特征空间"],
+    "level": "中等"
+  },
+  {
+    "catalog": "矩阵理论",
+    "question": "说明为何相似关系是等价关系，并列出反身性、对称性、传递性的验证思路。",
+    "solution": "取恒等矩阵可见反身性；若 $B=P^{-1}AP$，则 $A=(P^{-1})^{-1}BP^{-1}$ 显示对称性；若 $C=Q^{-1}BQ$ 且 $B=P^{-1}AP$，则 $C=(QP)^{-1}A(QP)$ 给出传递性。",
+    "keywords": ["相似矩阵"],
+    "level": "很难"
+  },
+  {
+    "catalog": "矩阵理论",
+    "question": "判断矩阵 $A=\\operatorname{diag}(1,2,3)$ 是否可对角化。",
+    "solution": "对角矩阵显然可对角化，自身即对角形式，对应特征向量为标准基。",
+    "keywords": ["对角化"],
+    "level": "简单"
+  },
+  {
+    "catalog": "矩阵理论",
+    "question": "设 $A=\\begin{bmatrix}4&1\\\\0&4\\end{bmatrix}$。判断是否可对角化并说明理由。",
+    "solution": "特征值仅有 $\\lambda=4$，代数重数 $2$，解 $(A-4I)\\mathbf{v}=\\begin{bmatrix}0&1\\\\0&0\\end{bmatrix}\\mathbf{v}=\\mathbf{0}$ 得特征空间的维数为 $1$，故不可对角化。",
+    "keywords": ["对角化", "特征空间"],
+    "level": "中等"
+  },
+  {
+    "catalog": "矩阵理论",
+    "question": "说明实对称矩阵为何总能正交对角化。",
+    "solution": "谱定理指出实对称矩阵存在正交矩阵 $Q$ 使 $Q^{\\mathsf{T}}AQ$ 为对角矩阵。证明基于对称矩阵的特征值都为实数且不同特征值的特征向量正交，可归纳构造正交基。<br>或者，实对称矩阵总可以通过一系列初等行变换和相应的初等列变换化简为对角矩阵，而初等矩阵的乘积仍然是可逆矩阵，因此可以构造出正交矩阵。",
+    "keywords": ["对角化", "正交矩阵", "谱分解"],
+    "level": "很难"
+  },
+  {
+    "catalog": "矩阵理论",
+    "question": "给定向量 $\\mathbf{u}=(1,0,1)^{\\mathsf{T}}$ 与 $\\mathbf{v}=(1,1,0)^{\\mathsf{T}}$，计算余弦相似性。",
+    "solution": "$\\cos\\theta=\\dfrac{\\mathbf{u}\\cdot\\mathbf{v}}{\\|\\mathbf{u}\\|\\,\\|\\mathbf{v}\\|}=\\dfrac{1+0+0}{\\sqrt{2}\\,\\sqrt{2}}=\\tfrac{1}{2}$。",
+    "keywords": ["向量之间的余弦相似性"],
+    "level": "简单"
+  },
+  {
+    "catalog": "矩阵理论",
+    "question": "设 $\\mathbf{a}=(1,2,2)^{\\mathsf{T}}$，$\\mathbf{b}=(2,1,1)^{\\mathsf{T}}$。判断两者余弦相似性是否大于 $0.8$。",
+    "solution": "$\\cos\\theta=\\dfrac{1\\cdot2+2\\cdot1+2\\cdot1}{\\sqrt{9}\\,\\sqrt{6}}=\\dfrac{6}{3\\sqrt{6}}=\\dfrac{2}{\\sqrt{6}}\\approx0.816$，因此大于 $0.8$。",
+    "keywords": ["向量之间的余弦相似性"],
+    "level": "中等"
+  },
+  {
+    "catalog": "矩阵理论",
+    "question": "判断向量 $\\mathbf{u}=(1,-1,0)$ 与 $\\mathbf{v}=(1,1,0)$ 是否正交。",
+    "solution": "内积 $\\mathbf{u}\\cdot\\mathbf{v}=1\\cdot1+(-1)\\cdot1+0=0$，故两向量正交。",
+    "keywords": ["正交"],
+    "level": "简单"
+  },
+  {
+    "catalog": "矩阵理论",
+    "question": "在 $\\mathbb{R}^3$ 中，求与 $\\mathbf{u}=(1,2,2)$ 正交的单位向量集合的一个参数化表达。",
+    "solution": "令 $\\mathbf{x}=(x,y,z)$ 满足 $x+2y+2z=0$，取自由变量 $y=s,z=t$，则 $x=-2s-2t$，归一化可得 $\\dfrac{1}{\\sqrt{(2s+2t)^2+s^2+t^2}}(-2s-2t,s,t)$，其中 $s, t$ 不能同时为零。",
+    "keywords": ["正交"],
+    "level": "中等"
+  },
+  {
+    "catalog": "矩阵理论",
+    "question": "计算向量 $\\mathbf{b}=(2,1,0)^{\\mathsf{T}}$ 在子空间 $U=\\operatorname{span}\\{(1,0,0)^{\\mathsf{T}},(0,1,0)^{\\mathsf{T}}\\}$ 上的正交投影。",
+    "solution": "正交投影保留前两坐标，得 $P_U\\mathbf{b}=(2,1,0)^{\\mathsf{T}}$。",
+    "keywords": ["正交投影"],
+    "level": "简单"
+  },
+  {
+    "catalog": "矩阵理论",
+    "question": "设 $A=\\begin{bmatrix}1&0\\\\1&1\\end{bmatrix}$，求 $\\mathbf{b}=(1,2)^{\\mathsf{T}}$ 在 $\\operatorname{Col}(A)$ 上的正交投影。",
+    "solution": "解法一：可以看出 $A$ 为可逆矩阵，$\\operatorname{Col}(A) = R^2$，又 $\\mathbf{b} \\in R^2$，因此 $\\mathbf{b}$ 在 $\\operatorname{Col}(A)$ 上的投影就是它自己。<br>解法二：由于 $\\operatorname{Col}(A) = R^2$，因此 $\\operatorname{Col}(A)$ 的一个单位正交基就是 $U=I_2$，相应的投影矩阵为 $P=UU^{\\mathsf{T}}$，投影向量为 $\\hat{\\mathbf{b}}=P\\mathbf{b}=\\mathbf{b}$。",
+    "keywords": ["正交投影", "最小二乘法"],
+    "level": "中等"
+  },
+  {
+    "catalog": "矩阵理论",
+    "question": "证明投影矩阵满足 $P^2=P$ 且 $P=P^{\\mathsf{T}}$。",
+    "solution": "投影矩阵满足 $P=UU^{\\mathsf{T}}$，其中 $U$ 为投影空间的单位正交基构成的矩阵。直接计算得 $P^2=P$，$P=P^{\\mathsf{T}}$",
+    "keywords": ["正交投影", "正交分解"],
+    "level": "很难"
+  },
+  {
+    "catalog": "矩阵理论",
+    "question": "判断矩阵 $Q=\\begin{bmatrix}0&1\\\\1&0\\end{bmatrix}$ 是否正交。",
+    "solution": "计算 $Q^{\\mathsf{T}}Q=\\begin{bmatrix}0&1\\\\1&0\\end{bmatrix}\\begin{bmatrix}0&1\\\\1&0\\end{bmatrix}=I$，故 $Q$ 为正交矩阵。",
+    "keywords": ["正交矩阵"],
+    "level": "简单"
+  },
+  {
+    "catalog": "矩阵理论",
+    "question": "设 $Q$ 为 $n$ 阶正交矩阵。证明其列向量构成 $\\mathbb{R}^n$ 的标准正交基。",
+    "solution": "由 $Q^{\\mathsf{T}}Q=I$ 可知列向量两两正交且模长为 $1$，从而构成单位正交基。",
+    "keywords": ["正交矩阵"],
+    "level": "中等"
+  },
+  {
+    "catalog": "矩阵理论",
+    "question": "证明正交矩阵的行列式只能取 $1$ 或 $-1$。",
+    "solution": "对正交矩阵 $Q$ 有 $1=\\det(I)=\\det(Q^{\\mathsf{T}}Q)=\\det(Q^{\\mathsf{T}})\\det(Q)=(\\det Q)^2$，故 $\\det Q=\\pm1$。",
+    "keywords": ["正交矩阵", "谱分解"],
+    "level": "很难"
+  },
+  {
+    "catalog": "矩阵理论",
+    "question": "说明如何利用正交分解将向量 $\\mathbf{b}=(1,2,2)$ 分解为在子空间 $U=\\operatorname{span}\\{(1,0,0),(0,1,0)\\}$ 和其正交补的部分。",
+    "solution": "计算正交投影 $P_U\\mathbf{b}=(1,2,0)$，剩余向量 $\\mathbf{b}-P_U\\mathbf{b}=(0,0,2)$ 位于正交补，实现正交分解。",
+    "keywords": ["正交分解", "正交投影"],
+    "level": "简单"
+  },
+  {
+    "catalog": "矩阵理论",
+    "question": "解释如何结合正交分解与格拉姆-施密特方法求解最小二乘问题。",
+    "solution": "先使用格拉姆-施密特得到列空间的正交基，从而构造正交投影矩阵 $P$ 实现 $\\mathbf{x}=P\\mathbf{b}$ 的最小二乘解，误差为 $\\mathbf{b}-P\\mathbf{b}$，即正交分解。",
+    "keywords": ["正交分解", "格拉姆-施密特方法", "最小二乘法"],
+    "level": "很难"
+  },
+  {
+    "catalog": "矩阵理论",
+    "question": "对向量组 $\\{(1,0,0),(1,1,0)\\}$ 执行格拉姆-施密特方法。",
+    "solution": "首向量归一化得 $\\mathbf{u}_1=(1,0,0)$，第二向量减去投影 $\\mathbf{v}_2-(\\mathbf{v}_2\\cdot\\mathbf{u}_1)\\mathbf{u}_1=(0,1,0)$，归一化仍为 $(0,1,0)$。",
+    "keywords": ["格拉姆-施密特方法"],
+    "level": "简单"
+  },
+  {
+    "catalog": "矩阵理论",
+    "question": "将向量组 $\\{(1,1,0),(1,0,1),(0,1,1)\\}$ 正交化。",
+    "solution": "使用格拉姆-施密特：$\\mathbf{u}_1=(1,1,0)$，$\\mathbf{u}_2=(1,0,1)-\\frac{(1,0,1)\\cdot\\mathbf{u}_1}{\\|\\mathbf{u}_1\\|^2}\\mathbf{u}_1=(\\tfrac{1}{2},-\\tfrac{1}{2},1)$，$\\mathbf{u}_3=(0,1,1)$ 减去前两项投影后得 $(-\\tfrac{2}{3},\\tfrac{2}{3},\\tfrac{2}{3})$。",
+    "keywords": ["格拉姆-施密特方法"],
+    "level": "中等"
+  },
+  {
+    "catalog": "矩阵理论",
+    "question": "对矩阵 $A=\\begin{bmatrix}1&0\\\\1&1\\end{bmatrix}$ 求一组 $QR$ 分解，其中 $R$ 的对角线元素为正。",
+    "solution": "列向量为 $\\mathbf{a}_1=(1,1)^{\\mathsf{T}}$ 与 $\\mathbf{a}_2=(0,1)^{\\mathsf{T}}$。归一化得 $\\mathbf{q}_1=\\dfrac{1}{\\sqrt{2}}(1,1)^{\\mathsf{T}}$，对应 $r_{11}=\\sqrt{2}$。计算 $r_{12}=\\mathbf{q}_1^{\\mathsf{T}}\\mathbf{a}_2=\\dfrac{1}{\\sqrt{2}}$，再令 $\\mathbf{u}_2=\\mathbf{a}_2-r_{12}\\mathbf{q}_1=(-\\tfrac{1}{2},\\tfrac{1}{2})^{\\mathsf{T}}$，其范数为 $r_{22}=\\tfrac{1}{\\sqrt{2}}$。故 $\\mathbf{q}_2=\\sqrt{2}(-\\tfrac{1}{2},\\tfrac{1}{2})^{\\mathsf{T}}=(-\\tfrac{\\sqrt{2}}{2},\\tfrac{\\sqrt{2}}{2})^{\\mathsf{T}}$。最终 $Q=\\begin{bmatrix}\\tfrac{1}{\\sqrt{2}}&-\\tfrac{\\sqrt{2}}{2}\\\\\\tfrac{1}{\\sqrt{2}}&\\tfrac{\\sqrt{2}}{2}\\end{bmatrix}$，$R=\\begin{bmatrix}\\sqrt{2}&\\tfrac{1}{\\sqrt{2}}\\\\0&\\tfrac{1}{\\sqrt{2}}\\end{bmatrix}$ 满足 $A=QR$。",
+    "keywords": ["QR分解"],
+    "level": "简单"
+  },
+  {
+    "catalog": "矩阵理论",
+    "question": "设 $A=\\begin{bmatrix}1&1\\\\1&0\\\\0&1\\end{bmatrix}$。使用格拉姆-施密特法写出其 QR 分解。",
+    "solution": "第一列 $\\mathbf{a}_1=(1,1,0)^{\\mathsf{T}}$，归一化得 $\\mathbf{q}_1=\\tfrac{1}{\\sqrt{2}}(1,1,0)^{\\mathsf{T}}$，$r_{11}=\\sqrt{2}$。计算 $r_{12}=\\mathbf{q}_1^{\\mathsf{T}}\\mathbf{a}_2=\\tfrac{1}{\\sqrt{2}}$。令 $\\mathbf{u}_2=\\mathbf{a}_2-r_{12}\\mathbf{q}_1=(\\tfrac{1}{2},-\\tfrac{1}{2},1)^{\\mathsf{T}}$，其范数为 $r_{22}=\\sqrt{\\tfrac{3}{2}}$。归一化得 $\\mathbf{q}_2=\\tfrac{\\sqrt{2}}{\\sqrt{3}}(\\tfrac{1}{2},-\\tfrac{1}{2},1)^{\\mathsf{T}}$。因此 $Q=\\begin{bmatrix}\\tfrac{1}{\\sqrt{2}}&\\tfrac{\\sqrt{2}}{2\\sqrt{3}}\\\\\\tfrac{1}{\\sqrt{2}}&-\\tfrac{\\sqrt{2}}{2\\sqrt{3}}\\\\0&\\tfrac{\\sqrt{2}}{\\sqrt{3}}\\end{bmatrix}$，$R=\\begin{bmatrix}\\sqrt{2}&\\tfrac{1}{\\sqrt{2}}\\\\0&\\sqrt{\\tfrac{3}{2}}\\end{bmatrix}$ 给出 $A=QR$。",
+    "keywords": ["QR分解"],
+    "level": "中等"
+  },
+  {
+    "catalog": "矩阵理论",
+    "question": "使用最小二乘法求解超定方程组 $\\begin{bmatrix}1&1\\\\1&2\\\\1&3\\end{bmatrix}\\begin{bmatrix}x_1\\\\x_2\\end{bmatrix}=\\begin{bmatrix}1\\\\2\\\\2\\end{bmatrix}$ 的近似解。",
+    "solution": "设 $A=\\begin{bmatrix}1&1\\\\1&2\\\\1&3\\end{bmatrix}$，$\\mathbf{b}=(1,2,2)^{\\mathsf{T}}$。正规方程为 $A^{\\mathsf{T}}A\\mathbf{x}=A^{\\mathsf{T}}\\mathbf{b}$，其中 $A^{\\mathsf{T}}A=\\begin{bmatrix}3&6\\\\6&14\\end{bmatrix}$，$A^{\\mathsf{T}}\\mathbf{b}=(5,11)^{\\mathsf{T}}$。解得 $\\mathbf{x}=(\\tfrac{2}{3},\\tfrac{1}{2})^{\\mathsf{T}}$，即最小二乘解 $x_1=\\tfrac{2}{3}$，$x_2=\\tfrac{1}{2}$。",
+    "keywords": ["最小二乘法"],
+    "level": "简单"
+  },
+  {
+    "catalog": "矩阵理论",
+    "question": "令 $A=\\begin{bmatrix}1&0\\\\0&1\\\\1&1\\end{bmatrix}$，$\\mathbf{b}=(1,1,0)^{\\mathsf{T}}$。使用 QR 分解求解最小二乘问题 $\\min\\limits_{\\mathbf{x}}\\|A\\mathbf{x}-\\mathbf{b}\\|$。",
+    "solution": "对 $A$ 施行格拉姆-施密特得 $Q=\\begin{bmatrix}\\tfrac{1}{\\sqrt{2}}&-\\tfrac{\\sqrt{2}}{2\\sqrt{3}}\\\\0&\\tfrac{\\sqrt{2}}{\\sqrt{3}}\\\\\\tfrac{1}{\\sqrt{2}}&\\tfrac{\\sqrt{2}}{2\\sqrt{3}}\\end{bmatrix}$，$R=\\begin{bmatrix}\\sqrt{2}&\\tfrac{1}{\\sqrt{2}}\\\\0&\\tfrac{\\sqrt{3}}{\\sqrt{2}}\\end{bmatrix}$。计算 $Q^{\\mathsf{T}}\\mathbf{b}=(\\tfrac{1}{\\sqrt{2}},\\tfrac{\\sqrt{2}}{2\\sqrt{3}})^{\\mathsf{T}}$。解 $R\\mathbf{x}=Q^{\\mathsf{T}}\\mathbf{b}$，先得 $x_2=\\dfrac{\\tfrac{\\sqrt{2}}{2\\sqrt{3}}}{\\tfrac{\\sqrt{3}}{\\sqrt{2}}}=\\tfrac{1}{3}$，再由第一行 $\\sqrt{2}x_1+\\tfrac{1}{\\sqrt{2}}x_2=\\tfrac{1}{\\sqrt{2}}$ 得 $x_1=\\tfrac{1}{3}$。因此最小二乘解为 $(\\tfrac{1}{3},\\tfrac{1}{3})^{\\mathsf{T}}$。",
+    "keywords": ["最小二乘法", "QR分解"],
+    "level": "中等"
+  },
+  {
+    "catalog": "矩阵理论",
+    "question": "证明最小二乘解 $\\hat{\\mathbf{x}}$ 满足残差向量 $\\mathbf{r}=\\mathbf{b}-A\\hat{\\mathbf{x}}$ 与 $A$ 的列空间正交。",
+    "solution": "正规方程 $A^{\\mathsf{T}}A\\hat{\\mathbf{x}}=A^{\\mathsf{T}}\\mathbf{b}$ 可写成 $A^{\\mathsf{T}}(\\mathbf{b}-A\\hat{\\mathbf{x}})=\\mathbf{0}$，即 $A^{\\mathsf{T}}\\mathbf{r}=\\mathbf{0}$。因此对任意列向量 $\\mathbf{a}_j$ 有 $\\mathbf{a}_j^{\\mathsf{T}}\\mathbf{r}=0$，说明 $\\mathbf{r}$ 垂直于列空间 $\\mathcal{R}(A)$，从而 $\\mathbf{b}=A\\hat{\\mathbf{x}}+\\mathbf{r}$ 实现了正交分解。",
+    "keywords": ["最小二乘法", "正交投影"],
+    "level": "中等"
+  },
+  {
+    "catalog": "矩阵理论",
+    "question": "求对称矩阵 $A=\\begin{bmatrix}2&1\\\\1&2\\end{bmatrix}$ 的谱分解。",
+    "solution": "特征多项式 $(2-\\lambda)^2-1=\\lambda^2-4\\lambda+3$，根为 $\\lambda_1=3$ 与 $\\lambda_2=1$。对应单位特征向量取 $\\mathbf{q}_1=\\tfrac{1}{\\sqrt{2}}(1,1)^{\\mathsf{T}}$，$\\mathbf{q}_2=\\tfrac{1}{\\sqrt{2}}(1,-1)^{\\mathsf{T}}$。于是 $Q=\\begin{bmatrix}\\tfrac{1}{\\sqrt{2}}&\\tfrac{1}{\\sqrt{2}}\\\\\\tfrac{1}{\\sqrt{2}}&-\\tfrac{1}{\\sqrt{2}}\\end{bmatrix}$，$\\Lambda=\\operatorname{diag}(3,1)$，满足 $A=Q\\Lambda Q^{\\mathsf{T}}$。",
+    "keywords": ["谱分解"],
+    "level": "中等"
+  },
+  {
+    "catalog": "矩阵理论",
+    "question": "设 $A=Q\\Lambda Q^{\\mathsf{T}}$ 为实对称矩阵的谱分解，其中 $\\Lambda=\\operatorname{diag}(\\lambda_1,\\dots,\\lambda_n)$。说明如何利用谱分解计算矩阵幂 $A^k$ 及任意多项式 $p(A)$。",
+    "solution": "因为 $A=Q\\Lambda Q^{\\mathsf{T}}$ 且 $Q^{\\mathsf{T}}Q=I$，有 $A^k=(Q\\Lambda Q^{\\mathsf{T}})^k=Q\\Lambda^k Q^{\\mathsf{T}}$。对多项式 $p(t)=\\sum_j c_j t^j$，得到 $p(A)=\\sum_j c_j A^j=Q(\\sum_j c_j\\Lambda^j)Q^{\\mathsf{T}}=Q\\operatorname{diag}(p(\\lambda_1),\\dots,p(\\lambda_n))Q^{\\mathsf{T}}$，从而可以把标量函数逐元素作用在特征值上。",
+    "keywords": ["谱分解"],
+    "level": "很难"
+  },
+  {
+    "catalog": "矩阵理论",
+    "question": "计算二次型 $q(x,y)=x^2+2xy+4y^2$ 在 $\\mathbf{x}=(1,-1)^{\\mathsf{T}}$ 处的值。",
+    "solution": "代入得到 $q(1,-1)=1^2+2\\cdot1\\cdot(-1)+4\\cdot(-1)^2=1-2+4=3$。",
+    "keywords": ["二次型"],
+    "level": "简单"
+  },
+  {
+    "catalog": "矩阵理论",
+    "question": "将二次型 $q(x,y,z)=2x^2+3y^2+z^2+4xy-2xz$ 写成 $\\mathbf{x}^{\\mathsf{T}}A\\mathbf{x}$ 的形式。",
+    "solution": "取 $A$ 为对称矩阵，主对角为 $(2,3,1)$。交叉项系数按照 $2a_{ij}x_ix_j$，故 $xy$ 项系数 $4$ 给出 $a_{12}=a_{21}=2$，$xz$ 项系数 $-2$ 给出 $a_{13}=a_{31}=-1$，无 $yz$ 项令 $a_{23}=0$。因此 $A=\\begin{bmatrix}2&2&-1\\\\2&3&0\\\\-1&0&1\\end{bmatrix}$，有 $q(\\mathbf{x})=\\mathbf{x}^{\\mathsf{T}}A\\mathbf{x}$。",
+    "keywords": ["二次型"],
+    "level": "中等"
+  },
+  {
+    "catalog": "矩阵理论",
+    "question": "设 $q(x,y)=3x^2+4xy+2y^2$。通过配方法求 $q$ 的最小值，并指出对应的点。",
+    "solution": "写成 $q=(\\sqrt{3}x+\\tfrac{2}{\\sqrt{3}}y)^2+\\left(2-\\tfrac{4}{3}\\right)y^2=(\\sqrt{3}x+\\tfrac{2}{\\sqrt{3}}y)^2+\\tfrac{2}{3}y^2\\ge0$。等号成立当且仅当 $y=0$ 且 $x=0$，因此最小值为 $0$，在原点取得。",
+    "keywords": ["二次型"],
+    "level": "很难"
+  },
+  {
+    "catalog": "矩阵理论",
+    "question": "给定二次型 $q(x,y)=5x^2-6xy+2y^2$，写出其对应的二次型矩阵。",
+    "solution": "矩阵 $A$ 满足 $q=[x\\ y]A[x\\ y]^{\\mathsf{T}}$，主对角为 $(5,2)$，交叉项 $-6xy$ 对应 $2a_{12}=-6$，故 $a_{12}=a_{21}=-3$。因此 $A=\\begin{bmatrix}5&-3\\\\-3&2\\end{bmatrix}$。",
+    "keywords": ["二次型矩阵"],
+    "level": "简单"
+  },
+  {
+    "catalog": "矩阵理论",
+    "question": "若二次型矩阵 $A$ 不是对称矩阵，说明如何通过 $\\tfrac{A+A^{\\mathsf{T}}}{2}$ 得到同一二次型的对称矩阵表达。",
+    "solution": "任意矩阵 $A$ 均满足 $\\mathbf{x}^{\\mathsf{T}}A\\mathbf{x}=\\mathbf{x}^{\\mathsf{T}}\\left(\\tfrac{A+A^{\\mathsf{T}}}{2}\\right)\\mathbf{x}$，因为反对称部分 $\\tfrac{A-A^{\\mathsf{T}}}{2}$ 对二次型贡献为零。故可取 $A_s=\\tfrac{A+A^{\\mathsf{T}}}{2}$ 作为二次型矩阵，使其对称且表示相同的二次型。",
+    "keywords": ["二次型矩阵"],
+    "level": "中等"
+  },
+  {
+    "catalog": "矩阵理论",
+    "question": "设二次型 $q(\\mathbf{x})=\\mathbf{x}^{\\mathsf{T}}A\\mathbf{x}$，在线性变换 $\\mathbf{x}=P\\mathbf{y}$ 下的新矩阵是多少？",
+    "solution": "代入得 $q(P\\mathbf{y})=\\mathbf{y}^{\\mathsf{T}}(P^{\\mathsf{T}}AP)\\mathbf{y}$，因此在新坐标下的二次型矩阵为 $P^{\\mathsf{T}}AP$。这表明矩阵按合同变换更新。",
+    "keywords": ["二次型矩阵"],
+    "level": "简单"
+  },
+  {
+    "catalog": "矩阵理论",
+    "question": "通过配方法将二次型 $q(x,y)=x^2+4xy+5y^2$ 化为标准型。",
+    "solution": "写成 $q=(x+2y)^2+y^2$。令 $u=x+2y$，$v=y$，则 $q=u^2+v^2$，即标准型为 $u^2+v^2$。",
+    "keywords": ["二次型的标准型"],
+    "level": "简单"
+  },
+  {
+    "catalog": "矩阵理论",
+    "question": "证明任何实二次型都可以通过可逆线性变换化为对角标准型。",
+    "solution": "对二次型矩阵 $A$ 施行合同变换。先经初等行列变换与对应列变换消去非对角项，实现逐步配方或高斯消元，最终得到对角矩阵 $D=P^{\\mathsf{T}}AP$。因此存在可逆矩阵 $P$ 使得 $q(\\mathbf{x})=\\sum_i d_i y_i^2$，这正是标准型。",
+    "keywords": ["二次型的标准型"],
+    "level": "很难"
+  },
+  {
+    "catalog": "矩阵理论",
+    "question": "利用主轴定理，将二次型 $q(x,y)=3x^2+4xy+3y^2$ 通过正交变换消去交叉项。",
+    "solution": "相应的二次型矩阵为 $A=\\begin{bmatrix}3&2\\\\2&3\\end{bmatrix}$。特征值为 $5$ 与 $1$，对应单位特征向量为 $\\tfrac{1}{\\sqrt{2}}(-1,1)^{\\mathsf{T}}$ 与 $\\tfrac{1}{\\sqrt{2}}(1,1)^{\\mathsf{T}}$。取正交矩阵 $Q$ 由这两向量组成，令 $(u,v)^{\\mathsf{T}}=Q^{\\mathsf{T}}(x,y)^{\\mathsf{T}}$，则 $q=5u^2+v^2$，交叉项被消去。",
+    "keywords": ["主轴定理"],
+    "level": "简单"
+  },
+  {
+    "catalog": "矩阵理论",
+    "question": "对称矩阵 $A=\\begin{bmatrix}2&0&1\\\\0&3&0\\\\1&0&2\\end{bmatrix}$ 产生的二次型如何通过正交矩阵对角化？",
+    "solution": "矩阵 $A$ 的两个相异特征值分别为 $3, 1$（特征值 $3$ 的重数为 $2$）。可得特征值 $3$ 对应的两个单位化后的特征向量是 $(0,1,0)^\\mathsf{T}, (1/\\sqrt{2},0,1/\\sqrt{2})^\\mathsf{T}$；特征值 $1$ 对应的单位化后的特征向量为 $(-1/\\sqrt{2}, 0, 1/\\sqrt{2})^\\mathsf{T}$。用这些单位向量组成正交矩阵 $Q$，则 $Q^{\\mathsf{T}}AQ=\\operatorname{diag}(3,3,1)$，二次型表达为 $3u^2+3v^2+w^2$。",
+    "keywords": ["主轴定理"],
+    "level": "中等"
+  },
+  {
+    "catalog": "矩阵理论",
+    "question": "概述主轴定理的证明思路，即说明为何每个实对称矩阵都可通过正交相似变换化为对角矩阵。",
+    "solution": "利用谱定理：实对称矩阵具有实特征值并确定一组正交特征向量。将这些特征向量单位化就构成正交矩阵 $Q$，即可得到 $Q^{\\mathsf{T}}AQ=\\Lambda$ 为对角矩阵。对关联二次型 $q(\\mathbf{x})=\\mathbf{x}^{\\mathsf{T}}A\\mathbf{x}$ 进行变量替换 $\\mathbf{x}=Q\\mathbf{y}$，得到 $q=\\sum_i \\lambda_i y_i^2$，这就是主轴变换。",
+    "keywords": ["主轴定理", "谱分解"],
+    "level": "很难"
+  },
+  {
+    "catalog": "矩阵理论",
+    "question": "判断二次型 $q(x,y)=x^2+2y^2$ 的类型。",
+    "solution": "矩阵 $A=\\operatorname{diag}(1,2)$，特征值均为正，因此 $q$ 为正定型。",
+    "keywords": ["二次型的分类"],
+    "level": "简单"
+  },
+  {
+    "catalog": "矩阵理论",
+    "question": "给出二次型 $q(x,y,z)=x^2+y^2-2z^2$ 的惯性指数并说明类型。",
+    "solution": "矩阵 $A=\\operatorname{diag}(1,1,-2)$，正惯性指数 $p=2$，负惯性指数 $n=1$，零惯性指数 $z=0$。因此该二次型是不定型。",
+    "keywords": ["二次型的分类"],
+    "level": "中等"
+  },
+  {
+    "catalog": "矩阵理论",
+    "question": "利用主子式判别法判断 $A=\\begin{bmatrix}2&1\\\\1&2\\end{bmatrix}$ 是否正定。",
+    "solution": "顺序主子式为 $2>0$ 与 $\\det A=3>0$，全部正，故 $A$ 是正定矩阵。",
+    "keywords": ["正定矩阵"],
+    "level": "简单"
+  },
+  {
+    "catalog": "矩阵理论",
+    "question": "证明若 $A$ 正定，则对任意非零向量 $\\mathbf{x}$ 有 $\\mathbf{x}^{\\mathsf{T}}A\\mathbf{x}>0$；反过来，若满足该条件且 $A$ 对称，则 $A$ 正定。",
+    "solution": "正定矩阵的定义即为 $\\mathbf{x}^{\\mathsf{T}}A\\mathbf{x}>0$。若对称矩阵满足此条件，则其特征值必须全部正，否则存在特征向量使该二次型非正。故条件充要。",
+    "keywords": ["正定矩阵"],
+    "level": "中等"
+  },
+  {
+    "catalog": "矩阵理论",
+    "question": "写出矩阵 $A=\\operatorname{diag}(3,1)$ 的奇异值分解。",
+    "solution": "取 $U=I_2$，$\\Sigma=\\operatorname{diag}(3,1)$，$V=I_2$，即可得到 $A=U\\Sigma V^{\\mathsf{T}}$，奇异值为 $3,1$。",
+    "keywords": ["奇异值分解"],
+    "level": "简单"
+  },
+  {
+    "catalog": "矩阵理论",
+    "question": "求矩阵 $A=\\begin{bmatrix}0&2\\\\1&0\\end{bmatrix}$ 的奇异值分解。",
+    "solution": "计算 $A^{\\mathsf{T}}A=\\operatorname{diag}(1,4)$，奇异值为 $\\sigma_1=2$、$\\sigma_2=1$。可取右奇异向量 $\\mathbf{v}_1=(0,1)^{\\mathsf{T}}$、$\\mathbf{v}_2=(1,0)^{\\mathsf{T}}$，组成 $V=\\begin{bmatrix}0&1\\\\1&0\\end{bmatrix}$。由 $\\mathbf{u}_i=\\dfrac{A\\mathbf{v}_i}{\\sigma_i}$ 得到 $\\mathbf{u}_1=(1,0)^{\\mathsf{T}}$、$\\mathbf{u}_2=(0,1)^{\\mathsf{T}}$，因此 $U=I_2$。最后 $\\Sigma=\\operatorname{diag}(2,1)$，满足 $A=U\\Sigma V^{\\mathsf{T}}$。",
+    "keywords": ["奇异值分解"],
+    "level": "中等"
   }
 ];
