@@ -242,6 +242,7 @@
       padding: 1rem;
       border-radius: 0.5rem;
       margin-top: 1rem;
+      overflow-x: auto;
     }
 
     .example-label {
@@ -259,6 +260,7 @@
       padding: 1rem;
       border-radius: 0.5rem;
       margin-top: 1rem;
+      overflow-x: auto;
     }
 
     .note-label {
@@ -528,8 +530,8 @@
                 <td>$\lambda - c$</td>
               </tr>
               <tr>
-                <td>矩阵多项式 $p(A)=a_mA^m + a_{m-1}A^{m-1}+\cdots+a_1A+a_0I$</td>
-                <td>$p(\lambda)=a_m\lambda^m +a_{m-1}\lambda^{m-1}+\cdots+a_1\lambda+a_0$</td>
+                <td>矩阵多项式 $p(A)=\sum_{i=0}^{m}a_iA^i$</td>
+                <td>$p(\lambda)=\sum_{i=0}^{m}a_i\lambda^{m}$</td>
               </tr>
             </tbody>
           </table>
